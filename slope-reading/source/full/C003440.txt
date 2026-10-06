@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees; C=Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts; grep -n \"Forecast the outcome\\|supplied scenario\" step-9-contracts/$C/agent_config.json step-9-contracts/$C/build_contracts.py step-9-contracts/$C/barfresh-economic-effects.json | cut -c1-200"}

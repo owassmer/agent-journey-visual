@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p19_header.py && uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/dbg_unit.py | tail -4 && uv run pytest -q -p no:warnings 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^FAILED|^E  \" | head; uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/count_units.py | head -2"}

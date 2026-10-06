@@ -1,0 +1,35 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_6c4dc3a9]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 03:19:15 (7m29s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 449.65s
+
+--- ✓ TASK 1/1: Independent focused review of PR #12 in owassmer/Slope_Sparse_Events (branch step-6b-chains, stacked on #11): whether the chain model keeps legal meaning, clocks, amounts and affordability in code/Law and gives Jev only one-actor decisions; probability composition; and event-cash correctness. Post one PR comment with demonstrated defects only.  (status=completed, api_calls=36, 449.39s) ---
+I found five real defects in PR #12 and one minor wording defect, and posted one review comment: https://github.com/owassmer/Slope_Sparse_Events/pull/12#issuecomment-5844251139. I didn't add a label or approve anything.
+
+The test suite passes (123 tests) and `ruff check` is clean. I made no Jev calls, investigations or smoke runs.
+
+**Defects, each confirmed with a probe on the Akoustis fixture (2,128 paths, 66 Jev nodes):**
+1. **A stay motion drops every levy before the stay is approved.** When the stay is "yes", the model never asks about early registration or enforcement (`forecast.py:512-516` before the ruling, `:587-595` after it). None of the 220 early stay-yes paths has an early-registration step, and none of the 400 post-ruling stay-yes paths has an enforcement step. Yet the early-registration order comes before stay approval on 44.7% of trajectories, when median cash is $10.3M. After the ruling the figure is 13.3%. These paths are possible and change cash, so removing them breaks the rule that only impossibility removes a path.
+2. **The "beyond" amount class is not cash-identical, as the PR claims.** It groups 32 ruling outcomes and prices them all at the smallest total, $30.1M (`forecast.py:284-300`). 26 of those outcomes are increases up to $112.9M, which under the code's own rule wait 30 extra days (`events.py:448-449`). That shifts several post-ruling dates, including the second notes-default date. Jev is also told about $30.1M is owed on paths where the award was trebled to $112.9M.
+3. **The amended-judgment rule runs the sensitivity as the base, and the sensitivity crashes.** The contract base says only the increase waits 30 days; the code delays the whole amount (`events.py:449`). Turning on the sensitivity raises `ValueError` because the code tries to read the string `'whole_amount'` as a number. Fixing this also fixes most of item 2.
+4. **Legal fees keep running after a vacatur.** The contract says spend stops on payment, settlement, vacatur or petition (`dispute_model.json:438-441`). The vacated ruling never stops it (`events.py:442-444`), so $0.304M per trajectory is still spent after the ruling. The same ruling group also holds new-trial outcomes, where the case continues and spend should not stop.
+5. **The injunction question (J7) gets the wrong legal standard.** It cites Rule 62(b), the bond-stay rule (`dispute_model.json:711-713`). The design calls for eBay, the federal trade-secret statute, the North Carolina statute (§66-154(a)) and Rule 62(c). The two settlement questions also cite Rule 62(b), which has no bearing on them.
+6. **Minor:** 22 of the 26 forecast questions sent to Jev are ungrammatical ("Does the court grants…").
+
+**Checked and clean:**
+- **(a) Questions:** each is one actor's decision. Trebling and pre-judgment interest stay open for Jev, the interest start date and exemplary rule are code, J1–J7 get no cash and say the briefs are sealed, and A4's options are right.
+- **(b) Parameters:** their dispositions match the design; the one unsourced constant (a 20-day vote-call offset) moves no cash.
+- **(c) Composition:** paths sum to 1, timing draws ignore probabilities, the neutral map is correct, and "pay" is removed only by arithmetic. Items 1 and 2 are the only path-collapse problems.
+- **(d) Event cash:** interest, execution and registration timing, bond collateral, the settlement bound, both notes defaults, repurchase, the 15 Dec coupon in shares, and petitions are all correct.
+- **(e) Isolation:** no fact about Akoustis dated after 20 Jun 2024 appears in the contracts, code or fixtures.
+
+I edited nothing in the checkout. The review comment and two probe scripts are in `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/pr12/`:
+- `comment.md`
+- `probe1.py`
+- `probe2.py`
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_6c4dc3a9/task-0.log
+Child's process proc_e394086f24ef `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-chains && mkdir -p /Users/ow` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

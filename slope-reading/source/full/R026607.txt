@@ -1,0 +1,27 @@
+changed: ['research/revision_v2/contracts/agent_config.json', 'research/revision_v2/contracts/question_registry.json']
+added: 0
+MERGED 2026-09-25T15:14:49Z
+ M Slope_Credit_Scenario_Research_and_Design_Kit/PACKAGE_MANIFEST.json
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/question_registry.json
+ M app/agent/investigation.py
+ M app/agent/jev.py
+ M app/agent/jev_profiles.py
+ M app/agent/run_store.py
+ M app/agent/sweep.py
+ M app/agent/tools.py
+ M app/cli.py
+ M app/domain/investigation.py
+ M app/web/templates/run.html
+ M app/web/viewmodel.py
+ M cases/chromadex_20240819/make_run_inputs.py
+ M cases/chromadex_20240819/run_inputs.json
+ M tests/test_investigation_tools.py
+?? app/decisions/
+?? app/finance/bank.py
+?? app/finance/slope_products.py
+?? cases/chromadex_20240819/bank_feed.json
+?? cases/chromadex_20240819/make_bank_feed.py
+?? cases/slope_terms.json
+?? runs/recorded/chromadex_20240819-agent_plus_jev-20260925T152328Z/
+?? tests/test_decision_model.py

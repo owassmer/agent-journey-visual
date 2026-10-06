@@ -1,0 +1,124 @@
+[IMPORTANT: 3 background processes completed. Treat these results as one batch and give one consolidated response; preserve failures and actionable results.]
+
+[IMPORTANT: Background process proc_166ba56cbf57 completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/fix1 && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 SLOPE_WALK_CUT=3 SLOPE_WALK_SUBCUT=2 SLOPE_WALK_DUMP=$S/dumpA.pkl timeout 280 uv run python $S/small_tree.py 60 1 > $S/expA.log 2>&1; grep "^DIFFER\|^SAME" $S/expA.log; env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 SLOPE_WALK_CUT=3 SLOPE_WALK_SUBCUT=2 SLOPE_WALK_UNIT_MINUTES=0.01 SLOPE_WALK_DUMP=$S/dumpB.pkl timeout 280 uv run python $S/small_tree.py 60 1 > $S/expB.log 2>&1; grep "^DIFFER\|^SAME\|wave" $S/expB.log | cut -c1-120; uv run python $S/cmp_dump.py $S/dumpA.pkl $S/dumpB.pkl 2>&1 | cut -c1-260
+Output:
+...(first 6154 characters cut — process(action="log", session_id="proc_166ba56cbf57") has the full output)
+, 45, 9, 1, 8, 0, 9, 5, 6, 3, 0, 0, 10) ('file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 3, 0, 0, 0, 0, 0, 10) ('file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 4, 1, 0, 0, 0, 0, 10) ('file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 5, 2, 0, 0, 10) ('file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 6, 3, 0, 0, 10) ('file', 'neither') regions=0
+  B: 24 creations
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 3, 0, 0, 0, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 3, 0, 4, 1, 0, 0, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 3, 0, 5, 2, 0, 0, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 3, 0, 6, 3, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 3, 0, 7, 4, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 4, 1, 0, 0, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 5, 2, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 8, 0, 9, 5, 6, 3, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 3, 0, 0, 0, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 4, 1, 0, 0, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 5, 2, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+    LIVE (570, 0, 45, 9, 1, 15, 2, 9, 5, 6, 3, 0, 0, 10) ('initiate_offering', 'file', 'neither') regions=0
+A parts [(0, 6063, 0)]
+B parts [(0, 1685, 229), (1, 3522, 82), (2, 856, 0)]
+
+__HERMES_CWD_cb0886334a9d__/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo__HERMES_CWD_cb0886334a9d__
+]
+
+[IMPORTANT: Background process proc_e10a4986fa22 completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/fix1 && cat > $S/steps_dump2.py <<'EOF'
+p = "app/disputes/parallel.py"
+s = open(p).read()
+old = '''            if DUMP and a and isinstance(a[0], F._S):
+                st["at"] = a[0].steps
+'''
+new = '''            if DUMP and kw.get("s") is not None:
+                st["at"] = (kw["s"].steps, st.get("last_g"))
+'''
+assert old in s; s = s.replace(old, new)
+old = '''            log_event("node", key, n, *((kw.get("s").steps if kw.get("s") is not None else st.get("at"),) if DUMP
+                                        else ()))'''
+new = '''            log_event("node", key, n, *((st.get("at"),) if DUMP else ()))'''
+assert old in s; s = s.replace(old, new)
+old = '''    F._Walk.q1, F._Walk.appeal = closing(F._Walk.q1), closing(F._Walk.appeal)
+'''
+new = '''    F._Walk.q1, F._Walk.appeal = closing(F._Walk.q1), closing(F._Walk.appeal)
+    if DUMP:
+        gc_ = F._Walk.group_codes
+
+        def group_codes(self, steps):
+            g = gc_(self, steps)
+            st["last_g"] = (tuple(steps), g.tolist())
+            return g
+        F._Walk.group_codes = group_codes
+'''
+assert old in s; s = s.replace(old, new)
+open(p, "w").write(s); print("ok")
+EOF
+uv run python $S/steps_dump2.py && uv run ruff check app/disputes/parallel.py && cat > $S/cmp_dump.py <<'EOF'
+"""Compare two SLOPE_WALK_DUMP files: creations at the same key whose branches differ, with their prefix and groups."""
+import pickle
+import sys
+
+a = pickle.load(open(sys.argv[1], "rb"))
+b = pickle.load(open(sys.argv[2], "rb"))
+ka = {r[0]: r for r in a["all"]}
+kb = {r[0]: r for r in b["all"]}
+same_key = [k for k in ka if k in kb]
+diff = [k for k in same_key if ka[k][1] == kb[k][1] and ka[k][2] != kb[k][2]]
+mis = [k for k in same_key if ka[k][1] != kb[k][1]]
+print(len(ka), len(kb), "creations;", len(same_key), "shared keys;", len(diff), "same key+node, branches differ;",
+      len(mis), "same key, different node")
+out = []
+for k in diff[:3]:
+    ra, rb = ka[k], kb[k]
+    print("\n==", k, ra[1])
+    print("  A", ra[2], "\n  B", rb[2])
+    (sa, ga), (sb, gb) = ra[4][0], rb[4][0]
+    print("  prefix same:", sa == sb, "len", len(sa))
+    print("  A groups:", ga[0] if ga else None, sorted(set(ga[1])) if ga else None)
+    print("  B groups:", gb[0] if gb else None, sorted(set(gb[1])) if gb else None)
+    if ga and gb:
+        print("  g arrays equal:", ga[1] == gb[1], "; steps equal:", ga[0] == gb[0])
+    out.append({"key": k, "node": ra[1], "prefix": sa, "gA": ga, "gB": gb})
+pickle.dump(out, open(sys.argv[3], "wb"))
+EOF
+env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 SLOPE_WALK_CUT=3 SLOPE_WALK_SUBCUT=2 SLOPE_WALK_DUMP=$S/dumpA.pkl timeout 400 uv run python $S/small_tree.py 60 1 > $S/expA.log 2>&1; grep "^DIFFER\|^SAME" $S/expA.log; env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 SLOPE_WALK_CUT=3 SLOPE_WALK_SUBCUT=2 SLOPE_WALK_UNIT_MINUTES=0.01 SLOPE_WALK_DUMP=$S/dumpB.pkl timeout 400 uv run python $S/small_tree.py 60 1 > $S/expB.log 2>&1; grep "^DIFFER\|^SAME\|wave" $S/expB.log | cut -c1-100; uv run python $S/cmp_dump.py $S/dumpA.pkl $S/dumpB.pkl $S/diff.pkl 2>&1 | cut -c1-400
+Output:
+...(first 1777 characters cut — process(action="log", session_id="proc_e10a4986fa22") has the full output)
+g', 'file', 'neither')
+  prefix same: True len 11
+  A groups: (('settle', 'I0', 'no'), ('verdict', 'I0', 'award:1695000300:1130000200:2260000400'), ('judgment_response', 'entry', '@2=initiate_offering'), ('offering', 'entry', 'yes'), ('post_trial_motions', '', 'no'), ('settle', 'I2', 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'),
+  B groups: (('settle', 'I0', 'no'), ('verdict', 'I0', 'award:1695000300:1130000200:2260000400'), ('judgment_response', 'entry', '@2=initiate_offering'), ('offering', 'entry', 'yes'), ('post_trial_motions', '', 'no'), ('settle', 'I2', 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'),
+  g arrays equal: True ; steps equal: True
+
+== (568, 0, 43, 9, 1, 8, 0, 8, 4, 5, 2, 0, 0, 8) claim:financing_at_floor|floor1|paid|levied|raised|#1130000200-2260000400.paid.current.listed.available.nopay.g2
+  A ('file', 'neither') 
+  B ('initiate_offering', 'file', 'neither')
+  prefix same: True len 11
+  A groups: (('settle', 'I0', 'no'), ('verdict', 'I0', 'award:1695000300:1130000200:2260000400'), ('judgment_response', 'entry', '@2=initiate_offering'), ('offering', 'entry', 'yes'), ('post_trial_motions', '', 'no'), ('settle', 'I2', 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'),
+  B groups: (('settle', 'I0', 'no'), ('verdict', 'I0', 'award:1695000300:1130000200:2260000400'), ('judgment_response', 'entry', '@2=initiate_offering'), ('offering', 'entry', 'yes'), ('post_trial_motions', '', 'no'), ('settle', 'I2', 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'),
+  g arrays equal: True ; steps equal: True
+]
+
+[IMPORTANT: Background process proc_e31585847912 completed normally (exit code 0).
+Command: sleep 100; S=~/.hermes/profiles/connor/cache/scratch/fix1; grep "^DIFFER\|^SAME\|wave" $S/expB.log | cut -c1-120; ls $S/diff.pkl 2>&1; cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && test -f $S/diff.pkl && uv run python $S/cmp_dump.py $S/dumpA.pkl $S/dumpB.pkl $S/diff.pkl 2>&1 | cut -c1-500
+Output:
+...(first 1997 characters cut — process(action="log", session_id="proc_e31585847912") has the full output)
+ 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'), ('cash_floor', '1', 'neither')) [0, 2]
+  B groups: (('settle', 'I0', 'no'), ('verdict', 'I0', 'award:1695000300:1130000200:2260000400'), ('judgment_response', 'entry', '@2=initiate_offering'), ('offering', 'entry', 'yes'), ('post_trial_motions', '', 'no'), ('settle', 'I2', 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'), ('cash_floor', '1', 'neither')) [0, 2]
+  g arrays equal: True ; steps equal: True
+
+== (568, 0, 43, 9, 1, 8, 0, 8, 4, 5, 2, 0, 0, 8) claim:financing_at_floor|floor1|paid|levied|raised|#1130000200-2260000400.paid.current.listed.available.nopay.g2
+  A ('file', 'neither') 
+  B ('initiate_offering', 'file', 'neither')
+  prefix same: True len 11
+  A groups: (('settle', 'I0', 'no'), ('verdict', 'I0', 'award:1695000300:1130000200:2260000400'), ('judgment_response', 'entry', '@2=initiate_offering'), ('offering', 'entry', 'yes'), ('post_trial_motions', '', 'no'), ('settle', 'I2', 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'), ('cash_floor', '1', 'neither')) [0, 2]
+  B groups: (('settle', 'I0', 'no'), ('verdict', 'I0', 'award:1695000300:1130000200:2260000400'), ('judgment_response', 'entry', '@2=initiate_offering'), ('offering', 'entry', 'yes'), ('post_trial_motions', '', 'no'), ('settle', 'I2', 'no'), ('appeal', '', 'no'), ('stay', 'post', 'yes'), ('enforce', 'post', 'levy'), ('judgment_response', 'post', '@3=initiate_offering'), ('offering', 'post', 'no'), ('cash_floor', '1', 'neither')) [0, 2]
+  g arrays equal: True ; steps equal: True
+
+__HERMES_CWD_cb0886334a9d__/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo__HERMES_CWD_cb0886334a9d__
+]

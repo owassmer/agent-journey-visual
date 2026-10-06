@@ -1,0 +1,4 @@
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"aws iam list-roles --profile slope --query 'Roles[].{Name:RoleName,Arn:Arn}' --output json\naws iam list-open-id-connect-providers --profile slope --output json","max_output_tokens":2000,"yield_time_ms":1000}),
+tools.exec_command({cmd:"gh run view 36960914315 --json status,attempt,jobs --jq '{status,attempt,jobs:[.jobs[]|{name,status,conclusion}]}'","max_output_tokens":1000})
+]);r.forEach(text);

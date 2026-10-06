@@ -1,0 +1,82 @@
+              Disposition.__args__)}, "note": S},
+                                                          ["observation_id", "disposition"])}},
+         ["finding_id", "decision"]), resolve_finding),
+    ("propose_effect", "Propose an economic effect from accepted findings: mechanism (settlement_payment_timing, "
+     "noncash_normalization, receipt_delay, operating_interruption, restricted_funds, expense_funding, funding_constraint, "
+     "resolved_obligation), target, cash_direction, baseline_treatment, parameters (use 'remaining_current_year_bucket_cents' "
+     "for a settlement's remaining current-year amount), double-count guard and the plain-language model consequence.",
+     obj({"finding_ids": {"type": "array", "items": S}, "mechanism": S, "target": S,
+          "cash_direction": {"type": "string", "enum": ["inflow", "outflow", "none", "unknown"]},
+          "baseline_treatment": {"type": "string", "enum": ["already_in_baseline_reclassify_timing", "new_to_baseline",
+                                                            "remove_from_baseline", "normalization_only",
+                                                            "exclude_already_paid_obligation", "modify_available_funding"]},
+          "parameters": {"type": "array", "items": PARAM}, "linked_effect_ids": {"type": "array", "items": S},
+          "double_count_guard": S, "model_consequence": S,
+          "reply_to_failed_check": obj({"observation_id": S, "reason": S}, ["observation_id", "reason"])},
+         ["finding_ids", "mechanism", "target", "cash_direction", "baseline_treatment", "model_consequence"]), propose_effect),
+    ("run_sensitivity", "Deterministic remaining-period cash requirement for validated settlement effects across scenarios of "
+     "how much was paid since the measurement date. Optionally state an assumed unavailable share of reported cash.",
+     obj({"effect_ids": {"type": "array", "items": S}, "paid_fractions": {"type": "array", "items": S},
+          "unavailable_opening_cash_cents": {"type": "integer"}}, ["effect_ids"]), run_sensitivity),
+    ("propose_dispute_node", "Model one pending decision in a live dispute (for example the amount a court will fix, "
+     "whether a party appeals and must post a bond, whether a judgment debtor pays and when) as 2-5 mutually exclusive "
+     "branches. Cite the accepted findings it rests on. For each branch give its dated cash consequences: kind "
+     "(outflow, inflow or lock), an amount (value_cents, or lower_cents/upper_cents; state `basis` if the amount is not "
+     "quoted in the findings) and a window (window_start, window_end) after the review date. Jev judges which branch the "
+     "record supports and its distribution weights the branches.",
+     obj({"dependency_id": S, "decision_point": S, "finding_ids": {"type": "array", "items": S},
+          "branches": {"type": "array", "items": obj({"label": S, "description": S, "cash": {"type": "array", "items": obj({
+              "kind": {"type": "string", "enum": ["outflow", "inflow", "lock"]}, "label": S, "value_cents": {"type": "integer"},
+              "lower_cents": {"type": "integer"}, "upper_cents": {"type": "integer"}, "basis": S, "window_start": S,
+              "window_end": S, "finding_ids": {"type": "array", "items": S}}, ["kind", "window_start", "window_end"])}},
+              ["label", "description"])}},
+         ["dependency_id", "decision_point", "finding_ids", "branches"]), propose_dispute_node),
+    ("run_scenarios", "Run the deterministic cash engine for every Slope structure: the bank-only view and the "
+     "event-adjusted view with every combination of your accepted dispute nodes' branches. Returns which structures "
+     "pass policy, the limits, the lowest projected cash and the funding conditions.", obj({}, []), run_scenarios),
+    ("request_missing_fact", "Record a pivotal fact the evidence cannot supply: what it is, why it is pivotal, what evidence "
+     "would resolve it and what changes if it is resolved. Sends no message.",
+     obj({"dependency_id": S, "fact": S, "why_pivotal": S, "acceptable_evidence": S, "if_resolved": S},
+         ["fact", "why_pivotal", "acceptable_evidence"]), request_missing_fact),
+    ("read_inventory", "The reading list: paragraphs and table rows the host sweep flagged as describing a specific matter, "
+     "and whether an accepted finding cites each one yet.", obj({}, []), read_inventory),
+    ("escalate_effect", "Escalate an effect the category guard rejected when you disagree with the check: it becomes disputed, "
+     "creates no cash stream, and is left for the reviewer (a disputed cash-moving effect makes the run incomplete).",
+     obj({"effect_id": S, "reason": S}, ["effect_id", "reason"]), escalate_effect),
+    ("resolve_reconciliation", "Resolve an open reconciliation task: explain how the statements relate and which finding stands.",
+490:async def run_sensitivity(ctx: RunContext, args: dict) -> dict:
+491-    """Remaining-period required net cash across explicit paid-since-measurement scenarios."""
+492-    opening = _baseline_item(ctx, "opening_cash_observation_id")
+493-    if opening is None:
+494-        raise ToolError("This case's baseline names no opening-cash observation")
+495-    reserve = ctx.inputs["policy"]["required_cash_reserve"]
+496-    effect_ids = list(dict.fromkeys(args["effect_ids"]))  # the same effect is never counted twice
+497-    buckets, seen_findings = [], {}
+498-    for eid in effect_ids:
+499-        eff: EconomicEffectProposal = ctx.run.get("effects", eid)
+500-        if eff.status != "validated" or eff.mechanism != "settlement_payment_timing":
+501-            raise ToolError(f"{eid} must be a validated settlement_payment_timing effect")
+502-        shared = [f for f in eff.finding_ids if f in seen_findings]
+16:from __future__ import annotations
+18:import asyncio
+19:import hashlib
+20:import json
+21:import re
+22:from dataclasses import dataclass, field
+23:from datetime import date
+24:from decimal import Decimal
+25:from typing import Any
+27:from claude_agent_sdk import create_sdk_mcp_server, tool
+29:from app.agent.jev import registry_question
+30:from app.agent.jev_profiles import AMBIGUITY_MARGIN, Semantics, is_ambiguous
+31:from app.agent.meanings import NOT_SETTLED, meaning
+32:from app.agent.mission import project_mission
+33:from app.agent.run_store import RunStore
+34:from app.agent.sweep import units_touching
+35:from app.config import ROOT, ConfigurationError
+36:from app.domain.investigation import (
+51:from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit, assumed, documented, unknown
+52:from app.evidence.spans import SpanError, locate, verify
+53:from app.evidence.store import EvidenceAccessError, EvidenceStore
+54:from app.finance.fixed_installment import FixedInstallmentOffer
+55:from app.finance.thresholds import remaining_period_required_net_cash

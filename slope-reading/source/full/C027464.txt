@@ -1,0 +1,1 @@
+{"command": "git fetch -q origin main && git show origin/main:Jev_Pivot.md > /tmp/jevpivot_main.md && cmp -s Jev_Pivot.md /tmp/jevpivot_main.md && echo identical || (echo differs; diff <(wc -l < Jev_Pivot.md) <(wc -l < /tmp/jevpivot_main.md))", "description": "Compare local and incoming Jev_Pivot.md"}

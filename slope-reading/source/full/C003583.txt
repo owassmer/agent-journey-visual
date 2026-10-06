@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && git fetch -q && git worktree add -q .claude/worktrees/step-9-core -b step-9-core origin/step-9-build && cd .claude/worktrees/step-9-core && git merge -q --no-edit origin/step-9-contracts 2>&1 | grep -v \"npmrc\\|nvm\\|globalconfig\" | tail -3; git diff --name-only --diff-filter=U; git log --oneline -1 | cut -c1-80"}

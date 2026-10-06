@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n '40,120p' .github/workflows/reduce.yml; echo \"=== replay.yml\"; sed -n '1,30p' .github/workflows/replay.yml; echo \"=== pool.yml tail\"; sed -n '95,140p' .github/workflows/pool.yml; grep -n \"SLOPE_EVENT_CASH\\|event_store\" app/analysis/core.py | head -5"}

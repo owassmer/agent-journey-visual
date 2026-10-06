@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-questions && F=Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/DECOMPOSITION_20240514.md; python3 ~/.hermes/profiles/connor/cache/scratch/9f/point_s6.py $F && git diff --stat && grep -n \"\u00a76\\b\\|\u00a76\\.\\|\u2691\" $F | cut -c1-160 | head"}

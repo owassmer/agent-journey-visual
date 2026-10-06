@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && sqlite3 -header state.db \"select id, source, parent_session_id, datetime(started_at,'unixepoch','localtime') st, datetime(last_activity_at,'unixepoch','localtime') la, ended_at is not null ended, message_count, title, cwd from sessions where source!='subagent' order by coalesce(last_activity_at,started_at) desc limit 15\""}

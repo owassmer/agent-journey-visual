@@ -1,0 +1,335 @@
+      18 notes_baseline_and_c8.md
+      24 notes_light_mfg.md
+      21 notes_musclepharm.md
+       9 notes_tikk.md
+     328 shortlist.md
+     400 total
+# New lead case: ranked shortlist
+
+Builder-side research, compiled 25 Sep 2026. Outcomes and later filings were read.
+
+**Sources:** SEC EDGAR (filings and full-text search), the CourtListener search API (HTML docket pages return 403; the `/api/rest/v4/search/` endpoint works anonymously), court websites and news. Working notes sit beside this file: `notes_light_mfg.md`, `notes_musclepharm.md`, `notes_tikk.md` and `notes_baseline_and_c8.md`.
+
+**Coverage:** six sweeps.
+- Food and beverage.
+- Supplements, beauty, DTC and vape.
+- Apparel, home, durables and consumer electronics.
+- B2B distribution and light manufacturing.
+- A "distress-first" sweep that started from consumer companies using factoring, merchant cash advances or forbearance.
+- My own light-manufacturing pass.
+
+**Limits:**
+- Bash was unavailable in this session.
+- The session's WebSearch budget ran out near the end, so the last sweeps relied on EDGAR full-text search and CourtListener only.
+
+## Bottom line
+
+**No consumer-products borrower passes every hard criterion with a free federal docket.**
+
+The combination the brief needs is rare:
+- a Slope-sized consumer company,
+- that is cash-tight enough to rationally pay about 20% APR (criterion 8),
+- with a live dispute against a trade partner,
+- on RECAP,
+- and a public outcome.
+
+Small distressed consumer companies fight mostly in state court or confidential arbitration: Charles & Colvard v. Wolfspeed, Jones Soda v. Core Manufacturing and Upexi were all arbitrations.
+
+The two cases that make the dispute's cash path actually reach a Slope loan are both light manufacturers, not consumer brands:
+- **Akoustis:** best evidence and the strongest causal chain.
+- **Tel-Instrument:** obscure, crisp outcome, small loan.
+
+**MusclePharm** is the best Slope-shaped consumer borrower, but its collapse came through its lender, not the lawsuits.
+
+## Scoring key
+
+Each criterion is scored 2 (pass), 1 (partial) or 0 (fail). Criterion 8 is a hard gate: a 0 there disqualifies a case whatever its total.
+
+1. Borrower fit.
+2. Live dispute at D.
+3. Court record before D.
+4. The signal can reach the lender.
+5. At least two channels beyond the courtroom.
+6. Known outcome within about 12 months.
+7. Evidence can be acquired.
+8. Rational Slope draw, tested in four parts:
+   - (a) cheaper liquidity is absent or constrained;
+   - (b) cash is tight;
+   - (c) supplier invoices run at Slope scale;
+   - (d) the dispute is material to that tight position.
+
+| Rank | Case (D) | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | Total /16 | Gate 8 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | Akoustis / Qorvo (9 Oct 2024) | 1 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | **15** | pass |
+| 2 | Tel-Instrument / Aeroflex (16 Jun 2023) | 1 | 2 | 1 | 2 | 2 | 2 | 1 | 2 | **13** | pass |
+| 3 | MusclePharm / ThermoLife + Bakery Barn (16 May 2022) | 2 | 2 | 1 | 2 | 2 | 2 | 1 | 2* | **14** | pass (too distressed) |
+| 4 | Massimo Group / Taizhou Nebula (14 Nov 2024) | 2 | 2 | 1 | 2 | 2 | 0 | 1 | 1 | 11 | weak: 8(a) |
+| 5 | Kaival Brands / Bidi Vapor v. FDA (mid-Oct 2021) | 2 | 1 | 1 | 1 | 1 | 2 | 1 | 1 | 10 | weak |
+| 6 | Kopin / BlueRadios (15 Aug 2025) | 0 | 2 | 1 | 1 | 1 | 2 | 1 | 0 | 8 | **fail** |
+| base | **ChromaDex / Elysium (19 Aug 2024)** | 2 | 2 | 2 | 1 | 1 | 2 | 2 | 0 | 12 | **fail** |
+
+\* MusclePharm passes 8 on the letter. But cash of $0.5M is less than one month of outflows, so a bank-data-only view already declines it. The dispute signal therefore adds little, which makes it a weaker demonstration.
+
+---
+
+## 1. Akoustis Technologies (AKTS, later AKTSQ), CIK 1584754: Qorvo v. Akoustis
+
+**Borrower:** an RF BAW-filter maker with its own fab in Canandaigua, NY. It also owns RFMi, which has its products built by Tai-Saw Technology.
+- FY ended June 2024: revenue about $27.4M and cost of revenue $28.1M (a gross loss).
+- It buys substrates and wafers, process gases, high-purity metals, HTCC packages, and contract manufacturing from Tai-Saw.
+- Fit: it is B2B light manufacturing, but a deep-tech fab, which the coordinator marks as a poor fit.
+
+**Proposed D: 9 Oct 2024.** The FY2024 10-K was filed on 8 Oct 2024, and the injunction ruling came two days later. At D, all of these were still undecided:
+- the permanent injunction,
+- the motions for judgment as a matter of law and for a new trial,
+- the final judgment,
+- the appeal and whether to post a bond,
+- the default clock under the convertible notes,
+- the Nasdaq delisting appeal.
+
+**Dispute:** D. Del. 1:21-cv-01417-JPM, Judge McCalla. Qorvo is a competitor. The claims were trade-secret misappropriation (DTSA and the North Carolina act) and two patents.
+- **17 May 2024:** jury verdict of $31,315,214 in unjust enrichment plus $7M punitive, total $38.6M. Judgment was entered on 20 May.
+- **17 Jun 2024:** post-trial motions filed: permanent injunction, new trial, JMOL, prejudgment interest, and attorneys' fees (Qorvo asked for $12,116,123).
+- **9 Sep 2024:** fees awarded, about $11.7M.
+- **10 Sep 2024:** pre- and post-judgment interest awarded, about $7.3M.
+- These orders were not enforceable until final judgment.
+
+**RECAP availability before D (verified through the API):**
+- Docket: https://www.courtlistener.com/docket/60622376/qorvo-inc-v-akoustis-technologies-inc/ (about 1,088 entries).
+- Verified documents:
+  - Order on attorneys' fees, D.I. 690: https://storage.courtlistener.com/recap/gov.uscourts.ded.76727/gov.uscourts.ded.76727.690.0.pdf (read)
+  - Interest order, D.I. 699: https://storage.courtlistener.com/recap/gov.uscourts.ded.76727/gov.uscourts.ded.76727.699.0_3.pdf
+  - Redacted post-trial opposition and reply briefs, D.I. 682, 684 and 685 (for example …76727.685.0.pdf).
+  - Proposed injunction, D.I. 608-1.
+  - Proposed new-trial order, D.I. 613-1.
+- Listed as available, but I did not open them:
+  - Jury verdict, D.I. 601.
+  - Judgment, D.I. 602.
+  - Fee motion, D.I. 618. Its opening brief (D.I. 619) and the interest declaration (D.I. 617) are sealed.
+- The only sealed items are one brief and one declaration. Their key numbers appear in the orders.
+
+**Liquidity at D** (10-K FY2024: https://www.sec.gov/Archives/edgar/data/1584754/000121390024085984/ea0209774-10k_akoustis.htm):
+- Cash $24.4M at 30 Jun 2024 against current liabilities of $84.4M, which include a $57.4M litigation liability.
+- FY24 operating cash flow was −$40.4M and capital spending −$6.0M.
+- The 10-Q released after D shows cash of **$12.1M at 30 Sep 2024**. A bank feed at D would show about $10–12M, roughly three months of burn: https://www.sec.gov/Archives/edgar/data/1584754/000121390024097800/ea0218907-10q_akoustis.htm
+- The auditor raised going-concern doubt. The filing says: "if we are unable to arrange financing … or timely appeal … we may be forced to seek protection … under the Bankruptcy Code."
+- Debt is $44M of 6% convertible notes due 2027, plus a $4M acquisition note.
+- **Events of default:** a final judgment over **$10.0M** that stays "undischarged, unpaid or unstayed for a period of 60 days", or a Nasdaq delisting.
+
+**Criterion 8:**
+- **(a) pass.** There is no bank revolver. The 10-K says "Except for the Company's ATM Sales Agreement … no commitments or arrangements to obtain any additional funds." Equity was raised at $0.50 in January 2024 and $0.20 in May 2024.
+- **(b) pass.** Going concern, and about three months of cash at D.
+- **(c) partial.** Supplier purchases are real (cost of revenue about $2.3M a month), but it is a fab.
+- **(d) pass.** The $57.3M in awards is more than twice cash, and any final judgment starts the 60-day default clock.
+
+**Channels beyond the courtroom, all in pre-D filings:**
+- The 60-day judgment default and the delisting default under the notes.
+- Operations: an injunction was pending. The company had redesigned its XBAW process and argued current products were unaffected.
+- Qorvo is a competitor with audit rights under the proposed injunction.
+- Funding depends on the ATM at pennies a share.
+- Heavy litigation spend: the lawsuit "has resulted in significant expense" (8-K of 8 Aug 2024).
+- The Nasdaq delisting determination was under appeal.
+
+**Plausible Slope financing:** vendor invoices for substrates, gases and metals, or Tai-Saw contract-manufacturing invoices, of about $0.3–1M. The supplied terms ($2M, three monthly instalments) are oversized; a $0.5–1M draw fits better.
+
+**After D (all public):**
+- 11 Oct 2024: order on the injunction (D.I. 709). 15 Oct: permanent injunction (D.I. 710).
+- 31 Oct: JMOL and new trial denied (D.I. 715).
+- 21 Nov: amended final judgment of $38.6M plus $11.7M fees plus about $6.6M prejudgment interest, with post-judgment interest at 5.138% (D.I. 717; 8-K https://www.sec.gov/Archives/edgar/data/1584754/000121390024101627/ea0222366-8k_akoustis.htm).
+- 29 Nov: notice of appeal (Fed. Cir. 25-1250), **with no bond**.
+- **16 Dec 2024: Chapter 11** (D. Del. Bankr.). The stalking horse was Gordon Brothers at a $10M base price (https://www.sec.gov/Archives/edgar/data/1584754/000121390024109364/ea022485901ex10-1_akoustis.htm).
+- 2025: assets sold to a SpaceX subsidiary (Tune Holdings) for about $30.2M. Qorvo's $59.1M unsecured claim went uncontested under a settlement.
+- **Effect on a Slope loan made at D:** instalments would fall due about 8 Nov, 8 Dec and 7 Jan.
+  - The third instalment falls after the petition, so it is stayed.
+  - The 8 Dec instalment falls inside the 90-day preference window.
+
+**Risks:**
+- The borrower is a deep-tech fab, the fit the coordinator flagged as poor.
+- **Moderate fame and recall risk.** The case got trade-press coverage, and the SpaceX asset purchase is memorable. A model may "know" the bankruptcy.
+- The dispute is with a competitor, not a trade partner.
+- The key numbers are all fully public.
+
+---
+
+## 2. Tel-Instrument Electronics (TIKK, OTCQB), CIK 96885: Aeroflex Wichita v. Tel-Instrument
+
+**Borrower:** a light manufacturer of avionics test sets for the US Army, Navy and Air Force, Lockheed, and airlines.
+- FY ended March 2023: revenue $8.63M (FY2022: $12.93M).
+- It buys components, and "vendors are requiring cash deposits at ordering".
+- Below the $10M revenue floor and not consumer, but a genuine small-business buyer of inventory.
+
+**Proposed D: 16 Jun 2023.** The FY2023 10-K was filed on 15 June. Kansas Court of Appeals oral argument was on 30 Mar 2023, with a "decision expected approximately 90 days" later. At D, all of these were open:
+- the ruling,
+- whether to seek Kansas Supreme Court review,
+- the payment date and amount,
+- how to fund it.
+
+**Dispute:** Sedgwick County, Kansas District Court, 09 CV 1141, filed 24 Mar 2009; on appeal as Kansas Court of Appeals No. 119,563.
+- Aeroflex is a competitor. The dispute concerns the Army TS-4530 program, which drives TIC's government sales.
+- March 2017 jury: tortious interference, $1.3M lost profits. October 2017: punitive damages of $2.1M. Total judgment about $4.9M.
+- Accrued $6,360,698 at 31 Mar 2023, including $1.46M of interest at 4.25%.
+- A $2M supersedeas bond is backed by restricted cash.
+
+**Court record:**
+- The Court of Appeals opinion is public: https://kscourts.gov/KSCourts/media/KsCourts/Opinions/119563.pdf?ext=.pdf
+- **Unverified:** whether the appellate briefs and the Sedgwick County trial docket and documents are online. There is no RECAP.
+
+**Liquidity at D** (10-K: https://www.sec.gov/Archives/edgar/data/96885/000118518523000638/telinstru20230331_10k.htm):
+- Unrestricted cash $3.84M plus restricted $2.01M, against the $6.36M accrual.
+- The only bank facility is a Bank of America line of **$690k, fully drawn**, at 8.64%. It expires 30 Jul 2023 and is secured by substantially all assets.
+- There is no going-concern language. Management says: "TIC's cash position should allow for the payment of the entire amount if necessary."
+
+**Criterion 8 (lead researcher's scoring):**
+- **(a) pass.** The only line is small, fully drawn, and expiring within weeks.
+- **(b) pass.** Unrestricted cash is below the judgment.
+- **(c) marginal pass.** Cost of sales runs about $1.4–1.6M a quarter, so purchases are roughly $150–350k a month (my estimate), and vendors want deposits.
+- **(d) strong pass.** The payment came about three months after D.
+- Sizing: scale the supplied $2M terms down to about $250–500k.
+
+**Channels beyond the courtroom:**
+- Bond collateral is restricted cash.
+- A fully drawn secured line is up for renewal.
+- The counterparty is a direct competitor on the key Army program.
+- Post-judgment interest is called "a significant drag on profitability".
+- Vendors are demanding deposits.
+
+**After D:**
+- 21 Jul 2023: the Court of Appeals affirmed on all issues (8-K exhibit: https://www.sec.gov/Archives/edgar/data/96885/000118518523000761/ex_549507.htm).
+- 15 Sep 2023: TIC paid **$6,559,233**, including $1.66M of interest.
+- **Cash was $356,942 at 30 Sep 2023.** The Bank of America line stayed fully drawn and was extended to 31 Dec 2023, and $721k of convertible preferred was raised for working capital (10-Q: https://www.sec.gov/Archives/edgar/data/96885/000118518523001184/telinstru20230930_10q.htm).
+- A three-instalment loan from D (about 16 Jul, 15 Aug and 14 Sep) finishes the day before the payment. The event drains cash to near zero, which matters for any next draw and for an event-weighted forecast.
+
+**Risks:**
+- Revenue is under $10M, it trades OTC, and it is defence-adjacent rather than consumer.
+- The record is in state court.
+- The amount is fully accrued, so the uncertainty is the ruling, the timing and the funding, not the size.
+- **Very low fame, so the model is unlikely to recall the outcome.**
+
+---
+
+## 3. MusclePharm (MSLP), CIK 1415684: ThermoLife judgment, Bakery Barn suit, instalment settlements
+
+**Borrower:** a sports-nutrition brand (protein powders and bars) that relies on co-manufacturers.
+- FY2021 revenue $50.0M. Q1 2022 revenue $13.1M, with cost of goods $11.6M.
+- One customer is 59% of revenue. Four vendors account for 17%, 12%, 12% and 11% of purchases.
+- This is the best Slope-shaped borrower on the list.
+
+**Proposed D: 16 May 2022**, the Q1 2022 10-Q (https://www.sec.gov/Archives/edgar/data/1415684/000149315222013900/form10-q.htm). A pre-D alternative is 17 Nov 2021, with the Q3 10-Q, while ThermoLife's petition for review was still pending (it was decided 4 May 2022).
+
+**Disputes at D:**
+- **ThermoLife v. MusclePharm** (Maricopa Superior Court CV2016-000113; Arizona Court of Appeals 1 CA-CV 20-0209, affirmed 27 Apr 2021 with prejudgment interest vacated).
+  - ThermoLife is an ingredient supplier and licensor, suing for missed minimum purchases.
+  - The judgment was $1.68M; $1.9M was accrued.
+  - The bond was only **$600k**.
+  - Review was denied 4 May 2022, and the case was remanded to recalculate interest.
+  - Opinion: https://www.courtlistener.com/opinion/9530472/thermolife-international-llc-v-musclepharm-corporation/
+- **Bakery Barn v. MusclePharm** (Allegheny County Court of Common Pleas; filed 24 Jan 2022, amended 14 Mar 2022).
+  - Bakery Barn is a protein-bar co-manufacturer claiming more than $1.9M, including a single invoice (no. 59192) for **$1,816,017**.
+  - This is exactly the kind of invoice Slope pays. The docket number and online access are **unverified**.
+- **Instalment settlements already running:**
+  - Nutrablend (co-packer, $3.1M of unpaid invoices), paid monthly to June 2023, with $1.0M current.
+  - 4Excelsior (co-manufacturer, $4.75M), $100k a month, with $1.1M current plus $1.6M long-term.
+- **Smaller:** a $390k cross-claim by Flavor Producers.
+
+**Liquidity at D:**
+- Cash **$534k**. Working-capital deficit $36.3M. Going-concern doubt.
+- No bank revolver. Funding sources:
+  - Prestige Capital factoring: $12.5M cap, 80% advance, $6.6M outstanding.
+  - Empery senior secured notes: $8.2M at 14% original issue discount, due 28 May 2022, 18% after.
+  - Notes from the CEO, Ryan Drexler: $5.4M at 12%, plus a revolver at 18%.
+- **The Empery note form sets an event of default for any monetary judgment over $100,000 that stays "unvacated, unbonded or unstayed for a period of 45 calendar days"**, and a cross-default over $100k (https://www.sec.gov/Archives/edgar/data/1415684/000149315221025730/ex4-2.htm). Once review was denied, the unbonded roughly $1.3M of ThermoLife exposure made this clause live.
+
+**Criterion 8:**
+- **(a) pass.** Only factoring and notes at 14–28% discounts are available.
+- **(b) pass.** Cash is less than one month of outflows, which is arguably *too* tight.
+- **(c) pass.** Co-manufacturer invoices run $0.2–4.75M.
+- **(d) pass.** The unbonded judgment plus the Bakery Barn claim is several times cash.
+
+**After D (reveal):**
+- 3 Jun 2022: the securities purchase agreement was amended. The October notes' discount rose from 14% to 28%, $3.08M of new notes were issued at a 20% discount, and maturities moved out six months (8-K: https://www.sec.gov/Archives/edgar/data/1415684/000149315222016288/form8-k.htm).
+- August 2022: credit-memo restatement. 26 Aug and 8 Sep: Empery default letters citing the restatement and the CFO's departure, **not the lawsuits** (https://www.sec.gov/Archives/edgar/data/1415684/000149315222026142/form8-k.htm).
+- 3 Oct 2022: Empery's deposit-account control notice swept the Wells Fargo accounts, Prestige stopped factoring, and cash "came to a halt".
+- 15 Dec 2022: Chapter 11 (D. Nev. 22-14422), minutes before Empery's collateral auction. The case has rich RECAP coverage, for example the first-day declaration: https://storage.courtlistener.com/recap/gov.uscourts.nvb.408643/gov.uscourts.nvb.408643.34.0.pdf
+- ThermoLife was **not** collected in 2022. The Arizona court entered the amended judgment only on 6 Feb 2023, after the petition, and ThermoLife then sought stay relief to execute on the $600k bond (Doc 351: https://storage.courtlistener.com/recap/gov.uscourts.nvb.408643/gov.uscourts.nvb.408643.351.0.pdf).
+- Bakery Barn appears on the top-20 unsecured creditor list at $1,692,869, disputed (Doc 210).
+- 2023: FitLife bought the assets for $18.5M.
+
+**Risks:**
+- The records are in state court (Arizona, Pennsylvania), and pre-D documents are not on RECAP.
+- The **causal chain runs through the lender, not the lawsuits.**
+- A 90-day loan from 16 May would have been repaid (June to August) before the 3 Oct sweep. A later D (about 19 Sep 2022) would be impaired, but by lender events.
+- Pre-D financials were later restated (a small amount).
+- Moderate brand fame.
+
+---
+
+## 4. Massimo Group (MAMO), CIK 1952853: Taizhou Nebula Power v. Massimo Motor Sports (near miss)
+
+- **Borrower:** UTVs, ATVs and pontoon boats. 2024 revenue $111.2M. Two suppliers made up 74% of 2024 purchases. Tractor Supply accounted for about $73M of 2024 revenue.
+- **Dispute:** Dallas County District Court DC-20-13300. Nebula is a former Chinese supplier.
+  - A bench trial ended in a final judgment on 8 Jul 2024: $3.33M damages plus $1.44M fees, plus interest.
+  - Accrued $5.99–6.03M. Notice of appeal filed 7 Aug 2024.
+  - No supersedeas disclosure.
+- **Liquidity:**
+  - Cash $1.72M at 30 Sep 2024 against the $6M accrual (10-Q: https://www.sec.gov/Archives/edgar/data/1952853/000149315224045987/form10-q.htm).
+  - Cash $2.44M at 30 Jun 2025, with H1 2025 revenue down 52%.
+  - A shareholder loan of $6.42M.
+- **Fails 8(a) as filed.** The Cathay Bank line of $15M at prime + 0.75% was **undrawn** at 30 Sep 2024. Its borrowing base and renewal are unknown.
+- **Fails 6 on the court outcome.** The appeal was still undecided in May 2026, and nothing had been paid.
+- The state docket is unverified.
+- It is a good consumer-durables shape (supplier concentration, Tractor Supply concentration, tariffs), but the story lacks a resolution.
+
+## 5. Kaival Brands (KAVL), CIK 1762239: Bidi Vapor v. FDA (partial)
+
+- Kaival is the exclusive distributor for its related-party supplier, Bidi Vapor. The FDA denied marketing orders for flavoured BIDI Sticks on 9 Sep 2021, and Bidi petitioned the 11th Circuit (No. 21-13340).
+- The court stayed the order on 1 Feb 2022 and vacated it on 23 Aug 2022.
+- Kaival is not a party, the dispute is regulatory, there are no RECAP documents (only opinions), and cash after its September 2021 offering was probably about $8M (unverified). Partial fit only.
+
+## 6. Kopin (KOPN), CIK 771266: BlueRadios v. Kopin, D. Colo. 1:16-cv-02052 (fails 8)
+
+- 22 Apr 2024: jury awarded $5.1M plus an advisory $19.7M for disgorgement and exemplary damages. Kopin accrued $24.8M and took going-concern language solely because of the accrual.
+- 4 Sep 2025: JMOL denied (D.I. 785). 5 Sep 2025: final judgment of $19.7M, with no injunction and no prejudgment interest (D.I. 786).
+- October 2025: a $23M appeal bond, cash-collateralised with $24.2M of restricted cash through a Rockland Trust loan agreement.
+- **Fails 8:**
+  - Cash was $24.4M plus $2.4M of securities at D, with no debt.
+  - Burn was about $14M a year.
+  - A PIPE / Theon financing of about $41M followed Q2 2025 (subagent-reported; the $41M figure is unverified by me).
+- Other drawbacks: defence microdisplays (DRS is 65% of revenue), a thin pre-D RECAP record (D.I. 756, 783 and 784 only), and the counterparty is a former development partner.
+
+## Baseline: ChromaDex (CDXC), 19 Aug 2024: fails 8
+
+- **Liquidity:** cash about $27.7–27.9M at 30 Jun 2024, plus an **undrawn $10M Western Alliance revolver** (about prime + 1%). Q2 2024 operating cash flow was roughly breakeven, and there is no going-concern language (Q2 results release, 7 Aug 2024).
+- **Criterion 8:** (a) fail, (b) fail, (c) pass, (d) fail. The roughly $9.8M fee request is about 35% of cash (the court later awarded $9.15M), with no path to the loan.
+- **Other criteria:** strong on the docket (D. Del. 1:18-cv-01434, RECAP), the live dispute and the outcome. Channels beyond the courtroom are thin.
+- **Score: 12/16, and it fails the gate.**
+
+## Rejected (one line each)
+
+- **Charles & Colvard / Wolfspeed:** confidential AAA arbitration. Otherwise ideal: sole supplier, $4.77M settlement in February 2025, going concern.
+- **BRC / Bev-Hub (D. Kan. 5:24-cv-04057):** $2.7M accrual, $50M of revolver availability, still in discovery in 2026.
+- **Real Good Food:** passes 8, but its supplier suits are small (Echo Lake $147k, dismissed), and it stopped filing after Q3 2023.
+- **Jones Soda / Core Manufacturing ($7.2M claim):** arbitration.
+- **Digital Brands Group, Nature's Miracle, Agrify, Interactive Strength, American Rebel, Safe & Green, Fresh Vine, NuZee:** too small, disputes too small, or resolved too late.
+- **Kaspien:** thin docket (one RECAP document), small claim ($774k), already collapsing.
+- **Celsius, Boston Beer / Ardagh, RPM, Malibu, Markforged, Beyond Meat:** too large or too liquid.
+- **AMMO / Urvan:** Delaware Chancery, insider dispute, liquid.
+- **Laird, Stryve, Splash, Reed's, Tattooed Chef, Better Choice, cbdMD, Greenlane, Perfect Moment, EDUC / Usborne:** no material live dispute as defendant.
+- **Securities or derivative only:** Franklin Wireless, 22nd Century, Vintage Wine Estates.
+
+## Recommendation
+
+1. **Akoustis at 9 Oct 2024 is the strongest demonstration of the thesis.**
+   - It is the only candidate where every link is public and dated, from courtroom events (injunction, JMOL, final judgment, no bond) through the notes' 60-day judgment default to Chapter 11 about 68 days after D.
+   - The bank-data view at D ($10–12M of cash, burn visible) would plausibly approve a short three-instalment draw. The dispute paths show the collections at risk.
+   - The docket is RECAP-rich before D.
+   - Accept it only if a non-consumer fab borrower is acceptable. Watch the moderate recall risk: withhold the outcome, and test the model blind on "what happened to Akoustis in Dec 2024."
+2. **Tel-Instrument at 16 Jun 2023 is the low-fame alternative.**
+   - It is a small, obscure, genuinely cash-tight manufacturer.
+   - A single appellate ruling decides a known amount (about $6.4–6.6M) against $3.8M of free cash plus $2M of bond collateral, and the outcome is crisp: affirmed in 5 weeks, paid in 13 weeks, cash left at $357k.
+   - It needs a smaller loan ($250–500k) and state-court records (opinion public; briefs and docket unverified).
+3. **If a consumer brand is non-negotiable, use MusclePharm.**
+   - Be explicit that its lawsuits (a supplier judgment with a $100k/45-day judgment default, and a co-manufacturer's $1.8M invoice suit) are the risk channel.
+   - The realised failure came through the lender, and a 90-day loan from May 2022 would have been repaid.
+
+**Baseline:** ChromaDex scores 12/16 and fails the rational-draw gate outright (criterion 8).
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

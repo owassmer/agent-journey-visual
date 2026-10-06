@@ -1,0 +1,48 @@
+{'artifact': 'jev_semantic_boundary_cases', 'version': '1.2.0', 'registry_version': '3.1.1', 'access_class': 'host_evaluator_only', 'policy': "Labelled semantic boundary cases for sanity-checking Jev questions and the code-owned routing thresholds. Non-synthetic passages are sliced verbatim from admissible decision-date snapshot text, with the snapshot's source metadata. Never mount into an agent or reviewer run."}
+[
+ {
+  "case_id": "syn_support_all",
+  "borrower": "synergy",
+  "profile": "statement_support",
+  "question_id": "claims_supported",
+  "state": {
+   "statement": "Up to $2,000,000 of settlement loan payments fall due in 2024.",
+   "cited_findings": [
+    {
+     "finding_id": "fnd_a",
+     "proposition": "The December 28, 2023 settlement loan requires payments of $2,000,000 in 2024.",
+     "quotes": [
+      "| 2024 | $2,000,000 |"
+     ]
+    }
+   ],
+   "engine_results": []
+  },
+  "expected": "all_supported",
+  "why": "Restates the finding."
+ }
+]
+dict_keys(['case_id', 'borrower', 'profile', 'question_id', 'state', 'expected', 'why'])
+193:    async def coverage(self, passage: dict | list[dict], cited: list[AtomicFinding], subject_ids: tuple[str, ...],
+194-                       source_hashes: tuple[str, ...]) -> list[SemanticObservation]:
+195-        """inventory_coverage: do the cited findings account for the flagged matter?"""
+196-        cited_state = [{"finding_id": f.finding_id, "proposition": f.proposition} for f in cited]
+197-        return await self._ask("inventory_coverage", ["coverage_supported"],
+198-                               {"passage": passage, "cited_findings": cited_state}, subject_ids, source_hashes)
+199-
+200-    async def baseline_overlap(self, effect_description: str, baseline_item: str, subject_ids: tuple[str, ...],
+201-                               source_hashes: tuple[str, ...] = ()) -> list[SemanticObservation]:
+202-        """Warning signal only; obligation IDs and host validation decide double counting."""
+203-        return await self._ask("statement_relation", ["baseline_overlap"],
+204-                               {"effect_description": effect_description, "baseline_item": baseline_item},
+205-                               subject_ids, source_hashes)
+from app.agent.jev_eval import run_eval
+
+report = run_eval()
+for q, v in report["by_question"].items():
+    print(f"  {q:24s} {v['agree']}/{v['cases']}")
+for r in report["results"]:
+    if not r["agree"]:
+        print(f"  disagree: {r['case_id']}: expected {r['expected']!r}, got {r['answer']!r} "
+              f"(noul={r['noul_value']}, probs={r['probabilities']})")
+print(f"{report['agreement']}/{report['cases']} agree; usage {report['jev_usage']}")

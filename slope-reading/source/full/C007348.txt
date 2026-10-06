@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n '138,160p;1180,1206p;1246,1262p' app/analysis/events.py; grep -n \"    def ledger_left\\|    def _atm_rebook\\|    def _eq_key\" app/analysis/events.py; awk '/    def ledger_left\\(/{f=1} f{print NR\": \"$0; n++} n>14{exit}' app/analysis/events.py; sed -n '2720,2760p' app/analysis/events.py"}

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"git status --short; rg -n 'def _facts|def _run|def _advanced|def completed|def c_situation|def advance|def _upto_dated' app/analysis/events.py app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2000}));

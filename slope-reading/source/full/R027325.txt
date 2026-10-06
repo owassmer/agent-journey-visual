@@ -1,0 +1,15 @@
+50:def build(run_id: str, root: Path = RECORDED) -> dict[str, Any]:
+118:    check_labels = {"coverage_supported": "Coverage", "adds_matter": "Duplicate", "decision_relevance": "Relevance",
+148:        "decision": _decision(root / run_id),
+149:        "disputes": _disputes(g, inputs.get("baseline_profile", {}).get("borrower", "")),
+158:def _decision(run_dir: Path) -> dict | None:
+159:    """The deterministic decision written by `slope compare` next to the recorded run, if present."""
+194:            "bank_feed": s["bank_feed"], "slope_terms": s["slope_terms"], "paths_label": s["paths_label"],
+198:def _disputes(g: dict, borrower: str) -> list[dict]:
+201:    from app.decisions.case import describe
+202:    from app.disputes.rules import load_model
+207:    for d in g.get("disputes", {}).values():
+32:{% if v.decision %}{% set d = v.decision %}
+33:<h3>Financing decision <span class="tag engine">Engine result</span></h3>
+47:{% for x in v.disputes %}<div class="card"><h5>{{ x.title }}</h5>
+57:{% if v.disputes %}<p class="muted">{{ d.paths_label }}</p>{% endif %}

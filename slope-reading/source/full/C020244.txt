@@ -1,0 +1,3 @@
+text(await tools.exec_command({cmd:"aws ec2 describe-instances --profile slope --region us-east-2 --query 'Reservations[].Instances[].{Id:InstanceId,State:State.Name,Type:InstanceType,Name:Tags[?Key==`Name`].Value|[0]}' --output json","max_output_tokens":1800}));
+text(await tools.exec_command({cmd:"aws ec2 describe-volumes --profile slope --region us-east-2 --query 'Volumes[].{Id:VolumeId,State:State,Size:Size,Attachments:Attachments[].InstanceId}' --output json","max_output_tokens":1800}));
+text(await tools.exec_command({cmd:"git status --short; tail -25 PLAN.md","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2000}));

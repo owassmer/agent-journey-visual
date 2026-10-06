@@ -1,0 +1,96 @@
+1	"""Step 5b financial correctness: Slope products, the connected-bank baseline and the scenario engine."""
+2	
+3	from datetime import date
+4	
+5	from app.decisions.scenarios import Request, compare, simulate, summarize
+6	from app.domain.investigation import BranchCash, DisputeBranch, DisputeNode
+7	from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit
+8	from app.finance.bank import load_feed, risk_features
+9	from app.finance.slope_products import load_terms, menu, offer, tier_for
+10	
+11	SNAP = "chromadex_20240819"
+12	FUNDING = date(2024, 8, 20)
+13	REQ = Request(amount_cents=200_000_000, invoice_due=date(2024, 9, 19), funding=FUNDING, requested_term_id="inst_120")
+14	
+15	
+16	def ev(cents: int) -> EvidenceValue:
+17	    return EvidenceValue(status=Status.EXACT, unit=Unit.CENTS, value=cents, provenance=Provenance(basis=Basis.DOCUMENTED))
+18	
+19	
+20	def node(branches) -> DisputeNode:
+21	    return DisputeNode(node_id="node_001", dependency_id="dep_001", decision_point="fee award", finding_ids=("fnd_001",),
+22	                       branches=branches, weights_bps={b.branch_id: 10_000 // len(branches) + (i == 0) * (10_000 % len(branches))
+23	                                                       for i, b in enumerate(branches)}, status="accepted")
+24	
+25	
+26	def test_offers_conserve_totals_and_prorate_fees():
+27	    terms = load_terms()
+28	    for o in menu(terms, 200_000_000, "B"):
+29	        sched = o.schedule(FUNDING)
+30	        assert sum(p.amount_cents for p in sched) == o.total_cents
+31	        assert sum(p.principal_cents for p in sched) == o.amount_cents
+32	        assert all(p.due > FUNDING for p in sched)
+33	        assert o.prorated_fee_cents(0) == 0 and o.prorated_fee_cents(o.days) == o.fee_cents
+34	    net90 = offer(terms, "net_90", 200_000_000, "A")
+35	    assert net90.fee_cents == 5_980_000  # 2.99% of USD 2.0M, the published best Net 90 rate
+36	    assert 1_200 <= net90.apr_equivalent_bps(FUNDING) <= 1_300  # about 12-13% effective annual
+37	
+38	
+39	def test_bank_feed_matches_public_anchors_and_stops_at_the_review_date():
+40	    feed = load_feed(SNAP)
+41	    assert feed.balances[date(2024, 3, 31)] == 2_756_500_000  # Q1 10-Q cash including restricted
+42	    assert feed.balances[date(2024, 6, 30)] == 2_788_500_000  # Q2 10-Q cash including restricted
+43	    assert feed.period_end == date(2024, 8, 19)
+44	    assert all(t["date"] <= "2024-08-19" for t in feed.transactions)
+45	    assert "Synthetic" in feed.provenance
+46	    tier, _ = tier_for(risk_features(feed), load_terms())
+47	    assert tier == "A"
+48	
+49	
+50	def test_zero_cash_branches_reproduce_the_bank_only_view():
+51	    empty = node((DisputeBranch(branch_id="br_1", label="a", description="a"),
+52	                  DisputeBranch(branch_id="br_2", label="b", description="b")))
+53	    comp = compare(load_feed(SNAP), load_terms(), REQ, [empty])
+54	    for name in comp.structures:
+55	        bank = [p for p in comp.paths if p.structure == name and p.view == "bank_only"]
+56	        event = [p for p in comp.paths if p.structure == name and p.view == "event_adjusted"]
+57	        assert event and {(p.min_cash_cents, tuple(p.collections)) for p in event} == \
+58	            {(bank[0].min_cash_cents, tuple(bank[0].collections))}
+59	
+60	
+61	def test_a_lock_lowers_cash_by_its_amount_and_collections_never_exceed_contract():
+62	    feed, terms = load_feed(SNAP), load_terms()
+63	    lock = BranchCash(kind="lock", label="bond", amount=ev(980_000_000), window_start=date(2024, 8, 20),
+64	                      window_end=date(2024, 12, 31))
+65	    s = offer(terms, "inst_120", 200_000_000, "A")
+66	    horizon = date(2025, 2, 15)
+67	    base, coll, owed, _ = simulate(feed, REQ, s, [], "stress", horizon)
+68	    locked, coll2, _, _ = simulate(feed, REQ, s, [lock], "stress", horizon)
+69	    assert all(base[d] - locked[d] == 980_000_000 for d in base if d >= date(2024, 8, 20))
+70	    assert sum(c for _, c in coll) == s.total_cents and not owed
+71	    assert sum(c for _, c in coll2) <= s.total_cents
+72	
+73	
+74	def test_the_financed_invoice_is_paid_once():
+75	    feed, terms = load_feed(SNAP), load_terms()
+76	    horizon = date(2025, 2, 15)
+77	    declined, _, _, _ = simulate(feed, REQ, None, [], "central", horizon)
+78	    financed, _, _, _ = simulate(feed, REQ, offer(terms, "net_30", 200_000_000, "A"), [], "central", horizon)
+79	    # Declining: the borrower pays the invoice itself. Financed: Slope pays it; the borrower repays Slope instead.
+80	    fee = offer(terms, "net_30", 200_000_000, "A").fee_cents
+81	    assert declined[horizon] - financed[horizon] == fee  # financing costs exactly the fee; the invoice is not paid twice
+82	
+83	
+84	def test_weights_are_labelled_and_conditions_are_actions():
+85	    lock = DisputeBranch(branch_id="br_1", label="appeal with bond", description="x", cash=(
+86	        BranchCash(kind="lock", label="bond", amount=ev(980_000_000), window_start=date(2024, 8, 20),
+87	                   window_end=date(2024, 12, 31)),))
+88	    pay = DisputeBranch(branch_id="br_2", label="pay", description="y", cash=(
+89	        BranchCash(kind="outflow", label="fee", amount=ev(980_000_000), window_start=date(2024, 8, 20),
+90	                   window_end=date(2024, 12, 31)),))
+91	    comp = compare(load_feed(SNAP), load_terms(), REQ, [node((lock, pay))])
+92	    s = summarize(comp, load_terms())
+93	    assert s["recommendation"]["bank_only"]["requested_passes"]
+94	    assert s["recommendation"]["event_adjusted"]["limit_cents"] < s["recommendation"]["bank_only"]["limit_cents"]
+95	    assert sum(b["weight_bps"] for b in s["nodes"][0]["branches"]) == 10_000
+96	

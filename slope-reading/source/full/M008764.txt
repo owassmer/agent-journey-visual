@@ -1,0 +1,18 @@
+[IMPORTANT: Background process proc_9e8b1813a2fe completed normally (exit code 0).
+Command: ~/.hermes/profiles/connor/cache/scratch/split/watch_prepare3.sh
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+unit: inactive
+{"saved_paths": 6573684, "unmatched_saved_paths": 13, "measured_roots": 612, "native_prefixes": 634, "native_roots": 756}
+      0s split part0.pkl: 993 control events, 905 rows
+published shard 0: walk-36781427817/fresh-corrected-3/refine-v1/base/attempts/0/native-top
+{"jobs": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99], "roots": 756, "tasks": 1050, "target_paths_per_task": 4000, "measured_roots": 612, "estimated_paths": 6573699, "depths": {"11": 4, "10": 12, "9": 2, "8": 3, "7": 7, "1": 16, "2": 11, "3": 8, "4": 9, "5": 8, "6": 20}, "cost_balanced": true, "revision": "3e14d97e30c5511d2d6bee8c0165f3f9c2b071da"}
+ready 2026-10-05T18:08:40Z
+STATUS: Success
+roots: old 756, new 756, identical set: True
+groups with identical roots and split: 100 of 100
+assembled under the old queue: 66; of them reusable (identical roots): 66
+to walk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 27, 72, 75, 79, 80, 81, 82, 83, 84, 86, 87]
+]

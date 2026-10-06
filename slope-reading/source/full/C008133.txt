@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && git show 0c5db3079700afe1b9a1b21884fb9dcabdc75441:app/analysis/events.py | grep -n \"def _run\\b\" -A 60 | grep -n \"light\\|capture\\|question\\|finish\\|day_only\" | head -20; sed -n '2300,2325p' app/analysis/events.py"}

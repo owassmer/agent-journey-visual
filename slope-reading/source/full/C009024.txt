@@ -1,0 +1,8 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"pwd",max_output_tokens:1000}),
+  tools.exec_command({cmd:"rg --files --hidden -g '!\\.git/**' -g '!node_modules/**' -g '!\\.venv/**' -g '!venv/**' -g '!dist/**' -g '!build/**'",max_output_tokens:16000}),
+  tools.exec_command({cmd:"git status --short --branch",max_output_tokens:2000}),
+  tools.exec_command({cmd:"rg --files --hidden -g 'AGENTS.md' -g 'SKILL.md' -g '*hermes*' -g '*connor*' -g '*SOUL*' -g '*MEMORY*' /Users/owenwassmer/.hermes /Users/owenwassmer/.config /Users/owenwassmer/.codex/skills /Users/owenwassmer/dev 2>/dev/null",max_output_tokens:14000})
+]);
+for (let i=0;i<results.length;i++) text({index:i,...results[i]});
+text(ALL_TOOLS.filter(x=>/search|hermes|session|memory|profile/i.test(x.name+" "+x.description)).map(x=>({name:x.name,description:x.description.slice(0,180)})).slice(0,100));

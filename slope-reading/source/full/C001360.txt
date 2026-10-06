@@ -1,0 +1,1 @@
+{"command": "python3 ~/.hermes/profiles/connor/cache/scratch/6c/user_msgs_range.py ~/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530.jsonl 2026-09-26T00:30 2026-09-26T02:20 14000 > ~/.hermes/profiles/connor/cache/scratch/6c/claude_0030_0220.txt; wc -c ~/.hermes/profiles/connor/cache/scratch/6c/claude_0030_0220.txt"}

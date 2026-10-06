@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && D=/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c; python3 $D/compare_answers.py $D/jev_states.json $D/jev_states2.json > $D/compare.txt 2>&1; wc -c $D/compare.txt; python3 -c \"print(open('$D/compare.txt').read()[:26000])\""}

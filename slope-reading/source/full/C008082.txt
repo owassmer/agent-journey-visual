@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split && python3 ssm.py --wait 60 -- \"ls -t /tmp | grep refine- | head -3; for d in \\$(ls -td /tmp/refine-*/ | head -3); do echo \\\"== \\$d\\\"; tail -c 400 \\$d/walk.log; echo; done; uptime; free -g | head -2; tail -3 /var/log/slope-walk-assemble.log\"", "timeout": 90}

@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/forecast.py", "old_string": "        return k, prefix, hashlib.blake2b(pack_row(row), digest_size=16).digest()", "new_string": "        import xxhash\n\n        return k, prefix, xxhash.xxh3_128_digest(pack_row(row))"}

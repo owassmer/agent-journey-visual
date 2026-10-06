@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-00b6051aa298e85e2 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"tail -3 /var/log/slope-restore.log; date -u; df -h /; systemctl list-timers slope-safe-stop.timer --no-pager\"]}' --query Command.CommandId --output text","max_output_tokens":500}));
+text(await tools.write_stdin({session_id:39330,chars:"","yield_time_ms":1000,"max_output_tokens":1000}));

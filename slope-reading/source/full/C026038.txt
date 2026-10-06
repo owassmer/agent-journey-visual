@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/registry_excl.py && grep -n \"async def _check_coverage\" -A 22 app/agent/tools.py && grep -n \"def _escalate_item\" -A 8 app/agent/tools.py && grep -n '\"covered_by_findings\", \"duplicate_of\", \"not_decision_relevant\", \"escalate\"\\]' -B2 -A4 app/agent/tools.py"}

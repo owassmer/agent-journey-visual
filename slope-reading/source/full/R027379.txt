@@ -1,0 +1,8 @@
+E                   assert (np.int64(-819634669) == 0)
+tests/test_analysis.py:128: AssertionError
+E       assert np.int64(-1850000) == -(50000000 - (np.int64(207400000) - np.int64(155550000)))
+E        +  where np.int64(207400000) = <built-in method sum of numpy.ndarray object at 0x10c6c18f0>()
+E        +    where <built-in method sum of numpy.ndarray object at 0x10c6c18f0> = array([       0,        0,        0,        0,        0,        0,\n              0,        0,        0,        0,     ...,        0,        0,        0,        0,        0,\n              0,        0,        0,        0,        0,        0]).sum
+E        +  and   np.int64(155550000) = <built-in method sum of numpy.ndarray object at 0x10c6c1b30>()
+E        +    where <built-in method sum of numpy.ndarray object at 0x10c6c1b30> = array([       0,        0,        0,        0,        0,        0,\n              0,        0,        0,        0,     ...,        0,        0,        0,        0,        0,\n              0,        0,        0,        0,        0,        0]).sum
+tests/test_analysis.py:143: AssertionError

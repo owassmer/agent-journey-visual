@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -ln \"divergence(\" tests/*.py | head; grep -n \"def .*chain\\b\\|def _chain\\|event_chain(\" tests/test_chains.py | head -8; grep -n \"def per_draw\" -A 6 app/analysis/events.py | head -8", "timeout": 30}

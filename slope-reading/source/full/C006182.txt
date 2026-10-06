@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/analysis/events.py", "old_string": "        if delta.any():\n            self.ev.cash += delta\n            self.ev.kinds[\"inflow\"] += delta", "new_string": "        if delta.any():\n            self._evw(\"cash\")[...] += delta\n            self._evw(\"k:inflow\")[...] += delta"}

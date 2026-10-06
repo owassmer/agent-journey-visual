@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && cat .gitignore | grep -n \"analysis\\|runs\\|json\" ; git check-ignore -v runs/recorded/akoustis_20240620-agent_plus_jev-20260926T212137Z/analysis.json; git ls-files runs/recorded | grep synergy | head -8; git status --short"}

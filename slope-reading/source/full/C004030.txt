@@ -1,0 +1,1 @@
+{"command": "S=~/.hermes/profiles/connor/cache/scratch/9m2; for i in $(seq 1 40); do n=$(grep -l \"phys_footprint_peak\" $S/noreuse.log $S/cap64.log 2>/dev/null | wc -l); [ \"$n\" -ge 2 ] && break; sleep 10; done; for f in noreuse cap64; do echo \"== $f\"; grep -v -E \"npmrc|nvm|globalconfig\" $S/$f.log | tail -5; done", "timeout": 450}

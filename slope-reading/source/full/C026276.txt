@@ -1,0 +1,1 @@
+{"url": "https://dockets.justia.com/docket/california/cacdce/2:2022cv08222/867839", "prompt": "List all docket details: parties (exact names), judge, nature of suit, cause, jury demand, amount demanded if shown, and every docket entry with date and text (complaint, dismissal, etc.). Is the complaint document available?"}

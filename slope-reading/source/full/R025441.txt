@@ -1,0 +1,20 @@
+turns 62 duration_s 205
+{
+ "conclusion": "No conclusion yet on whether to fund; two pivotal facts are missing. (1) Knight Therapeutics' senior-secured loan says 'Synergy shall not add any other debt without paying out KTI first', so no offer can be treated as permissible without Knight's consent, a waiver or a carve-out. (2) The 2024 settlement installments (Atrium $2,000,000; March 2024 supplier settlement $600,000) were apparently unpaid or barely paid by June 30, and payments since then are not disclosed. If still unpaid, they alone use up the ~$2.0M of reported cash and the $200K reserve, needing $800K\u2013$900K of net operating cash by year-end. That need falls to zero if at least half was paid. The Atrium $2.24M FY2023 gain is noncash and nonrecurring. The Valenti and LODC settlements are paid and have no cash effect. Linking the Note 11 loans to the 'Atrium' and 'VitBest' rows is an inference from matching amounts. If Knight consents and enough of the installments were paid, assess the $100K and then the $250K 6-month offers on operating receipts. The 3-month $250K offer has the largest payments and is least compatible with the year-end settlement cash demand.",
+ "pivotal_unknowns": [
+  "Amount of the $2,000,000 Atrium and $600,000 supplier 2024 settlement installments paid between 2024-06-30 and 2024-08-13, and due dates of the remainder",
+  "Whether Knight Therapeutics consents to or carves out new debt despite 'Synergy shall not add any other debt without paying out KTI first'",
+  "Whether the ~$2.0M cash figure at 2024-08-12 includes the $100,000 restricted cash"
+ ],
+ "supported_effect_ids": [
+  "eff_001",
+  "eff_002",
+  "eff_003",
+  "eff_004",
+  "eff_005"
+ ]
+}
+leak-scan exit 1 (1 = no matches)
+VitBest')?
+VitBest')
+VitBest' row, $2,920,824) and likely inside the ~$4.1M due in 2024. Schedule it once.

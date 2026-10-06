@@ -1,0 +1,8 @@
+synergy_20240813-agent_plus_jev-20260925T041059Z INCOMPLETE_REVIEW turns 53 failure None
+incomplete: ['disputed inventory item inv_003 (debt or financing agreement): WebBank Definitions section: findings fnd_011/012/016/022/023 cover the daily payment, minimum payment, account sweep, obligations, make-up payments and term; the checker still flags an unspecified definition (possibly Owner/Confidential/Arbitration terms) as uncovered. No additional cash term identified.', 'disputed inventory item inv_004 (debt or financing agreement): Knight prospectus-summary paragraph: fnd_020/009/010 cover the balance, 12% rate, covenants, budget approval, 19.6% affiliate ownership and distributi
+inventory: Counter({'disputed': 15, 'not_decision_relevant': 15, 'covered': 6}) Counter({'debt_or_financing_agreement': 11, 'accounting_item_from_a_matter': 1, 'covenant_or_restriction': 1, 'cash_restriction': 1, 'legal_matter_or_settlement': 1})
+inventory checks: Counter({('coverage_supported', 'partly_covered'): 31, ('coverage_supported', 'covered'): 16, ('decision_relevance', 'could_not_change'): 14, ('coverage_supported', 'not_covered'): 5, ('decision_relevance', 'could_change'): 4, ('adds_matter', 'adds_item'): 2})
+conclusion checks: [{'answer': 'some_unsupported', 'ambiguous': False, 'passed': False, 'conclusion_sha256': 'c67f50fda3570779cfd37c346af92ddcff9bd1fe7a2460a488df7862eb30be55'}, {'answer': 'all_supported', 'ambiguous': True, 'passed': True, 'conclusion_sha256': 'd9a1b804941108772797c507071a234fc4d2bba8ea493b7c802d874e1b250fc5'}]
+    "requests": 143,
+    "physical_attempts": 143,
+sections with >1 chunk: 6 flagged multi-chunk: 2

@@ -1,0 +1,1 @@
+{"command": "uv run pytest -q -p no:warnings 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | tail -1; git add -A && git commit -q -m \"Record Synergy runs 3 (incomplete: turn-count bug, kept) and 4 (CANDIDATE_READY after all repairs)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && git push -q 2>&1 | tail -1; git log --oneline -1"}

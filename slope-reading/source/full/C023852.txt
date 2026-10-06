@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'def question_class|def situation_conditions|stay_status|def classify_row|situation_class|situation_keys' app/disputes/forecast.py app/disputes/notes.py tools/question_refresh.py app/disputes/state14.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":5000}))

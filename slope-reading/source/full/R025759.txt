@@ -1,0 +1,40 @@
+78:        "coverage_supported"
+79-      ]
+80-    }
+81-  },
+82-  "state_contract": {
+83-    "unanswered_question": "The recorded decision dependency: the question, its embedded premises and the financial quantity it could change.",
+84-    "passage": "Source text with its heading path and enough surrounding qualification to preserve meaning (a section or table from the admissible snapshot).",
+85-    "target": "The resolved legal entity plus the specific affiliate, asset, activity or obligation being evaluated.",
+86-    "source": "Source ID, title, publisher, document kind and public availability date. Eligibility is already checked by the host.",
+87-    "claim": "One statement extracted by the agent from the passage.",
+88-    "subject": "The identified obligation, cash pool, activity or offset a status question is about.",
+89-    "proposed_finding": "One agent-authored proposition, with entity and scope, that the agent wants to record.",
+90-    "proposed_fact": "The fact two statements are being compared against.",
+91-    "statement_a": "First statement with its source and passage context.",
+92-    "statement_b": "Second statement with its source and passage context.",
+93-    "effect_description": "The proposed economic effect in words: mechanism, obligation or activity, and scope.",
+94-    "baseline_item": "The baseline stream or item it might duplicate, in words.",
+95-    "company": "The borrower's legal name.",
+96-    "statement": "Agent-written text to check (an effect's model consequence or the packet conclusion).",
+97-    "cited_findings": "The accepted findings the statement rests on: proposition plus verbatim quotes.",
+98-    "engine_results": "Deterministic results the statement may cite (validated effects, sensitivity outputs)."
+99-  },
+100-  "observation_record": {
+--
+597:      "id": "coverage_supported",
+598-      "version": "3.2.0",
+599-      "profile": "inventory_coverage",
+600-      "primitive": "choice",
+601-      "question": "Do these findings account for the specific matter this passage describes?",
+602-      "applies_when": "The agent marks an inventory item as covered by accepted findings.",
+603-      "state_fields": [
+604-        "passage",
+605-        "cited_findings"
+606-      ],
+607-      "prompt": {
+608-        "instructions": "Do state.cited_findings account for the specific matter that state.passage describes? A finding accounts for the matter when it states what the passage establishes about that matter's cash, obligation, restriction or accounting treatment. Findings about a different matter, or about a different aspect than the one the passage describes, do not account for it.",
+609-        "criteria": {
+610-          "covered": "The findings state what the passage establishes about its specific matter.",
+611-          "partly_covered": "The findings address the matter but miss a distinct item the passage describes (for example an accounting gain, a covenant or a payment status).",
+612-          "not_covered": "The findings concern a different matter or aspect.",

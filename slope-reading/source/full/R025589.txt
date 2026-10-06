@@ -1,0 +1,22 @@
+119:async def get_mission(ctx: RunContext, _args: dict) -> dict:
+127:async def read_baseline_profile(ctx: RunContext, _args: dict) -> dict:
+131:async def read_loan_terms(ctx: RunContext, _args: dict) -> dict:
+144:async def record_dependency(ctx: RunContext, args: dict) -> dict:
+155:async def search_evidence(ctx: RunContext, args: dict) -> dict:
+157:    limit = max(1, min(int(args.get("limit", 6)), MAX_SEARCH_RESULTS))
+195:async def read_evidence(ctx: RunContext, args: dict) -> dict:
+214:async def judge(ctx: RunContext, args: dict) -> dict:
+252:async def propose_finding(ctx: RunContext, args: dict) -> dict:
+271:    ctx.run.put("finding_proposed", finding)
+280:        ctx.run.put("finding_proposed", finding)
+291:async def resolve_finding(ctx: RunContext, args: dict) -> dict:
+329:    return {"finding_id": resolved.finding_id, "status": resolved.status}
+355:async def propose_effect(ctx: RunContext, args: dict) -> dict:
+381:    ctx.run.put("effect_validated", validated)
+387:async def run_sensitivity(ctx: RunContext, args: dict) -> dict:
+437:async def request_missing_fact(ctx: RunContext, args: dict) -> dict:
+444:async def submit_packet(ctx: RunContext, args: dict) -> dict:
+447:    summary["configuration_failure"] = ctx.configuration_failure
+520:    ("request_missing_fact", "Record a pivotal fact the evidence cannot supply: what it is, why it is pivotal, what evidence "
+524:    ("submit_packet", "Lock the investigation for review with a summary, the pivotal unknowns, the supported effect IDs and the "
+550:        async def call(args: dict, _h=handler, _n=name) -> dict:

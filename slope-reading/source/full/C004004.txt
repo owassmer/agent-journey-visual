@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int && python3 ~/.hermes/profiles/connor/cache/scratch/9m2/fix_deco.py && env -u CLAUDE_CODE_OAUTH_TOKEN .venv/bin/ruff check app/disputes/forecast.py app/disputes/parallel.py && sed -n 205,262p app/disputes/forecast.py && git diff --stat"}

@@ -1,0 +1,12 @@
+ok
+[1;32mAll checks passed![0m
+app/agent/investigation.py:91:def system_prompt(arm: str, max_turns: int) -> str:
+app/agent/investigation.py:96:    method = WORKING_METHOD.format(jev_method=JEV_METHOD if arm == "agent_plus_jev" else "", turn_budget=max_turns)
+app/agent/investigation.py:101:                   max_turns: int) -> ResultMessage | None:
+app/agent/investigation.py:112:                if ctx.turns_used > max_turns and not stats["turn_limit_hit"]:
+app/agent/investigation.py:125:                max_turns: int | None = None, wall_clock_s: int | None = None) -> dict[str, Any]:
+app/agent/investigation.py:127:    max_turns = max_turns or cfg["budgets"]["main_agent_max_turns"]
+app/agent/investigation.py:128:    wall_clock_s = wall_clock_s or cfg["budgets"]["main_investigation_wall_clock_seconds"]
+app/agent/investigation.py:148:                                 "max_turns": max_turns, "run_inputs": inputs, "run_inputs_sha256": canonical_sha256(inputs)})
+app/agent/investigation.py:177:        permission_mode=settings["native_sdk_options"]["permission_mode"], max_turns=max_turns,
+app/agent/investigation.py:178:        cwd=tempfile.mkdtemp(prefix="slope-run-"), env=AGENT_PROCESS_ENV, system_prompt=system_prompt(arm, max_turns),

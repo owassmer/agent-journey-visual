@@ -1,0 +1,36 @@
+Exit code 1
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+  [1m[94m--> [0mtests/test_decision_model.py:4:1
+   [1m[94m|[0m
+[1m[94m 2[0m [1m[94m|[0m   post-judgment dispute model (rule-derived dates and amounts, path weights, refinement). No network."""
+[1m[94m 3[0m [1m[94m|[0m
+[1m[94m 4[0m [1m[94m|[0m [1m[91m/[0m import asyncio
+[1m[94m 5[0m [1m[94m|[0m [1m[91m|[0m from datetime import date, timedelta
+[1m[94m 6[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m 7[0m [1m[94m|[0m [1m[91m|[0m from app.agent.tools import _date_in_text
+[1m[94m 8[0m [1m[94m|[0m [1m[91m|[0m from app.decisions.scenarios import AMOUNT_STEP_CENTS, Request, compare, policy_checks, simulate, summarize
+[1m[94m 9[0m [1m[94m|[0m [1m[91m|[0m from app.disputes.evaluate import Evaluator
+[1m[94m10[0m [1m[94m|[0m [1m[91m|[0m from app.domain.investigation import AtomicFinding, BranchCash, DisputeInstance, SemanticObservation, SourceSpan
+[1m[94m11[0m [1m[94m|[0m [1m[91m|[0m from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit
+[1m[94m12[0m [1m[94m|[0m [1m[91m|[0m from app.finance.bank import load_feed, risk_features
+[1m[94m13[0m [1m[94m|[0m [1m[91m|[0m from app.finance.slope_products import load_terms, menu, offer, tier_for
+   [1m[94m|[0m [1m[91m|________________________________________________________________________^[0m
+[1m[94m14[0m [1m[94m|[0m
+[1m[94m15[0m [1m[94m|[0m   SNAP = "chromadex_20240819"
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m  [0m [1m[94m|[0m
+[1m[94m9 [0m [1m[94m|[0m from app.disputes.evaluate import Evaluator
+[1m[94m  [0m [1m[31m-[0m [31mfrom app.domain.investigation import AtomicFinding, BranchCash, DisputeInstance, SemanticObservation, SourceSpan
+[0m[1m[94m10[0m [1m[32m+[0m [32mfrom app.domain.investigation import (
+[0m[1m[94m11[0m [1m[32m+[0m [32m    AtomicFinding,
+[0m[1m[94m12[0m [1m[32m+[0m [32m    BranchCash,
+[0m[1m[94m13[0m [1m[32m+[0m [32m    DisputeInstance,
+[0m[1m[94m14[0m [1m[32m+[0m [32m    SemanticObservation,
+[0m[1m[94m15[0m [1m[32m+[0m [32m    SourceSpan,
+[0m[1m[94m16[0m [1m[32m+[0m [32m)
+[0m[1m[94m17[0m [1m[94m|[0m from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit
+[1m[94m  [0m [1m[94m|[0m
+
+Found 1 error.
+[[36m*[0m] 1 fixable with the `--fix` option.

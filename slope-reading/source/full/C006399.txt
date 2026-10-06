@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. .venv/bin/python ~/.hermes/profiles/connor/cache/scratch/memo/classes.py 2>&1 | grep -v \"npmrc\\|nvm\\|globalconfig\" | head -60; date -u +%H:%M", "timeout": 120}

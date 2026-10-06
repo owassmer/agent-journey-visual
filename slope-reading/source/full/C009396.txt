@@ -1,0 +1,6 @@
+// @exec: {"max_output_tokens": 10000}
+const results = await Promise.allSettled([
+ tools.exec_command({cmd:"cat /Users/owenwassmer/.hermes/profiles/connor/skills/software-development/slope-sparse-events-build/SKILL.md",max_output_tokens:8000}),
+ tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport json\np=Path('inventory.json')\nv=json.loads(p.read_text())\nprint(type(v).__name__)\nif isinstance(v,dict):\n print('keys',list(v))\n for k,x in v.items():\n  print(k, type(x).__name__, len(x) if hasattr(x,'__len__') else '')\nelse:\n print(json.dumps(v[:2],indent=2)[:7000])\nroot=Path('/Users/owenwassmer/.hermes/profiles/connor')\nprint('Profile top-level:',', '.join(sorted(p.name for p in root.iterdir())))\nfor folder in ('memories','skills/cordon'):\n print(folder)\n for p in sorted((root/folder).glob('*')):\n  print(p.name)\nPY",workdir:load("digestDir"),max_output_tokens:1500})
+]);
+for(const r of results) text(r.status === "fulfilled" ? r.value.output : String(r.reason));

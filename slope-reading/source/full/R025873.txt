@@ -1,0 +1,29 @@
+{
+  "configuration_id": "slope_external_event_cashflow_investigation",
+  "configuration_version": "3.1.0-design",
+  "status": "design_template_not_implemented_or_live_validated",
+  "scope": "One local investigation of a real borrower and a proposed new discretionary advance, followed by loan cash-flow scenario comparison and independent review. Analysis candidates are not claims of actual Slope offers or customers.",
+  "default_mission": {
+    "case_id": "synergy_chc_2024",
+    "borrower": "Synergy CHC Corp.",
+          ]
+        },
+        "statement_support": {
+          "trigger": "host, on every propose_effect consequence and on submit_packet conclusion",
+          "questions": [
+            "claims_supported"
+          ]
+        },
+        "inventory_coverage": {
+          "trigger": "host, on every inventory item the agent marks covered",
+          "questions": [
+            "coverage_supported"
+          ]
+        }
+      },
+      "state_policy": "The host builds each state from immutable run objects (dependency text, evidence section or table text with its heading path, agent-authored claim or finding). The agent never supplies raw Jev state or question IDs.",
+      "screen_policy": "Screening labels and orders candidates as direct evidence, conflict or context-only using code-owned thresholds; it never removes a candidate from the agent's view.",
+232:These are verified design pins, not a claim of installed or tested integration. The first implementation gate is a local subscription-authenticated structured-output and custom-tool smoke test. Do not use Claude `--bare`; it prevents the intended subscription credential loading. Detect API-key/provider overrides without logging secrets.
+263:- **Category-error guard.** Every finding that supports an effect gets host-run posture and status checks, with the status question chosen by the effect's mechanism. Code-owned rules require, for example, a required (not claimed or disputed) obligation for a settlement payment effect and a reported-satisfied obligation for a resolved one; a mismatch or ambiguous answer blocks the effect unless the agent overrides it with a reason.
+269:Acceptance is asymmetric: Jev observation → agent accepts, reconciles, or overrides with a stated reason → host structural validation (atomicity, verbatim source spans) → effect proposal → deterministic engine validation. Every semantic observation carries a `downstream_disposition` (used in finding, caused a further read, redirected research, flagged conflict, challenged the agent's draft, overridden with reason, unused), which forms the Jev contribution ledger used in evaluation.
+337:| 4c. Jev at scale | Snapshot sweep inventory with mandatory accounting, category-error guard on effects, statement-support checks, automatic relation checks, screen reliance attribution | No packet can be submitted with an unaccounted inventory item, an unsupported consequence or conclusion, an effect whose supporting findings fail its category rule, or an open reconciliation, unless each exception carries a recorded reason; the coverage prompt rule is removed; a recorded Synergy run shows these checks at work |

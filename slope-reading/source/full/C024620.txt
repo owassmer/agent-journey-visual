@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor typ in ('raw','capture','catalog-states'):\n p=Path(f'/tmp/review-native-guarded-{typ}.pkl')\n print(typ,p.exists(),p.stat().st_size if p.exists() else '')\nprint(Path('/tmp/review-native-guarded.log').read_text().splitlines()[-1])\nPY","max_output_tokens":1000}));

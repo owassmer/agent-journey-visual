@@ -1,0 +1,54 @@
+{
+ "run_id": "probe",
+ "case_id": "synergy_chc_2024",
+ "snapshot_id": "probe",
+ "question_id": "obligation_status",
+ "question_version": "2.0.0",
+ "registry_version": "2.0.1-design",
+ "provider": "openrouter",
+ "requested_model": "typesafe/jev-1.13",
+ "returned_model": "typesafe/jev-1.13-20260917",
+ "pinned_build": "jev-1.13.0",
+ "state_sha256": "e910e5a2e092ff5bc7db2b3e0a8c566306c9fc38a131a9662cb86ea65bbbf286",
+ "source_content_hashes": [],
+ "selected_choice": "reported_satisfied",
+ "probabilities": {
+  "unknown": 0.0,
+  "claimed_or_disputed": 0.0,
+  "reported_satisfied": 1.0,
+  "required_unconditional": 0.0,
+  "conditional": 0.0
+ },
+ "confidence": 1.0,
+ "usage": {
+  "input_tokens": 976,
+  "output_tokens": 68,
+  "cost": 4.0992e-05
+ },
+ "raw_response": {
+  "model": "typesafe/jev-1.13-20260917",
+  "answers": {
+   "obligation_status": {
+    "type": "choice",
+    "choice": "reported_satisfied",
+    "probabilities": {
+     "unknown": 0,
+     "claimed_or_disputed": 0,
+     "reported_satisfied": 1,
+     "required_unconditional": 0,
+     "conditional": 0
+    },
+    "confidence": 1
+   }
+  },
+  "usage": {
+   "input_tokens": 976,
+   "output_tokens": 68,
+   "cost": 4.0992e-05
+  },
+  "id": "gen-dec-1790289862-TnBddEm5uvrEN83RJQRK",
+  "provider": "TypeSafe"
+ },
+ "agent_disposition": null,
+ "created_at": "2026-09-24T22:44:22.226326+00:00"
+}

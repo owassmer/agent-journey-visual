@@ -1,0 +1,25 @@
+1001	    ("read_inventory", "List the matters the host sweep flagged in the admissible evidence and their accounting status.",
+1002	     obj({}, []), read_inventory),
+1003	    ("account_for_items", "Account for inventory items in a batch. Each entry is checked on its own: covered_by_findings "
+1004	     "(accepted finding_ids that address the matter each flagged section describes), duplicate_of (another item already covered; the passage must add "
+1005	     "nothing), not_decision_relevant (with a reason; checked), or escalate (the observation_id of a failed check on the item "
+1006	     "and what is missing; the item stays open for the reviewer).",
+1007	     obj({"items": {"type": "array", "items": obj({"item_id": S, "disposition": {"type": "string", "enum": [
+1008	         "covered_by_findings", "duplicate_of", "not_decision_relevant", "escalate"]}, "finding_ids": {"type": "array", "items": S},
+1009	         "duplicate_of": S, "reason": S, "observation_id": S, "missing": S},
+1010	         ["item_id", "disposition"])}}, ["items"]), account_for_items),
+1011	    ("escalate_effect", "Escalate an effect the category guard rejected when you disagree with the check: it becomes disputed, "
+1012	     "creates no cash stream, and is left for the reviewer (a disputed cash-moving effect makes the run incomplete).",
+1013	     obj({"effect_id": S, "reason": S}, ["effect_id", "reason"]), escalate_effect),
+1014	    ("resolve_reconciliation", "Resolve an open reconciliation task: explain how the statements relate and which finding stands.",
+1015	     obj({"task_id": S, "note": S}, ["task_id", "note"]), resolve_reconciliation),
+1016	    ("submit_packet", "Lock the investigation for review with a summary, the pivotal unknowns, the supported effect IDs and the "
+1017	     "conclusion. The conclusion is checked against accepted findings, validated effects and sensitivity results. "
+1018	     "No lending action is taken.",
+1019	     obj({"summary": S, "pivotal_unknowns": {"type": "array", "items": S},
+1020	          "supported_effect_ids": {"type": "array", "items": S}, "conclusion": S,
+1021	          "conclusion_reply_to_failed_check": obj({"observation_id": S, "reason": S}, ["observation_id", "reason"])},
+1022	         ["summary", "conclusion"]), submit_packet),
+1023	]
+1024	
+1025	

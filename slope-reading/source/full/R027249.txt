@@ -1,0 +1,42 @@
+    for o in ctx.inputs["permitted_offers"]["offers"]:
+        offer = FixedInstallmentOffer(proposal_id=o["proposal_id"], advance_cents=o["advance_cents"],
+                                      term_months=o["term_months"], fee_fraction=Decimal(o["fixed_total_fee_fraction"]))
+        offers.append({**o, "total_repayment_cents": offer.total_repayment_cents,
+                       "payments_by_month_index_cents": [p.amount_cents for p in offer.schedule()],
+                       "largest_single_payment_cents": offer.minimum_residual_capacity_cents()})
+    return {"existing_loans": ctx.inputs["baseline_profile"]["existing_loans"],
+            "requested_proposal_id": ctx.inputs["permitted_offers"]["requested_proposal_id"], "permitted_offers": offers,
+            "note": "Offers are analytical fixtures with month indices; no funding or payment calendar dates exist yet."}
+
+
+async def record_dependency(ctx: RunContext, args: dict) -> dict:
+    target = args.get("target", "").strip()
+    if len(target) < 12:
+        raise ToolError("Name the target precisely: the entity plus the specific obligation, counterparty, asset or activity")
+    dep = DecisionDependency(dependency_id=ctx.run.new_id("dep"), question=args["question"], target=target,
+                             premises=tuple(args.get("premises", [])), affects=args["affects"],
+                             resolvable_by=args.get("resolvable_by", ""))
+    ctx.run.put("dependency_recorded", dep)
+    return {"dependency_id": dep.dependency_id}
+
+
+async def search_evidence(ctx: RunContext, args: dict) -> dict:
+    dep = ctx.run.get("dependencies", args["dependency_id"])
+    limit = max(1, min(int(args.get("limit", DEFAULT_SEARCH_RESULTS)), MAX_SEARCH_RESULTS))
+    try:
+        hits = ctx.evidence.search(args["query"], source_ids=args.get("source_ids") or None, limit=limit)
+    except EvidenceAccessError as e:
+        raise ToolError(str(e)) from e
+    search_id = ctx.run.new_id("search")
+    cands = [EvidenceCandidate(candidate_id=ctx.run.new_id("cand"), dependency_id=dep.dependency_id, search_id=search_id,
+                               query=args["query"], rank=i, item_id=h["id"], kind=h["kind"], source_id=h["source_id"],
+                               heading_path=tuple(h["heading_path"]), snippet=h["snippet"]) for i, h in enumerate(hits)]
+    ctx.run.append("search", object_ids=(search_id, dep.dependency_id),
+                   payload={"query": args["query"], "source_ids": args.get("source_ids"), "candidate_ids": [c.candidate_id for c in cands]})
+    if ctx.semantics is not None and cands:
+        cands = await ctx.semantics.screen(dep, cands)
+        for err in ctx.semantics.last_screen_errors:
+            reason = f"Jev screening failed for a candidate: {err}"[:300]
+            if reason not in ctx.incomplete_reasons:
+                ctx.incomplete_reasons.append(reason)
+(eval):1: no matches found: --include=*.py

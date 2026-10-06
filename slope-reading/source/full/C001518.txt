@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/6c && grep -i \"spent\\|usd\\|requests\" analyze10.log | grep -v npmrc | cut -c1-300 | head -8; python3 -c \"\nimport json\nfor f in ('jev_states2.json','jev_states3.json'):\n  d=json.load(open(f))['nodes']; print(f, len(d), sum(len(json.dumps(r['state'])) for r in d))\""}

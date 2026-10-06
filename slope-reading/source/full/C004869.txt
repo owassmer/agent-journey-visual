@@ -1,0 +1,1 @@
+{"command": "S=~/.hermes/profiles/connor/cache/scratch/9z; grep -v -E \"npmrc|nvm|globalconfig\" $S/prof2.log | grep -A30 \"Ordered by: internal\" | sed -n 4,30p | awk '{printf \"%-12s %7s %7s  %s\\n\", $1, $2, $4, $6}' | sed 's|/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/||'"}

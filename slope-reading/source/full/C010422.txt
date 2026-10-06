@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --command-id 00eaf7f9-c186-4422-abed-a2b431aa2d37 --instance-id i-07454d2f7582ce015 --profile slope --region us-east-2 --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' --output json","max_output_tokens":2500}));
+text(await tools.exec_command({cmd:"rg -n 'control\\(|pool' tests/test_parallel*; sed -n '1,200p' tests/test_parallel_refine.py; git status --short","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3500}));

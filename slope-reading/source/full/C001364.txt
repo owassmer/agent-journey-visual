@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && ls *.db 2>/dev/null; sqlite3 state.db \".tables\" 2>/dev/null | head; sqlite3 state.db \"select session_id, substr(timestamp,1,19), substr(content,1,600) from messages where role='user' and content like '%holistic%' and timestamp > '2026-09-24' order by timestamp\" 2>&1 | head -40"}

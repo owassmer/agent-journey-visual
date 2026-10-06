@@ -1,0 +1,7 @@
+// @exec: {"max_output_tokens": 7000}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat read.py",workdir:load("digestDir"),max_output_tokens:2500}),
+tools.exec_command({cmd:"rg --files -g '*index*' -g '*json' -g '*py' -g '*bundle*' -g '*coverage*' .",workdir:load("digestDir"),max_output_tokens:3500}),
+tools.exec_command({cmd:"rg --files -g AGENTS.md -g '*SKILL*' -g '*SOUL*' -g '*MEMORY*' -g '*USER*' /Users/owenwassmer/.hermes/profiles/connor",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:1500})
+]);
+for(let i=0;i<results.length;i++)text({i,...results[i]});

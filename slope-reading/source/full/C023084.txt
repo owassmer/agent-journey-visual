@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -l 'review-floor-family|floor-family.pkl' /tmp/*.py | head -15\naws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-00b6051aa298e85e2 --command-id 7d348dfa-95a2-479a-8674-6c90d9cb64da --query '{Status:Status,Output:StandardOutputContent}'","max_output_tokens":1500}));

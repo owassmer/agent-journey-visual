@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:".venv/bin/pytest tests/test_prepared_question_wording.py -q\n.venv/bin/ruff check app/disputes/state14.py tests/test_prepared_question_wording.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000,"yield_time_ms":1000}));

@@ -1,0 +1,1 @@
+{"command": "python3 -c \"\nimport json;d=json.load(open('economic-effects.json'))\nprint(json.dumps(d['operator_assumptions'],indent=0)[:2500])\nprint('---- loan_terms keys', [ (lt.get('loan_id'), list(lt)) for lt in d['loan_terms']])\nprint('---- effects'); [print(json.dumps(e)[:900]) for e in d['effects']]\n\""}

@@ -1,0 +1,17 @@
+   28866 agent_config.json
+   35587 barfresh-economic-effects.json
+   39076 build-contracts.schema.json
+    4199 case_eval_private.json
+   62620 economic-effects.json
+    5099 proposal-fixtures.json
+    3278 proposal-fixtures.schema.json
+   22238 question_registry.json
+    1913 synergy-decision-context.json
+    1091 validation-report.json
+  203967 total
+== economic-effects.json ['schema_version', 'case_id', 'artifact_status', 'source_fact_references', 'operator_assumptions', 'decision_context', 'historical_observations', 'loan_terms', 'effects', 'scenarios', 'decision_result', 'loan_cashflow_export']
+== proposal-fixtures.json ['schema_version', 'case_id', 'mission_id', 'artifact_status', 'currency', 'timing_basis', 'actual_existing_loan_id', 'calendar_date_rule', 'pricing_rule', 'rounding_rule', 'cross_year_calendar_rule', 'existing_debt_rule', 'offers']
+== synergy-decision-context.json ['decision_id', 'mission_id', 'borrower_id', 'borrower_name', 'as_of', 'decision_timezone', 'decision_type', 'transaction_basis', 'slope_relationship', 'stakeholder_scope', 'currency', 'requested_amount', 'requested_term_months', 'use_of_proceeds', 'baseline_id', 'baseline_status', 'available_actions', 'missing_inputs', 'note']
+== barfresh-economic-effects.json ['schema_version', 'case_id', 'artifact_status', 'source_fact_references', 'decision_context', 'historical_observations', 'loan_terms', 'effects', 'scenarios', 'decision_result', 'loan_cashflow_export']
+== build-contracts.schema.json ['$schema', '$id', 'title', 'description', '$ref', '$defs']
+['Provenance', 'EvidenceValue', 'DecisionContext', 'Observation', 'PaymentRow', 'FeeTerm', 'LoanTerms', 'Parameter', 'Effect', 'Scenario', 'ActionResult', 'DecisionResult', 'CollectionRow', 'ScenarioWeight', 'LoanCashflowExport', 'SourceFactReference', 'CasePacket', 'MinimumCheckpoint', 'MerchantRepaymentRules', 'ThresholdResult']

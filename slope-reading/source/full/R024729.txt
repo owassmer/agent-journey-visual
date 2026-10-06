@@ -1,0 +1,15 @@
+---
+name: delivery-workflow
+description: "Owen's required per-step flow for Slope build — worktree → PR → independent intent-grounded review → merge-ready label → Owen merges"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 2e338e7b-b5a4-476b-a810-3f7556007f4a
+  modified: 2026-09-24T22:25:37.116Z
+---
+
+Each of the 7 spec build steps goes: implement in a worktree (branch `step-N-<slug>`) → commit, push, open PR → independent, fully intent-grounded review (fresh context, judged against alignment doc + spec + kit, posted as PR comment) → fix and re-review until it passes → apply `merge-ready` label → Owen reads the PR on GitHub and decides whether to merge. Never merge or push to main myself.
+
+**Why:** Owen wants to stay the decision-maker on every change while agents do the implementation and review.
+**How to apply:** Repo is private `owassmer/Slope_Sparse_Events`; labels `merge-ready` / `needs-repair` exist; CLAUDE.md in repo encodes this. See [[speed-over-verification]].
+worktrees

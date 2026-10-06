@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-7-page/app/web/static/page.js", "old_string": "      const full = (t.when ? `${t.when} \u00b7 ` : \"\") + shortLabel(t), mixed", "new_string": "      const full = mixedAll ? (t.when ? `${t.when} \u00b7 ` : \"\") + shortLabel(t) : \"\", mixed"}

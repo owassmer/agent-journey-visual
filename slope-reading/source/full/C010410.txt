@@ -1,0 +1,3 @@
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"rg -n 'def control|part_cost|paths|print' app/disputes/pool.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3500}),
+tools.exec_command({cmd:"aws ssm send-command --instance-ids i-07454d2f7582ce015 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"date -u; ps -p 2579 -o pid,etime,time,pcpu,rss,stat; du -sh /opt/slope-pool/ctl; ls -lt /opt/slope-pool/ctl | head -8; cat /proc/2579/io\"]}' --profile slope --region us-east-2 --query Command.CommandId --output text","max_output_tokens":1000})]);r.forEach(text);

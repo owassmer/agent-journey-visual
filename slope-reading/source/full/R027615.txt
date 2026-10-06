@@ -1,0 +1,239 @@
+"""Event cash: the dated cash, collateral and credit-capacity effects of one dispute path, per operating draw.
+
+Code owns every date and amount. Dates are drawn uniformly inside the model's windows; a parent event's date is drawn
+once (keyed by dispute, node and purpose) and its children's windows are set from it, so every path sharing a parent
+shares its draw, and changing a probability never moves a date. Amounts: the documented figure (scaled by the exposure
+control for disputes where the borrower pays), settlements at 60%-100% of it, surety collateral at 50%-100% of a 125%
+bond, a cash deposit locking the amount, a letter of credit committing 125% of it as credit capacity, and post-judgment
+interest unless the figure already includes it. A settlement during a secured appeal releases exactly what that path
+encumbered, on the settlement date. Anything dated after the horizon is outside the period.
+
+Stress mode places each effect adversely for the borrower (payments and encumbrances early and high, receipts late and
+low) instead of drawing it.
+"""
+
+from __future__ import annotations
+
+import zlib
+from dataclasses import dataclass
+
+import numpy as np
+
+from app.analysis.setup import SEED, Setup
+from app.disputes.forecast import DisputePath
+from app.disputes.rules import param, param_range
+from app.domain.investigation import DisputeInstance
+
+
+@dataclass
+class EventCash:
+    """Per draw and day: borrower cash (+ receipt, - payment), encumbrance changes (+ lock, - release) and credit
+    capacity changes (+ commit, - release). Shape [draws, horizon days], integer cents."""
+    cash: np.ndarray
+    lock: np.ndarray
+    capacity: np.ndarray
+
+    @classmethod
+    def zeros(cls, draws: int, days: int) -> EventCash:
+        z = np.zeros((draws, days), dtype=np.int64)
+        return cls(z.copy(), z.copy(), z.copy())
+
+    def __add__(self, other: EventCash) -> EventCash:
+        return EventCash(self.cash + other.cash, self.lock + other.lock, self.capacity + other.capacity)
+
+
+class Draws:
+    """Uniform draws keyed by (dispute, node, purpose), identical across paths, probabilities and controls."""
+
+    def __init__(self, draws: int, stress: bool = False) -> None:
+        self.n, self.stress, self.cache = draws, stress, {}
+
+    def u(self, *key: str, adverse_high: bool | None = None) -> np.ndarray:
+        if self.stress and adverse_high is not None:
+            return np.full(self.n, 1.0 if adverse_high else 0.0)
+        k = ":".join(key)
+        if k not in self.cache:
+            self.cache[k] = np.random.default_rng([SEED, zlib.crc32(k.encode())]).random(self.n)
+        return self.cache[k]
+
+
+def amount_cents(d: DisputeInstance, setup: Setup) -> int:
+    """The documented figure; for a range, the end that is conservative for the borrower's cash (the top when the
+    borrower pays, the bottom when it is paid). The exposure control scales what the borrower pays."""
+    if d.amount.value is not None:
+        a = int(d.amount.value)
+    else:
+        a = int(d.amount.upper if d.borrower_role == "debtor" else d.amount.lower)
+    return int(round(a * setup.exposure_scale)) if d.borrower_role == "debtor" else a
+
+
+def event_cash(d: DisputeInstance, path: DisputePath, setup: Setup, model: dict, draws: Draws) -> EventCash:
+    n, days = draws.n, (setup.horizon - setup.review).days
+    out = EventCash.zeros(n, days)
+    rows = np.arange(n)
+    debtor = d.borrower_role == "debtor"
+    sign = -1 if debtor else 1
+    amount = amount_cents(d, setup)
+    iid = d.instance_id
+    notice, stay_days = param(model, "appeal_notice_days"), param(model, "automatic_stay_days")
+    vol, enf = param(model, "voluntary_payment_days_after_stay"), param(model, "enforcement_period_days")
+    settle_days = param(model, "settlement_window_days")
+    s_lo, s_hi = (x / 10_000 for x in param_range(model, "settlement_share_bps"))
+    c_lo, c_hi = setup.collateral_share or tuple(x / 10_000 for x in param_range(model, "bond_collateral_share_bps"))
+    r_lo, r_hi = (x / 10_000 for x in param_range(model, "post_judgment_interest_bps_per_year"))
+    multiple = param(model, "supersedeas_multiple_bps") / 10_000
+
+    def offset(a, b, *key):
+        """A day offset from the review date (1 = the day after) drawn uniformly inside the full window [a, b], the
+        window Jev was asked about; payments early in stress. A draw past the horizon books nothing, and nothing that
+        depends on it (a release, a payment) is booked either. A window that closed before the review date, or that
+        starts after it ends (its parent fell past the horizon), books nothing."""
+        a, b = np.asarray(a), np.asarray(b)
+        closed = b < 1
+        a, b = np.maximum(a, 1), np.maximum(b, 1)
+        u = draws.u(iid, *key, adverse_high=not debtor)
+        inside = np.minimum(a + np.floor(u * (b - a + 1)).astype(np.int64), b)
+        return np.where(closed | (a > b), days + 1, inside)  # an empty window (starts after it ends) books nothing
+
+    def book(arr, when, cents):
+        idx = when - 1
+        ok = idx < days
+        np.add.at(arr, (rows[ok], idx[ok]), np.asarray(cents)[ok] if np.ndim(cents) else cents)
+
+    def share(*key):
+        return s_lo + draws.u(iid, *key, adverse_high=debtor) * (s_hi - s_lo)
+
+    def with_interest(judged, paid, *key):
+        if d.amount_includes_interest:
+            return np.full(n, amount, dtype=np.int64)
+        r = r_lo + draws.u(iid, *key, adverse_high=debtor) * (r_hi - r_lo)
+        return np.rint(amount * (1 + r * np.maximum(paid - judged, 0) / 365)).astype(np.int64)
+
+    if d.stage == "amount_pending":
+        judged = offset(1, days, "amount_fixed", "date")
+    elif d.judgment_date is not None:
+        judged = np.full(n, (d.judgment_date - setup.review).days, dtype=np.int64)
+    else:
+        judged = np.ones(n, dtype=np.int64)
+    stay = np.ones(n, dtype=np.int64)
+    encumbrance, encumbered_kind = np.zeros(n, dtype=np.int64), None
+    for node, _, branch in path.steps:
+        if node == "settle_before_ruling" and branch == "yes":
+            when = offset(1, settle_days, node, "date")
+            book(out.cash, when, np.rint(sign * amount * share(node, "amount")).astype(np.int64))
+        elif node == "settle_after_judgment" and branch == "yes":
+            when = offset(judged, judged + notice, node, "date")
+            book(out.cash, when, np.rint(sign * amount * share(node, "amount")).astype(np.int64))
+        elif node == "secured_stay" and branch == "yes":
+            stay = offset(judged, judged + stay_days, node, "date")
+        elif node == "security_form" and debtor:
+            if branch == "cash_deposit":
+                encumbrance, encumbered_kind = np.full(n, amount, dtype=np.int64), "lock"
+            elif branch == "surety_bond":
+                c = c_lo + draws.u(iid, node, "collateral", adverse_high=True) * (c_hi - c_lo)
+                encumbrance, encumbered_kind = np.rint(amount * multiple * c).astype(np.int64), "lock"
+            else:
+                encumbrance, encumbered_kind = np.full(n, int(round(amount * multiple)), dtype=np.int64), "capacity"
+            book(out.lock if encumbered_kind == "lock" else out.capacity, stay, encumbrance)
+        elif node == "settle_during_appeal" and branch == "yes":
+            when = offset(stay, days, node, "date")
+            book(out.cash, when, np.rint(sign * amount * share(node, "amount")).astype(np.int64))
+            if encumbered_kind:  # the bond is discharged when the settlement is paid
+                book(out.lock if encumbered_kind == "lock" else out.capacity, when, -encumbrance)
+        elif node == "voluntary_payment" and branch == "yes":
+            when = offset(judged + stay_days, judged + stay_days + vol, node, "date")
+            book(out.cash, when, sign * with_interest(judged, when, node, "interest"))
+        elif node == "enforcement" and branch == "yes":
+            when = offset(judged + stay_days, judged + stay_days + enf, node, "date")
+            book(out.cash, when, sign * with_interest(judged, when, node, "interest"))
+    return out
+                "collected_p5": kq[0].astype(int).tolist(), "collected_p50": kq[1].astype(int).tolist(),
+                "collected_p95": kq[2].astype(int).tolist(),
+                "contractual": np.cumsum(due).astype(int).tolist(),
+                "outstanding_mean": np.rint(w @ stack("outstanding")).astype(int).tolist(),
+                "locked_mean": np.rint(w @ stack("locked")).astype(int).tolist(),
+                "capacity_mean": np.rint(w @ stack("capacity")).astype(int).tolist(),
+            },
+            "maturity_index": maturity, "total_repayable_cents": total,
+        }
+
+    def min_cash_quantile(self, probs: np.ndarray, q: float) -> float:
+        w = np.repeat(probs / DRAWS, DRAWS)
+        return float(weighted_quantiles(np.concatenate([t.min_cash for t in self.paths]), w, (q,))[0])
+
+    def views(self, overrides: dict | None = None) -> dict:
+        probs = self.model.probs(overrides)
+        return {"bank_only": self._view([self.bank], np.array([1.0])), "event_adjusted": self._view(self.paths, probs)}
+
+    def scenarios(self, overrides: dict | None = None) -> list[dict]:
+        probs = self.model.probs(overrides)
+        rows = []
+        for i, (combo, t) in enumerate(zip(self.model.combos, self.paths, strict=True)):
+            rows.append({"index": i, "probability": float(probs[i]),
+                         "paths": [{"dispute": p.instance_id, "outcome": p.outcome, "label": path_label(p)} for p in combo],
+                         "min_cash_mean_cents": float(t.min_cash.mean()),
+                         "min_cash_p5_cents": float(np.quantile(t.min_cash, 0.05)),
+                         "uncollected_maturity_cents": float(t.uncollected_maturity.mean()),
+                         "lender_pv_cents": float(t.lender_pv.mean()), "dollar_days": float(t.dollar_days.mean()),
+                         "peak_locked_cents": float(t.locked.max(axis=1).mean()),
+                         "peak_capacity_cents": float(t.capacity.max(axis=1).mean())})
+        return sorted(rows, key=lambda r: -r["probability"])
+
+    def judgment_sensitivity(self, overrides: dict | None = None) -> list[dict]:
+        """Each prospective judgment at 0%, Jev and 100% (a choice at each option held certain), all else fixed:
+        ranked by the change in expected discounted lender cash flows, then principal dollar-days, then the
+        uncollected balance at maturity."""
+        base = self.expected(self.model.probs(overrides))
+        rows = []
+        for key, j in self.model.judgments.items():
+            if tuple(j.distribution) == ("yes", "no"):
+                variants = {"0%": {"yes": 0.0, "no": 1.0}, "100%": {"yes": 1.0, "no": 0.0}}
+            else:
+                variants = {k: {o: float(o == k) for o in j.distribution} for k in j.distribution}
+            results = {name: self.expected(self.model.probs({**(overrides or {}), key: dist}))
+                       for name, dist in variants.items()}
+            metrics = ("lender_pv", "dollar_days", "uncollected_maturity", "min_cash", "shortfall_p")
+            rows.append({"key": key, "variants": results, "jev": base,
+                         "range": {m: max(r[m] for r in results.values()) - min(r[m] for r in results.values())
+                                   for m in metrics}})
+        return sorted(rows, key=lambda r: (-round(r["range"]["lender_pv"], 2), -round(r["range"]["dollar_days"], 2),
+                                           -r["range"]["uncollected_maturity"], -r["range"]["min_cash"]))
+
+
+def parameter_sensitivity(feed: BankFeed, setup: Setup, model: EventModel, overrides: dict | None = None) -> list[dict]:
+    """Financial parameters, kept apart from the signal: collateral share, the borrower-pays exposure, operating
+    variability. Each variant re-simulates with the same seeds."""
+    out = []
+    for name, variants in [("collateral_share", [("50%", {"collateral_share": (0.5, 0.5)}),
+                                                 ("75%", {"collateral_share": (0.75, 0.75)}),
+                                                 ("100%", {"collateral_share": (1.0, 1.0)})]),
+                           ("exposure", [("75%", {"exposure_scale": setup.exposure_scale * 0.75}),
+                                         ("87.5%", {"exposure_scale": setup.exposure_scale * 0.875}),
+                                         ("100%", {"exposure_scale": setup.exposure_scale})]),
+                           ("operating_variability", [("0.5x", {"variability": 0.5}), ("1x", {"variability": 1.0}),
+                                                      ("1.5x", {"variability": 1.5})])]:
+        rows = []
+        for label, change in variants:
+            a = Analysis(feed, replace(setup, **change), model)
+            probs = model.probs(overrides)
+            rows.append({"label": label, **a.expected(probs), "min_cash_p5": a.min_cash_quantile(probs, 0.05)})
+        out.append({"parameter": name, "variants": rows})
+    return out
+
+
+def stress(feed: BankFeed, setup: Setup, model: EventModel, overrides: dict | None = None) -> list[dict]:
+    """Every feasible joint path under adverse placement, whatever its probability. Never weighted, never decisive."""
+    a = Analysis(feed, setup, model, stress=True)
+    probs = model.probs(overrides)
+    rows = [{"index": i, "probability": float(probs[i]),
+             "paths": [{"dispute": p.instance_id, "outcome": p.outcome, "label": path_label(p)} for p in combo],
+             "min_cash_p5_cents": float(np.quantile(t.min_cash, 0.05)),
+             "min_cash_p50_cents": float(np.quantile(t.min_cash, 0.5)),
+             "uncollected_maturity_cents": float(t.uncollected_maturity.mean()),
+             "lender_pv_cents": float(t.lender_pv.mean())}
+            for i, (combo, t) in enumerate(zip(model.combos, a.paths, strict=True))]
+    return sorted(rows, key=lambda r: r["min_cash_p5_cents"])
+
+
+def dates(setup: Setup) -> list[str]:
+    return [(setup.review + timedelta(days=t + 1)).isoformat() for t in range((setup.horizon - setup.review).days)]

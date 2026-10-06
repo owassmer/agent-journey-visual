@@ -1,0 +1,139 @@
+# Charles & Colvard (CTHR), CIK 1015155 — Wolfspeed v. Charles & Colvard (AAA arbitration)
+
+Verified by worker W2, 25 Sep 2026, from EDGAR (curl, UA per brief) plus web search. No browser available (see toolcheck_W2.md). "Unverified" marks anything not read in a primary document.
+
+## Borrower
+- Moissanite gemstone and finished-jewelry brand (Morrisville, NC); SIC 3911 jewelry. Online (DTC) and Traditional (wholesale/retail partners) segments.
+- FY ended 30 Jun 2024 net sales about $22.5M (NT 10-K / 8-K Item 2.02, 1 Oct 2024: https://www.sec.gov/Archives/edgar/data/1015155/000110465924104971/tm2425308d2_8k.htm). FY2023 $29.9M.
+- Buys SiC crystals (sole supplier Wolfspeed, formerly Cree), gold and precious metals; finished jewelry is assembled by contract "manufacturing partners" in the U.S., China, India, Mexico, Costa Rica, Hong Kong (FY24 10-K, Business).
+- Q ended 30 Sep 2024: net cash used in operations $1.29M (10-Q filed 4 Aug 2025: https://www.sec.gov/Archives/edgar/data/1015155/000114036125028619/ef20047787_10q.htm).
+
+## Dispute (all from company filings)
+- 12 Dec 2014 Exclusive Supply Agreement: C&C buys 100% of SiC from Wolfspeed with minimum quarterly quantities; total commitment about $52.95M through June 2025, about $24.75M still unpurchased at 31 Mar 2024; no SiC purchases in the 12 months to 31 Mar 2024 "while engaged in discussions" (Q3 FY24 10-Q, Note 9, filed 6 May 2024: https://www.sec.gov/Archives/edgar/data/1015155/000114036124024560/ef20026281_10q.htm).
+- 13 Jul 2023 AAA demand (settlement agreement recital A); company filings say initiated 28 Jul 2023. Claims: FY2023 minimum-purchase shortfall $4.25M; unpaid delivered crystals $3.30M; anticipatory breach of remaining purchase obligations $18.5M; plus interest, costs, fees (Q3 FY24 10-Q, Legal Proceedings). Press release later called total sought "in excess of $28 million".
+- Hearing scheduled 30 Sep 2024 (disclosed in 10-Q of 6 May 2024); held 30 Sep–2 Oct 2024 (settlement recital A).
+- NT 10-K, 1 Oct 2024: the 10-K is late because of "the potential determination of the pending outcome of the confidential arbitration" (https://www.sec.gov/Archives/edgar/data/1015155/000110465924104965/tm2425308d1_nt10k.htm). NT 10-Q, 15 Nov 2024, same reason, and states the company expects to disclose substantial doubt about going concern (https://www.sec.gov/Archives/edgar/data/1015155/000110465924119736/tm2428546d1_nt10q.htm).
+- 5/6 Dec 2024 interim award: expectation damages ($18.5M) rejected; C&C to pay about $1.3M for product already purchased (already a payable) and buy about $2.0M of consigned raw material; 8% interest from 24 Apr 2023 (later corrected to 12%); AAA fees on C&C; limited attorneys' fees; fee petition due 4 Jan 2025 (8-K 11 Dec 2024: https://www.sec.gov/Archives/edgar/data/1015155/000110465924127622/tm2430786-1_8k.htm). Recital B: $3,296,974.28 awarded.
+- 6 Jan 2025: Wolfspeed fee petition $611,305.78 fees + $102,042.65 costs (recital F).
+- 10 Feb 2025 settlement: supply agreement terminated; total $4.77M payable $500k on 10 Feb 2025, $1,834,105 by 28 Feb 2025, $2,437,095.89 by 31 Dec 2025; Wolfspeed gets a **lien on C&C's assets** for the final payment; $100k liquidated damages per confidentiality breach (8-K 14 Feb 2025: https://www.sec.gov/Archives/edgar/data/1015155/000110465925014250/tm256573d1_8k.htm; agreement filed as Ex. 10.1 to the Q3 FY25 10-Q: https://www.sec.gov/Archives/edgar/data/1015155/000114036125028626/ef20051325_ex10-1.htm).
+- No court confirmation/vacatur petition found (settlement says the obligation "arises solely out of this Settlement Agreement"); CourtListener search for "Charles & Colvard" returned no such case (API query, 25 Sep 2026).
+
+## Record route (criterion 3)
+- Opened: Q3 FY24 10-Q (legal proceedings, going concern, debt note); 8-Ks of 27 Jun 2023, 1 Aug 2024, 1 Oct 2024, 12 Nov 2024, 15 Nov 2024, 11 Dec 2024, 14 Feb 2025; NT 10-K 1 Oct 2024; NT 10-Q 15 Nov 2024; FY24 10-K (filed 3 Apr 2025, https://www.sec.gov/Archives/edgar/data/1015155/000114036125012058/ef20029694_10k.htm); Q1/Q2/Q3 FY25 10-Qs (all filed 4 Aug 2025); 2025–2026 8-Ks; settlement agreement exhibit (via search snippet and URL).
+- Exists but not opened / not public: the arbitration demand, briefs, hearing transcript and the interim award itself (confidential; settlement redacts one term "[***]"). Key facts (claims by head, amounts, hearing date, award, fee petition, interest rate, payment schedule) are all recoverable from the company's filings. **Arbitration exclusion does not apply under the round-2 criterion 3.**
+
+## Liquidity at D (proposed D = 18 Nov 2024)
+Public at D: Q3 FY24 10-Q (31 Mar 2024): cash $3.69M, restricted cash $5.55M, line drawn $0.5M, AP $5.87M; going-concern doubt; 9-month operating cash burn $6.06M.
+Bank-data view at D (from later-filed balance sheets):
+| Date | Unrestricted cash | Restricted cash | JPMC line drawn | AP |
+|---|---|---|---|---|
+| 30 Jun 2024 | $4.14M | $5.33M | $2.30M | $8.27M |
+| 30 Sep 2024 | $2.74M | $5.33M | $2.30M | $7.41M |
+| 31 Dec 2024 | $1.52M | $5.37M | $2.30M | $8.62M |
+| 31 Mar 2025 | $1.26M | $0.45M | $0 | $6.07M |
+Sources: FY24 10-K; 10-Qs for Sep 2024, Dec 2024 (https://www.sec.gov/Archives/edgar/data/1015155/000114036125028623/ef20051324_10q.htm), Mar 2025 (https://www.sec.gov/Archives/edgar/data/1015155/000114036125028626/ef20051325_10q.htm).
+- Only facility: JPMorgan Chase $5M line, **cash-collateralized** by a $5.05M deposit; SOFR+1.25%+0.10%; no financial covenants; EoD includes MAC and "other circumstances that JPMC believes may impair the prospect of repayment"; renewed only in 3-month increments (to 31 Oct 2024, then to 31 Jan 2025); $2.3M drawn since July 2024 (8-Ks 1 Aug 2024 and 12 Nov 2024: https://www.sec.gov/Archives/edgar/data/1015155/000110465924116481/tm2427918d1_8k.htm).
+- S-3 shelf expired 2 Jun 2024 (Q3 FY24 10-Q); Nasdaq bid-price and late-filing deficiencies (8-Ks 24 Oct 2024, 27 Nov 2024 — Item 3.01; contents not opened).
+
+## Criterion 8 at D
+- (a) PARTIAL. No uncollateralized credit; the JPMC line only releases the company's own pledged deposit and is renewed quarter-to-quarter with a MAC clause. But $2.7M of the $5M line was nominally undrawn at SOFR+1.35%, and the company never drew it even when cash fell to $1.5M (reason not disclosed — unverified whether JPMC would have funded). Equity route impaired (expired shelf, Nasdaq deficiencies, late filings).
+- (b) PASS. Going concern (Q3 FY24 10-Q; NT 10-Q 15 Nov 2024). Unrestricted cash about $2.7M at 30 Sep 2024 against about $1.3M quarterly net burn and gross outflows around $2M/month (estimate from sales ≈ $5M/qtr + burn) → roughly 1–1.5 months of gross outflows, about two quarters of net burn. Stressed, not collapsed (no default).
+- (c) PASS (estimated). Recurring purchases of gold/metals and contract jewelry assembly; AP $7.4–8.6M; FY24 AP rose $3.49M (stretched vendors). Monthly purchases estimated $0.5–1.5M (inferred, not disclosed per invoice).
+- (d) PASS. Claimed exposure $26M+ vs. $2.7M cash; even the realised $4.77M = 1.7× unrestricted cash, $2.33M due within 18 days of settlement, and the award also forced the 10-K/10-Q delays that led to delisting.
+
+## Channels beyond the courtroom (pre-D evidence)
+1. Counterparty is the **sole supplier** of the core raw material (supply agreement; 10-Q risk factor on SiC supply interruption).
+2. Financing: 3-month renewals of a cash-collateralized line with MAC/impairment default (8-Ks).
+3. **Reporting/listing channel:** the arbitration directly delayed the audited 10-K and Q1 10-Q (NT 10-K, NT 10-Q), triggering Nasdaq late-filing notices (8-K 24 Oct 2024, 3.01) — equity access impaired.
+4. Litigation spend: FY24 legal fees +$680k (10-K; attribution "primarily due to corporate matters" — spend is only partly the arbitration).
+5. Going-concern dependence on "evaluating its financing arrangements" and inventory liquidation.
+
+## After D
+- 5 Dec 2024 interim award ($3.3M; $18.5M expectation damages rejected). 10 Feb 2025 settlement $4.77M, lien to Wolfspeed. Restricted cash used to repay JPMC line by 31 Mar 2025 (Mar 2025 10-Q).
+- 16 Apr 2025 Nasdaq delisting determination for failure to file the 10-Qs; suspended 25 Apr 2025 (8-K 22 Apr 2025: https://www.sec.gov/Archives/edgar/data/1015155/000110465925037514/tm2512898d1_8k.htm).
+- 24 Jun 2025 Ethara Capital $2.0M convertible secured note, subordinated to Wolfspeed, 3-month maturity, conversion $0.1478 (8-K https://www.sec.gov/Archives/edgar/data/1015155/000110465925063622/tm2519259d1_8k.htm). Proxy fight / NC Business Court shareholder petition (Riverstyx). 25 Nov 2025 Ethara default notice (8-K https://www.sec.gov/Archives/edgar/data/1015155/000110465925118916/tm2532851d1_8k.htm).
+- 2 Mar 2026 Chapter 11, E.D.N.C. 26-00969-5-DMW (8-K https://www.sec.gov/Archives/edgar/data/1015155/000110465926023038/tm267752d2_8k.htm). Sale order (June 2026) preserves "Wolfspeed's perfected and non-avoidable first-priority liens" (RECAP: https://storage.courtlistener.com/recap/gov.uscourts.nceb.346638/gov.uscourts.nceb.346638.114.0_2.pdf) — implies the $2.44M Dec 2025 payment was not made (inference; not verified in a claims register).
+- Effect on a Slope loan at D = 18 Nov 2024: instalments about 18 Dec, 17 Jan, 16 Feb. The 17 Feb 2025 instalment collides with the $2.33M settlement payments due 10–28 Feb 2025 against about $1.5M cash at 31 Dec 2024 — the forecastable stress point.
+
+## Scores (W2)
+1: 2 | 2: 2 | 3: 2 | 4: 2 | 5: 2 | 6: 2 | 7: 2 | 8: 1 (a partial) → **15/16, gate 8 passes only as partial on (a)**.
+
+## Risks
+- 8(a): nominal $2.7M undrawn JPMC headroom at ~6% is the obvious objection (same failure class as Massimo, milder because it is self-collateralized and short-dated).
+- Recall: low-to-moderate (small-cap; Triangle Business Journal and PR coverage of the award). Confidentiality: interim award text is not public; model reads only company disclosures.
+- The realised award was small ($3.3M + fees) relative to the claim; the dispute's cash hit is a Feb 2025 payment cluster and a Dec 2025 balloon, both inside/at the edge of 180 days from D.
+# Tel-Instrument Electronics (TIKK, OTCQB, CIK 96885): Aeroflex Wichita v. Tel-Instrument — round 2 (worker W1)
+
+Verified by W1, 25 Sep 2026, from EDGAR (curl, UA per brief), web search/extract, browser_mcp. Round-1 facts in `../notes_tikk.md` re-checked where cited.
+
+## Proposed D: 11 Aug 2023 (Q1 FY2024 10-Q filed; press release 11 Aug, 8-K 14 Aug)
+
+Why this D and not 16 Jun 2023 (round 1): from 16 Jun a 3-instalment loan (16 Jul / 15 Aug / 14 Sep) finishes the day before the 15 Sep 2023 payment, so the event never touches the loan. From 11 Aug the instalments fall ~11 Sep (before payment), ~11 Oct and ~10 Nov (both after the payment drained cash to $356,942 at 30 Sep). The event reaches instalments 2 and 3.
+
+What is still open at 11 Aug 2023 (all in pre-D public record):
+- Petition for review to the Kansas Supreme Court: 10-Q says "TIC is currently deciding whether to pay the full judgement amount or appeal the decision to the Kansas Supreme Court" (30-day window from the 21 Jul opinion ⇒ ~21 Aug). The 26/27 Jul press release said instead "This will entail TIC paying the full $6.45 million judgement" — the two company statements conflict, which is exactly a Jev question.
+- Payment timing and funding: accrual $6,430,943 vs cash $4,531,637 + restricted $2,011,133 (bond collateral) at 30 Jun 2023. Paying in full consumes ~all cash.
+- Bank of America line: $690k, fully drawn, matured 30 Jul 2023, "renewal … currently in process" (10-Q). Secured by substantially all assets.
+- Viavi (Aeroflex parent) press release 8 Aug 2023 says "VIAVI is pursuing full payment of all amounts owed" (public, pre-D): https://www.prnewswire.com/news-releases/kansas-court-of-appeals-rules-in-favor-of-aeroflex-wichita-in-case-against-tel-instrument-electronics-corp-301895414.html
+
+Honest weakness of this D: the appellate merits are decided before D. Jev's courtroom questions reduce to petition-for-review (low probability), bond release/execution timing, payment date, and funding. Criterion 2 is therefore a partial (1), not a 2. The alternative D = 16 Jun keeps the merits live but the event misses the loan.
+
+## Dispute
+- Sedgwick County District Court (KS) 09 CV 1141, filed 24 Mar 2009; Kansas Court of Appeals Nos. 119,563 / 119,564 (consolidated; Filardo and Allen co-appellants). Judge William S. Woolley.
+- Aeroflex = competitor on Army TS-4530 Mode 5 upgrade. Jury: $1.3M tortious interference w/ prospective business + $1.5M tortious interference w/ NDA against TIC; punitive $2.1M; trade-secret claim lost by Aeroflex.
+- $2M supersedeas bond backed by restricted cash.
+- Opinion 21 Jul 2023, 63 Kan. App. 2d 588, 534 P.3d 610, affirmed on all issues: https://kscourts.gov/KSCourts/media/KsCourts/Opinions/119563.pdf?ext=.pdf (opened, text extracted). Also https://law.justia.com/cases/kansas/court-of-appeals/2023/119563.html
+- Pre-D prior appellate opinion (jurisdiction), 294 Kan. 258 (2012): https://law.justia.com/cases/kansas/supreme-court/2012/103672.html (search snippet seen, not fully opened).
+
+## Record route
+Opened:
+- EDGAR: FY2023 10-K https://www.sec.gov/Archives/edgar/data/96885/000118518523000638/telinstru20230331_10k.htm ; Q1 FY24 10-Q (filed 11 Aug 2023) https://www.sec.gov/Archives/edgar/data/96885/000118518523000807/telinstru20230630_10q.htm ; 8-K 27 Jul 2023 ex. 99.1 https://www.sec.gov/Archives/edgar/data/96885/000118518523000761/ex_549507.htm ; 8-K 18 Sep 2023 (preferred subscriptions) https://www.sec.gov/Archives/edgar/data/96885/000118518523000982/telinstru20230914_8k.htm ; Q2 FY24 10-Q https://www.sec.gov/Archives/edgar/data/96885/000118518523001184/telinstru20230930_10q.htm ; FY24 10-K https://www.sec.gov/Archives/edgar/data/96885/000118518524000659/telinstru20240331_10k.htm
+- KS CoA opinion PDF (above).
+Exists but not opened:
+- Kansas Appellate Courts Public Access Portal (casesearch.kscourts.gov): case information (register of actions) is public after free registration, but **documents filed before 13 Mar 2025 are not online** (must be requested from the Clerk of the Appellate Courts) — so the 2019–2023 briefs are not freely downloadable. Source: https://kscourts.gov/eCourt/Search-Appellate-Court-Records . The portal also presents a Cloudflare Turnstile human check; I did not bypass it.
+- Sedgwick County district docket: same Kansas CaseSearch portal (district side), same human check/registration; not opened. Whether 2009–2017 trial documents are imaged online is **unverified**.
+- Old Kansas "Appellate Case Inquiry System" is listed as offline (kscourts.gov/Cases-Decisions/Cases).
+Net: pre-D record for Jev = SEC disclosures + 2012 KS Supreme Court opinion + press releases (company, Viavi). Enough to read the dispute's stakes and posture, thin on the parties' appellate arguments. Criterion 3 = 1.
+
+## Liquidity at D (Q1 FY24 10-Q, 30 Jun 2023)
+- Cash $4,531,637; restricted $2,011,133; accrual $6,430,943; AP $313,222; line $690k fully drawn at 8.92%, matured 30 Jul 2023, renewal in process.
+- Q1 FY24: sales $2.87M, COGS $1.57M, opex $0.87M ⇒ outflows ≈ $0.8M/month. Unrestricted cash ≈ 5.5 months of outflows before the judgment; ≈ 0 after it. Not collapsing at D on bank data.
+- ERC refund $628k received 1 Jun 2023 (one-off, visible in bank data).
+
+## Criterion 8
+- (a) PASS. Only bank line is $690k, fully drawn, past maturity with renewal pending (10-Q). No other facility. After D the company raised $721k convertible preferred (8-K 18 Sep 2023) — equity at the margin.
+- (b) PASS (event-conditional). Pre-payment cash ~5.5 months of outflows, but cash + restricted ≈ judgment. Post-payment: $356,942 at 30 Sep 2023; $132,013 at 31 Mar 2024 (FY24 10-K).
+- (c) MARGINAL PASS. COGS $1.2–1.6M/quarter; AP $313k (30 Jun) → $608k (30 Sep). Supplier invoices ≈ $100–400k/month; "vendors are requiring cash deposits at ordering" (FY23 10-K MD&A).
+- (d) PASS. $6.56M payment vs $4.53M free cash; it takes the company to ~$0.36M.
+
+## Channels beyond the courtroom (pre-D filings)
+1. Restricted cash / bond collateral $2.01M (10-Q).
+2. Secured bank line fully drawn and in renewal (10-Q Note 7).
+3. Counterparty is a direct competitor on the core Army program (opinion; 10-K).
+4. Post-judgment interest "significant drag on profitability" (press release 26 Jul 2023).
+5. Supplier terms: vendors demanding deposits (FY23 10-K). After D the realised channel was supplier stretch: AP doubled to $608k, and FY24 10-K says the Navy payment "will allow for vendors to be brought back into typical payment terms".
+
+## Plausible Slope loan
+$250–400k on component-vendor invoices, 3 monthly instalments from 11 Aug 2023 (≈11 Sep, 11 Oct, 10 Nov).
+
+## After D
+- No petition for review; TIC paid $6,559,233 (incl. $1,659,233 interest) on 15 Sep 2023 (Q2 10-Q).
+- 15 Sep 2023: $400k Series B + $321k Series C preferred "for payment of a judgment, working capital" (8-K 18 Sep 2023).
+- BofA line extended to 31 Dec 2023, still fully drawn; cash $356,942 at 30 Sep 2023; Q2 loss from operations −$479k.
+- 31 Mar 2024 cash $132,013; vendors off normal terms; line raised to $1.0M and extended (FY24 10-K).
+- Effect on a Slope loan from 11 Aug: instalment 1 (~11 Sep) paid from pre-payment cash; instalments 2–3 fall into a $0.1–0.4M cash trough with vendors being stretched. Likely paid (company kept operating, raised equity), but with high delinquency risk — a genuine, measurable signal.
+
+## Scores (D = 11 Aug 2023)
+1 fit: 1 (revenue $8.6–8.8M < $10M; defence avionics light mfg, OTC). Revenue below the floor is a real but not substantive defect: purchase volumes ($0.1–0.4M/month) are in Slope's range; the defect is lower loan size and non-consumer.
+2 live dispute: 1 (merits decided 21 Jul; payment/funding/petition live).
+3 record: 1.
+4 reaches lender: 2.
+5 channels: 2.
+6 outcome ≤12 mo: 2 (paid 15 Sep 2023).
+7 acquirable: 2 for EDGAR + opinion; state docket documents not free online → overall 1.
+8 gate: PASS (a 2, b 2, c 1–2, d 2).
+Total ≈ 12/16 (1+1+1+2+2+2+1+2).
+Alternative D = 16 Jun 2023: 1,2,1,2,2,2,1, and 8 passes on the letter but the event misses a 3-instalment loan → total 13/16 but weaker demo.
+
+Fame/recall: very low. Unverified: Sedgwick docket content; whether briefs are obtainable free on request.
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

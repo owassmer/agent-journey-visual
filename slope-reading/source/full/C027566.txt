@@ -1,0 +1,1 @@
+{"command": "grep -rn 'registry_version\\|3\\.12\\.0\\|MANIFEST' app tests --include='*.py' | head; grep -n '\"id\": \"factor_level\"' -A12 Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/question_registry.json | cut -c1-400", "description": "Find version checks and factor_level prompt"}

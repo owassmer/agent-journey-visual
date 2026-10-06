@@ -1,0 +1,57 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_bad23112]
+A background fan-out unit you dispatched earlier — 2 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 01:52:37 (45m31s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2731.86s
+
+--- ✓ TASK 1/2: Step 6b-engine for the Slope demo: implement Slope's reusable line, the operating-need collection rule, the petition rule (stay, stayed claim, preference exposure), the new lender outputs and the three-step attribution in app/analysis, with tests. Commit and push branch step-6b-engine and open a PR.  (status=completed, api_calls=60, 920.19s) ---
+The reusable line, the need-based collection rule, the petition, the new lender outputs and the three-step attribution are built, tested and pushed on `step-6b-engine`. PR: https://github.com/owassmer/Slope_Sparse_Events/pull/11 (no label, not merged).
+
+**Commits**
+- `6a6909f`: `EventCash.petition` field, exactly the interface agreed with the chains branch (int64 per draw, −1 for none; adding two keeps the earliest petition).
+- `613017c`: the line, collections, petition and outputs in `operating.py`, `engine.py`, `setup.py`, `core.py` and `build.py`, plus tests.
+
+**Tests:** all 109 pass (was 103: 3 old single-draw tests removed, 9 added) and `ruff check .` is clean. The new tests are in `tests/test_line.py` and two in `tests/test_analysis.py`, all on the Akoustis feed, and cover every §12 line and petition check you listed. Beyond those, they check that the day-0 limit equals the run-inputs figure ($357,172.37) and that the limit follows the rule after the multiplier and on 1 Aug.
+
+**Akoustis bank-only run** (feed only, no Jev; 512 draws × 180 days; one engine run takes about 18 ms, the full payload 0.15 s):
+
+```
+Output (expected value)                   | Figure                               
+------------------------------------------+--------------------------------------
+Total drawn                               | $807,909                             
+Fees                                      | $29,893                              
+Collected in the horizon                  | $546,141                             
+Due and unpaid at 17 Dec                  | $122,797                             
+Not yet due at 17 Dec                     | $168,864                             
+Stayed claim / preference-exposed         | $0 / $0 (no petitions without events)
+Peak outstanding                          | $371,358                             
+Time-weighted outstanding                 | $265,128                             
+PV of fundings / collections (8%)         | $797,122 / $535,643                  
+Minimum headroom, P5 / P50                | −$4.83M / −$0.81M                    
+Headroom at due dates, P5 / P50 / P95     | −$3.38M / $3.28M / $11.00M           
+Chance headroom is negative at a due date | 23.7%                                
+Chance cash goes below zero               | 31.1%                                
+```
+
+- **Limit path:** $357k on 21 Jun. After that, the mean and P5 are $318k/$267k (1 Jul), $324k/$204k (1 Aug), $332k/$173k (1 Sep), $355k/$147k (1 Oct), $355k/$147k (1 Nov) and $353k/$147k (1 Dec).
+- **Outstanding above the limit:** after a downward reassessment, outstanding can run up to 1.27× the new limit. That is expected: the rule only stops new draws.
+
+**Deviations from the spec (all stated in the PR)**
+- **Headroom:** I used available − need − everything owed (the installment plus any arrears), not the installment alone. Slope debits the whole amount owed, so negative headroom then means exactly that the rule collects less than is owed.
+- **Need:** it is measured on gross operating flows, including invoices Slope may later pay, because which future invoices get routed isn't known on the day.
+- **Outstanding principal:** it is amount funded minus collections × funded / contractual. Every draw carries the same fee, so this is exact when the contract is fully collected.
+- **Page field names:** `full_collection_by_maturity_p` and `uncollected_maturity_cents` stay in the payload so the current page doesn't break, but they now read at the horizon, since a line has no single maturity.
+- **Stress view:** it adds a petition placed on each path's peak-exposure day, using a small `with_petition` helper. Nothing derives petitions from disputes.
+
+**Notes for the chains merge**
+- The tests that use `model_with([DE])` depend on the current dispute tree and may need adjusting when the chains branch lands.
+- Attribution step 2 uses `EventModel.neutral` if the chains branch supplies it; otherwise every judgment is set neutral (0.5, or uniform across choices).
+
+I also added a one-line note to the `slope-sparse-events-build` skill on how to run the engine on the feed alone. Scratch scripts and the full bank-only payload are in `~/.hermes/profiles/connor/cache/scratch/6b_engine/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_bad23112/task-0.log
+
+--- ✗ TASK 2/2: Step 6b-chains for the Slope demo: implement the approved Akoustis decomposition as dispute model 4.0.0 and question registry 4.0.0 — legal chain templates with code-owned timing and amounts, the 26 Jev residual questions with evidence routing, financing instruments, and event cash including petition dates — with tests using stub judges. Commit and push branch step-6b-chains and open a PR.  (status=interrupted, api_calls=36, 2731.6s) ---
+(interrupted: Operation interrupted: waiting for model response (1063.6s elapsed).)
+Partial output:
+Now tests and registry/config.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_bad23112/task-1.log

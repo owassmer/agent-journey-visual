@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int && sed -n 1588,1625p app/disputes/forecast.py | cut -c1-170; grep -n \"def distress_day\\|def waiting_day\\|def decide_waiting\\|def book_grouped\\|def restay\\|def _size_stay\\|def seen_at\" app/analysis/events.py; grep -n \"def distress_day\" -A25 app/analysis/events.py | cut -c1-160 | head -30"}

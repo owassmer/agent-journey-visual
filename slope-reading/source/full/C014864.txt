@@ -1,0 +1,1 @@
+const rs=await Promise.allSettled([59,63,132,2206].map(i=>tools.exec_command({cmd:`.venv/bin/python /tmp/probe_context_authority.py ${i}${i===2206?" 6258":""} > /tmp/context-${i}.log 2>&1`,workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",yield_time_ms:1000,max_output_tokens:200})));rs.forEach(text);

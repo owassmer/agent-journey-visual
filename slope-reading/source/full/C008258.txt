@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split/base && git checkout -q --detach 1ca49d1 && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 timeout 500 .venv/bin/python -m pytest -p no:warnings tests/test_chains.py -k filing_path_sets_the_petition 2>&1 | tail -3; git diff 2d097b1 1ca49d1 -- tests/test_chains.py", "timeout": 560}

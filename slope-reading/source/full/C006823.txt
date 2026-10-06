@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/hermes-agent && sed -n 2160,2175p hermes_cli/config.py; sed -n 2220,2240p hermes_cli/config.py; grep -n \"def scope_terminal_cwd\" -A25 -r agent/*.py tools/*.py 2>/dev/null | head -40; ls ~/Desktop/Connor/ | head; ls ~/Desktop/Connor/AGENTS.md ~/Desktop/Connor/CLAUDE.md ~/Desktop/Connor/.hermes.md 2>&1"}

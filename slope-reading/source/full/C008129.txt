@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"court_questions\\|def capture_waiting\\|def captures\\|capture_questions\\|capture_indices\" app/analysis/events.py app/disputes/forecast.py | head -40; echo; sed -n '1150,1170p' app/disputes/forecast.py; sed -n '925,985p' app/disputes/forecast.py"}

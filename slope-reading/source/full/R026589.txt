@@ -1,0 +1,5 @@
+     806 var/runs/chromadex_20240819-agent_plus_jev-20260925T152328Z/events.jsonl
+[('inventory_loaded', 569), ('observation_recorded', 145), ('jev_call', 37), ('candidate_screened', 32), ('evidence_read', 12), ('search', 5), ('dependency_recorded', 3), ('finding_proposed', 2), ('run_started', 1)]
+dependency_recorded What does the C.D. Cal. judgment (Dkt. 618) entered in ChromaDex v. Elysium Health order, which party owes what amount, and is it final/stayed/appealable as of 2024-08-19? 
+dependency_recorded What attorney fees and costs did the D. Del. court award in ChromaDex v. Elysium (1:18-cv-01434, Dkt. 399), against whom, in what amount, and has ChromaDex accrued, paid, bonded or appealed it by 2024-08-19? 
+dependency_recorded Do the Western Alliance Bank credit agreement covenants (cash kept at lender, quick ratio, minimum liquidity, indebtedness/negative pledge) permit ChromaDex to incur the Slope USD 2.0M bill-pay obligation, and is ChromaDex in compliance?

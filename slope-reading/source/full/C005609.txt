@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events; for J in 109978993144 109978992761; do echo \"=== $J\"; gh api \"repos/owassmer/Slope_Sparse_Events/actions/jobs/$J/logs\" 2>/dev/null | grep -v \"npmrc\\|nvm\\|DeprecationWarning\" | grep -E \"total|Mem:|Swap:|nproc|^.{29}[0-9]$|rss|done|part|shutdown|walk\" | cut -c1-250 | tail -25; done", "timeout": 120}

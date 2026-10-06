@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch && for f in 8/p2/rebuild_page.py 8/p2/check.py review17b/dump_states_f3.py 9p/render_check.py 9k/render14.py review18/f2_order.py 9px/probe_sit.py 6c/make_outcome.py; do [ -f $f ] && echo \"ok  $f\" || echo \"MISSING $f\"; done; ls -d ~/dev/Slope_Sparse_Events/.claude/worktrees/*/scratch 2>/dev/null | head -3"}

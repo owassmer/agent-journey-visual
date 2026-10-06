@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/viewer5.py && uv run ruff check --fix -q app/web; uv run ruff check app --output-format concise | tail -3; grep -n \"decision\\|dispute\" app/web/templates/run.html | head", "description": "Strip decision blocks from investigation viewer"}

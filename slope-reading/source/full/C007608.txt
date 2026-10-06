@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/web/static/page.js", "old_string": "    $(`${id}-reach`).textContent = fill(J.reach, { p: pct(nodeReach(i)) });", "new_string": "    const reach = nodeReach(i); $(`${id}-reach`).textContent = reach === null ? \"\" : fill(J.reach, { p: pct(reach) });"}

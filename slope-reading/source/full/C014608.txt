@@ -1,0 +1,4 @@
+text(await tools.write_stdin({session_id:4750,chars:"",yield_time_ms:1000,max_output_tokens:1000}));
+text(await tools.write_stdin({session_id:25458,chars:"",yield_time_ms:1000,max_output_tokens:500}));
+text(await tools.write_stdin({session_id:11347,chars:"",yield_time_ms:1000,max_output_tokens:500}));
+text(await tools.exec_command({cmd:"cat /tmp/dead-offering-fallback.log; cat /tmp/probe-offering-23.log","max_output_tokens":1500}));

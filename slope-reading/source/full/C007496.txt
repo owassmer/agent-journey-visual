@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/pool.py", "old_string": "        name = f\"part{k}.pkl\"\n        with open(os.path.join(out, \"control\", name), \"wb\") as fh:", "new_string": "        name = f\"part{pk}.pkl\"\n        with open(os.path.join(out, \"control\", name), \"wb\") as fh:"}

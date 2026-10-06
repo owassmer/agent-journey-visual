@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq && for a in 000114036115011633 000114420414074119 000114036115017129; do echo \"== $a\"; curl -s -A \"Owen Wassmer owassmer1@gmail.com\" https://www.sec.gov/Archives/edgar/data/1015155/$a/ | grep -o 'href=\"/Archives[^\"]*\\.htm\"' | sort -u | sed 's/href=\"//;s/\"//'; sleep 0.5; done", "timeout": 60}

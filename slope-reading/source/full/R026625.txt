@@ -1,0 +1,145 @@
+ M app/decisions/scenarios.py
+app/cli.py:124:    summary = decide(meta["snapshot_id"], inputs, list(store.graph["dispute_nodes"].values()), review)
+app/web/viewmodel.py:149:        "dispute_nodes": [{"id": n.node_id, "decision_point": n.decision_point, "findings": list(n.finding_ids),
+app/web/viewmodel.py:156:                          for n in g.get("dispute_nodes", {}).values()],
+app/web/templates/run.html:43:{% for n in v.dispute_nodes %}<div class="card"><h5>{{ n.decision_point }}</h5>
+app/web/templates/run.html:47:{% if v.dispute_nodes %}<p class="muted">{{ d.weights_label }}</p>{% endif %}
+app/agent/investigation.py:63:  appeal and its bond, whether a judgment debtor pays) with propose_dispute_node: mutually exclusive branches, each with its
+app/agent/tools.py:567:async def propose_dispute_node(ctx: RunContext, args: dict) -> dict:
+app/agent/tools.py:623:    ctx.run.put("dispute_node_recorded", node)
+app/agent/tools.py:640:    nodes = [n for n in ctx.run.graph["dispute_nodes"].values() if n.status == "accepted"]
+app/agent/tools.py:650:    ctx.run.append("scenarios_run", object_ids=tuple(n.node_id for n in nodes), payload={
+app/agent/tools.py:1105:    ("propose_dispute_node", "Model one pending decision in a live dispute (for example the amount a court will fix, "
+app/agent/tools.py:1117:         ["dependency_id", "decision_point", "finding_ids", "branches"]), propose_dispute_node),
+app/agent/run_store.py:39:    "effects": EconomicEffectProposal, "inventory": InventoryItem, "dispute_nodes": DisputeNode,
+app/agent/run_store.py:48:    "dispute_node_recorded": "dispute_nodes",
+app/agent/run_store.py:52:            "effects": "effect_id", "inventory": "item_id", "dispute_nodes": "node_id"}
+app/domain/investigation.py:213:class BranchCash(Frozen):
+app/domain/investigation.py:227:class DisputeBranch(Frozen):
+app/domain/investigation.py:234:class DisputeNode(Frozen):
+app/domain/investigation.py:255:    "dispute_node_recorded", "scenarios_run",
+tests/test_investigation_tools.py:369:def test_dispute_node_amounts_windows_and_weights(make_ctx):
+tests/test_investigation_tools.py:377:        call(T.propose_dispute_node, ctx, {**base, "branches": [
+tests/test_investigation_tools.py:381:        call(T.propose_dispute_node, ctx, {**base, "branches": [
+tests/test_investigation_tools.py:384:    out = call(T.propose_dispute_node, ctx, {**base, "branches": [
+tests/test_investigation_tools.py:387:    node = ctx.run.get("dispute_nodes", out["node_id"])
+{
+  "terms_id": "slope_terms_v1",
+  "provenance": "Reconstructed from Slope's public product pages and announcements; values between the published anchors are reconstructed.",
+  "sources": [
+    "https://slopepay.com/faqs",
+    "https://slopepay.com/bill-pay-financing",
+    "https://slopepay.com/blog/slope-amazon-sellers",
+    "https://slopepay.com/blog/agents-platform",
+    "https://help.slopepay.com/en/articles/4357633",
+    "https://www.pymnts.com/news/b2b-payments/2025/shipbob-offers-access-to-financing-program-powered-by-slope/",
+    "https://partners.jpmorgan.com/slope.html"
+  ],
+  "product": {
+    "product_id": "slope_bill_pay",
+    "description": "Slope pays the supplier directly; the business repays Slope on net terms or in monthly installments, by ACH from its connected account.",
+    "terms": [
+      {
+        "term_id": "net_30",
+        "label": "Net 30",
+        "days": 30,
+        "installments": 1
+      },
+      {
+        "term_id": "net_60",
+        "label": "Net 60",
+        "days": 60,
+        "installments": 1
+      },
+      {
+        "term_id": "net_90",
+        "label": "Net 90",
+        "days": 90,
+        "installments": 1
+      },
+      {
+        "term_id": "inst_60",
+        "label": "2 monthly installments (60 days)",
+        "days": 60,
+        "installments": 2
+      },
+      {
+        "term_id": "inst_90",
+        "label": "3 monthly installments (90 days)",
+        "days": 90,
+        "installments": 3
+      },
+      {
+        "term_id": "inst_120",
+        "label": "4 monthly installments (120 days)",
+        "days": 120,
+        "installments": 4
+      }
+    ],
+    "early_repayment": "The fee is prorated to the days the funds were outstanding.",
+    "default_interest_bps_per_year": 1800,
+    "funding": "Slope pays the supplier on the next business day after approval."
+  },
+  "price_card": {
+    "basis": "Fee as a share of the amount financed, by risk tier and term. Tier A is anchored on the published best rates (Net 30 from 0.99%, Net 90 from 2.99%, under 12% APR); lower tiers are reconstructed.",
+    "tiers": {
+      "A": {
+        "net_30": 99,
+        "net_60": 199,
+        "net_90": 299,
+        "inst_60": 179,
+        "inst_90": 249,
+        "inst_120": 319
+      },
+      "B": {
+        "net_30": 160,
+        "net_60": 300,
+        "net_90": 440,
+        "inst_60": 270,
+        "inst_90": 370,
+        "inst_120": 470
+      },
+      "C": {
+        "net_30": 250,
+        "net_60": 470,
+        "net_90": 690,
+        "inst_60": 420,
+        "inst_90": 580,
+        "inst_120": 740
+      },
+      "D": {
+        "net_30": 390,
+        "net_60": 740,
+        "net_90": 1090,
+        "inst_60": 660,
+        "inst_90": 910,
+        "inst_120": 1160
+      }
+    }
+  },
+  "tiering": {
+    "basis": "Risk tier from connected-bank features (reconstructed, in the spirit of SlopeScore). Months of cover = available cash / monthly outflows.",
+    "rules": [
+      {
+        "tier": "A",
+        "min_months_cover_bps": 30000,
+        "max_inflow_volatility_bps": 1500,
+        "max_negative_balance_days": 0,
+        "max_debt_service_share_bps": 1500
+      },
+      {
+        "tier": "B",
+        "min_months_cover_bps": 15000,
+        "max_inflow_volatility_bps": 2500,
+        "max_negative_balance_days": 2,
+        "max_debt_service_share_bps": 3000
+      },
+      {
+        "tier": "C",
+        "min_months_cover_bps": 7500,
+        "max_inflow_volatility_bps": 4000,
+        "max_negative_balance_days": 5,
+        "max_debt_service_share_bps": 4500
+      },
+      {
+        "tier": "D",

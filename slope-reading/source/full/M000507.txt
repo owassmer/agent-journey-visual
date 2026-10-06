@@ -1,0 +1,57 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_491803a4]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 02:38:46 (39m15s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2355.22s
+
+--- ✓ TASK 1/1: Step 6b-chains for the Slope demo, in small checkpointed steps: implement the approved Akoustis decomposition as dispute model 4.0.0 and question registry 4.0.0 (legal chain templates, code-owned timing and amounts, the 26 Jev residual questions with evidence routing, financing instruments, event cash with petition dates), with stub-judge tests. Commit and push after each step on branch step-6b-chains, then open a PR.  (status=completed, api_calls=134, 2355.03s) ---
+All seven steps are done and PR #12 is open. It stacks on #11, so #11 has to merge first; the PR body says so. On the final state 123 tests pass and ruff is clean. No Jev calls, investigations or smoke runs were made, and nothing under `runs/` or `var/` was committed.
+
+**PR:** https://github.com/owassmer/Slope_Sparse_Events/pull/12 (branch `step-6b-chains`, no label)
+
+**Commits:**
+- `a73ca51` dispute model 4.0.0, part A: forum, components, `post_trial` stage, cited rules, parameters, declared scenarios; timing nodes removed
+- `5be7584` part B: chain templates and composition, registry 4.0.0 with the 26 questions and evidence routing, agent_config, manifest hashes
+- `b5613a6` domain and agent: components and motions on the dispute, `FinancingInstrument`, `instantiate_financing` with its guards, guard tests
+- `267d9d3` steps 4 and 5: chain composition and event cash
+- `73bbcf6` chain tests, part 1 (plus fixes for intervals that began before the review date)
+- `c3d4a9e` chain tests, part 2
+- `b7d1af7` older fixtures moved to the new model
+- `e0fdd24` fix: a petition certain on every trajectory still asks the cash-floor question
+
+Steps 1–3 left 8 older tests failing because they tested the old model; step 6 rewrote them. Nothing is marked xfail.
+
+**Jev questions: 26.** Across the whole run there are 66 Jev asks, because some questions are asked once per context (interval, amount, stay or notes status):
+- **Court:** forecast_ts_liability_jmol, forecast_ts_damages_ruling, forecast_patent_jmol, forecast_trebling, forecast_fees_awarded, forecast_prejudgment_interest, forecast_injunction_ts, forecast_stay_approved, forecast_1963_good_cause
+- **Qorvo:** forecast_execution_pending_motions, forecast_remittitur_accepted, forecast_enforcement_after_final, forecast_settlement_accept
+- **Akoustis:** forecast_stay_motion, forecast_appeal, forecast_settlement_offer, forecast_debtor_response, forecast_petition_on_notes, forecast_petition_cash_floor, forecast_reverse_split_board, forecast_nasdaq_hearing
+- **Others:** forecast_split_approved, forecast_panel_exception, forecast_holders_act_judgment, forecast_holders_act_delisting, forecast_holders_involuntary
+
+**Akoustis fixture: 2,128 paths.** Building them takes about 13 s and a full analysis about 42 s, so most engine tests use a small $2.0M test judgment instead.
+
+**Deviations:**
+- **Steps 4 and 5 are one commit.** Computing path facts before asking Jev needs the event cash from step 5.
+- **Files outside the brief:**
+  - `core.py`: two lines give the analysis the operating cash, which levies and settlements need.
+  - `run_store.py`: a `financing` collection.
+  - `investigation.py`: one sentence in the agent prompt about the new tool.
+- **How paths stay in the low thousands:**
+  - Ruling outcomes are grouped by what cash can reach: none, each amount some trajectory could pay, and one group for amounts no trajectory's cash could cover even at the 80% collateral bound. Those produce identical cash, so they share paths.
+  - After the ruling, "seek a sale or financing" and "neither" are merged, because no later decision point falls inside the horizon.
+  - A decision that can't fall inside the horizon on any trajectory isn't asked. This drops the notes repurchase in the base case.
+  - Each Jev question is shared by all paths with the same context, with its cash figures pooled across them.
+- **Levies before the ruling use the judgment as entered.** This only matters where the post-ruling amount would be within reach of cash.
+- **Coupon in shares is now the base, as the brief says.** DECOMPOSITION had the June cash split as base; it is now a sensitivity (3,348 bps), alongside all-cash.
+- **Disputes are now treated as independent.** A judgment's components and the notes all sit inside one dispute's chains, so the old same-counterparty conditioning was dropped.
+- **Jev attempt cap raised from 400 to 1200.** That leaves room for the readings plus about 66 forecast requests with retries.
+- **If paying the notes were ever affordable on some trajectory, the builder raises an error.** It never drops that branch silently.
+
+**Not built yet:**
+- Arbitration: noted in the contract, not built.
+- Creditor-side chains and the `amount_pending` stage: they return an "outside the chains" path.
+- The sensitivities are coded but not yet page controls.
+- Page labels come out empty for the new steps.
+- The injunction stress scenario is asked but not wired into the stress view.
+
+I also added these lessons to the `slope-sparse-events-build` skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_491803a4/task-0.log

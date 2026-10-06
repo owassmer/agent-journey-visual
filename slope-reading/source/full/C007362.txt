@@ -1,0 +1,1 @@
+{"command": "S=~/.hermes/profiles/connor/cache/scratch/fix1; pkill -f small_tree.py 2>/dev/null; grep \"^DIFFER\\|^SAME\\|wave\" $S/expB.log | cut -c1-100; cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && test -f $S/dumpB.pkl && uv run python $S/cmp_dump.py $S/dumpA.pkl $S/dumpB.pkl $S/diff.pkl 2>&1 | cut -c1-400", "timeout": 120}

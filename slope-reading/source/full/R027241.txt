@@ -1,0 +1,52 @@
+text = section_of(sid)[1]
+for c in existing[0]["cover_terms"]:
+    assert c["citation"]["quote"] in text, c
+
+inputs = {
+    "mission_id": "chromadex_2024_supplier_bill_financing",
+    "case_id": "chromadex_elysium_2024",
+    "snapshot_id": "chromadex_20240819",
+    "status": "locked_operator_inputs",
+    "note": ("Operator request and ordinary baseline for the 19 August 2024 review, reconstructed as if ChromaDex applied "
+             "to Slope to finance a contract-manufacturer invoice. The baseline holds only ordinary underwriting facts; "
+             "the litigation is for the investigation to establish."),
+    "run_inputs": {
+        "mission_id": "chromadex_2024_supplier_bill_financing",
+        "requested_use": {"value": "Pay a contract manufacturer's invoice for Tru Niagen finished goods", "basis": "operator_request"},
+        "requested_amount": {"value": 200_000_000, "unit": "USD_cents", "basis": "operator_request"},
+        "requested_term": {"value": "90 days, monthly installments", "basis": "operator_request"},
+        "requested_pricing": {"value": "Slope price card for the borrower's risk tier", "basis": "operator_request"},
+        "baseline_profile_id": "chromadex_ordinary_baseline_v1",
+        "existing_loan_record_ids": ["chromadex_western_alliance_revolver"],
+        "permitted_offer_set_id": "slope_menu_v1",
+        "policy_config_id": "slope_policy_v1",
+        "initial_event_seed": ("As of 19 August 2024, assess Slope financing of a USD 2.0 million contract-manufacturer "
+                               "invoice for ChromaDex Corporation. ChromaDex's public filings describe long-running "
+                               "litigation with Elysium Health, a former customer, in several federal courts."),
+    },
+    "financing_plan": {
+        "funding": "next business day after the review date (Slope pays the supplier)",
+        "invoice_due_days_after_funding": 30,
+        "basis": "operator_request",
+        "note": "Without Slope, ChromaDex would pay this invoice itself on its due date.",
+    },
+    "permitted_offers": {"permitted_offer_set_id": "slope_menu_v1", "terms_file": "cases/slope_terms.json",
+                         "requested_term_id": "inst_90"},
+    "policy": {"policy_config_id": "slope_policy_v1", "terms_file": "cases/slope_terms.json"},
+    "bank_feed": "cases/chromadex_20240819/bank_feed.json",
+    "baseline_profile": {
+        "baseline_profile_id": "chromadex_ordinary_baseline_v1",
+        "borrower": "ChromaDex Corporation",
+        "opening_cash_observation_id": "cash_20240630",
+        "observations": observations,
+        "existing_loans": existing,
+    },
+}
+out = Path(__file__).resolve().parent / 'run_inputs.json'
+out.write_text(json.dumps(inputs, indent=2, ensure_ascii=False) + '\n')
+print('wrote', out, len(observations), 'observations')
+for o in observations:
+    print(' ', o['observation_id'], o['citation']['item_id'], '|', o['citation']['quote'][:100])
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:487:      "requested_pricing",
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:490:      "permitted_offer_set_id",
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:491:      "policy_config_id",

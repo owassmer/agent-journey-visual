@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees && for w in step-6b-page step-6c-record fix-a4-milestone; do du -sh $w/var/dev $w/var/analysis 2>/dev/null; rm -rf $w/var/dev $w/var/analysis; done; du -sh step-6c-run/var/dev; rm -rf step-6c-run/var/dev; df -h / | tail -1; memory_pressure -Q | tail -1"}

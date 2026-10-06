@@ -1,0 +1,137 @@
+1	"""Generate ChromaDex's connected-bank feed (synthetic reconstruction) from 1 Jan to 19 Aug 2024.
+2	
+3	Slope underwrites on connected bank data. ChromaDex's is not public, so this feed reconstructs it: daily,
+4	counterparty-tagged transactions whose quarterly totals match the public 10-Q anchors (cash including restricted cash
+5	of USD 27,325k at 31 Dec 2023, 27,565k at 31 Mar 2024, 27,885k at 30 Jun 2024; receipts equal to net sales less the
+6	increase in receivables; the stock-option proceeds in Q2). July and August continue the second-quarter pattern and
+7	use no later information. Seeded and deterministic: `uv run python cases/chromadex_20240819/make_bank_feed.py`.
+8	"""
+9	
+10	from __future__ import annotations
+11	
+12	import json
+13	import random
+14	from datetime import date, timedelta
+15	from pathlib import Path
+16	
+17	OUT = Path(__file__).resolve().parent / "bank_feed.json"
+18	SEED = 20240819
+19	START, END = date(2024, 1, 1), date(2024, 8, 19)
+20	OPENING_CENTS = 2_732_500_000  # 31 Dec 2023, including USD 152k restricted
+21	RESTRICTED_CENTS = 15_200_000
+22	
+23	# Quarterly anchors in cents: receipts = net sales - increase in trade receivables; net = change in cash.
+24	QUARTERS = {
+25	    1: {"months": (1, 2, 3), "receipts": 2_215_300_000 - 140_500_000, "net": 24_000_000, "other_inflows": 0},
+26	    2: {"months": (4, 5, 6), "receipts": 2_270_000_000 - 121_400_000, "net": 32_000_000,
+27	        "other_inflows": 59_800_000},  # stock option exercise proceeds (Q2 financing)
+28	    3: {"months": (7, 8), "receipts": 1_180_000_000, "net": 25_000_000, "other_inflows": 0},  # Q2 daily rate x 50 days, to 19 Aug
+29	}
+30	RECEIPT_MIX = [  # (counterparty, category, share of receipts, cadence)
+31	    ("Shopify Payments", "ecommerce_payouts", 0.47, "daily"),
+32	    ("Amazon Payments", "marketplace_payouts", 0.21, "biweekly"),
+33	    ("Retail and distributor customers", "wholesale_receipts", 0.13, "weekly"),
+34	    ("Ingredient customers (incl. related party)", "ingredient_receipts", 0.19, "weekly"),
+35	]
+36	OUTFLOW_MIX = [  # (counterparty, category, share of outflows, cadence)
+37	    ("Contract manufacturers", "contract_manufacturing", 0.19, "weekly"),
+38	    ("W.R. Grace (NR ingredient)", "ingredient_supply", 0.10, "monthly"),
+39	    ("Advertising platforms", "marketing", 0.30, "weekly"),
+40	    ("Payroll (ADP)", "payroll", 0.21, "biweekly"),
+41	    ("Landlord", "rent", 0.02, "monthly"),
+42	    ("Litigation counsel", "legal_fees", 0.04, "monthly"),
+43	    ("Other professional services", "professional_fees", 0.03, "monthly"),
+44	    ("Research and clinical vendors", "research", 0.04, "monthly"),
+45	    ("Fulfilment, freight and other", "operations_other", 0.07, "weekly"),
+46	]
+47	
+48	
+49	def days(month: int, last: date) -> list[date]:
+50	    d = date(2024, month, 1)
+51	    out = []
+52	    while d.month == month and d <= last:
+53	        out.append(d)
+54	        d += timedelta(days=1)
+55	    return out
+56	
+57	
+58	def cadence_days(ds: list[date], cadence: str, rng: random.Random) -> list[date]:
+59	    business = [d for d in ds if d.weekday() < 5]
+60	    if cadence == "daily":
+61	        return business
+62	    if cadence == "weekly":
+63	        return [d for d in business if d.weekday() == 2]
+64	    if cadence == "biweekly":
+65	        return [d for d in business if d.weekday() == 4 and (d.isocalendar().week % 2 == 0)]
+66	    return [business[min(len(business) - 1, rng.randint(8, 14))]] if business else []
+67	
+68	
+69	def spread(total: int, when: list[date], rng: random.Random, noise: float = 0.18) -> list[tuple[date, int]]:
+70	    if not when:
+71	        return []
+72	    w = [max(0.2, 1 + rng.uniform(-noise, noise)) for _ in when]
+73	    raw = [int(total * x / sum(w)) for x in w]
+74	    raw[-1] += total - sum(raw)  # conserve the total exactly
+75	    return list(zip(when, raw, strict=True))
+76	
+77	
+78	def main() -> None:
+79	    rng = random.Random(SEED)
+80	    txns: list[dict] = []
+81	    for q, spec in QUARTERS.items():
+82	        months = spec["months"]
+83	        last = END if q == 3 else date(2024, months[-1], 28) + timedelta(days=4)
+84	        month_days = {m: days(m, END if q == 3 else last) for m in months}
+85	        n_days = sum(len(v) for v in month_days.values())
+86	        receipts = spec["receipts"]
+87	        outflows = receipts + spec["other_inflows"] - spec["net"]
+88	        for ds in month_days.values():
+89	            share = len(ds) / n_days
+90	            for cp, cat, s, cad in RECEIPT_MIX:
+91	                for d, amt in spread(int(receipts * share * s), cadence_days(ds, cad, rng), rng):
+92	                    txns.append({"date": d.isoformat(), "amount_cents": amt, "counterparty": cp, "category": cat})
+93	            for cp, cat, s, cad in OUTFLOW_MIX:
+94	                for d, amt in spread(int(outflows * share * s), cadence_days(ds, cad, rng), rng):
+95	                    txns.append({"date": d.isoformat(), "amount_cents": -amt, "counterparty": cp, "category": cat})
+96	        if spec["other_inflows"]:
+97	            txns.append({"date": date(2024, 5, 15).isoformat(), "amount_cents": spec["other_inflows"],
+98	                         "counterparty": "Stock option exercises", "category": "equity_proceeds"})
+99	        # Exact quarter-end calibration: one adjusting operating flow on the last business day of the quarter.
+100	        q_net = sum(t["amount_cents"] for t in txns if int(t["date"][5:7]) in months)
+101	        gap = spec["net"] - q_net
+102	        if gap:
+103	            last_day = max(d for ds in month_days.values() for d in ds if d.weekday() < 5)
+104	            txns.append({"date": last_day.isoformat(), "amount_cents": gap, "counterparty": "Fulfilment, freight and other",
+105	                         "category": "operations_other"})
+106	    txns.sort(key=lambda t: (t["date"], -t["amount_cents"]))
+107	    balances, bal, by_day = [], OPENING_CENTS, {}
+108	    for t in txns:
+109	        by_day[t["date"]] = by_day.get(t["date"], 0) + t["amount_cents"]
+110	    d = START
+111	    while d <= END:
+112	        bal += by_day.get(d.isoformat(), 0)
+113	        balances.append({"date": d.isoformat(), "closing_cents": bal})
+114	        d += timedelta(days=1)
+115	    for i, t in enumerate(txns, 1):
+116	        t["transaction_id"] = f"txn_{i:05d}"
+117	    feed = {
+118	        "feed_id": "chromadex_connected_bank_v1",
+119	        "provenance": "Synthetic connected-bank reconstruction, consistent with ChromaDex's public financial statements.",
+120	        "borrower": "ChromaDex Corporation",
+121	        "accounts": ["Operating account", "Restricted (USD 152k)"],
+122	        "restricted_cents": RESTRICTED_CENTS,
+123	        "opening": {"date": "2023-12-31", "balance_cents": OPENING_CENTS},
+124	        "period": {"start": START.isoformat(), "end": END.isoformat()},
+125	        "transactions": txns,
+126	        "daily_balances": balances,
+127	    }
+128	    OUT.write_text(json.dumps(feed, indent=1) + "\n")
+129	    closes = {b["date"]: b["closing_cents"] for b in balances}
+130	    for q_end in ("2024-03-31", "2024-06-30", "2024-08-19"):
+131	        print(q_end, closes[q_end] / 100)
+132	    print(len(txns), "transactions")
+133	
+134	
+135	if __name__ == "__main__":
+136	    main()
+137	

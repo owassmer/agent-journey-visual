@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/model_v3.py && python3 -c \"\nimport json;m=json.load(open('Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json'));print(list(m['rules']), list(m['readings']))\"", "description": "Write dispute model v3"}

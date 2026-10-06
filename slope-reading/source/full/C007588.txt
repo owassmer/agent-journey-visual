@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/analysis/tables_page.py", "old_string": "        \"financing\": {\"raised\": [], \"terms\": __import__(\"app.analysis.page\", fromlist=[\"offering_terms\"]).offering_terms(m)},", "new_string": "        \"financing\": {\"raised\": [], \"terms\": offering_terms(m)},"}

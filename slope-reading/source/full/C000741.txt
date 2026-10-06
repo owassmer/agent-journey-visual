@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events && gh pr checks 14 2>&1 | tail -2; cd .claude/worktrees/step-6b-page && git pull -q --ff-only && git status --short | head -3; git log --oneline -1 | cat; ls /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/pr14_fix/shots/ | head -30"}

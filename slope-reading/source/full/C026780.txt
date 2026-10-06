@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/        if q\\[\"primitive\"\\] == \"noul\":$/        if q[\"primitive\"] == \"noul\" and not q[\"prompt\"].get(\"criteria_from_host\"):/' tests/test_semantic_layer.py && uv run pytest -q -p no:cacheprovider 2>&1 | tail -2", "description": "Exempt host-built Noul criteria; rerun", "timeout": 600000}

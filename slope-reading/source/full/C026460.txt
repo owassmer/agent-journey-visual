@@ -1,0 +1,1 @@
+{"subject": "5b: reconstructed Slope terms and products", "description": "slope_terms.json (menu, tier price card, policy, cost of funds, PD/LGD, public-source anchors) labelled once; app/finance/slope_products.py (NetTerms, Installment, proration, APR equivalent, pricing, tiering).", "activeForm": "Reconstructing Slope terms"}

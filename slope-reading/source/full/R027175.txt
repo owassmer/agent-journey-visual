@@ -1,0 +1,10 @@
+- [Delivery workflow](delivery-workflow.md) — worktree → PR → independent intent-grounded review → merge-ready; Owen merges
+- [Speed over verification](speed-over-verification.md) — same-day POC; no non-essential tests, but never careless
+- [Jev route settled](jev-route-settled.md) — don't raise Jev build-pin mismatch or untested direct TypeSafe again
+- [Jev pivot decisions](jev-pivot-decisions.md) — 4a/4b/4c split, viewer in 4b, no provenance work, 250 Jev attempts, 80 turns
+- [No contrived cases](no-contrived-cases.md) — evals/tests reflect real court/filing evidence (parties named); no synthetic ambiguity
+- [Lead case ChromaDex](lead-case-chromadex.md) — live disputes lead case; Jev forecasts dispute events; Slope supplied terms (labelled once)
+- [Probabilistic analysis](probabilistic-analysis.md) — governing direction: Jev conditional probabilities → lender cash-flow distributions; no lending decision
+- [Analysis page](analysis-page.md) — one page: evidence → Jev judgment → mechanism → impact; no machinery, no decision
+
+1

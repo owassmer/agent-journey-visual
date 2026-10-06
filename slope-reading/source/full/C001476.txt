@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN uv run pytest -p no:warnings > ~/.hermes/profiles/connor/cache/scratch/6c/pytest6.txt 2>&1; echo exit $?; grep -E \" passed| failed|^FAILED\" ~/.hermes/profiles/connor/cache/scratch/6c/pytest6.txt | head -30", "timeout": 900}

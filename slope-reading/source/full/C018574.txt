@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:".venv/bin/pytest -q tests/test_notes_decision.py tests/test_question_refresh.py tests/test_decision_snapshots.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":1000}));
+text(await tools.exec_command({cmd:".venv/bin/ruff check tools/question_refresh.py tests/test_question_refresh.py app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}));

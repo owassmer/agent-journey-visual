@@ -1,0 +1,12 @@
+Exit code 1
+Traceback (most recent call last):
+  File "/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/dev_payload.py", line 17, in <module>
+    data = payload(load_feed("chromadex_20240819"), setup, model, meta_for(model, "ChromaDex Corporation", []))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-probabilistic-analysis/app/analysis/build.py", line 124, in meta_for
+    "judgments": {k: _judgment_meta(j, model.disputes) for k, j in model.judgments.items()}}
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-probabilistic-analysis/app/analysis/build.py", line 63, in _judgment_meta
+    "distribution": j.distribution, "confidence": j.confidence, "evidence": j.evidence,
+                                                                            ^^^^^^^^^^
+AttributeError: 'Judgment' object has no attribute 'evidence'

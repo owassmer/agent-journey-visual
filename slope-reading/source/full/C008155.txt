@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split && python3 ssm.py --wait 30 -- \"cat /var/log/slope-walk-worker.log | cut -c1-200; dmesg -T 2>/dev/null | grep -i -E 'oom|killed process' | tail -5; free -g | head -2; ls -la --time-style=+%H:%M /tmp | grep refine- | head -20\"", "timeout": 60}

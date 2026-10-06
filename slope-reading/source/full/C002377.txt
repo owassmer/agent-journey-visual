@@ -1,0 +1,1 @@
+{"image_url": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/7_page/shots/final_4b_tree_map.png", "question": "Transcribe and describe this 'decisions' map view. Is it legible and intuitive for a lender new to the case? Any clutter, clipping, or confusing encodings? Compare its clarity to a typical decision-tree diagram."}

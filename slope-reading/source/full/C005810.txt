@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; git status --short | grep -v '^??'; git log --oneline -1; grep -n \"_fork\\|_child\\|load_parts\\|parallel\\.\\(walk\\|shard\\|replay\\)\" -r app tests --include=*.py | grep -v \"^app/disputes/parallel.py\" | head -20; ls .github/workflows", "timeout": 30}

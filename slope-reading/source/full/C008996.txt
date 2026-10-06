@@ -1,0 +1,5 @@
+const results = await Promise.allSettled([
+ tools.exec_command({cmd:"python - <<'PY'\nfrom urllib.request import urlopen\nfrom concurrent.futures import ThreadPoolExecutor\nurls=['https://docs.typesafe.ai/patterns/composite-scoring.md','https://docs.typesafe.ai/introduction/machine-learning-primer.md','https://docs.typesafe.ai/model-jaggedness/jev-1.13.md']\ndef get(u):\n try:return u,urlopen(u,timeout=30).read().decode()\n except Exception as e:return u,str(e)\nfor u,t in ThreadPoolExecutor(3).map(get,urls):print('\\nSOURCE',u,'\\n',t)\nPY",max_output_tokens:6500}),
+ tools.exec_command({cmd:"gh api repos/jarrodwatts/jev-trader/contents/src/model.ts -H 'Accept: application/vnd.github.raw+json'",max_output_tokens:4100}),
+ tools.exec_command({cmd:"gh api repos/RomanSlack/jev-drone/contents/tactics.py -H 'Accept: application/vnd.github.raw+json'",max_output_tokens:4300})
+]);for(let i=0;i<results.length;i++) {store("jev-research-batch-"+i,results[i]); text({i,...results[i]});}

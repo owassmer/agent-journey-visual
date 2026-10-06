@@ -1,0 +1,88 @@
+turns 37 / 80 sweep 36 {'provider': 'openrouter', 'requests': 0, 'cache_hits': 305, 'physical_attempts': 0, 'attempt_ceiling': 800, 'spent_usd': '0', 'spend_cap_usd': '0.10'}
+DEP dep_001 | What remains payable in calendar 2024 under Synergy's December 28, 2023 settlement loan to Atrium (HVL, LLC), its former
+DEP dep_002 | What remains payable in calendar 2024 under Synergy's March 27, 2024 supplier settlement loan (VitBest)?
+DEP dep_003 | Does Synergy's amended Knight Therapeutics senior secured loan prohibit incurring the proposed new working-capital debt 
+DEP dep_004 | What are the payment rules and remaining balance of the May 1, 2024 WebBank/Shopify merchant loan, and must Shopify debt
+DEP dep_005 | What short-term related-party borrowings (Kenek / CEO-controlled entity) and related-party note receivable affect Synerg
+DEP dep_006 | Are the Valenti and L.O.D.C. settlements fully paid, and how much of Synergy's reported cash is restricted?
+ F fnd_001 rejected  | Synergy's litigation with its former contract manufacturer HVL, LLC d/b/a Atrium Innovations was settled in December 2023; the settlement produced a n
+ F fnd_002 rejected inf | The $5,450,000 December 28, 2023 settlement loan to the former supplier (identified with Atrium by matching Note 13's $5,450,000 loan payable and the 
+ F fnd_003 accepted  | The December 2023 settlement of Synergy's lawsuit with HVL, LLC d/b/a Atrium Innovations resulted in a loan payable of $5,450,000 owed by Synergy.
+ F fnd_004 rejected inf | Synergy is required to pay $2,000,000 during calendar 2024 on the $5,450,000 December 28, 2023 former-supplier settlement loan (the Atrium settlement 
+ F fnd_005 rejected inf | The Atrium settlement loan balance was the same $4,802,445 at December 31, 2023 and June 30, 2024, so none of the 2024 installment had been paid by Ju
+ F fnd_006 accepted  | In the future-payment schedule for the $5,450,000 December 28, 2023 settlement loan, as reported at June 30, 2024, Synergy is required to pay $2,000,0
+ F fnd_007 rejected inf | The 'Atrium' row in Synergy's notes-payable table ($4,802,445 at June 30, 2024) is the $5,450,000 December 28, 2023 former-supplier settlement loan, b
+ F fnd_008 accepted  | Synergy is required to pay $600,000 in 2024 on the $3,020,824 March 27, 2024 supplier settlement loan, per the future-payment schedule reported at Jun
+ F fnd_009 accepted  | Under the amended Knight Therapeutics loan, Synergy may not add any other debt without first paying out Knight.
+ F fnd_010 accepted  | The amended Knight loan is senior secured against all current and future assets of Synergy, its affiliates and subsidiaries, including cash.
+ F fnd_011 accepted  | If Synergy defaults on any of its third-party debt obligations, the amended Knight loan automatically enters default.
+ F fnd_012 accepted  | A covenant of the amended Knight loan requires Synergy to repay and terminate its Shopify debt no later than December 31, 2024.
+ F fnd_013 accepted  | Under the May 1, 2024 WebBank merchant loan, Synergy's daily payment equals 25% of the Shopify Account Credits attributed to its Shopify Services Acco
+ F fnd_014 accepted  | Under the WebBank merchant loan, Synergy must pay a Minimum Payment of 30% of the $418,100 Total Payment Amount within the first six months from the E
+ F fnd_015 accepted  | During July and August 2024, Synergy received $1,716,496 under a short-term note payable to an entity owned and controlled by its CEO and repaid $130,
+ F fnd_016 rejected  | BoomBod Ltd., a CEO-owned related party, must repay Synergy $4,424,547 by December 31, 2024 under a non-interest-bearing promissory note, but Synergy 
+ F fnd_017 rejected  | Synergy paid the L.O.D.C. Group settlement in full in May 2024, and the charge was already recorded in 2023 operations.
+ F fnd_018 accepted  | Synergy paid the L.O.D.C. Group settlement in full in May 2024.
+ F fnd_019 accepted  | Synergy fully paid the $340,000 Valenti settlement during 2023.
+ F fnd_020 accepted  | At June 30, 2024, Synergy's $100,000 of restricted cash was held as credit card collateral.
+ F fnd_021 accepted  | Synergy states it does not expect to rely on BoomBod Ltd.'s repayment of $4,424,547 (due by December 31, 2024) to fund operations or meet near-term de
+ F fnd_022 rejected inf | The Atrium settlement's $2,235,986 net gain was recorded as a reduction of cost of sales, which is an accounting gain rather than a cash receipt.
+ F fnd_023 accepted  | The December 28, 2023 former-supplier settlement produced a $2,235,986 gain recorded as a reduction of cost of sales.
+ E eff_001 rejected settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — $5,450,000 Atrium (former cont | Up to $2,000,000 of settlement-loan cash must be paid to Atrium by December 31, 2024. This is about the whole  | problems: ['Consequence support: some_unsupported. Revise the model consequence to what the cited findings support'] | overrides: {}
+ E eff_002 validated settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — $3,020,824 March 27, 2024 supp | Up to $600,000 more of supplier-settlement cash is due by December 31, 2024. | problems: [] | overrides: {}
+ E eff_003 validated settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — $5,450,000 Atrium (former cont | Synergy's Atrium settlement loan requires a $2,000,000 payment in calendar 2024. This is modeled as a remainin | problems: [] | overrides: {}
+ E eff_004 rejected funding_constraint modify_available_funding | Synergy CHC Corp. — Knight Therapeutics (Barbados) | The amended Knight loan says Synergy shall not add any other debt without first paying out Knight. It is senio | problems: ['Consequence support: some_unsupported. Revise the model consequence to what the cited findings support'] | overrides: {}
+ E eff_005 validated resolved_obligation exclude_already_paid_obligation | Synergy CHC Corp. — L.O.D.C. Group settlement (pai | No remaining cash outflow for the LODC or Valenti settlements. Both are reported paid in full (LODC in May 202 | problems: [] | overrides: {}
+ E eff_006 rejected restricted_funds modify_available_funding | Synergy CHC Corp. — $100,000 restricted cash held  | $100,000 of Synergy's cash is held as credit card collateral and is not available to pay settlement installmen | problems: ["Category guard: fnd_020 cash_access is Access limited (ambiguous); restricted_funds needs ['access_limited', 'access_pro", 'Consequence support: some_unsupported. Revise the mode
+ E eff_007 rejected noncash_normalization normalization_only | Synergy CHC Corp. — $2,235,986 former-supplier (At | Exclude the $2,235,986 settlement gain from any 2023 margin or EBITDA used to judge repayment capacity. It cre | problems: ['Consequence support: some_unsupported. Revise the model consequence to what the cited findings support'] | overrides: {}
+ E eff_008 validated funding_constraint modify_available_funding | Synergy CHC Corp. — Knight Therapeutics (Barbados) | Synergy may not add other debt without first paying out Knight. Knight's loan is senior secured on all assets, | problems: [] | overrides: {}
+ E eff_009 rejected restricted_funds modify_available_funding | Synergy CHC Corp. — $100,000 restricted cash held  | At June 30, 2024, $100,000 of Synergy's cash was restricted and held as credit card collateral, so it is treat | problems: ['Consequence support: some_unsupported. Revise the model consequence to what the cited findings support'] | overrides: {'category_guard': "The filing labels the $100,000 as 'restr
+ E eff_010 rejected noncash_normalization normalization_only | Synergy CHC Corp. — $2,235,986 former-supplier set | The $2,235,986 settlement gain was recorded as a reduction of cost of sales. It is removed when normalizing op | problems: ['Consequence support: some_unsupported. Revise the model consequence to what the cited findings support'] | overrides: {}
+ E eff_011 rejected restricted_funds modify_available_funding | Synergy CHC Corp. — $100,000 restricted cash held  | $100,000 of restricted cash held for credit card collateral is excluded from available cash. | problems: ['Consequence support: some_unsupported. Revise the model consequence to what the cited findings support'] | overrides: {'category_guard': "The filing expressly calls the $100,000 'restricted cash' 
+ E eff_012 validated noncash_normalization normalization_only | Synergy CHC Corp. — $2,235,986 former-supplier set | The $2,235,986 settlement gain recorded as a reduction of cost of sales is treated as a normalization item, no | problems: [] | overrides: {'consequence_support': 'A gain recorded as a reduction of cost of sales in a settlement that created a loan payable (fnd_003) is an accounting entry. The only cash
+INVENTORY Counter({'not_decision_relevant': 19, 'covered': 17})
+   inv_001 covered legal_matter_o  | ['fnd_003', 'fnd_006'] | 
+   inv_002 covered debt_or_financ  | ['fnd_013', 'fnd_014'] | 
+   inv_003 covered debt_or_financ 1. Definitions | ['fnd_013', 'fnd_014'] | 
+   inv_004 covered debt_or_financ Relationships with Knight Therapeutics | ['fnd_009', 'fnd_010'] | 
+   inv_005 not_decision_relevant covenant_or_re A significant number of our total outstanding shar | [] | Equity lock-up for the offering restricts share sales and creates no borrower cash obligation or access limit.
+   inv_006 covered accounting_ite Results of Operations for the Years Ended December | ['fnd_023'] | 
+   inv_007 covered debt_or_financ Liquidity and Capital Resources | ['fnd_009', 'fnd_020', 'fnd_021'] | 
+   inv_008 covered legal_matter_o Legal Proceedings | ['fnd_003', 'fnd_018', 'fnd_019'] | 
+   inv_009 covered debt_or_financ CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIO | ['fnd_015', 'fnd_021'] | 
+   inv_010 not_decision_relevant covenant_or_re Lock-up Agreements | [] | Lock-up agreements govern shareholders' sales and create no cash obligation for Synergy.
+   inv_011 not_decision_relevant debt_or_financ UNDERWRITING | [] | The offering is not complete as of August 13, 2024, and no IPO proceeds are assumed in the cash analysis. The 
+   inv_012 not_decision_relevant covenant_or_re Underwriter Warrants | [] | Underwriter warrants are equity instruments issued only on closing and are non-cash.
+   inv_013 covered cash_restricti Note 2 — Summary of Significant Accounting Policie | ['fnd_020'] | 
+   inv_014 not_decision_relevant accounting_ite Note 2 — Summary of Significant Accounting Policie | [] | Deferred tax accounting policy; no dated cash effect in the advance window was identified.
+   inv_015 not_decision_relevant accounting_ite Note 3 — Income Taxes | [] | Deferred income tax presentation is non-cash and outside the settlement/financing question.
+   inv_016 not_decision_relevant accounting_ite Note 4 — Accounts Receivable | [] | Ordinary trade receivables are part of the operating baseline. No matter-related receipt delay was identified.
+   inv_017 not_decision_relevant accounting_ite Note 7 — Inventory | [] | Inventory valuation policy and balances are ordinary baseline items, and no matter-related write-down affects 
+   inv_018 not_decision_relevant accounting_ite Note 8 — Intangible Assets | [] | The Knight license-fee intangible is amortized (non-cash), and its payable was consolidated into the Knight lo
+   inv_019 covered debt_or_financ Note 9 — Related Party Transactions | ['fnd_015', 'fnd_021'] | 
+   inv_020 not_decision_relevant accounting_ite Note 10 — Accounts Payable and Accrued Liabilities | [] | Ordinary accrued payables are part of the operating baseline, and no settlement-related accrual beyond the loa
+   inv_021 covered debt_or_financ Note 11 — Notes Payable | ['fnd_006', 'fnd_008', 'fnd_009', 'fnd_010', 'fnd_011', 'fnd_012'] | 
+   inv_022 covered legal_matter_o Note 13 — Commitments & Contingencies | ['fnd_003', 'fnd_018'] | 
+   inv_023 not_decision_relevant accounting_ite Note 14 — Stock Options | [] | Stock-based compensation is non-cash ($4,611) and immaterial.
+   inv_024 covered debt_or_financ Note 16 — Subsequent Events | ['fnd_015'] | 
+   inv_025 covered cash_restricti Note 2 — Summary of Significant Accounting Policie | ['fnd_020'] | 
+   inv_026 not_decision_relevant accounting_ite Note 3 — Income Taxes | [] | The NOL Section 382 evaluation is a tax-attribute question with no dated cash effect in the advance window.
+   inv_027 not_decision_relevant accounting_ite Note 4 — Accounts Receivable | [] | December 2023 receivables are superseded by the June 30, 2024 interim figures and are part of the ordinary bas
+   inv_028 not_decision_relevant accounting_ite Note 7 — Inventory | [] | December 2023 inventory balances are superseded by interim figures and are an ordinary baseline item.
+   inv_029 not_decision_relevant accounting_ite Note 8 — Fixed Assets and Intangible Assets | [] | Fixed and intangible asset balances are non-cash and have no effect on the advance window.
+   inv_030 covered debt_or_financ Note 9 — Related Party Transactions | ['fnd_021'] | 
+   inv_031 not_decision_relevant accounting_ite Note 10 — Accounts Payable and Accrued Liabilities | [] | December 2023 accrued liabilities are superseded by the June 30, 2024 interim note and are ordinary baseline p
+   inv_032 covered debt_or_financ Note 11 — Notes Payable | ['fnd_006', 'fnd_009', 'fnd_011'] | 
+   inv_033 covered legal_matter_o Note 13 — Commitments and Contingencies | ['fnd_003', 'fnd_018'] | 
+   inv_034 not_decision_relevant accounting_ite Note 14 — Stock Options | [] | Stock option activity is non-cash.
+   inv_035 not_decision_relevant debt_or_financ Note 16 — Subsequent Events | [] | Early-2024 subsequent events (e.g., the January 2024 Shopify advance) are superseded by the June 30, 2024 inte
+   inv_036 not_decision_relevant debt_or_financ Item 15. Recent Sales of Unregistered Securities | [] | Past unregistered securities issuances are equity and debenture history, and the resulting debt is covered thr
+RECON {'task_id': 'recon_001', 'finding_ids': ['fnd_013', 'fnd_012'], 'observation_ids': ['obs_135'], 'status': 'resolved', 'note': 'Different entities, periods or obligations; not a conflict: What are the payment rules and remaining balance of the May 1, 2024 WebBank/Shopify merchant loan, and must Shopify debt be repaid by December 31, 2024? | No conflict; the two findings stack. fnd_013 is the contractual WebBank 
+SENSITIVITY_RUN {"calculation": "required_net_cash = max(0, sum(bucket - paid) + reserve - (reported cash - unavailable portion))", "opening_cash_basis": "Cash reported by management: approximate $2,000,000 as of 2024-08-12", "reserve_basis": "Illustrative $200,000 liquidity reserve; not Slope policy.", "unavailable_opening_cash": 10000000, "buckets": [{"effect_id": "eff_003", "bucket_cents": 200000000}, {"effect_id"
+MISSING_FACT_REQUESTED {"fact": "Has Knight Therapeutics (Barbados) Inc. consented in writing to Synergy incurring a new $100k\u2013$250k working-capital advance? If not, does the Sixth Amendment contain a permitted-debt basket that covers such an advance despite the covenant 'Synergy shall not add any other debt without paying out KTI first'?", "why_pivotal": "Without consent or a carve-out, any modeled advance woul
+MISSING_FACT_REQUESTED {"fact": "How much of the $2,000,000 2024 Atrium settlement-loan installment and the $600,000 2024 installment on the March 27, 2024 supplier settlement loan was paid between June 30 and August 12, 2024? And what are the remaining due dates in 2024?", "why_pivotal": "Sensitivity shows required net cash of $900,000 if nothing was paid, $250,000 if 25% was paid, and $0 at 50% or more. This counts
+CONCLUSION_CHECKED {"answer": "some_unsupported", "ambiguous": false, "override_reason": null}
+CONCLUSION_CHECKED {"answer": "all_supported", "ambiguous": true, "override_reason": null}
+PACKET_SUBMITTED {"summary": "Synergy CHC Corp., as of August 13, 2024. Proposed $250k 6-month advance, compared with the $100k/6-month and $250k/3-month alternatives. Baseline: management reports ~$2.0M of cash at Aug 12, 2024 and ~$4.1M of debt due in 2024; illustrative reserve $200k.\n\nFindings:\n- Atrium litigation settled into a $5,450,000 loan payable (fnd_003). $2,000,000 is due in 2024 (fnd_006; eff_003). Th
+LEDGER Counter({('finding_check', 'used_in_finding'): 64, ('candidate_screen', 'unused'): 36, ('claim_interpretation', 'used_in_finding'): 27, ('finding_check', 'unused'): 23, ('candidate_screen', 'used_in_finding'): 20, ('statement_relation', 'unused'): 15, ('claim_interpretation', 'challenged_agent_draft'): 15, ('finding_check', 'challenged_agent_draft'): 12, ('finding_check', 'overridden_by_agent_with_reason'): 11
+leak-scan exit 1 (1 = none)

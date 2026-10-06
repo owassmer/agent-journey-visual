@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'analyze-case|pool_uri|pool-dir|pooled|processes' app/cli.py | tail -30; rg -n 'typesafe|TYPESAFE' app/config.py; sed -n '1,60p' tests/test_pooled_flow.py; git status --short; tail -5 /tmp/slope-tail-dashboard.log","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1400}));

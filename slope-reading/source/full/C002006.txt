@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && for b in step-6c-fix-engine step-6c-fix-jev; do git worktree add -q .claude/worktrees/$b -b $b origin/step-6c-run && rsync -a --exclude analysis --exclude dev .claude/worktrees/step-6c-run/var/ .claude/worktrees/$b/var/; done; git worktree list | grep fix; df -h / | tail -1"}

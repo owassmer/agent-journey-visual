@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'settlement.*(cash|date)|available.*cash' Slope_Model_Extensions_Spec.md | head -22; sed -n '2638,2698p' app/disputes/forecast.py; sed -n '3010,3050p' app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3200}));

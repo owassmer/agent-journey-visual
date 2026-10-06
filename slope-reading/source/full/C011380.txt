@@ -1,0 +1,2 @@
+text(ALL_TOOLS.filter(x=> /browser|browse/.test(x.name)).map(x=>({name:x.name,description:x.description.slice(0,150)})).slice(0,30));
+text(await tools.exec_command({cmd:"cat /Users/owenwassmer/.codex/skills/playwright/SKILL.md | head -85; ls .playwright-cli | tail -4","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

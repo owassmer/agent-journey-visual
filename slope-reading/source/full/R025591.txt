@@ -1,0 +1,200 @@
+252	async def propose_finding(ctx: RunContext, args: dict) -> dict:
+253	    ctx.run.get("dependencies", args["dependency_id"])
+254	    spans = []
+255	    for c in args["citations"]:
+256	        try:
+257	            spans.append(locate(ctx.evidence, c["item_id"], c["quote"], int(c.get("occurrence", 1))))
+258	        except (SpanError, EvidenceAccessError) as e:
+259	            raise ToolError(f"Citation rejected: {e}") from e
+260	    linked = tuple(args.get("interpretation_observation_ids", []))
+261	    for oid in linked:
+262	        o = ctx.run.get("observations", oid)
+263	        if o.profile != "claim_interpretation":
+264	            raise ToolError(f"{oid} is not a claim interpretation")
+265	    if not spans:
+266	        raise ToolError("A finding needs at least one verbatim citation")
+267	    finding = AtomicFinding(finding_id=ctx.run.new_id("fnd"), dependency_id=args["dependency_id"],
+268	                            proposition=args["proposition"], target=args["target"],
+269	                            subject_kind=args.get("subject_kind", "other"), subject=args.get("subject", ""),
+270	                            is_inference=bool(args.get("is_inference", False)), spans=tuple(spans), observation_ids=linked)
+271	    ctx.run.put("finding_proposed", finding)
+272	    checks: list[SemanticObservation] = []
+273	    if ctx.semantics is not None:
+274	        try:
+275	            checks = await ctx.semantics.check_finding(finding)
+276	        except Exception as e:
+277	            _record_jev_failure(ctx, e)
+278	            raise ToolError(f"Finding recorded as {finding.finding_id} but not checked, so it cannot be accepted: {e}") from e
+279	        finding = finding.model_copy(update={"observation_ids": linked + tuple(o.observation_id for o in checks)})
+280	        ctx.run.put("finding_proposed", finding)
+281	    all_obs = [ctx.run.get("observations", o) for o in finding.observation_ids]
+282	    return {"finding_id": finding.finding_id, "status": "proposed",
+283	            "spans": [{"item_id": s.item_id, "start": s.start, "end": s.end} for s in spans],
+284	            "observations": [_obs_view(o) for o in all_obs],
+285	            "to_accept": ("Give every observation a disposition. Unsettled or ambiguous answers need "
+286	                          "'overridden_by_agent_with_reason' with a reason; an ambiguous entity_scope answer cannot be accepted "
+287	                          "(re-interpret with a more precise target or more context, or reject)."),
+288	            "unsettled_observation_ids": [o.observation_id for o in all_obs if _unsettled(o)]}
+289	
+290	
+291	async def resolve_finding(ctx: RunContext, args: dict) -> dict:
+292	    finding: AtomicFinding = ctx.run.get("findings", args["finding_id"])
+293	    if finding.status != "proposed":
+294	        raise ToolError(f"{finding.finding_id} is already {finding.status}")
+295	    decision = args["decision"]
+296	    if decision not in ("accept", "reject"):
+297	        raise ToolError("decision must be accept or reject")
+298	    given = {d["observation_id"]: d for d in args.get("dispositions", [])}
+299	    allowed = set(Disposition.__args__)
+300	    bad = [d for d in given.values() if d.get("disposition") not in allowed]
+301	    if bad:
+302	        raise ToolError(f"Unknown disposition(s) {[d.get('disposition') for d in bad]}; use one of {sorted(allowed)}")
+303	    if decision == "accept" and ctx.semantics is not None and not any(
+304	            ctx.run.get("observations", o).profile == "finding_check" for o in finding.observation_ids):
+305	        raise ToolError(f"{finding.finding_id} has no completed finding check, so it cannot be accepted in this run")
+306	    missing = [o for o in finding.observation_ids if o not in given]
+307	    if missing:
+308	        raise ToolError(f"Give a disposition for every linked observation: missing {missing}")
+309	    if decision == "accept":
+310	        for oid in finding.observation_ids:
+311	            o = ctx.run.get("observations", oid)
+312	            d = given[oid]
+313	            if o.question_id == "entity_scope" and (is_ambiguous(o) or o.answer != "target"):
+314	                raise ToolError(f"{oid}: entity scope is {'ambiguous' if is_ambiguous(o) else o.answer}; a finding cannot be "
+315	                                "accepted on an unresolved entity. Re-interpret with a precise target or more context, or reject.")
+316	            if _unsettled(o) and (d["disposition"] != "overridden_by_agent_with_reason"
+317	                                  or len(d.get("note", "").strip()) < OVERRIDE_NOTE_MIN):
+318	                raise ToolError(f"{oid} ({o.question_id}: {meaning(o.question_id, o.answer)}"
+319	                                f"{', ambiguous' if is_ambiguous(o) else ''}) needs an override with a stated reason")
+320	    for oid, d in given.items():
+321	        if oid not in finding.observation_ids:
+322	            continue
+323	        o = ctx.run.get("observations", oid)
+324	        ctx.run.put("observation_disposition", o.model_copy(update={"downstream_disposition": d["disposition"],
+325	                                                                    "disposition_note": d.get("note", "")}))
+326	    resolved = finding.model_copy(update={"status": "accepted" if decision == "accept" else "rejected",
+327	                                          "resolution_note": args.get("note", "")})
+328	    ctx.run.put("finding_resolved", resolved)
+329	    return {"finding_id": resolved.finding_id, "status": resolved.status}
+330	
+331	
+332	def _parameter(p: dict, findings: dict[str, AtomicFinding]) -> ParameterRequirement:
+333	    """A value is documented only when it appears verbatim in a cited finding's quotes; otherwise it is agent-stated."""
+334	    value = None
+335	    if p.get("value_cents") is not None:
+336	        cents = int(p["value_cents"])
+337	        quotes = " ".join(s.quote for f in p.get("finding_ids", []) if f in findings for s in findings[f].spans)
+338	        if p.get("finding_ids") and _cents_in_text(cents, quotes):
+339	            value = documented(cents, Unit.CENTS, note=p.get("description"))
+340	        else:
+341	            value = EvidenceValue(status=Status.EXACT, unit=Unit.CENTS, value=cents, provenance=Provenance(
+342	                basis=Basis.DERIVED, derivation="agent-stated",
+343	                note="Agent-stated amount not found verbatim in the cited findings' quotes"))
+344	    elif p.get("lower_cents") is not None and p.get("upper_cents") is not None:
+345	        lo, hi = int(p["lower_cents"]), int(p["upper_cents"])
+346	        quotes = " ".join(s.quote for f in p.get("finding_ids", []) if f in findings for s in findings[f].spans)
+347	        quoted = bool(p.get("finding_ids")) and _cents_in_text(lo, quotes) and _cents_in_text(hi, quotes)
+348	        value = EvidenceValue(status=Status.RANGE, unit=Unit.CENTS, lower=lo, upper=hi, provenance=Provenance(
+349	            basis=Basis.DOCUMENTED if quoted else Basis.DERIVED, derivation=None if quoted else "agent-stated",
+350	            note=p.get("description") if quoted else "Agent-stated range not found verbatim in the cited findings' quotes"))
+351	    return ParameterRequirement(name=p["name"], description=p.get("description", ""), status=p.get("status", "unknown"),
+352	                                value=value, finding_ids=tuple(p.get("finding_ids", [])), resolves_via=p.get("resolves_via", ""))
+353	
+354	
+355	async def propose_effect(ctx: RunContext, args: dict) -> dict:
+356	    try:
+357	        effect = EconomicEffectProposal(
+358	            effect_id=ctx.run.new_id("eff"), finding_ids=tuple(args["finding_ids"]), mechanism=args["mechanism"],
+359	            target=args["target"], cash_direction=args["cash_direction"], baseline_treatment=args["baseline_treatment"],
+360	            parameters=tuple(_parameter(p, ctx.run.graph["findings"]) for p in args.get("parameters", [])),
+361	            linked_effect_ids=tuple(args.get("linked_effect_ids", [])), double_count_guard=args.get("double_count_guard", ""),
+362	            model_consequence=args.get("model_consequence", ""))
+363	    except (ValueError, KeyError) as e:
+364	        raise ToolError(f"Effect rejected: {e}") from e
+365	    ctx.run.put("effect_proposed", effect)
+366	    findings = {k: v for k, v in ctx.run.graph["findings"].items()}
+367	    problems = validate_effect(effect, findings, verify_span=lambda sp: verify(ctx.evidence, sp))
+368	    warnings = []
+369	    if ctx.semantics is not None and effect.baseline_treatment == "already_in_baseline_reclassify_timing" and not problems:
+370	        try:
+371	            item = _baseline_item(ctx, "aggregate_debt_observation_id")
+372	            if item is not None:
+373	                overlap = await ctx.semantics.baseline_overlap(
+374	                    f"{effect.mechanism} for {effect.target}", f"{item['label']} (baseline, {item['precision']} "
+375	                    f"${item['value'] / 100:,.0f}, observed {item['observed_on']})", (effect.effect_id,))
+376	                warnings = [_obs_view(o) for o in overlap]
+377	        except Exception as e:
+378	            _record_jev_failure(ctx, e)
+379	    validated = effect.model_copy(update={"status": "rejected" if problems else "validated",
+380	                                          "validation_messages": tuple(problems)})
+381	    ctx.run.put("effect_validated", validated)
+382	    return {"effect_id": validated.effect_id, "status": validated.status, "problems": problems,
+383	            "baseline_overlap_warning": warnings,
+384	            "note": "Validated means structurally sound and supported; it does not activate any cash flow."}
+385	
+386	
+387	async def run_sensitivity(ctx: RunContext, args: dict) -> dict:
+388	    """Remaining-period required net cash across explicit paid-since-measurement scenarios."""
+389	    opening = _baseline_item(ctx, "opening_cash_observation_id")
+390	    if opening is None:
+391	        raise ToolError("This case's baseline names no opening-cash observation")
+392	    reserve = ctx.inputs["policy"]["required_cash_reserve"]
+393	    effect_ids = list(dict.fromkeys(args["effect_ids"]))  # the same effect is never counted twice
+394	    buckets, seen_findings = [], {}
+395	    for eid in effect_ids:
+396	        eff: EconomicEffectProposal = ctx.run.get("effects", eid)
+397	        if eff.status != "validated" or eff.mechanism != "settlement_payment_timing":
+398	            raise ToolError(f"{eid} must be a validated settlement_payment_timing effect")
+399	        shared = [f for f in eff.finding_ids if f in seen_findings]
+400	        if shared:
+401	            raise ToolError(f"{eid} rests on {shared}, already used by {seen_findings[shared[0]]}: one obligation, one effect")
+402	        seen_findings.update({f: eid for f in eff.finding_ids})
+403	        bucket = next((p for p in eff.parameters if p.name == "remaining_current_year_bucket_cents"), None)
+404	        if (bucket is None or bucket.value is None or bucket.value.status != "exact"
+405	                or bucket.value.provenance.basis != Basis.DOCUMENTED):
+406	            raise ToolError(f"{eid} needs 'remaining_current_year_bucket_cents' as an exact amount found in its cited quotes")
+407	        buckets.append((eid, bucket.value.value))
+408	    unavailable_arg = args.get("unavailable_opening_cash_cents")
+409	    unavailable = (assumed(int(unavailable_arg), Unit.CENTS, "A_unavailable_opening_cash", "operator assumption for this sensitivity")
+410	                   if unavailable_arg is not None else unknown(Unit.CENTS, "restricted or unavailable share of reported cash not reported"))
+411	    opening_ev = documented(opening["value"], Unit.CENTS, approximate=True, observed_on=None)
+412	    reserve_ev = assumed(reserve["value"], Unit.CENTS, "demo_policy_reserve_v1", reserve["note"])
+413	    try:
+414	        fractions = [Decimal(str(x)) for x in args.get("paid_fractions", ["0", "0.5", "1"])]
+415	    except ArithmeticError as e:
+416	        raise ToolError("paid_fractions must be decimal numbers") from e
+417	    if not fractions or any(not Decimal(0) <= f <= 1 for f in fractions):
+418	        raise ToolError("paid_fractions must be between 0 and 1")
+419	    rows = []
+420	    for fr in fractions:
+421	        ins = [(eid, b, assumed(int(b * fr), Unit.CENTS, f"A_paid_{fr}", "scenario: share of the bucket paid since measurement"))
+422	               for eid, b in buckets]
+423	        res = remaining_period_required_net_cash(ins, opening_cash=opening_ev, unavailable_opening_cash=unavailable,
+424	                                                 reserve=reserve_ev)
+425	        rows.append({"share_of_bucket_paid_since_measurement": str(fr),
+426	                     "required_net_cash_cents": res.value, "status": res.status,
+427	                     "missing": res.provenance.note if res.value is None else None})
+428	    out = {"calculation": "required_net_cash = max(0, sum(bucket - paid) + reserve - (reported cash - unavailable portion))",
+429	           "opening_cash_basis": f"{opening['label']}: {opening['precision']} ${opening['value'] / 100:,.0f} as of {opening['observed_on']}",
+430	           "reserve_basis": reserve["note"], "unavailable_opening_cash": unavailable_arg if unavailable_arg is not None else "unknown",
+431	           "buckets": [{"effect_id": e, "bucket_cents": b} for e, b in buckets], "scenarios": rows,
+432	           "reading": "A necessary cumulative condition, not a dated feasibility test and not an observed shortfall."}
+433	    ctx.run.append("sensitivity_run", object_ids=tuple(effect_ids), payload=out)
+434	    return out
+435	
+436	
+437	async def request_missing_fact(ctx: RunContext, args: dict) -> dict:
+438	    fact_id = ctx.run.new_id("fact")
+439	    ctx.run.append("missing_fact_requested", object_ids=(fact_id, args.get("dependency_id", "")),
+440	                   payload={k: args.get(k) for k in ("fact", "why_pivotal", "acceptable_evidence", "if_resolved", "dependency_id")})
+441	    return {"fact_request_id": fact_id, "note": "Recorded internally; no message is sent."}
+442	
+443	
+444	async def submit_packet(ctx: RunContext, args: dict) -> dict:
+445	    summary = {k: args.get(k) for k in ("summary", "pivotal_unknowns", "supported_effect_ids", "conclusion")}
+446	    summary["incomplete_reasons"] = ctx.incomplete_reasons
+447	    summary["configuration_failure"] = ctx.configuration_failure
+448	    path = ctx.run.lock(summary)
+449	    ctx.submitted = True
+450	    return {"locked": True, "packet": path.name, "chain_head": ctx.run.head}
+451	

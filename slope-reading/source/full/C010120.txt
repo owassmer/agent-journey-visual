@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:26276,chars:"",yield_time_ms:1000,max_output_tokens:900}));
+text(await tools.exec_command({cmd:"aws sts get-caller-identity --profile slope; aws configure list --profile slope; aws ec2 describe-instances --profile slope --region us-east-1 --query 'Reservations[].Instances[].{Id:InstanceId,State:State.Name}' --output json; aws service-quotas get-service-quota --profile slope --region us-east-1 --service-code ec2 --quota-code L-1216C47A --query 'Quota.{Name:QuotaName,Value:Value}' --output json",max_output_tokens:1800}));

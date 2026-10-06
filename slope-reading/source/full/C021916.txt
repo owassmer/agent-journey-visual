@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'def answers_levy|enforce_after_final|stay_approved' app/disputes/forecast.py | tail -30; sed -n '1,160p' /tmp/review-stay-replay.py; rg -n 'enforce_after_final|stay_approved' app/disputes/state14.py | head -30","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3500}));

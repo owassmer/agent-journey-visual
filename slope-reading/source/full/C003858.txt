@@ -1,0 +1,1 @@
+{"command": "L=~/.hermes/profiles/connor/cache/delegation/live/deleg_a52c0804/task-0.log; grep -n -i \"slice\\|paths\\b\\|paths \" $L | grep -v \"^.*tool     |\" | tail -15 | cut -c1-350; tail -5 $L | cut -c1-300; ps -Ao pid,etime,%cpu,rss,command | grep \"9i2\" | grep -v -E \"grep|claude\" | cut -c1-160"}

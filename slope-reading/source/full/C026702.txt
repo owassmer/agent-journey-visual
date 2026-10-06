@@ -1,0 +1,1 @@
+{"command": "grep -n \"^Disposition\\|def _dispose\\|def _obs_view\\|def _record_jev_failure\\|def _review_date\" -A8 app/domain/investigation.py app/agent/tools.py | head -60; grep -n \"HORIZON\\|requested_amount\" app/decisions/case.py app/agent/tools.py | head", "description": "Inspect disposition helpers"}

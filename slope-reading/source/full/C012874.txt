@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"cat tools/decision_validation/notes_candidate.py; sed -n '1,80p' /tmp/reclassify_boundary_tie.py; rg -n 'notes_due_date|def as_of' app/analysis/events.py app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2600}));

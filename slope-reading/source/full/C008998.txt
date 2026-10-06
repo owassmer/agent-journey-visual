@@ -1,0 +1,6 @@
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"python - <<'PY'\nfrom urllib.request import urlopen\nu='https://docs.typesafe.ai/introduction/machine-learning-primer.md'\ns=urlopen(u,timeout=30).read().decode()\nprint(s)\nPY",max_output_tokens:3000}),
+ tools.exec_command({cmd:"sed -n '190,265p' app/agent/jev_profiles.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:2100}),
+ tools.exec_command({cmd:"rg -n -C 7 'noul|score|probabilities|argmax|max\\(' app/agent/jev.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3000}),
+ tools.exec_command({cmd:"nl -ba app/decisions/scenarios.py | sed -n '150,198p'",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:2000})
+]);results.forEach((r,i)=>text({i,...r}));

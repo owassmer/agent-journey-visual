@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor name in ('native','82'):\n p=Path(f'/tmp/review-{name}-narrow-catalog.py')\n Path(f'/tmp/review-{name}-guarded-catalog.py').write_text(p.read_text().replace(f'review-{name}-narrow',f'review-{name}-guarded'))\nPY","max_output_tokens":100}));

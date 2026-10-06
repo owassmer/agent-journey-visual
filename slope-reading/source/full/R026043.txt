@@ -1,0 +1,16 @@
+Exit code 1
+Traceback (most recent call last):
+  File [35m"/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p12_excl.py"[0m, line [35m62[0m, in [35m<module>[0m
+    [31mpatch[0m[1;31m('app/agent/tools.py', [[0m
+    [31m~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^^^^^^^^[0m
+        [1;31m('''    AtomicFinding,[0m
+        [1;31m^^^^^^^^^^^^^^^^^^^^^^[0m
+    ...<118 lines>...
+         [1;31m"a matter with no payment, obligation, restriction, covenant or earnings effect and why, each checked), duplicate_of'''),[0m
+         [1;31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+    [1;31m])[0m
+    [1;31m^^[0m
+  File [35m"/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p12_excl.py"[0m, line [35m8[0m, in [35mpatch[0m
+    assert [1;31ma in s[0m, (rel, a[:90])
+           [1;31m^^^^^^[0m
+[1;35mAssertionError[0m: [35m('app/agent/tools.py', '                checks = await _check_coverage(ctx, item, fids) if ctx.semantics is not No')[0m

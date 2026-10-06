@@ -1,0 +1,1 @@
+{"command": "uv run pytest -p no:cacheprovider --color=no -W ignore tests/test_decision_model.py 2>&1 | tail -3; uv run pytest -p no:cacheprovider --color=no -W ignore -q --deselect tests/test_viewer.py::test_recorded_run_renders_with_its_causal_chain 2>&1 | tail -4", "description": "Run decision tests and full suite", "timeout": 600000}

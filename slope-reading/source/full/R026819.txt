@@ -1,0 +1,40 @@
+    "get_mission": 1,
+    "read_baseline_profile": 1,
+    "read_loan_terms": 1,
+    "read_inventory": 1,
+    "record_dependency": 2,
+    "read_evidence": 11,
+    "search_evidence": 5,
+    "judge": 2,
+    "propose_finding": 5,
+    "resolve_finding": 5,
+    "resolve_reconciliation": 1,
+    "instantiate_dispute": 3,
+    "run_scenarios": 1,
+    "propose_effect": 9,
+    "request_missing_fact": 3,
+    "submit_packet": 2,
+    "StructuredOutput": 1
+  },
+  "graph_counts": {
+    "dependencies": 2,
+    "candidates": 36,
+    "jev_calls": 93,
+    "observations": 240,
+    "findings": 5,
+    "reconciliations": 1,
+    "effects": 9,
+    "inventory": 569,
+    "disputes": 2
+  },
+  "jev": {
+    "provider": "openrouter",
+    "requests": 82,
+    "cache_hits": 11,
+    "physical_attempts": 82,
+    "attempt_ceiling": 400,
+    "spent_usd": "0.007168434",
+    "spend_cap_usd": "0.10"
+  },
+  "recorded_at": "runs/recorded/chromadex_20240819-agent_plus_jev-20260925T163410Z"
+}

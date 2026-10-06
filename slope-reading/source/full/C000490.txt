@@ -1,0 +1,1 @@
+{"command": "ls -t ~/.hermes/services/claude-proxy-runtime 2>/dev/null | head; ls -t ~/.hermes/profiles/connor/logs 2>/dev/null | head -5; F=$(ls -t ~/.hermes/profiles/connor/logs/*.log 2>/dev/null | head -1); [ -n \"$F\" ] && grep -i -E \"429|rate|overload|timeout|retry|error\" \"$F\" | tail -15 | cut -c1-220"}

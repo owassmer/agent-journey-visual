@@ -1,0 +1,21 @@
+[IMPORTANT: Background process proc_ea8d90d95865 completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && S=~/.hermes/profiles/connor/cache/scratch/8/perf; mkdir -p $S && timeout 600 env -u CLAUDE_CODE_OAUTH_TOKEN uv run python -m cProfile -o $S/tree.prof ~/.hermes/profiles/connor/cache/scratch/8/b3/tree14.py 2>&1 | grep -v "npmrc\|nvm\|globalconfig" | head -4; env -u CLAUDE_CODE_OAUTH_TOKEN uv run python -c "
+import pstats; p=pstats.Stats('$S/tree.prof'); p.sort_stats('cumulative').print_stats(28)" 2>&1 | grep -v npmrc | tail -45 | cut -c1-170
+Output:
+...(first 3524 characters cut — process(action="log", session_id="proc_ea8d90d95865") has the full output)
+r/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1595(_end)
+  864/196    0.009    0.000  176.552    0.901 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1312(notes_petition)
+      136    0.000    0.000  175.373    1.290 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1391(post)
+        4    0.000    0.000  170.853   42.713 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1233(q1)
+      907    0.002    0.000  168.698    0.186 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1642(cash_out)
+       68    0.000    0.000  164.744    2.423 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1361(ripe_i1)
+      114    0.000    0.000  161.368    1.416 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1366(ruling)
+  146/114    0.001    0.000  161.368    1.416 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1378(ruling_pending)
+      136    0.001    0.000  158.826    1.168 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1394(appeal)
+  314/272    0.002    0.000  156.718    0.576 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1404(stay_post)
+    28666    0.116    0.000  143.509    0.005 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:380(trace)
+   165533   14.808    0.000  135.456    0.001 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/analysis/events.py:451(cum)
+     25/4    0.000    0.000  135.233   33.808 /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/disputes/forecast.py:1240(stay_i1)
+
+
+]

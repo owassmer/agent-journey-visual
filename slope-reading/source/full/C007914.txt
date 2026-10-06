@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split; sed -n '1,30p' fresh-balanced-coarse/live/0-0.log | cut -c1-200; echo ...; grep -h 'done,' */live/*.log | head -3; echo; grep -c . fresh-balanced-nested/live/4000-*.log | head -3; tail -3 fresh-balanced-nested/live/$(ls fresh-balanced-nested/live | head -1)"}

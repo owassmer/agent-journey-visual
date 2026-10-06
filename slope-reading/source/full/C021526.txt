@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'appeal_deadline|def build|security_offered' app/disputes/state14.py; sed -n '760,855p' app/disputes/state14.py; sed -n '260,315p' app/disputes/state14.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1900}));

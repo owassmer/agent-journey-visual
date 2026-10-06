@@ -1,0 +1,29 @@
+<persisted-output>
+Output too large (33.7KB). Full output saved to: /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events--claude-worktrees-step-5c-channels/1ebb1026-a1f0-4809-9321-bc3d6f875530/tool-results/bi46eufdq.txt
+
+Preview (first 2KB):
+# Round 2 brief: new lead case for the Slope demo
+
+This is builder-side case research, so you may read outcomes and later filings. Round 1 is recorded in `../shortlist.md` and `../notes_*.md`. Read `../shortlist.md` before you start. Its scoring and dossier format is the format for this round.
+
+## What the product does, and why the criteria
+
+The demo is a proof of concept for Russell at Slope, a B2B payments and financing company. Slope pays a business's supplier invoices, and the business repays in monthly installments. Slope underwrites on connected bank data.
+
+Thesis: domain-informed probabilistic judgments turn unusual qualitative evidence into a useful, measurable financial signal.
+
+At a decision date D:
+- An agent investigates the borrower's live legal dispute(s) from the public record available by D.
+- An LLM judgment model ("Jev") reads that evidence. It gives conditional probabilities for developments in court (ruling, appeal, bond, payment, settlement, enforcement). It also gives them for consequences beyond the courtroom: covenant or judgment defaults, litigation spend, customer or supplier relationships, and operational restrictions.
+- Code turns those probabilities into dated cash paths. It then simulates the borrower's cash and the lender's dated collections over about 180 days on Slope-style financing of the borrower's supplier invoices.
+
+The financing is sized from the borrower under Slope's published practice (`slope_practices.md`), not fixed in advance. The price for a stressed borrower sits in the upper part of Slope's risk-based range, at about 15–22% or more a year. For example, 3.7% over three monthly installments is about 22% a year.
+
+ChromaDex, the previous lead, failed because it had $27.7M of cash and an undrawn $10M revolver at about 9.5%. It would never rationally draw Slope financing, so no path reached the loan.
+
+## Why round 2 exists
+
+Round 1 ruled out state-court cases for reasons that came from its tools, not from the product:
+...
+</persisted-output>
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

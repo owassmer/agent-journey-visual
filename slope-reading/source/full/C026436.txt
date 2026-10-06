@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/cdx/fix_gen.py && uv run slope evidence build chromadex_20240819 2>&1 | tail -3 && uv run python cases/chromadex_20240819/make_run_inputs.py && grep -n \"restricted\\|200000000\\|19 August\" cases/chromadex_20240819/run_inputs.json | head", "timeout": 300000}

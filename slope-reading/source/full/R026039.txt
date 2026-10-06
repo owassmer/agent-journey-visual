@@ -1,0 +1,40 @@
+ok
+741:async def _check_coverage(ctx: RunContext, item: InventoryItem, fids: tuple[str, ...]) -> list[SemanticObservation]:
+742-    """Host check that 'covered' is true for every section: the cited findings must account for what it describes."""
+743-    cited = [ctx.run.graph["findings"][f] for f in fids]
+744-
+745-    def reuse(key: str) -> SemanticObservation | None:
+746-        # Adding findings cannot uncover a window: an earlier clear pass with a subset of these findings still holds.
+747-        for o in ctx.run.graph["observations"].values():
+748-            if (o.question_id == "coverage_supported" and o.subject_ids[:2] == (item.item_id, key)
+749-                    and set(o.subject_ids[2:]) <= set(fids) and o.answer == "covered" and not is_ambiguous(o)):
+750-                return o
+751-        return None
+752-    return await _per_section(
+753-        ctx, item, lambda key, passage, sha: ctx.semantics.coverage(passage, cited, (item.item_id, key, *fids), (sha,)),
+754-        {"partly_covered", "not_covered"}, "coverage check",
+755-        "Read each failed window (section_id:start-end character range) and propose and accept a finding for each specific "
+756-        "matter it describes, including one stating that a matter was paid, closed or superseded, then account for the item "
+757-        "again citing all its findings.", reuse=reuse, units=_coverage_windows(ctx, item))
+758-
+759-
+760-async def _check_duplicate(ctx: RunContext, item: InventoryItem, other: InventoryItem) -> list[SemanticObservation]:
+761-    """A duplicate adds nothing: each section must describe no matter or item beyond the covered item's passages."""
+762-    covered = _matter_passages(ctx, other)[:MAX_DUPLICATE_PASSAGES]
+763-    covered_passage = covered[0][1] if len(covered) == 1 else [p for _, p, _ in covered]
+782:def _escalate_item(ctx: RunContext, item: InventoryItem, observation_id: str, missing: str) -> InventoryItem:
+783-    """Escalation answers a specific failed check on this item; the item is disputed and stays open for the reviewer."""
+784-    obs = ctx.run.graph["observations"].get(observation_id)
+785-    failing = {"coverage_supported": {"partly_covered", "not_covered"}, "adds_matter": {"adds_item"},
+786-               "decision_relevance": {"could_change"}}
+787-    if (obs is None or not obs.subject_ids or obs.subject_ids[0] != item.item_id
+788-            or obs.answer not in failing.get(obs.question_id, set()) or is_ambiguous(obs)):
+789-        raise ToolError(f"{item.item_id}: escalate needs the observation_id of a failed host check on this item")
+790-    if len(missing) < OVERRIDE_NOTE_MIN:
+1023-     "and what is missing; the item stays open for the reviewer).",
+1024-     obj({"items": {"type": "array", "items": obj({"item_id": S, "disposition": {"type": "string", "enum": [
+1025:         "covered_by_findings", "duplicate_of", "not_decision_relevant", "escalate"]}, "finding_ids": {"type": "array", "items": S},
+1026-         "duplicate_of": S, "reason": S, "observation_id": S, "missing": S},
+1027-         ["item_id", "disposition"])}}, ["items"]), account_for_items),
+1028-    ("escalate_effect", "Escalate an effect the category guard rejected when you disagree with the check: it becomes disputed, "
+1029-     "creates no cash stream, and is left for the reviewer (a disputed cash-moving effect makes the run incomplete).",

@@ -1,0 +1,156 @@
+# W2 sweep log: arbitration and venue-rejected lane (25 Sep 2026)
+
+Method: EDGAR full-text search (efts.sec.gov, curl, UA per brief, ≤4 req/s), 2021-01-01..2025-09-30, forms 10-Q/10-K/8-K, filtered to consumer / food-bev / supplements / personal care / apparel / home / distribution / light-mfg SIC ranges (script: scratch/efts_sweep.py; raw hits: scratch/efts_hits.json). Promising hits were read in the filing text. No browser (toolcheck_W2.md).
+
+## Queries run (total hits → consumer-SIC companies)
+- "demand for arbitration" "substantial doubt" "supply agreement" → 105 → Cuentas, Faraday, View (none consumer-fit)
+- "arbitration award" "co-manufacturer" → 4 → Beyond Meat (too large)
+- "arbitration award" "substantial doubt" supplier → 129 → Charles & Colvard, Greenwave, Rite Aid, PLBY, Verus, Innovative MedTech, EV makers
+- "petition to confirm" "arbitration award" "substantial doubt" → 61 → Rite Aid only
+- "demand for arbitration" "co-packer" → 0
+- "interim award" "substantial doubt" → 65 → Acreage
+- "American Arbitration Association" "substantial doubt" supplier → 174 → Ascend Wellness, Exactus, Rocky Mountain High, Trutankless, Applied UV, SinglePoint, etc.
+- "arbitration" "co-packer" "substantial doubt" → 13 → NuZee, Pacific Ventures, Jones Soda, Reed's, Rocky Mountain High
+- "arbitration" "contract manufacturer" "substantial doubt" → 565 → Trutankless, Aterian, Jones Soda, Cambell Intl, Exactus, SinglePoint, ChromaDex, EV makers
+- "final award" "substantial doubt" → 217 → Applied UV, Agritek, Innovative MedTech, Mullen, Rite Aid, Acreage
+- "arbitrator awarded" "substantial doubt" → 70 → RDE (Restaurant.com)
+- "arbitration" "forbearance" "supplier" → 2,007 → 65 companies, mostly large or boilerplate (credit-agreement text)
+- "arbitration" "merchant cash advance" "supplier" → 32 → American Rebel, Sadot, Fuse Medical
+- "JAMS" "substantial doubt" distributor → 41 → Acreage, Global Diversified Marketing, Yunhong CTI
+- "arbitration" "minimum purchase" "substantial doubt" → 364 → C&C, Jones Soda, Alliance Entertainment (too large), NuZee, Greenlane, Canopy
+- "arbitration" "exclusive supply" "substantial doubt" → 88 → C&C only
+- "arbitration" "factoring" "substantial doubt" "supply agreement" → 31 → Synergy CHC (boilerplate in credit agreement)
+- "arbitration panel" "substantial doubt" "customer" → 111 → Porter Holding, CXJ, Cambell, Applied UV
+- "confirm the arbitration award" "substantial doubt" → 41 → Rite Aid
+- "filed a demand for arbitration against the Company" "substantial doubt" → 28 → Faraday, Wellgistics
+- "arbitration" "co-manufacturer" "substantial doubt" → 5 → SRx Health (risk-factor boilerplate)
+- "arbitration" "key customer" "substantial doubt" "award" → 52 → Greenlane, NuZee, Reed's, LiveOne, Fortune Valley
+- 8-K only, "arbitration award" → 3,135 → about 80 consumer-SIC filers; spot-checked Algorhythm (Singing Machine), Borealis, Dragonfly, Solesence, Energy Focus, Connexa, TechPrecision, Forward: **all were contract boilerplate** (SPA/indemnity/MCA/employment exhibits), not disclosed awards.
+- 8-K only, "interim award" → 90 → C&C, Beyond Meat, JELD-WEN, Leggett, Trulieve, VOXX (large)
+
+EFTS returned intermittent HTTP 500 on some 3–4-term queries; retried once.
+
+## Hits read and rejected (one line each)
+- **Reed's (REED) / California Custom Beverage (co-packer, former related party):** cross-demands Jan 2024, consolidated arbitration, amounts never disclosed, company calls loss "remote"; interim award for Reed's Feb 2026 (FY25 10-K: https://www.sec.gov/Archives/edgar/data/1140215/000149315226012679/form10-k.htm). Fails 3/4: no amount.
+- **Pacific Ventures (PACV):** arbitration awards $54k (Tradigital) and $29k judgment (10-Q/A Nov 2022). Too small.
+- **Applied UV (AUVIQ):** AAA award to ex-executive Doyle ($121k + $474k fees), confirmed in Westchester Supreme Court Sep 2023, payment schedule (FY23 10-K). Employee, not trade partner; small vs. $40M revenue.
+- **Aterian (ATER):** PPD earn-out (£6.9M) went to an independent accountant, company won Feb 2024; seller dispute, not trade partner; Aterian had revolver and more cash.
+- **TechPrecision (TPCS):** only a PAGA/employee matter; "arbitration award" hits were boilerplate.
+- **RDE (Restaurant.com):** $195k arbitration award (2021), settled $150k. Too small.
+- **Greenlane (GNLN):** Pryor Cashman fee arbitration $320k; Crossmark suit $297k. Too small.
+- **Upexi:** round-1 mention; hits are Bloomios-related (Upexi a seller/creditor) and 2025 convertible-note boilerplate; not re-examined further (company pivoted to a crypto treasury in 2025).
+- **Jones Soda / Core:** see notes_jones_soda.md (10/16; record too thin, outcome amount confidential).
+
+## Round-1 record/venue rejections reconsidered
+- **Charles & Colvard / Wolfspeed:** REVIVED — see notes_charles_colvard.md (15/16, 8(a) partial).
+- **Jones Soda / Core:** re-examined, still rejected (record thin; undisclosed settlement).
+- **Kaspien:** the round-1 reason was partly substantive ($774k claim, already collapsing); not redone.
+- **Real Good Food:** round-1 reason was substantive (suits of about $147k; stopped filing after Q3 2023); not redone.
+# Lane W3 sweep log (state commercial courts), 25 Sep 2026
+
+Time spent ≈ 60 min. Tools: see toolcheck_W3.md. Scratch JSON of EFTS hits: ~/.hermes/profiles/connor/cache/scratch/w3_efts*.json.
+
+## Filing-first (EDGAR full-text, 10-Q/10-K, 2021-01-01 → 2025-09-30)
+1. Court names × {co-packer, co-manufacturer, supply agreement, distribution agreement, substantial doubt, factoring, forbearance}: "Commercial Division", "North Carolina Business Court", "Complex Commercial Litigation Division", "Texas Business Court", "Business Litigation Session", "Metro Atlanta Business Case Division", "Georgia State-wide Business Court", "Complex Business Litigation". "co-packer"/"co-manufacturer" never co-occur with any of these court names.
+2. Full lane-name pull (all hits, paginated): "Commercial Division" 394, NCBC 27, CCLD 33, BLS 144, Complex Business Litigation 11, Texas Business Court 4 / Business Court of Texas 1, State-wide Business Court 33, Metro Atlanta 28, Commerce Court 36. After consumer-SIC filter the hits are large caps (PepsiCo, Kontoor, Mohawk, Under Armour, Krispy Kreme, Campbell's, UNFI) or false positives ("Commercial Division" = a business segment at Tandy Leather and Dixie Group; biote's CCLD hit is a forum clause).
+3. Generic state courts × supplier/distress terms: "Supreme Court of the State of New York", "Superior Court of the State of Delaware", "Court of Chancery", "Business Court", "Index No.", "Superior Court of California", "Circuit Court of Cook County", "Superior Court of New Jersey" × {co-packer, co-manufacturer, contract manufacturer + substantial doubt, supplier/distributor + substantial doubt + judgment, merchant cash advance}; plus "unpaid invoices"/"co-packing agreement"/"minimum purchase"/"forbearance agreement" phrase sets. → Nanophase/BASF found here.
+
+## Court-first
+- Web searches over nycourts.gov/reporter (Commercial Division), nccourts.gov NCBC opinions, courts.delaware.gov CCLD opinions, txcourts.gov Business Court, GSU Georgia Business Court reading room, Mass. BLS. Hits were private-company disputes (Oak Beverages v Yuengling, AOG v KIND, Cyprium v Curia, Parlux v S. Carter, Maxwell Foods v Smithfield, etc.) or large caps. No Slope-scale SEC-filer consumer company found court-first.
+- NYSCEF: search page loads in browser_mcp but hCaptcha present; no NYSCEF case for a qualifying candidate was identified, so no document opened there.
+- NJ eCourts civil case jacket: login wall.
+
+## Candidates examined and rejected (one line each)
+- **ToughBuilt (TBLT)**: only a landlord suit at D (Irvine HQ lease, ~$2.4M claim, $375k accrued, Orange County Sup. Ct. 30-2023-01326779); cash $1.8M vs AP $41.1M at 30 Sep 2023 = collapsing; then no filings until Dec 2024.
+- **Algorhythm / Singing Machine (RIME)**: NY Supreme lease suit settled for $250k within two months (Jul–Oct 2024); immaterial.
+- **Applied UV (AUVI)**: no legal proceedings disclosed in Q3 2023 10-Q.
+- **Aterian (ATER)**: NY Supreme case is an investor (Sabby) securities-purchase dispute, not a trade partner.
+- **Minim (MINM)**: NY Supreme (Kings) case is a TRO against Nasdaq delisting, not a trade partner.
+- **Neptune Wellness (NEPTF)**: $4.0M arbitration award to former seller/executive (PMGSL), not a trade partner; company collapsing.
+- **Youngevity, Cosmos, CV Sciences, Connexa, Samsara, Synergy CHC**: hits were forbearance/noteholder or boilerplate text; no live trade-partner state-court dispute found in the documents read.
+- **Heritage Distilling (CASK→IPST), Edible Garden (EDBL)**: no pending material litigation in the filings read.
+- **Tandy Leather, Dixie Group, biote**: false-positive court-name hits.
+- **Safety Shot, Life On Earth, Rocky Mountain High, Veroni Brands, Nutriband**: revenue far below $10M (not opened in depth).
+# W4 screen: companies read and rejected (filing-first lane)
+
+Verified by W4 from EDGAR filings on 25 Sep 2026. Each line gives the filing I read and the reason for rejection.
+
+- **Eastside Distilling / Beeline (EAST, CIK 1534708).** Sandstrom Partners v. Eastside (Multnomah County Circuit Court): a $245k claim for design services, settled for $0.1M cash plus $0.1M stock in Oct 2024. Immaterial. Source: 10-K filed 15 Apr 2025, https://www.sec.gov/Archives/edgar/data/1534708/000164117225004793/form10-k.htm
+- **Innovative Food Holdings (IVFH, CIK 312257).** Philadelphia Court of Common Pleas action, filed 2019, settled Jan 2024. This is the PA Action; its nature was not confirmed in the text I read, so the tort label is **unverified**. Not a trade-partner cash event. Source: 10-Q filed 14 Aug 2024, https://www.sec.gov/Archives/edgar/data/312257/000118518524000799/innovfood20240630_10q.htm
+- **Maison Solutions (MSS).** The only state-court matter is a securities class action (Sup. Ct. NY, Index 150024/2024). Excluded as securities-only.
+- **JanOne (ALTS).** Skybridge (call-center vendor) judgment in Hennepin County, about $715k plus fees, from 2021. Cash was $115k at FYE 2022, and the company pivoted to pharma after selling ARCA. Collapsing and no longer a Slope-shaped buyer. Source: 10-K filed 17 Apr 2023, https://www.sec.gov/Archives/edgar/data/862861/000095017023013095/jan-20221231.htm
+- **TechPrecision (TPCS).** The only state matter is a PAGA wage case (LA Superior Court 23STCV26591), settled 2024. Not a trade dispute.
+- **Vystar (VYST).** EMA Financial v. Vystar: a convertible-note lender dispute in S.D.N.Y. and the 2d Cir. Not a trade partner, and revenue collapsed after 2021.
+- **Smart for Life (SMFL).** The hit was a director biography. No dispute found.
+- **BranchOut Food (BOF).** The hit was the Nevada exclusive-forum clause. No dispute found.
+- **ThermoGenesis (THMO).** The hit was the Delaware Chancery forum clause. No dispute found in the text I read.
+- **Venus Concept (VERO) and ADOMANI/Envirotech (EVTV).** State matters are securities class actions only.
+- **Sientra.** BIA-ALCL product-liability suits. Not a trade dispute. Medical device.
+- **Unrivaled Brands.** *Fusion LLF v. Unrivaled* (Orange County Superior Court 30-2022-01266856): a claim of at least $4.55M with a writ of attachment sought and denied, then settled by term sheet. This is a real trade-creditor fight, but the company is a **cannabis** operator: not Slope-fundable and banking-restricted. Rejected on criterion 1. Not verified further.
+- **Kewaunee Scientific.** The hits were boilerplate in a credit-agreement exhibit.
+- **Coffee Holding and Yunhong CTI.** See their separate notes files.
+# Nanophase Technologies (NANX, now Solésence Inc., SLSN), CIK 883107: BASF Corp. v. Nanophase
+
+Lane W3 (state commercial courts), 25 Sep 2026. Verified by the W3 worker from EDGAR primary documents fetched with curl (listed below). Builder-side: outcomes read.
+
+## Borrower
+- Romeoville/Bolingbrook, IL. Makes zinc-oxide and other mineral ingredients (personal-care ingredients, sold mainly to BASF under a 1999 exclusive Zinc Oxide Supply Agreement) and, through subsidiary Solésence LLC, finished skin-care / SPF products for brands (contract manufacturer to beauty brands). SIC 2844 (cosmetics). OTCQB.
+- Revenue: FY2022 $37.3M; FY2023 $37.3M (10-K FY2023: https://www.sec.gov/Archives/edgar/data/883107/000199937124004138/nanx-10k_123123.htm).
+- Q3 2023: revenue $7.96M, cost of revenue $6.43M, net loss $1.44M; 9M 2023 net loss $2.26M (10-Q Q3 2023: https://www.sec.gov/Archives/edgar/data/883107/000199937123000211/nanx-10q_093023.htm).
+- Customer concentration (Q3 2023 10-Q, Note 8 / FY2024 Q3 10-Q table): customer #2 "Personal Care Ingredients" (BASF) = 30% of Q3 2023 revenue, 31% of 9M 2023; customer #1 (Solésence) 21%/11%.
+- Buys high-purity zinc and other raw materials (some single-source, China/Korea) — 10-K FY2022 "Sources and Availability of Raw Materials".
+
+## Dispute
+- **BASF Corp. v. Nanophase Technologies Corp., Docket No. MRS-L-1396-22** (N.J. Super. Ct., Law Div., Morris County), filed 9 Aug 2022. Docket number verified in the filed settlement agreement (8-K 11 Apr 2024, Ex. 99.2: https://www.sec.gov/Archives/edgar/data/883107/000117184324001961/exh_992.htm).
+- Claims: breach of exclusivity, capacity and inventory provisions of the Zinc Oxide Supply Agreement (Nanophase selling zinc oxide / Solésence products containing it in BASF's "Field"); unjust enrichment; good faith. Relief: **unspecified damages, permanent injunction** against sales to anyone other than BASF of a broad range of zinc-oxide products, fees. Not seeking termination. (10-Q Q3 2022: https://www.sec.gov/Archives/edgar/data/883107/000138713122011376/nanx-10q_093022.htm; 8-K 8 Sep 2022: https://www.sec.gov/Archives/edgar/data/883107/000138713122009591/nanx-8k_090622.htm)
+- Parallel: Nanophase v. BASF declaratory action, Circuit Court of Cook County, filed 7 Sep 2022; dismissed as duplicative 16 Mar 2023.
+- Rulings: NJ MTD denied 10 Feb 2023; Nanophase answered + counterclaims 28 Feb 2023 (declaratory judgment; BASF breached 70% requirements-purchase obligation); 6 Oct 2023: BASF MTD denied as to DJ counterclaim, granted as to the purchase-requirement counterclaim; BASF answered 31 Oct 2023; discovery ongoing (10-Q Q3 2023).
+- No accrual: "estimated contingent loss was not recorded ... nor is a range of loss estimable" (10-K FY2022, FY2023).
+- Litigation spend flagged: 9M 2023 SG&A up "due in large part to increased legal costs" (10-Q Q3 2023 MD&A).
+
+## Proposed D
+- **14 Nov 2023** (Q3 2023 10-Q filed; 13 Nov 2023 Strandler bridge-note financing). Dispute live (discovery; counterclaim just pleaded out). Next developments unknown at D.
+- Caveat from the later-filed settlement: the parties had signed a binding ZnO Exclusivity MOU on **27 Nov 2023** and supply/modified-product MOUs on **21 Dec 2023** (Ex. 99.2 §2(j)). Not public at the time; public on 11 Apr 2024. So the dispute was de facto resolved ~2 weeks after D.
+- Alternative D: 14 Nov 2022 (Q3 2022 10-Q; cash $510k at 30 Sep 2022; MTD pending). Earlier, cash tighter, but outcome ~17 months out (fails 12-month outcome by a margin).
+
+## Liquidity at D (30 Sep 2023, 10-Q Q3 2023)
+- Cash **$1.19M**; AR $3.20M; inventory $10.12M; AP **$6.27M**; lines of credit, related party **$6.34M** (current); long-term related-party debt $1.0M; total equity $3.93M.
+- 9M 2023 operating cash flow +$0.64M; capex $0.85M.
+- Facilities: all from affiliates of majority holder Bradford T. Whitmore (Beachcorp LLC, Strandler LLC): A/R Revolver up to $8.0M (qualified AR borrowing base), Inventory Facility up to $4.0M (50% of qualified inventory), Term Loan $1.0M; **prime + 0.75%** (≈9.25% in late 2023); maturity 31 Mar 2024, extended to 31 Mar 2025 on 13 Nov 2023 with inventory facility raised to $5.2M at 55% advance; plus a new **$2.0M Strandler Bridge Note** at prime + 0.75%, due on a planned rights offering or 13 May 2024. A Libertyville Bank & Trust line supports the Bolingbrook lease (undrawn at 31 Dec 2022). (10-K FY2022: https://www.sec.gov/Archives/edgar/data/883107/000183988223007887/nanx-10k_123122.htm; 10-Q Q3 2023 Note 6)
+- No going-concern doubt; auditor (RSM) made going concern a **critical audit matter** (10-K FY2022, FY2023).
+- My estimate (not disclosed): borrowing base at 30 Sep 2023 ≈ AR-based ~$2.5M + inventory ~$5.2M ≈ $7.7M vs $6.34M drawn → ~$1.4M headroom, plus the $2M bridge from 13 Nov 2023. **Unverified estimate.**
+
+## Criterion 8
+- (a) **Partial (1).** No third-party bank revolver of size; the working-capital lines are insider-controlled, borrowing-base limited, short-dated, but cheap (~9.25%) and were expanded on 13 Nov 2023. A bank-data view sees a controlling holder topping up at prime+0.75%, which is cheaper than Slope's ~20% APR. Constrained only in the sense that it is discretionary.
+- (b) **Pass (2).** Cash $1.19M vs quarterly cash costs ~ $9M (COGS $6.43M + R&D $1.06M + SG&A $1.70M in Q3 2023) → ~2 weeks of gross outflows; AP $6.27M ≈ 1 quarter of COGS.
+- (c) **Pass (2).** COGS ~$2.1M/month; raw materials (high-purity zinc etc.) and packaging bought on invoice; AP $6.3M.
+- (d) **Weak (0–1).** Exposure unquantified (unspecified damages); the real risk was an injunction on Solésence zinc-oxide sales and loss/repricing of BASF volume (30% of revenue). No dated cash consequence within 180 days was disclosed or occurred.
+
+## Channels beyond the courtroom (pre-D filings)
+1. Counterparty is the key customer (≈30% of revenue) and exclusive offtaker — relationship and volume at risk; Nanophase alleged BASF under-bought its 70% requirement.
+2. Requested permanent injunction would restrict sales of Solésence finished products (the growth business).
+3. Litigation spend explicitly raising SG&A (9M 2023).
+4. Dependence on insider financing (Beachcorp/Strandler) with 31 Mar 2024 maturities at D-1 and a rights offering planned.
+
+## After D (reveal)
+- 27 Nov / 21 Dec 2023: binding MOUs with BASF (exclusivity; modified ZnO product; supply) — disclosed only in April 2024.
+- 1 Mar 2024: Strandler bought $6.0M Series X preferred (instead of the rights offering) (10-K FY2023 subsequent events).
+- **10 Apr 2024: Settlement Agreement and General Release**; Amendment No. 5 to the supply agreement (BASF exclusive for ZnO it buys as ingredient; Nanophase/Solésence free to sell finished products and certain customer-developed dispersions worldwide; forecasting/inventory/capacity/shutdown terms reworked). **No cash payment either way.** Stipulation of dismissal with prejudice filed 11 Apr 2024. (8-K 11 Apr 2024: https://www.sec.gov/Archives/edgar/data/883107/000117184324001961/f8k_041124.htm; Ex. 10.1 Amendment No. 5: https://www.sec.gov/Archives/edgar/data/883107/000117184324001961/exh_101.htm)
+- Cash $1.72M at 31 Dec 2023, $2.02M at 31 Mar 2024 (10-Q Q1 2024: https://www.sec.gov/Archives/edgar/data/883107/000199937124005984/nanx-10q_033124.htm).
+- BASF share of revenue fell to 17% in Q3 2024 while Solésence customer rose to 34% (10-Q Q3 2024).
+- A Slope loan at D (installments mid-Dec, mid-Jan, mid-Feb) would have been repaid; the dispute never produced a cash event.
+
+## Record route
+- Opened (fetched and read): 10-Qs Q1 2022–Q3 2025 and 10-Ks FY2021–FY2025 (legal-proceedings, liquidity, balance-sheet text); 8-K 14 Nov 2023 (cover only, earnings release); settlement agreement Ex. 99.2 of the 11 Apr 2024 8-K. Seen only via search snippets (not opened): 8-K 8 Sep 2022 and its Ex. 99.1, the 11 Apr 2024 8-K body, Ex. 99.1 and Ex. 10.1 — their content is restated in the 10-Qs I read.
+- Could not open: NJ eCourts civil case jacket for MRS-L-1396-22 — https://portal.njcourts.gov/webcivilcj/CIVILCaseJacketWeb/pages/civilCaseSearch.faces redirects to "NJCourts Online: Login" (free account may exist; not tried). No published NJ opinion found. Cook County docket not attempted (dismissed early).
+- So the record before D is the company's own SEC narrative only (fairly detailed: ruling dates and holdings), no pleadings.
+
+## Scores (0/1/2)
+1 Borrower fit 2 (personal-care ingredients + contract manufacturer of skin care, $37M revenue) · 2 Live dispute w/ cash consequence in 180d 1 (live, but no quantified cash path) · 3 Record 1 (SEC narrative only; NJ docket behind login) · 4 Signal reaches lender 1 (unquantified; injunction/customer risk vs $1.2M cash) · 5 Channels 2 · 6 Outcome within 12 months 2 (settled 10 Apr 2024, ~5 months) · 7 Acquirable 1 (EDGAR yes; court docs no) · 8 Rational draw 1 ((a) 1, (b) 2, (c) 2, (d) 0–1) → **11/16, gate partial (weak on 8(a)/(d))**.
+
+## Risks
+- Low fame (OTC, niche) → low recall risk.
+- Outcome is non-monetary; the demo would show a dispute that fizzles into a contract amendment. Useful as a "benign resolution" control case, weak as a lead.
+- Insider lender makes the bank-data view ambiguous.
+- Settlement MOUs signed 13 days after D — a D before 27 Nov 2023 is required.
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

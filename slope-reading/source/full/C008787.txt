@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/fresh-walk-3 && git log --oneline -1 && grep -c \"worker: \\[\" .github/workflows/fresh-walk.yml && git push -q -f origin HEAD:fresh-walk && sleep 45 && gh run list --branch fresh-walk --limit 1 --json databaseId,status,headSha --jq '.[0] | \"\\(.databaseId) \\(.status) \\(.headSha)\"'", "timeout": 120}

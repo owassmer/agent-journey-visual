@@ -1,0 +1,1 @@
+{"command": "uv run python -c \"\nimport sqlite3\ndb=sqlite3.connect('var/evidence/chromadex_20240903.sqlite')\nrows=db.execute(\\\"SELECT section_id, heading_path, text FROM sections WHERE source_id='cdxc_2024q2_10q' AND (text LIKE '%Elysium%') ORDER BY ordinal\\\").fetchall()\nfor sid,hp,t in rows:\n    print('=====',sid,hp[:120]); print(t[:6000])\n\" | head -150"}

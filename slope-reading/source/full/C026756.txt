@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/self.prefer\\[stage\\[\"stage\"\\]\\], top)/self.prefer.get(stage[\"stage\"], next(iter(options))), top)/' tests/test_decision_model.py && uv run pytest tests/test_decision_model.py -q 2>&1 | grep -E \"passed|failed|Error|assert\" | head -30", "description": "Fix stub default and rerun tests", "timeout": 300000}

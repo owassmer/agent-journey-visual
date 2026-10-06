@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"git status --short && git remote -v && gh auth status && rg --files -g '*.md' -g '!**/reference/**' | head -65","max_output_tokens":5000}));
+text(await tools.exec_command({cmd:"for p in /AGENTS.md /Users/AGENTS.md /Users/owenwassmer/AGENTS.md /Users/owenwassmer/dev/AGENTS.md /Users/owenwassmer/dev/Slope_Sparse_Events/AGENTS.md; do if [ -f \"$p\" ]; then cat \"$p\"; fi; done\ncat README.md","max_output_tokens":6000}));

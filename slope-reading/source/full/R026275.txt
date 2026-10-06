@@ -1,0 +1,19 @@
+Web search results for query: "Barfresh Food Group v. Schreiber Foods complaint court case 2022 2023 docket"
+
+Links: [{"title":"barfresh food group inc.","url":"https://www.sec.gov/Archives/edgar/data/1487197/000149315223006567/form10-k.htm"},{"title":"Sec","url":"https://www.sec.gov/Archives/edgar/data/1487197/000149315222031338/form8-k.htm"},{"title":"Barfresh Food Group, Inc. v. Schreiber Foods, Inc. et al 2:2022cv08222 | U.S. District Court for the Central District of California | Justia","url":"https://dockets.justia.com/docket/california/cacdce/2:2022cv08222/867839"},{"title":"OPPOSITION OF DEFENDANT AND CROSS- COMPLAINANT BARFRESH FOOD GROUP, INC., TO PLAINTIFF/CROSS-DEFENDANTS' IMPROPER NOTICE OF CONTINUANCE RE DEMURRER HEARING/NOTICE OF MOTION FOR IMPOSITION OF SANCTIONS - SCOTT DUNCOMBE VS BARFRESH FOOD GROUP INC | Trellis","url":"https://trellis.law/doc/175726608/opposition-defendant-cross-complainant-barfresh-food-group-inc-to-plaintiff-cross-defendants-improper-notice-continuance-re-demurrer-hearing-notice-motion-for-imposition-sanctions"},{"title":"Case Law Index: Food Labeling – National Agricultural Law Center","url":"https://nationalaglawcenter.org/aglaw-reporter/case-law-index/food-labeling/"},{"title":"NOTICE OF RULING RE BARFRESH'S MOTION TO COMPEL RESPONSES TO FORM INTERROGATORIES-GENERAL - SCOTT DUNCOMBE VS BARFRESH FOOD GROUP INC | Trellis","url":"https://trellis.law/doc/175719997/notice-ruling-re-barfresh-s-motion-to-compel-responses-to-form-interrogatories-general"},{"title":"Food & Beverage Industry's 2022 Litigation Outlook | Food Manufacturing","url":"https://www.foodmanufacturing.com/labeling/article/21977542/food-beverage-industrys-2022-litigation-outlook"},{"title":"barfresh provides first quarter 2023 results and business update","url":"https://www.tipranks.com/news/press-releases/barfresh-provides-first-quarter-2023-results-and-business-update"},{"title":"EX-99.1 2 ex99-1.htm","url":"https://www.sec.gov/Archives/edgar/data/1487197/000149315222031338/ex99-1.htm"},{"title":"barfresh announces non recourse non dilutive litigation financing","url":"https://www.tipranks.com/news/press-releases/barfresh-announces-non-recourse-non-dilutive-litigation-financing"}]
+
+Based on the search results, here's what I found about the Barfresh Food Group v. Schreiber Foods court case:
+
+## Case Overview
+A contract product liability case was filed on November 10, 2022 in the California Central District Court under case number 2:2022cv08222.
+
+## Background and Complaint
+On November 4, 2022, Barfresh received notification from Schreiber Foods, Inc. that it was denying any responsibility for the defective manufacture of certain products, after Barfresh had been experiencing performance and quality issues with products manufactured by Schreiber under the supply agreement. In response to Schreiber's denial of any liability, on November 10, 2022, Barfresh filed a complaint in the United States District Court for the Central District of California, Western Division, against Schreiber claiming a breach of the supply agreement and seeking economic damages.
+
+## Case Status
+On January 20, 2023, Barfresh filed a voluntary dismissal of the complaint which allows the parties to reach a potential resolution outside of the court system; however, Barfresh had the right to refile the complaint in California State Court. As of August 2024, Barfresh received offers to fund the lawsuit on a non-recourse basis and had spent approximately $300,000 over the past two years for this lawsuit.
+
+For more detailed docket information, you can access the case through the U.S. Court's PACER system or the California Central District Court's Electronic Court Filings (ECF) System.
+
+
+REMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.

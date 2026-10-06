@@ -1,0 +1,99 @@
+    return date.fromisoformat(str(ctx.evidence.snapshot_info()["cutoff"])[:10])
+
+
+async def read_baseline_profile(ctx: RunContext, _args: dict) -> dict:
+    from app.decisions.case import is_slope_case
+
+    if is_slope_case(ctx.inputs):
+        from app.finance.bank import load_feed, summary
+        from app.finance.slope_products import load_terms
+
+        terms = load_terms(ROOT / ctx.inputs["policy"]["terms_file"])
+        return {"baseline_profile": ctx.inputs["baseline_profile"], "financing_plan": ctx.inputs["financing_plan"],
+                "connected_bank_data": summary(load_feed(ctx.evidence.snapshot_info()["snapshot_id"])),
+                "slope_credit_policy": terms["credit_policy"]}
+    return {"baseline_profile": ctx.inputs["baseline_profile"], "policy": ctx.inputs["policy"]}
+
+
+async def read_loan_terms(ctx: RunContext, _args: dict) -> dict:
+    from app.decisions.case import is_slope_case
+
+    if is_slope_case(ctx.inputs):
+        from app.decisions.case import request_from_inputs
+        from app.finance.bank import load_feed, risk_features
+        from app.finance.slope_products import limits, load_terms, menu, tier_for
+
+        terms = load_terms(ROOT / ctx.inputs["permitted_offers"]["terms_file"])
+        features = risk_features(load_feed(ctx.evidence.snapshot_info()["snapshot_id"]))
+        tier, measures = tier_for(features, terms)
+        req = request_from_inputs(ctx.inputs, _review_date(ctx))
+        return {"product": terms["product"], "provenance": terms["provenance"], "tier": tier, "tier_measures": measures,
+                "bank_only_limits": limits(features, terms), "requested_term_id": req.requested_term_id,
+                "funding_date": req.funding.isoformat(), "invoice_due_without_slope": req.invoice_due.isoformat(),
+                "offers": [{"offer_id": o.offer_id, "term_id": o.term_id, "amount_cents": o.amount_cents,
+                            "fee_bps": o.fee_bps, "fee_cents": o.fee_cents,
+                            "apr_equivalent_bps": o.apr_equivalent_bps(req.funding),
+                            "schedule": [{"due": p.due.isoformat(), "amount_cents": p.amount_cents}
+                                         for p in o.schedule(req.funding)]}
+                           for o in menu(terms, req.amount_cents, tier)],
+                "existing_loans": ctx.inputs["baseline_profile"]["existing_loans"]}
+    offers = []
+    for o in ctx.inputs["permitted_offers"]["offers"]:
+{
+ "financing_plan": {
+  "funding": "next business day after the review date (Slope pays the supplier)",
+  "invoice_due_days_after_funding": 30,
+  "basis": "operator_request",
+  "note": "Without Slope, ChromaDex would pay this invoice itself on its due date."
+ },
+ "permitted_offers": {
+  "permitted_offer_set_id": "slope_menu_v1",
+  "terms_file": "cases/slope_terms.json",
+  "requested_term_id": "inst_90"
+ },
+ "policy": {
+  "policy_config_id": "slope_policy_v1",
+  "terms_file": "cases/slope_terms.json"
+ }
+}
+{'mission_id': 'chromadex_2024_supplier_bill_financing', 'requested_use': {'value': "Pay a contract manufacturer's invoice for Tru Niagen finished goods", 'basis': 'operator_request'}, 'requested_amount': {'value': 200000000, 'unit': 'USD_cents', 'basis': 'operator_request'}, 'requested_term': {'value': '90 days, monthly installments', 'basis': 'operator_request'}, 'requested_pricing': {'value': "Slope price card for the borrower's risk tier", 'basis': 'operator_request'}, 'baseline_profile_id': 'chromadex_ordinary_baseline_v1', 'existing_loan_record_ids': ['chromadex_western_alliance_revolver'], 'permitted_offer_set_id': 'slope_menu_v1', 'policy_config_id': 'slope_policy_v1', 'initial_event_seed': "As of 19 August 2024, assess Slope financing of a USD 2.0 million contract-manufacturer invoice for ChromaDex Corporation. ChromaDex's public filings describe long-running litigation with Elysium Health, a former customer, in several federal courts."}
+"""Generate the locked run inputs for the ChromaDex lead case from the built snapshot.
+
+Run after `uv run slope evidence build chromadex_20240819`: `uv run python cases/chromadex_20240819/make_run_inputs.py`.
+Every baseline observation and revolver cover term is checked verbatim against the stored section text.
+"""
+
+import json
+import sqlite3
+from pathlib import Path
+
+from app.evidence.snapshot import EVIDENCE_DIR
+
+db = sqlite3.connect(EVIDENCE_DIR / 'chromadex_20240819.sqlite')
+
+
+def section_of(item_id: str) -> tuple[str, str]:
+    if '#t' in item_id:
+        sid = db.execute('SELECT section_id FROM tables WHERE table_id=?', (item_id,)).fetchone()[0]
+    else:
+        sid = item_id
+    return sid, db.execute('SELECT text FROM sections WHERE section_id=?', (sid,)).fetchone()[0]
+
+
+def find_quote(item_id: str, needle: str) -> tuple[str, str]:
+    sid, text = section_of(item_id)
+    for line in text.split('\n'):
+        if needle in line:
+            return sid, line.strip()
+    raise SystemExit(f'{needle!r} not in {sid}')
+
+
+def obs(oid, label, value, precision, observed_on, item, needle, note=None):
+    sid, quote = find_quote(item, needle)
+    assert quote in section_of(sid)[1]
+    return {"observation_id": oid, "label": label, "value": value, "unit": "USD_cents", "precision": precision,
+            "observed_on": observed_on, "basis": "documented_evidence", "note": note,
+            "citation": {"source_id": sid.split('#')[0], "item_id": sid, "quote": quote}}
+
+
+Q2 = 'cdxc_2024q2_10q'

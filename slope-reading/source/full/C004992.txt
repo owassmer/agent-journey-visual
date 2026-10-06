@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; grep -rn \"delisted_on\\|default_available_on\\|declaration_deadline\\|repurchase_date\\b\" app/ Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/*.json | grep -v \"def \\|\\.pyc\" | cut -c1-200 | head -20", "timeout": 30}

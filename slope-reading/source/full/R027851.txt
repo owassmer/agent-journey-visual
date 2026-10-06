@@ -1,0 +1,28 @@
+<persisted-output>
+Output too large (33.1KB). Full output saved to: /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/2e338e7b-b5a4-476b-a810-3f7556007f4a/tool-results/b0o20nqp3.txt
+
+Preview (first 2KB):
+{
+  "registry_id": "slope_external_event_cashflow",
+  "registry_version": "2.0.1-design",
+  "status": "design_template_not_live_validated",
+  "model_id": "jev-1.13.0",
+  "sdk_requirement": "typesafe-sdk==0.7.1",
+  "sdk_mapping": "For each selected entry, copy entry.question, prefix its instructions with the global_rules text, and construct typesafe_sdk.Choice(**copied_question). Other entry metadata is enforced by the host and is not forwarded as unsupported model instruction fields.",
+  "purpose": "Focused evidence and research-routing judgments inside an adaptive external-event investigation. No question estimates a borrower default probability, generates a dollar adjustment, or makes the final lending decision.",
+  "global_rules": [
+    "Evaluate only the supplied state. Do not use remembered facts about this company, dispute, or later events.",
+    "Each semantic call concerns one atomic claim, one target, and one source passage with necessary qualifications. Split multiple claims before evaluation.",
+    "If more than one substantive category fits because the input combines claims, select unknown instead of choosing an arbitrary category.",
+    "The instruction describes the statement in this evidence. Code applies dates, source eligibility, supersession and financial arithmetic separately.",
+    "Source authority and claim posture are separate. An SEC filing can report an allegation or expectation.",
+    "No confidence threshold automatically converts a judgment to an accepted fact or a credit decision. Retain all distributions and require the agent to reconcile material contradictions.",
+    "Independent questions using the same state may be batched. A question that depends on another answer receives a later request with that answer explicitly included in state.",
+    "Question identifiers are application metadata. The complete question must appear in instructions."
+  ],
+  "state_contract": {
+    "semantic": {
+      "required": [
+        "target",
+...
+</persisted-output>

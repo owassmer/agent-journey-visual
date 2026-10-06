@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --command-id f76b42a0-95cc-467f-b061-6e3bc19f720e --instance-id i-09b42b44a8d35909a --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' --output json;","max_output_tokens":1000}));
+text(await tools.exec_command({cmd:"rg -n 'remaining|def worker|Restart' tools/question_refresh_fleet.py | tail -15","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}));

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '2280,2320p' app/disputes/forecast.py\nrg -n 'stay_post|stay_motion|stay.*no|court_order' app/analysis/events.py | head -30\nsed -n '267,293p' app/disputes/forecast.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:2300}));

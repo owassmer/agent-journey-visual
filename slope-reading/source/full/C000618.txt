@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events && git fetch -q origin && git log --oneline -5 origin/main | cat && gh run list --limit 8 --json databaseId,headBranch,conclusion,status,name,createdAt,headSha --jq '.[] | \"\\(.databaseId) \\(.headBranch) \\(.name) \\(.status) \\(.conclusion) \\(.headSha[0:7]) \\(.createdAt)\"' && git worktree list | cat"}

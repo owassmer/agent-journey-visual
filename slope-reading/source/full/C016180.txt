@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"osascript -e 'tell application \"System Events\" to tell process \"Google Chrome\" to click menu item \"Allow JavaScript from Apple Events\" of menu \"Developer\" of menu item \"Developer\" of menu \"View\" of menu bar item \"View\" of menu bar 1'\npython3 /tmp/read_ci_tail.py 36960914315","yield_time_ms":1000,"max_output_tokens":1000}));

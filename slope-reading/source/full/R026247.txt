@@ -1,0 +1,24 @@
+Web search results for query: "Slope fintech JPMorgan B2B pay later net terms credit underwriting AI 2025"
+
+Links: [{"title":"JPMorgan Chase invests in B2B payments startup Slope | Banking Dive","url":"https://www.bankingdive.com/news/jpmorgan-chase-65m-investment-payments-slope-openai-sam-altman/721936/"},{"title":"Slope funding, news & analysis | Sacra","url":"https://sacra.com/c/slope/"},{"title":"JPMorgan Chase invests in B2B payments startup Slope | Payments Dive","url":"https://www.paymentsdive.com/news/jpmorgan-chase-investment-payments-startup-slope/721896/"},{"title":"Slope - Partner Integration | J.P. Morgan","url":"https://partners.jpmorgan.com/slope.html"},{"title":"Slope, AI-Led B2B Payments Platform, Secures $65 Million Strategic Equity and Debt Funding Provided by J.P. Morgan and Others","url":"https://www.businesswire.com/news/home/20240717100691/en/Slope-AI-Led-B2B-Payments-Platform-Secures-$65-Million-Strategic-Equity-and-Debt-Funding-Provided-by-J.P.-Morgan-and-Others"},{"title":"Slope | B2B payments simplified - About us","url":"https://slopepay.com/company"},{"title":"Case Study: J.P. Morgan integrates Slope's AI-powered platform to offer instant B2B financing at point of sale - Tearsheet","url":"https://tearsheet.co/payments/case-study-j-p-morgan-integrates-slopes-ai-powered-platform-to-offer-instant-b2b-financing-at-point-of-sale/"},{"title":"AI-Led B2B Payments Platform, Slope Secures $65 Million Strategic Equity and Debt Funding Provided by J.P. Morgan and Others","url":"https://ffnews.com/news/ai-led-b2b-payments-platform-slope-secures-65-million-strategic-equity-and-debt-funding-provided-by-j-p-morgan-and-others"},{"title":"Elite and Slope Partner to Provide AI-Powered \"Pay Later\" in Legal","url":"https://globalfintechseries.com/finance/elite-and-slope-partner-to-provide-ai-powered-pay-later-in-legal/"}]
+
+Based on the search results, here's what I found about Slope, fintech, JPMorgan, B2B pay later, net terms, credit underwriting, and AI:
+
+## Overview
+
+Slope is a B2B payments platform for enterprise companies offering order-to-cash automation using leading AI tools that power checkout, customer and vendor risk assessment, embedded short-term financing, and payment reconciliation.
+
+## JPMorgan Partnership
+
+J.P. Morgan Payments has chosen Slope to help provide clients access to a short-term financing solution that offers an extension of payment terms to business customers, powered by Slope's platform and leveraging Slope's AI-driven underwriting and J.P. Morgan's debt facility. Slope has raised a total of $252 million, including $77 million in equity funding and $175 million in debt financing, with Sam Altman, CEO of OpenAI, also investing in Slope's latest round of fundraising.
+
+## AI-Driven Underwriting Capabilities
+
+Slope's AI capabilities are a market differentiator, as they use AI not only for initial underwriting but also for ongoing risk monitoring of the portfolio. Slope has launched SlopeAI, which makes its AI underwriting platform available to financial institutions and wholesalers, including access to its LLMs for bank data enrichment (SlopeGPT, TransFormer) and KYB/KYC powered by AI agents.
+
+## 2025 Market Growth
+
+The global B2B payments market is projected to grow from $1.29 trillion in 2025 to $3.5 trillion by 2033, representing a 13% CAGR. Slope's recent growth surge has been driven by a 730% year-over-year increase in tariff-related financing applications.
+
+
+REMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.

@@ -1,0 +1,20 @@
+synergy_20240813-agent_plus_jev-20260925T055525Z CANDIDATE_READY | turns 57 | failure None
+jev: {'requests': 154, 'physical_attempts': 154, 'spent_usd': '0.013873062'}
+incomplete: []
+cited-unit check: units 19 | checked 19 | passed 18 | reused 0 | escalated 0
+   gap: synergy_merchant_agreement_20240501#s0001:6939-7348 partly_covered ['fnd_015']
+cited-unit check: units 19 | checked 2 | passed 2 | reused 17 | escalated 0
+reviewer checklist: uncited units 319 | escalations 0
+reading list: Counter({'uncited': 319, 'cited': 10})
+effects: [('eff_002', 'validated', 'settlement_payment_timing'), ('eff_004', 'validated', 'noncash_normalization'), ('eff_009', 'validated', 'settlement_payment_timing'), ('eff_010', 'validated', 'funding_constraint'), ('eff_011', 'validated', 'funding_constraint')]
+conclusion checks: [('some_unsupported', True)]
+conclusion: No advance can be recommended on the admitted evidence. The binding issue is contractual, not cash.
+Knight's amended senior secured loan states that Synergy shall not add any other debt without paying out Knight first. Knight's security covers all current and future assets. WebBank's agreement separately makes encumbering its all-asset collateral without prior written consent an Event of Default. Whether Knight (and WebBank, for a secured advance) has consented is unknown. Until that is resolved, none of the three analytical offers ($100k/6m, $250k/6m, $250k/3m) can be treated as available funding.
+If consent exists, cash capacity turns on how much of the 2024 settlement payments was paid after June 30, 2024: $2,000,000 on the Atrium settlement loan and $600,000 on the March 27, 2024 supplier settlement loan. Against ~$2.0M reported cash, less $100k assumed unavailable and a $200k illustrative reserve:
+- 0% paid: required net cash of $900,000, more than even the $250k advance.
+- 25% paid: $250,000.
+- 50% or more paid: $0.
+The requested $250k/6m structure therefore only fits if a substantial share of those payments has already been made. The $250k/3m structure adds larger monthly installments during the same window as the settlement payments and WebBank's first Minimum Payment.
+Two identifications are inferences from matching amounts and dates, not stated links: the Atrium settlement loan as the $5,450,000 December 28, 2023 former-supplier loan, and the March 27 loan as the VitBest row. The Atrium settlement gain is non-cash and excluded from repayment capacity. No default probability is inferred from the litigation.
+inventory phase: 450 -> 475 s
+last event: packet_submitted 475

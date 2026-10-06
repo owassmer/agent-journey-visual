@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:81390,chars:"",yield_time_ms:1000,max_output_tokens:1000}));
+text(await tools.exec_command({cmd:"aws ssm send-command --instance-ids i-07454d2f7582ce015 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"ps -p 3395 -o pid,etime,time,pcpu,rss,stat; ps --ppid 3395 -o pid,pcpu,rss,args; tail -6 /var/log/cloud-init-output.log; free -m\"]}' --profile slope --region us-east-2 --query Command.CommandId --output text","max_output_tokens":1000}));

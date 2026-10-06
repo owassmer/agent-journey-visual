@@ -1,0 +1,17 @@
+ScoreAnswer {'type': "typing.Literal['score']", 'score': "<class 'float'>", 'confidence': "<class 'float'>", 'legend': 'dict[int, str | dict[str, typing.Any] | list[typing.Any]]', 'probabilities': 'dict[int, float]'}
+ChoiceAnswer {'type': "typing.Literal['choice']", 'choice': "<class 'str'>", 'confidence': "<class 'float'>", 'probabilities': 'dict[str, float]'}
+NoulAnswer {'type': "typing.Literal['noul']", 'noul': "<class 'float'>"}
+Score {'type': "typing.Literal['score']", 'instructions': 'typing.Optional[JSONContent]', 'criteria': 'collections.abc.Sequence[JSONContent]'}
+51:class _Raw(BaseModel):
+52-    """Permissive response model so provider-added fields (e.g. OpenRouter cost) are preserved."""
+53-
+54-    model_config = ConfigDict(extra="allow")
+55-
+56-
+57-def canonical_sha256(obj: Any) -> str:
+58-    return hashlib.sha256(json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str).encode()).hexdigest()
+59-
+60-
+61-def registry_question(question_id: str) -> dict:
+62-    for q in question_registry()["questions"]:
+63-        if q["id"] == question_id:

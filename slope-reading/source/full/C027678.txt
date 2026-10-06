@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/case_search/round2 && cat notes_massimo.md notes_musclepharm.md notes_barfresh.md notes_jones_soda.md notes_coffee_holding.md notes_yunhong_cti.md | cut -c1-600; grep -n \"^#\\|^\\*\\*\" sweep_W4.md | head -40", "description": "Skim remaining candidate notes and W4 structure"}

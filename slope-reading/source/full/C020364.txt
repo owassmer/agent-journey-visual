@@ -1,0 +1,4 @@
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"ps -p 28979 -o command=; aws ssm get-command-invocation --profile slope --region us-east-2 --command-id 8bca5d24-eefa-4e91-b708-eefa7f6cad2d --instance-id i-00b6051aa298e85e2 --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}'","max_output_tokens":1800}),
+tools.write_stdin({session_id:44137,chars:"","yield_time_ms":1000,"max_output_tokens":1000})
+]);r.forEach(text);

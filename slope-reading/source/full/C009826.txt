@@ -1,0 +1,2 @@
+text(await tools.web__run({search_query:[{q:'site:docs.github.com cancel specific job workflow run GitHub Actions'}],response_length:"short"}));
+text(await tools.exec_command({cmd:"sed -n '1,70p' tools/cloud_walk.py; git status --short; tail -n 8 /tmp/slope-production-36781427817/cloud-control.log","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1500}));

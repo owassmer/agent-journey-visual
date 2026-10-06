@@ -1,0 +1,113 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_7c018cf7]
+A background fan-out unit you dispatched earlier — 3 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 14:02:28 (26m34s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1594.31s
+
+--- ✓ TASK 1/3: Worker L: make `ruff check .` pass on PR #18 (branch step-8-model) and PR #19 (branch step-8-page) without changing behavior, push both, and confirm the GitHub `check` job passes on both PRs.  (status=completed, api_calls=31, 1593.92s) ---
+{"model_sha":"6533346d204d1183b865f2b8c0a89c2f554777ca","page_sha":"95942475706e68244da9692ea6d32fb17e564fd1","ruff_clean":true,"pytest_model":"249 passed (local, 6533346)","pytest_page":"251 passed (local, 9594247)","gh_checks_18":"pass (check job, 4m16s, run 36464428420)","gh_checks_19":"pass (check job, 5m51s, run 36464757888)","notes":"step-8-model: 59ffb52 fixed the ruff errors. The import sorting came from ruff check --fix. In test 5, the unused `a`/`b` tuple names became `_`. The B023 errors were fixed by binding the loop variables as lambda defaults (`extra=extra`, `iv=iv`), so behavior is unchanged. No noqa was added and --unsafe-fixes was not used. step-8-page: 515fa06 merged step-8-model with no conflicts, and 4866d3e removed the unused CLASSES import in tests/test_viewer.py (F401). Once ruff passed, CI ran pytest for the first time on the step-8 digest-pinned tests, and 2 of them failed on ubuntu: test_collection_modes::test_protect_need_reproduces_the_engine_before_the_split_bit_for_bit and test_opening_exposure::test_an_empty_exposure_reproduces_the_new_line_bit_for_bit (2 failed, 246 passed). The cause is the test environment, not the model. The PV fields are BLAS matmuls (collections @ df), and their last bits change with the platform's summation order (up to 1.5e-8 on values around 1e8 cents; 182 of 512 rows differ from a plain sum locally). Fix in 6533346 (tests only, no engine change): the digests now hash float fields rounded to whole cents, and integer arrays are still compared bit for bit. The 11 new pins were computed locally, where the raw digests still equal all of the old engine pins, so they pin the same engines. Merged into page as 9594247. Nothing was committed from runs/recorded, cases, the kit or model code. No PRs or labels were touched. I added the digest-pin lesson to the slope-sparse-events-build skill."}
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_7c018cf7/task-0.log
+Child's process proc_1f9985ec447a `cd /Users/owenwassmer/dev/Slope_Sparse_Events && for i in $(seq 1 20); do a=$(gh pr checks 18 2>&1);` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+check	fail	5m48s	https://github.com/owassmer/Slope_Sparse_Events/actions/runs/36462801412/job/109065314107	
+---
+check	fail	5m43s	https://github.com/owassmer/Slope_Sparse_Events/actions/runs/36463131183/job/109066428983	
+59ffb521d2af55aeb2260e8fec697159255f6ce1
+4866d3e68965e1794950339afb3aaf9ea09e3781
+
+
+--- ✓ TASK 2/3: Worker F (read-only research): establish, from sources dated on or before 14 May 2024 plus general securities law, exactly how Akoustis Technologies could raise equity at its cash floor in mid-2024: which channels existed, how much each could raise and under what rule, how fast proceeds arrive, who decides, and what (if anything) would close each channel. Write the findings to /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9/fin_grounding.md.  (status=completed, api_calls=84, 1285.59s) ---
+I've written the findings to `fin_grounding.md`. The main result: the $9.7M baby-shelf cap in the model most likely did not apply on 14 May 2024, and the real limits on a raise were trading volume and conditions in the sales contract.
+
+**What was available on 14 May 2024**
+- **At-the-market program (ATM): $48.0M left**, with Oppenheimer, Craig-Hallum and Roth. It was re-activated by the 13 May 10-Q. Commission is up to 3% and each sale settles two business days after the trade. The agents only use "commercially reasonable efforts" and have no obligation to sell. Either side can suspend at any time or terminate on two days' notice.
+- **Shelf registration S-3 333-262540:** $150M, effective 15 Feb 2022, expires 15 Feb 2025. By my arithmetic about $102M is unsold, of which about $54M is outside the ATM. The company never states this figure.
+- **The January 2024 raise was not a registered direct.** It was an underwritten offering through Roth: 23.0M shares at $0.50 with no warrants, 29% below the prior close. It launched 24 Jan and closed about 29 Jan; gross $11.5M, net $10.4M.
+- **The 13 May S-3 raises no company cash.** It registers 5.0M shares for noteholders so the company can pay note interest in stock.
+- **No warrants were outstanding**, so a warrant-inducement deal was impossible. The notes' indenture places no limit on issuing common stock.
+
+**Baby-shelf cap (Form S-3 Instruction I.B.6)**
+- Eligibility is re-tested at each 10-K. At the 6 Sep 2023 10-K, public float was about $199M at the 60-day high close ($2.86), well above the $75M threshold. So Akoustis could use the shelf without the one-third cap until its FY2024 10-K, due around 30 Sep 2024.
+- Two documents support this. The ATM agreement states at every sale that the company does not rely on I.B.6. The January 2024 prospectus has no I.B.6 calculation on its cover, which the rule would require.
+- **The $9.7M figure** was one third of 98.67M shares × $0.60, minus $10.0M. The rule needs non-affiliate shares (about 93.9–95.9M), the 60-day high close ($0.6135 on 21 Mar) and gross proceeds ($11.5M). If the cap had applied, it would be $7.7–8.1M counting the January sale, or $19.2–19.6M without it. On the rule's wording the January sale does not count, because it was not made under I.B.6.
+- The report gives the cap as a formula for use from the FY2024 10-K onward. It also shows a table at hypothetical prices down to $0.10.
+
+**What actually limited a raise**
+- **Trading volume:** about $337k a day (15 Mar–14 May). The model's $9.7M over 30 days would mean selling about 96% of daily dollar volume. At typical ATM pace (10–25% of volume), 30 trading days yields only about $1.0–2.5M.
+- **Regulation M clause:** the ATM contract suspends sales unless the stock counts as "actively traded" ($1M daily volume and $150M float). Akoustis failed both tests, at about $0.34M and about $58M. The record doesn't show how this was handled at re-activation.
+- **Nasdaq 20% rule (Rule 5635(d)):** a registered direct below market is capped at about 19.72M shares, roughly $8.7M at the $0.44 close.
+
+**Delisting and bankruptcy**
+- **Delisting** ends every S-3 channel, including the ATM. It is also a note Event of Default with no grace period and lets holders force repurchase of the $44M notes. What remains is an S-1 (about four weeks of SEC review) or a private placement.
+- **Bankruptcy** makes the notes due immediately. Nasdaq may delist, and new equity then comes through a court plan, not the market.
+
+**Adverse judgment**
+- The record has only "urgent need for additional liquidity" and "severely constrained" (10-Q), plus counsel's "eight-figure verdict … ability to raise money" on the call.
+- A judgment over $10M that stays unpaid or unstayed for 60 days is a note Event of Default, after notice from 25% of holders. Holders can then accelerate the notes.
+- Nothing in the record says equity would be unavailable after an adverse judgment, and the call says nothing about the ATM or any raise plan.
+
+**Caveats**
+- Web extraction and the browser tools failed, and Yahoo, Stooq, Nasdaq and MarketWatch had no usable AKTS history. I took daily prices from stockanalysis' API under the old ticker (AKTSQ) and filtered them to 14 May 2024 or earlier before reading. They match the three prices quoted in the filings.
+- The SEC relief for ATMs after a float drop (interpretation 116.26) is dated March 2026. I cite it only to explain the rule and flag it as unavailable to an analyst in May 2024.
+- I used no Akoustis facts dated after 14 May 2024. No repo files were changed.
+
+Section 6 of the report lists 13 gaps: ATM sales after 13 May, how the parties handled Reg M, the company's own float calculation, investor appetite and pricing, and management's plan after a verdict.
+
+Files are in `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9/`:
+- fin_grounding.md
+- compute_ib6.py
+- compute_ib6_output.txt
+- src/akts_px_to_20240514.csv
+- to_txt.py
+- stooq_fetch.py
+- txt/ (extracted filing text)
+- src/ (EDGAR and law downloads)
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_7c018cf7/task-1.log
+
+--- ✓ TASK 3/3: Worker V (read-only research): establish, from the court record dated on or before 14 May 2024, what dollar amounts the jury in Qorvo v. Akoustis (D. Del. 1:21-cv-1417) could award on each claim of the special verdict form (D.I. 580), what controls the amount within each claim, and whether the pre-cutoff record supports any amount between the claimant's itemised figures. Write findings to /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9/verdict_grounding.md.  (status=completed, api_calls=56, 1015.96s) ---
+The record before 14 May 2024 states no amount between USD 1,426,412 and USD 67,526,412. It does let the jury choose any trade-secret amount from $0 up to Qorvo's "at least $66.1 million". The findings are written up with verbatim quotes and D.I./page/date citations. I used no source after 14 May and no docket entry above 590.
+
+**The verdict form (D.I. 580, 9 May)**
+- It has seven dollar blanks across six questions: 1(b), 1(d), 2(c), 3(b), 4(c), and 5(b) with one blank per patent.
+- 1(b) is a single total "as to which you have answered 'Yes' and 'Yes'". The jury finds liability secret by secret, across 46 secrets in 8 groups, but writes one amount for all of them.
+- 1(d) asks the jury itself for an exemplary amount, with no cap on the form. Both parties' pretrial filings said the court decides exemplary damages under the DTSA.
+- 2(c) asks for conspiracy damages for "actual loss". Qorvo's $66.1M is an unjust-enrichment figure, and its expert gave no actual-loss opinion.
+- 5(c) asks only whether patent infringement was willful. Any increase up to 3× is for the court.
+- There is no question on non-duplication, the statute of limitations, conspiracy punitive damages, interest or fees.
+
+**What controls each amount**
+- **Trade secrets:** the 55 months is one total period across all eight groups of trade secrets, worked out by treating development tasks as running in parallel. The dollar figure compares the value of Akoustis's actual revenue with the same revenue received 55 months later, at a 14.8% cost of capital, as of 30 June 2024.
+  - The court let this opinion in (D.I. 553) and left the revenue base to the jury (grants, the New York fab and two acquired businesses are disputed).
+  - Akoustis's avoided-cost opinion, calculated per trade-secret group, was also admitted, but its figures are redacted.
+- **Patent:** $279,808 for both patents together. Only the 1% rate for sales after the verdict is stated; there is no split between the two patents and no stated rate for the past period.
+- **Corrective advertising:** $1,146,604, with no public explanation of how it was built.
+- **Poaching:** $809,772, admitted into evidence on 3 May (D.I. 566).
+
+**Can an amount between $1.43M and $67.5M be computed?**
+- The record gives no alternative head-start period, no dollar figure per month or per period, no figure per secret or group, and no public defense figure.
+- The 217.5-month number is only an illustrative sum of task head starts, not a claimed period.
+- My own inference, not stated anywhere in the record: under one reading of the method, the figure does not scale in straight line with months. It would be about 27.5% of $66.1M at 12 months and about 51.5% at 24 months. That reading is uncertain because the expert's schedules are sealed.
+
+**Enhanced damages (statutory caps applied to Qorvo's figures)**
+- DTSA exemplary: at most twice 1(b), so $132.2M on $66.1M.
+- If 1(d) were read as North Carolina punitive damages: the cap is the greater of 3× or $250,000, so $198.3M. The jury is not told this cap.
+- Patent: at most 3 × $279,808 = $839,424.
+
+**Rulings that limit damages**
+- D.I. 590 (14 May) holds "The jury has no reasonable basis to find compensable damages under the UDTPA." It does not mention poaching, but its wording covers all UDTPA damages.
+- RICO and false marking were dismissed (D.I. 545).
+- Parts of the defense technical expert Lebby's report were excluded (D.I. 546), which may trim part of the avoided-cost figure.
+- Patent validity was decided for Qorvo (D.I. 557).
+
+**Not in the public record:** the damages expert's schedules, the per-task head starts, the defense figures, the final jury instructions, the sealed motions-in-limine order and final pretrial order, and whether D.I. 580 was changed after D.I. 590.
+
+To fill gaps I fetched 17 RECAP files, all D.I. ≤ 590 and paced at least 31 s apart. The damages and technical expert reports themselves are excluded or redacted on RECAP. The earlier findings file `c_findings_frozen.md` contains post-cutoff facts; I read it as instructed but did not use or repeat any of them.
+
+Files are in `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9/`:
+- `verdict_grounding.md`
+- `ex.py` and `fetch.sh` (helper scripts)
+- `ded_*.pdf` and `d*.txt` (fetched PDFs and extracted texts)
+- `docket0514.txt`
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_7c018cf7/task-2.log

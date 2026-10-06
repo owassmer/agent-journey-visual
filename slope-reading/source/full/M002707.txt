@@ -1,0 +1,76 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_8b30e884]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 07:09:24 (48m37s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2917.6s
+
+--- ✓ TASK 1/1: Worker G3: finish PR #18's fix round and land it in the page. In worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD 338a5ab plus the uncommitted lead-run files G2 rewrote), complete the variant re-runs, the final checks and the run commit. Then merge into branch step-8-page (worktree .claude/worktrees/step-8-page, HEAD a34453c), rebuild the page data and restart the viewer on port 8012. Report the SHAs, the final lead and no-lawsuit figures, the variant table with Jev re-asks and spend, and the page figure check. Do not open a PR, change model code beyond what a failing check demonstrates, or re-run the investigation.  (status=completed, api_calls=39, 2917.29s) ---
+I finished PR #18's fix round, merged it into step-8-page, rebuilt the page and restarted the viewer on 8012. All checks passed. One gap remains: collections no longer contradict, but the no-lawsuit view still shows a higher filing probability than "settles before the verdict" (9.4% vs 5.9%).
+
+**Commits (pushed)**
+- **step-8-model `22dff0a`**: lead run and all ten variants re-run after the review fixes, plus `assumptions.json`. Checks on this commit:
+  - `f2_order.py`: every decision is in date order across all paths.
+  - 20 Jun tree: byte-identical to `base20.json` (13,821 paths, 337 questions).
+  - Full suite: 247 passed.
+- **step-8-page `6f7710a`**: merge of origin/step-8-model.
+  - `forecast.py` merged without a conflict, and P3's `notes_default_text` is still in it. The kit manifest also merged cleanly, and all 131 hashes check out.
+  - The real conflicts were `page.json` and `assumptions.json`. I took both from step-8-model and then rebuilt `page.json` with the page branch's `page.py`: 2,962 paths, all 207 Jev answers from cache, $0, tiles identical to the model run.
+  - Page figure check (`p3/check.py final`): 0 mismatches across the central case and ten variants. The page logged one 404 for some resource; I didn't track down which.
+  - Full suite: 249 passed.
+- **Viewer:** I stopped only the `--port 8012` process and restarted it from step-8-page. It returns HTTP 200; 8011 is untouched.
+
+**Lead run** (matches G2's figures)
+
+```
+View             | Due by 10 Nov | Collected | Rate  | Filing by 10 Nov
+-----------------+---------------+-----------+-------+-----------------
+With the lawsuit | $915,682      | $827,885  | 90.4% | 27.1%           
+No lawsuit       | $966,369      | $958,626  | 99.2% | 9.4%            
+```
+
+**Variants** (1,119 Jev re-asks, $0.211 in total; the per-variant spend tallied from `var/jev_cache` matches what each variant recorded)
+
+```
+Variant                        | Paths | Questions | Re-asks | Spend   | Collected | Rate  | Filing
+-------------------------------+-------+-----------+---------+---------+-----------+-------+-------
+central                        | 2,962 | 207       | 0       | $0      | $827.9k   | 90.4% | 27.1% 
+cost_plan                      | 4,300 | 232       | 182     | $0.0346 | $853.8k   | 92.7% | 25.4% 
+equity_injection               | 4,204 | 251       | 195     | $0.0359 | $863.5k   | 93.9% | 23.0% 
+raise_capacity_no_judgment_low | 3,293 | 238       | 99      | $0.0184 | $812.7k   | 89.0% | 31.6% 
+raise_after_judgment_available | 3,701 | 230       | 107     | $0.0203 | $838.0k   | 91.5% | 26.0% 
+settlement_lump_sum            | 2,962 | 207       | 39      | $0.0070 | $804.3k   | 88.9% | 29.7% 
+collection_protect_need        | 2,962 | 207       | 132     | $0.0248 | $808.7k   | 89.0% | 26.8% 
+cash_floor_60_days             | 2,737 | 203       | 128     | $0.0241 | $835.6k   | 91.2% | 25.5% 
+lower_award_high               | 3,160 | 217       | 84      | $0.0164 | $795.0k   | 88.3% | 34.9% 
+coupon_cash                    | 2,623 | 207       | 153     | $0.0299 | $824.9k   | 90.3% | 25.9% 
+```
+
+**The old contradiction**
+
+```
+                                             | Collected | Rate  | Filing
+---------------------------------------------+-----------+-------+-------
+Before the merge: no lawsuit                 | $947,857  | 98.3% | 5.4%  
+Before the merge: settles before the verdict | $951,854  | 98.6% | 3.0%  
+Now: no lawsuit                              | $958,626  | 99.2% | 9.4%  
+Now: settles before the verdict              | $951,167  | 98.5% | 5.9%  
+```
+
+- **Collections:** fixed. The no-lawsuit view now collects more than the settlement case.
+- **Filing:** still higher in the no-lawsuit view, as it was before the merge. The engine isn't causing it: the two views ask Jev separate questions, and Jev answers them differently:
+
+```
+Jev's answer             | No lawsuit | Settles before the verdict
+-------------------------+------------+---------------------------
+Files once cash runs out | 63%        | 42%                       
+Listing kept             | 43%        | 54%                       
+```
+
+- **I changed no code**, since no check failed and changing the questions to close this gap would be tuning toward an outcome. It's your call whether it matters.
+
+**Other issues**
+- **Jev cache not synced:** my first page rebuild ran against the page worktree's cache, which lacked the model run's new answers, so it re-asked 156 questions ($0.030). I then copied the model worktree's cache across, which overwrote 45 of the page worktree's older entries. After that the rebuild answered all 207 questions from cache, and that rebuild is the committed `page.json`. I added this cache-sync step to the build skill notes.
+- **Kill before exit:** the only process I left running is the 8012 viewer.
+
+Logs and scripts are in `~/.hermes/profiles/connor/cache/scratch/8g3/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_8b30e884/task-0.log

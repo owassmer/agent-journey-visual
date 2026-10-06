@@ -1,0 +1,9 @@
+[1;32mAll checks passed![0m
+E           AssertionError: Atrium
+E           assert 'Atrium' not in '[{"mission"...xist yet."}]'
+E             
+E             'Atrium' is contained here:
+E               LLC d/b/a Atrium Innovations, D. Me. No. 2:22-cv-00301: Recommended Decision on Motion to Dismiss", "document_kind": "court_decision", "publicly_available_at": "2023-02-27T23:59:59-05:00", "access": "full"}, {"source_id": "synergy_merchant_agreement_20240501", "title": "Merchant Loan Agreement between WebBank and Synergy CHC Corp. (S-1 Exhibit 10.32)", "document_kind": "loan_agreement", "publicly_available_at": "2024-06-28T23:59:59-04:00", "access": "full"}, {"source_id": "synergy_s1a_20240813", "title": "Synergy CHC Corp. Form S-1/A registration statement (Ame...
+E             
+E             ...Full output truncated (2 lines hidden), use '-vv' to show
+FAILED tests/test_investigation_tools.py::test_initial_context_is_ordinary_and_free_of_evaluator_content - AssertionError: Atrium

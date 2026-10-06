@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:".venv/bin/ruff check --fix tests/test_question_refresh.py; git diff --check; aws ssm get-command-invocation --profile slope --region us-east-2 --command-id c314a74a-94b3-4af5-aa73-7a0776b5c024 --instance-id i-00b6051aa298e85e2 --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}'","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1200}));
+text(await tools.write_stdin({session_id:10480,chars:"","yield_time_ms":1000,"max_output_tokens":1000}));

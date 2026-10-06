@@ -1,0 +1,160 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_cda68ce9]
+A background fan-out unit you dispatched earlier — 4 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-25 23:19:47 (28m44s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1724.9s
+
+--- ✓ TASK 1/4: Independent focused review of PR #9 in owassmer/Slope_Sparse_Events (branch step-5c-channels): probability composition, semantic correctness of the rubric changes, and the waiver-as-evidence change. Post the review as a PR comment and return the findings.  (status=completed, api_calls=21, 207.08s) ---
+I reviewed PR #9 and posted the review as one comment: https://github.com/owassmer/Slope_Sparse_Events/pull/9#issuecomment-5842736958. I found five defects. The two that matter are a filed appeal still being forecast as a future event, and the committed ChromaDex analysis being rebuilt from the old readings. Tests and lint pass: `pytest` 101 passed, `ruff` clean. No Jev calls, and I did not label, approve or merge.
+
+**What holds:**
+- **Waiver:** no code path prunes the appeal branch on a waiver any more. It reaches the appeal forecast only as a reading.
+- **Contracts:** the question registry, `agent_config` and `dispute_model.json` agree, including `event_mediation_ordered`. Mediation is not a stage rule, so it stays evidence.
+- **Payer's ability to fund:** it is skipped when the borrower pays.
+- **Borrower cash:** the figure passed to forecasts is the bank feed's available cash on the review date (closing balance minus restricted, $27,580,252.75 for ChromaDex). It is the same opening cash the simulation uses.
+
+**Defects:**
+1. **A filed appeal is still forecast.** `dispute_model.json:86-107` has no stage rule for `appeal_filed`, so `forecast.py:204-215` still asks the appeal question and keeps "does not appeal" paths. That contradicts the PR's own text (`:318` and `:134`). I confirmed it with the test file's stub judge: stage stays `judgment_entered`, the appeal node is asked, and 3 paths take "no appeal".
+2. **The recorded ChromaDex analysis was rebuilt, though the PR says it was not.**
+   - `analysis.json` and `cashflows.csv` changed in commit `fc9b366`.
+   - Both disputes still carry model 3.0.0 readings. For the dispute where ChromaDex pays, a text-read "ability to pay" reading went into the forecasts alongside the bank cash, and the payer's refusal to pay still reads 0.726 (appealing counted as refusal).
+   - The code cause: `build.py:193-198` never checks the stored dispute's model version, and `forecast.py:268-279` does not apply the payer scope.
+3. **Overlapping rubric levels.** In the payer's willingness to pay, level 0 (`dispute_model.json:148`, "complied with the court's payment orders") and level 2 (`:150`, "only after a court order") overlap. Every payment of an award comes after a court order, so an on-time payment fits both.
+4. **Stale sentence.** `dispute_model.json:6` still says a waiver constrains the graph. No code reads that field, so it does not reach Jev.
+5. **One test assertion cannot fail.** `tests/test_dispute_reading.py:104` (`"a" in fids`) passes whether or not the waiver is routed, because every finding with an established event is selected. The test's name is still covered by line 103.
+
+The design spec has no contradictions with the code change.
+
+**Files:** I only wrote to scratch (`/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/`): the review text (`pr9_review.md`) and the stub-judge check (`pr9_probe.py`). Nothing in the repository was changed.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_cda68ce9/task-0.log
+
+--- ✓ TASK 2/4: Write the Stage 1 decomposition document for the Akoustis lead case (D = 20 Jun 2024): the legal decision map, clocks and parameters, path arithmetic, the Jev residual questions, and the evidence requirements checked against what is already acquired. Design only: no code, no new acquisition.  (status=completed, api_calls=46, 1055.6s) ---
+I've written `DECOMPOSITION.md` at `Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/`. I created no other file and made no commit. It has all eight required sections and uses only sources dated on or before 20 Jun 2024. I did not open D.I. 622 or anything later. It came out at about 9,300 words by raw count, nearly all of it tables, so it is longer than the target.
+
+**Summary**
+1. **Legal map:** three reusable templates, instantiated for Akoustis. Federal post-judgment procedure has 15 nodes, the indenture 9, bankruptcy effects on Slope 5. Each node gives actor, authority, shall/may/must, trigger, exceptions and any open legal question as a RESEARCH slot.
+2. **Delisting is itself an Event of Default.** Indenture §7.01(b) triggers on delisting with no notice and no grace period. The acquisition note and spec §4.3 say it only gives holders a repurchase right; it does both.
+3. **Notes interest:** it is paid in shares unless the company elects cash (§16.02(c)), and the December 2023 payment was made in shares.
+4. **Procedure corrections:** the fee motion (D.I. 618) does not delay the appeal clock without a Rule 58(e) order. Seizing assets in North Carolina or New York needs a court's good-cause order while the motions are pending (28 U.S.C. §1963). Qorvo cannot force Akoustis into bankruptcy alone while its claim is disputed (§303(b)). No appeal can be decided before 17 Dec, so that branch is removed.
+5. **Remittitur:** the trial transcript (D.I. 616-1) gives the figures: Qorvo $66.1M and $50.3M, Akoustis $305,000, and about $23.1M after Akoustis's revenue corrections. The rule is two declared scenarios, $305k and $23.1M, until Qorvo's expert's month-by-month schedule turns up.
+6. **Clocks:** every date, window, threshold and amount has one disposition. The supersedeas multiple (100–125%) and surety collateral (50–100%) are bounded open terms. Even at the lowest corner, collateral is about $19.3M against roughly $24.5M of cash at the high end.
+7. **Chains:** T1–T5 are walked with basis labels, and settlement is asked in four intervals. The operating-cash petition (T5) is a company decision that fires the first day cash falls below the next 30 days of operating need. Its basis is the company's own "curtail or cease operations and/or seek protection" statement (8-K, 20 May).
+8. **What reaches Slope's collections:** seizures, bond collateral, settlements, the 15 Dec interest and T5 do, through cash above need or a petition. Note acceleration does, through a petition. The cross-default doesn't reach them.
+9. **Jev:** 28 registry ids, each one actor's decision. Three exist only if their research slot comes back "open" (trebling, pre-judgment interest, early noteholder notice).
+10. **Injunction:** its cash effect can't be obtained from the pre-D record. Receipts at risk are bounded at $0 to about $1.6M a month of product sales, but the Akoustis-filter share of those sales isn't disclosed and compliance costs aren't priced. It stays out of the weighted view and appears as one stress scenario.
+
+**Open legal questions left as RESEARCH slots**
+- **L1:** does the 8% pre-judgment interest under §24-5(b) apply to the unjust-enrichment award, and to any trebled portion? Does the federal §1961 rate govern post-judgment interest on the state claims?
+- **L2:** can the court treble over the jury's "No", or is a trade-secret violation automatically an unfair-trade-practices violation?
+- **L3:** must Qorvo choose between trebling and the $7M exemplary award (§1D-20), and which statute is the $7M under?
+- **L4:** the exemplary caps, and whether the $7M falls with a new trial or remittitur on damages.
+- **L5:** Third Circuit standards for Rule 50(b), new trial and the remittitur amount.
+- **L6:** the standard for a stay on less than a full bond.
+- **L7:** the usual supersedeas bond multiple in D. Del.
+- **L8:** whether the injunction and interest motions delay the appeal clock, whether an amended judgment restarts the 30-day automatic stay for the whole amount, and when post-judgment interest starts on it.
+- **L9:** the §1963 good-cause standard, and whether Qorvo can seize the parent's shares in Akoustis, Inc. in Delaware (8 Del. C. §324).
+- **L10:** does North Carolina's "shall be permanently enjoined" (§66-154(a)) bind a federal court after *eBay*, and how far can a worldwide ban reach?
+- **L11:** under New York law, is the 20 May judgment "final" for the notes' judgment default, and does the 60-day clock run during the automatic stay?
+- **L12:** Nasdaq hearing and panel rules (5815), when "ceases to be listed" happens, and the reverse-split vote standard (DGCL §242(d)).
+- **L13:** whether Qorvo's claim counts as disputed under §303(b), and whether the ordinary-course defense (§547(c)(2)) protects Slope's collections.
+- **Data slots:** R4 (the judge's pace on this docket) and R5 (the head-start schedule).
+
+**Gaps (the Stage 2 acquisition list)**
+- **E2:** OCR the verdict form (D.I. 601) and the redline in D.I. 616-4. Both are already acquired but image-only.
+- **E5:** the pre-D docket sheet, to confirm there is no stay motion and the 4 Oct 2021 filing date.
+- **E6 (R4):** reply and order dates for earlier motions on this docket.
+- **E9 (R5):** Qorvo's expert's Appendix C schedule, probably sealed.
+- **E13:** insurance cover for the judgment (FY2023 10-K).
+- **E16:** the 13 May earnings-call transcript, for the burn cut and the exact CHIPS timing. The CHIPS credits may land after the horizon.
+- **E19:** any proxy filed before 20 Jun for a reverse split.
+- **E20:** the Akoustis-filter versus RFMi split of product revenue.
+- **E27:** the §1961 interest rate for the week ending 17 May 2024 (Fed H.15).
+- **Cannot be obtained at D:** the sealed briefs (including D.I. 615) and where the bank accounts are held.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_cda68ce9/task-1.log
+
+--- ✓ TASK 3/4: Answer a fixed list of legal and docket research questions for the Akoustis case (D = 20 Jun 2024), with citations, and write them to one file.  (status=completed, api_calls=91, 1724.48s) ---
+I wrote `RESEARCH.md` in `akoustis/design/` (untracked, not committed; nothing else edited) with citations, a paragraph and a disposition for all 14 questions. Case-specific answers use only filings dated on or before 20 Jun 2024.
+
+The strongest finding came from the docket: on 14 May 2024 Judge McCalla ruled (D.I. 590) that head-start benefit to Akoustis is not a damages measure the N.C. unfair-trade-practices act recognises. That cuts directly against Qorvo's trebling motion. I also found no stay or bond order anywhere in entries 1–621, so the judgment became enforceable on 20 Jun 2024.
+
+```
+ID  | Disposition                         | One-line answer                                                                                                                                                                                                                                                                                                                                                                                                            
+----+-------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+R2a | SETTLED standard / OPEN application | Third Circuit remits only a verdict that is clearly unsupported or excessive, to the *maximum* amount the evidence supports, and Qorvo may choose a new trial instead (*Kazan*; *Cortez*; *Hetzel*). Akoustis's $305k is the defence minimum, so the rule points above it.                                                                                                                                                 
+R2b | SETTLED                             | The N.C. cap (§ 1D-25) applies to trade-secret punitive damages, and the DTSA allows up to 2× damages. $7.0M is 0.22× the $31.3M award, so it is within both caps.                                                                                                                                                                                                                                                         
+R2c | SETTLED standards / OPEN scope      | DTSA injunction is discretionary; the N.C. statute says "shall" enjoin for the life of the secret plus a head-start period; patents follow the four eBay factors. Akoustis's design-around lowers its hardship, but redesigned parts are tested later in contempt, not in the order (*TiVo*).                                                                                                                              
+R2d | SETTLED (mid-2024 rules)            | If the $1.00 bid isn't regained by 21 Oct 2024, Nasdaq issues a delisting decision. A timely hearing request ordinarily stays suspension, and the panel can give up to 180 more days (about Apr 2025). Exceptions: 10 days at $0.10 or less, or large recent reverse splits. A Jan 2025 rule change removes the stay.                                                                                                      
+R2e | OPEN                                | N.C. 8% interest runs from filing only on amounts "designated as compensatory damages"; whether unjust enrichment counts has no direct N.C. or Fourth Circuit authority. Bennis's number is already brought to present value at 14.8%, which invites a double-counting objection. Exposure is about $6.58M from 4 Oct 2021, or $3.21M from the Feb 2023 amended complaint. Exemplary damages bear no pre-judgment interest.
+R2f | OPEN, leaning strongly against      | D.I. 590 held head-start benefit is not cognizable damages under the N.C. unfair-trade-practices act. The Fourth Circuit bars trebling restitution (*Winant*), and trade-secret misappropriation is not automatically a violation (*Legacy Data*, *Drouillard*). N.C. law forces a choice between treble and punitive damages, and Qorvo filed no Rule 50(b) motion to overturn the jury's "No".                           
+R2g | SETTLED standard / OPEN outcome     | Fees are discretionary under both statutes after a willful-and-malicious finding. They usually follow when exemplary damages were awarded, but are trimmed (about 70% of the request in *Syntel*) or denied (*Proofpoint*). No dataset exists; my inferred range on the $12.1M request is about $0–11M.                                                                                                                    
+R2h | SETTLED                             | The automatic stay ran through 19 Jun 2024. Pending Rule 50/59 motions do not stay execution. D. Del. has no local rule on bond amount; the default is full judgment plus interest and costs (*Southern Track & Pump*).                                                                                                                                                                                                    
+R2i | OPEN (bounded)                      | Sureties generally require collateral equal to 100% of the bond from weak debtors. Akoustis had $15.2M cash and a going-concern warning, so a bond is impractical without new money.                                                                                                                                                                                                                                       
+R2j | OPEN, leaning that it qualifies     | The indenture is governed by N.Y. law. § 7.01(i) is framed around judgments being "unstayed", which fits appealable judgments, so the 20 May judgment likely counts; no N.Y. case is on point. Earliest trigger is about 19 Aug 2024, and trustee or 25%-holder notice is still required. The insurance exclusion and § 7.02 rescission text are quoted verbatim.                                                          
+R4  | SETTLED (n=10)                      | Fully briefed matters took a median 61.5 days to rule (range 17–159). Summary judgment and Daubert took 52–65 days under trial pressure; matters without a trial deadline had a median of about 98. Applied to the 8 Aug 2024 close of briefing, that suggests roughly mid-Nov 2024 (range late Aug 2024–Jan 2025).                                                                                                        
+R5  | SETTLED (record)                    | Bennis: 55 months at 14.8% gives $66.1M ($50.3M updated), and Appendix C runs month by month from 1 to 54. Irwin: avoided costs of about $305k, and a gross-profit rerun gives a negative benefit. My inference: the $31.3M verdict implies about 22 months on the $66.1M base, or about 30 on the $50.3M base.                                                                                                            
+R7  | SETTLED                             | No mention of insurance covering this litigation or IP claims in the 10-Q or the FY2023 10-K; only generic language.                                                                                                                                                                                                                                                                                                       
+R8  | SETTLED (what exists)               | The 19 part numbers are listed. Pre-D filings give revenue only by segment and region; the RF Filters segment caps the enjoined parts' share at about 60–67% of revenue. No part-level figure exists.                                                                                                                                                                                                                      
+```
+
+**Isolation:**
+- Some web searches returned titles and snippets of post-20-Jun filings in this docket. I did not open or use them, and filtered them out of later searches.
+- I read only D.I. 622's caption line, to confirm it was filed after the cutoff.
+- I excluded D.I. 730, which carries a May 2024 filed date but was entered in Apr 2025.
+- Two general-law sources post-date the cutoff: the Jan 2025 Nasdaq rule change and the *Syntel* fee order. Both are flagged in the file.
+
+Scratch scripts and data are in `~/.hermes/profiles/connor/cache/scratch/research_akts/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_cda68ce9/task-2.log
+Child's process proc_974f754b792f `cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/research_akts; rm -f cl_all.jsonl; pytho` finished (exit code -15) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_58121d59dd1a `cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/research_akts; python3 cl_docket.py 2 9 ` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_edad97868c7f `cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/research_akts; rm -f cl_late2.jsonl; pyt` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+
+--- ✓ TASK 4/4: Check whether prorating Akoustis's April–June 2024 quarter to 20 Jun 2024 would move post-decision-date cash into the pre-decision-date bank feed, and recommend the anchoring rule for the synthetic bank feed.  (status=completed, api_calls=17, 207.7s) ---
+Yes. Prorating the quarter (rule D1) would move about $7.2M of post-decision cash into the pre-decision feed. The cause is an $8.0M secured note from a key customer, received on 26 Jun 2024. The April–June burn was not near zero: the second financing inflow is what makes the numbers seem to reconcile.
+
+**Reconciliation, April–June 2024, in $M** (Q4 = full year in the FY2024 10-K minus the nine months to 31 Mar; all figures derived from the filings and XBRL):
+- Opening cash 15.200 − operating 8.108 + investing 0.133 + financing 17.222 = 24.447. This ties exactly to the reported 30 Jun balance.
+- Operating burn of −8.108 is in line with management's guidance. It was helped by deferred legal fees (accrued professional fees up 1.94) and an inventory drawdown (2.88).
+- It includes a −0.442 cash coupon on the 6% convertible notes. The coupon date was 15 Jun, a Saturday, so it was paid 17 Jun: **before 20 Jun**. The rest of that coupon (0.878) was paid in shares.
+- The registered direct offering brought in 9.208 net (shares 1.934 + pre-funded warrants 7.274), closing 24 May: **before 20 Jun**. That is 9.2 net, not the 9.3 assumed.
+- The **customer note of 8.000 was issued on 26 Jun: after 20 Jun.** It carries no interest and is repaid through sales to that customer.
+- Everything else is small or zero. There were no ATM sales in FY2024 (the programme has been suspended since May 2022). No asset sales, tax refunds or customer prepayments show up in cash. Investing was +0.133 net (capex offset by an investment tax credit), and the employee stock purchase plan brought in +0.014; neither is dated.
+
+**Recommended rule: option (c).** Put each dated flow on its own date: the offering on 24 May, the coupon on 17 Jun, and the customer note on 26 Jun, which stays out of every snapshot. Prorate only the undated residual (−7.519 for the quarter) by business days: 57 of the quarter's 63 fall on or before 20 Jun. Use the 30 Jun balance only as a check. This matches what a connected bank feed would have shown on 20 Jun. Option (a) overstates cash by about $6.4M.
+- One caveat: (c) uses the Q4 operating figure, which was published on 8 Oct 2024 but describes flows before 20 Jun. If the rule bars any figure published after the decision date, use option (b) instead: it prices the burn at the Jan–Mar rate and gives 16.54.
+
+**Cash at 20 Jun 2024: about $17.16M** (estimated) = 15.200 + 9.208 − 0.442 − 7.519 × 57/63. Rolling forward to 30 Jun and adding back the note gives 24.447. The working range is 16.5–17.2; option (a) would give 23.57.
+
+**Line-limit inputs, March / April / May 2024:**
+
+```
+Month    | Customer receipts | Supplier-invoice outflows | Debt service
+---------+-------------------+---------------------------+-------------
+March    |             2.679 |                     3.856 |            0
+April    |             2.232 |                     3.447 |            0
+May      |             2.232 |                     3.447 |            0
+**Mean** |         **2.381** |                     3.583 |        **0**
+```
+
+- **Receipts** come from revenue plus the fall in receivables plus the change in deferred revenue. The quarterly totals are derived (7.910 for Jan–Mar, 6.392 for Apr–Jun); the monthly split by business days is estimated.
+- **Supplier-invoice outflows are estimated and are the weakest numbers here.** They are operating outflows excluding interest, minus payroll. The payroll figure (1.462 a month) is my assumption: 117 full-time employees at about $150k loaded cost a year. The filings do not report it.
+- **Debt service is 0** (derived from the contract terms). The convertible notes pay only on 15 Jun and 15 Dec, the December coupon was paid in shares, and the other note carries no interest, with its first reduction not due until 1 Jan 2025.
+- **Line limit: 15% × (2.381 − 0) ≈ $0.357M.** Under option (b), where April and May are taken at the Jan–Mar rate, it is about $0.415M.
+
+A receipts classifier could tag the 26 Jun customer note as customer revenue, so the feed should keep it out explicitly.
+
+I wrote only that one file and committed nothing; the scratch scripts are in `.../cache/scratch/cashcheck/`. I did not confirm the 13 May guidance figures against the 8-K press release; the conclusion doesn't depend on them.
+
+File written: `/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6a-cases/Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/CASH_CHECK_20240620.md`
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_cda68ce9/task-3.log

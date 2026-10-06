@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"ps -axo pid,command | rg '18766|walk_live|live_status|slope.*dashboard|slope.*viewer'; aws ssm describe-instance-information --profile slope --region us-east-2 --filters Key=InstanceIds,Values=i-09b42b44a8d35909a --query 'InstanceInformationList[].PingStatus' --output text","yield_time_ms":1000,"max_output_tokens":800}));
+text(await tools.write_stdin({session_id:15485,chars:"","yield_time_ms":1000,"max_output_tokens":500}));

@@ -1,0 +1,1 @@
+{"questions":[{"title":"Can you sign into the new organization’s management account (266294230851) and allow GitHub OIDC setup for workload account 462947327980? The current session is blocked by organization policy p-x78f7zf6 on iam:ListOpenIDConnectProviders. I can continue preparing the data migration while this is resolved."}]}

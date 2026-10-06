@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_manifest_4b.py >/dev/null && git add -A && git commit -q -m \"Close re-review minors: argument errors are not Jev failures, bounded amount matching, turn definition, late-failure flag\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && git push -q 2>&1 | tail -1; git log --oneline -1"}

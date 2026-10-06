@@ -1,0 +1,4 @@
+text(await tools.exec_command({cmd:"sed -i '' 's/range(100):/range(10000):/' /tmp/reduce_retry_witness.py\n.venv/bin/python /tmp/reduce_retry_witness.py 23 > /tmp/retry-simple-witness.log","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":500}));
+text(await tools.write_stdin({session_id:25458,chars:"",yield_time_ms:1000,max_output_tokens:500}));
+text(await tools.write_stdin({session_id:14757,chars:"",yield_time_ms:1000,max_output_tokens:500}));
+text(await tools.write_stdin({session_id:11347,chars:"",yield_time_ms:1000,max_output_tokens:500}));

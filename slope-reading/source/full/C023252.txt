@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:".venv/bin/python - <<'PY'\nimport pickle,collections\nwith open('/tmp/refresh-control.pkl','rb') as f: c=pickle.load(f)\nprint(type(c), list(c)[:12] if isinstance(c,dict) else '')\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:1000}));

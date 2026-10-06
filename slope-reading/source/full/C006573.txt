@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && F=app/analysis/events.py; grep -n \"seen_at(\\|restay(\\|_stay_cv\\|_cv\\b\" $F | cut -c1-150; echo ---; for f in judgment_standing default_available_day arrears_by_class first_unpaid holder_route_days_path remitted_amount band notes_due_day; do grep -n \"def $f\\b\" $F; done", "timeout": 30}

@@ -1,0 +1,10 @@
+        [94massert[39;49;00m [96msum[39;49;00m(p.weight_bps [94mfor[39;49;00m p [95min[39;49;00m de.paths) == [94m10_000[39;49;00m[90m[39;49;00m
+>       [94massert[39;49;00m [96mabs[39;49;00m(top.weight_bps - [94m8_500[39;49;00m * [94m8_500[39;49;00m * [94m8_500[39;49;00m // [94m10_000[39;49;00m ** [94m2[39;49;00m) <= [94m150[39;49;00m  [90m# refined answers at 85%, renormalised[39;49;00m[90m[39;49;00m
+[1m[31mE       AssertionError: assert 969 <= 150[0m
+[1m[31mtests/test_decision_model.py[0m:180: AssertionError
+        [94massert[39;49;00m [33m"[39;49;00m[33mfactor_routing[39;49;00m[33m"[39;49;00m [95mnot[39;49;00m [95min[39;49;00m confident.calls[90m[39;49;00m
+>       [94massert[39;49;00m [33m"[39;49;00m[33mfactor_routing[39;49;00m[33m"[39;49;00m [95min[39;49;00m uncertain.calls [95mand[39;49;00m out.transitions[[94m0[39;49;00m].refined[90m[39;49;00m
+[1m[31mE       AssertionError: assert ('factor_routing' in ['dispute_stage', 'dispute_transition', 'dispute_transition', 'factor_routing', 'dispute_transition', 'dispute_transition', ...] and False)[0m
+[1m[31mtests/test_decision_model.py[0m:190: AssertionError
+[31mFAILED[0m tests/test_decision_model.py::[1mtest_path_weights_are_products_that_sum_to_one[0m - AssertionError: assert 969 <= 150
+[31mFAILED[0m tests/test_decision_model.py::[1mtest_refinement_only_when_uncertain_and_decision_relevant[0m - AssertionError: assert ('factor_routing' in ['dispute_stage', 'dispute_tran...

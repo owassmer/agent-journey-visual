@@ -1,0 +1,21 @@
+1736:On December 28, 2023, we entered into a confidential settlement agreement and mutual general release with a former supplier. The loan bears interest at 5% per annum and is payable in full with the last payment. This settlement resulted in a gain to us of $2,235,986 and is reflected as a reduction of cost of sales (See Note 13). During 2023, we made payments of $1,000,000 toward this loan. The outstanding loan balance at December
+2575:a Atrium Innovations,
+2578:(D. Me). The case was settled during December 2023, resulting in a net gain to us of $2,235,986, reflected as a reduction of cost of sales, and a loan payable of $5,450,000.
+2579:On July 28, 2023, L.O.D.C. Group (“LODC”) asserted claims of over $1,000,000 against us for breach of contract arising from their alleged failure to comply with contracts related to the delivery of hand sanitizer in
+2580:L.O.D.C. Group, Ltd. v. Synergy CHC Corp.
+2583:; United States District Court for the Eastern District of Texas, Sherman Division. We deny all allegations and believe we are the aggrieved party in the relationship with LODC, and we filed a counterclaim. The case was settled during April 2024 by way of a confidential settlement agreement and mutual release, the settlement of the claim has been accounted for and reported as a charge to operations for the year ended December 31, 2023. During May 2024, the Company paid in full the settlement to L.O.D.C Group, Ltd.
+4902:Atrium
+5089:On December 28, 2023, the Company entered into a confidential settlement agreement and mutual general release with a former supplier. The loan bears interest at 5% per annum and is payable in full with the last payment. This settlement resulted in a gain to the Company of $2,235,986 and is reflected as a reduction of cost of sales (See Note 13).
+5145:a Atrium Innovations,
+5148:(D. Me). The case was settled during December 2023, resulting in a net gain to the company of $2,235,986, reflected as a reduction of cost of sales, and a loan payable of $5,450,000 (see Note 11).
+5149:L.O.D.C. Group, Ltd. v. Synergy CHC Corp.
+5153:. On July 28, 2023, L.O.D.C. Group (“LODC”) asserted claims of over $1,000,000 against Synergy for breach of contract arising from their alleged failure to comply with contracts related to the delivery of hand sanitizer. Synergy denies all allegations and believes Synergy is the aggrieved party in the relationship between Synergy and LODC and Synergy has filed a counterclaim. The case was settled during April 2024 by way of a confidential settlement agreement and mutual release, the settlement of the claim has been accounted for and reported as a charge to operations for the year ended December 31, 2023. During May 2024, the Company paid in full the settlement to L.O.D.C Group, Ltd.
+6755:On December 28, 2023, the Company entered into a confidential settlement agreement and mutual general release with a former supplier. The loan bears interest at 5% per annum and is payable in full with the last payment. This settlement resulted in a gain to the Company of $2,235,986 and is reflected as a reduction of cost of sales (See Note 13).
+6787:a Atrium Innovations,
+6790:(D. Me). The case was settled during December 2023, resulting in a net gain to the company of $2,235,986, reflected as a reduction of cost of sales, and a loan payable of $5,450,000 (see Note 11).
+6791:L.O.D.C. Group, Ltd. v. Synergy CHC Corp.
+6795:.    On July 28, 2023, L.O.D.C. Group (“LODC”) asserted claims of over $1,000,000 against Synergy for breach of contract arising from their alleged failure to comply with contracts related to the delivery of hand sanitizer. Synergy denies all allegations and believes Synergy is the aggrieved party in the relationship between Synergy and LODC and Synergy has filed a counterclaim. The case was settled during April 2024 by way of a confidential settlement agreement and mutual release, the settlement of the claim has been accounted for and reported as a charge to operations for the year ended December 31, 2023.
+6969:During May 2024, the Company paid in full the settlement to L.O.D.C Group, Ltd. (see Note 13).
+----
+/opt/homebrew/bin/pdftotext
+ModuleNotFoundError: No module named 'pypdf'

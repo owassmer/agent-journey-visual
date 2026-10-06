@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 24000}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"python3 /var/folders/t1/05nck9rj6w7_jqgkkycxjcxw0000gn/T/connor-slope-digest-20260930-cy_n99a6/read.py code 152759 46000",max_output_tokens:14000}),
+tools.exec_command({cmd:"python3 /var/folders/t1/05nck9rj6w7_jqgkkycxjcxw0000gn/T/connor-slope-digest-20260930-cy_n99a6/read.py code 198759 46234",max_output_tokens:13000})
+]);for(let i=0;i<results.length;i++){store("code_agent_"+i,results[i]);if(results[i].status==="fulfilled")text(results[i].value.output);else text(results[i]);}

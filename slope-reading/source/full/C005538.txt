@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && python3 ~/.hermes/profiles/connor/cache/scratch/9z/edit_groups.py && env -u CLAUDE_CODE_OAUTH_TOKEN .venv/bin/ruff check app | tail -5; sed -n '/^class _OrdinaryWalk/,/^    def __init__/p' app/disputes/forecast.py | head -12", "timeout": 60}

@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/web/static/page.js", "old_string": "    const vb = mm.verdict_band, bs = V.branches || [];\n    if (vb && V.banded) {", "new_string": "    const vb = mm.verdict_band, bs = V.branches || [];\n    if (vb && V.banded && !TB) {"}

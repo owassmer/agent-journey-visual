@@ -1,0 +1,40 @@
+registry_id => "slope_external_event_cashflow"
+status => "design_template_not_live_validated"
+model_id => "jev-1.13.0"
+sdk_requirement => "typesafe-sdk==0.7.1"
+sdk_mapping => "For each selected entry, copy entry.question, prefix its instructions with the global_rules text, and construct typesafe_sdk.Choice(**copied_question). Other entry metadata is enforced by the host and is not forwarded as unsupported model instruction fields."
+purpose => "Focused evidence and research-routing judgments inside an adaptive external-event investigation. No question estimates a borrower default probability, generates a dollar adjustment, or makes the final lending decision."
+response_record => {"required_fields": ["run_id", "case_id", "snapshot_id", "question_id", "question_version", "registry_version", "requested_model", "returned_model", "state_sha256", "source_content_hashes", "raw_answer", "selected_choice", "probabilities", "confidence", "agent_disposition", "created_at"], "agent_disposition_values": ["accepted_for_analysis", "needs_reconciliation", "rejected_with_reason"], "raw_answer_policy": "Preserve the SDK's original typed response and any missing field as missing. Do not invent a confidence field when using a future Noul question."}
+sources => ["https://docs.typesafe.ai/primitives", "https://docs.typesafe.ai/models", "https://docs.typesafe.ai/model-jaggedness/jev-1.13", "https://docs.typesafe.ai/confidence"]
+evaluation_mode_policy => {"agent_plus_jev": "The scoped judge_evidence tool may load this generic registry. Only admissible retrieved passages and agent-proposed findings enter state. Never insert expected case answers or private evaluator material.", "agent_only": "Do not expose this registry or judge_evidence and remove instructions requiring Jev. The agent performs the same semantic work itself using the same admissible research and financial tools.", "blind_review": "The blind reviewer receives neither expected answer keys nor experimental arm labels. Ordinary admissible sources and the candidate packet remain available for independent checking.", "failure_policy": "Never silently change evaluation arms because 
+[
+ {
+  "id": "obligation_status",
+  "version": "2.0.0",
+  "role": "semantic",
+  "applies_when": "The gap concerns a specified payment obligation such as a disputed payable, settlement, legal expense or debt service.",
+  "question": {
+   "instructions": "What status does the single statement state.atomic_claim in state.passage establish for state.identified_obligation? Classify the obligation described, not all liabilities of the company. An amount demanded by a counterparty is not automatically an agreed payment. Do not generate a due date, assume immediate payment, or decide whether the amount has already entered the financial baseline. If the status is internally conflicting or combines different obligations, choose unknown.",
+   "criteria": {
+    "required_unconditional": "The statement describes a fixed payment obligation whose existence does not depend on an unresolved condition and does not report that it has already been satisfied; timing may still be unspecified.",
+    "claimed_or_disputed": "The statement describes a demand or contested amount, and does not establish an agreed or ordered unconditional payment of that amount.",
+    "conditional": "The statement explicitly makes the payment obligation depend on an unresolved event or condition, rather than presenting it solely as a disputed demand.",
+    "reported_satisfied": "The statement reports that the identified obligation has been paid, discharged or otherwise satisfied, rather than merely promising future payment.",
+    "unknown": "The statement does not establish one status, omits necessary context, or combines unresolved statuses."
+   }
+  },
+  "application": "Extract amounts and dates separately, then reconcile with opening balances, existing AP and loan schedules. A historical paid amount is not a new forecast outflow."
+ },
+ {
+  "id": "offset_support",
+  "version": "2.0.0",
+  "role": "semantic",
+  "applies_when": "The gap concerns a particular insurance reimbursement, legal-expense funding arrangement, indemnity or other identified source offsetting an expense or exposure.",
+  "question": {
+   "instructions": "What does state.atomic_claim in state.passage establish about state.identified_offset? Distinguish a documented funding commitment from hoped-for recovery and from money already received. Judge the one identified payment or coverage obligation only. A commitment to finance legal expenses is not unrestricted cash, and being nonrecourse does not make damages recoverable or guaranteed. Choose unknown if the statement combines different statuses or the offset cannot be established.",
+   "criteria": {
+    "committed_without_stated_unmet_condition": "The statement describes an identified party's commitment or payable obligation covering the specified offset, with no unresolved condition stated in this claim, and does not report the specific payment as already received.",
+    "committed_subject_to_condition": "The statement describes a commitment whose availability for this offset expressly depends on a condition not reported as satisfied, and does not report the payment as already received.",
+    "possible_or_disputed": "The statement presents the offset as a possibility, demand, disputed entitlement or expectation without an established commitment for this offset.",
+    "reported_received_or_paid_for_borrower": "The statement reports that the identified amount has been received or the specified expense has already been paid on the borrower's behalf.",
+    "unknown": "

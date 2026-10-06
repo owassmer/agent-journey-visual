@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-8-page && grep -E \"^\\*\\*M[0-9]|^## \" ~/.hermes/profiles/connor/cache/scratch/8/page_review.md | cut -c1-200; git log --format='%h %s' 6718bf2..origin/step-8-page --no-merges -- app/web app/analysis/page.py cases | cut -c1-200; grep -n \"^### 16.7\" -A 18 Slope_Model_Extensions_Spec.md | cut -c1-250"}

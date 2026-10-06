@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/fix4b_tests.py && uv run ruff check --fix -q . ; uv run ruff check . && uv run pytest -q -p no:warnings 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"FAILED|^E  \" | head -20; uv run pytest -q -p no:warnings 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | tail -1"}

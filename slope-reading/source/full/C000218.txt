@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/akts/recap && for f in 616.1 616.2 616.3 616.4; do echo \"######## $f $(head -c 300 $f.txt | tr -s ' \\n' ' ')\"; grep -n -i -E \"head start|55 months|unjust enrichment of|\\\\\\$[0-9]+(\\.[0-9])? million|customers?|revenue\" $f.txt | sed 's/  */ /g' | head -14 | cut -c1-200; done"}

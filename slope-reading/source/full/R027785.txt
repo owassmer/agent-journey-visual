@@ -1,0 +1,60 @@
+1	# Model extensions for the Akoustis and Charles & Colvard cases (spec)
+2	
+3	**Status:** proposed, for Owen's review. Written 25 Sep 2026.
+4	
+5	**Scope:** every change to the model, the contracts, the engine, the agent and the page needed to move the demo from ChromaDex to:
+6	- **Akoustis Technologies**, decision date (D) 20 Jun 2024, as the lead case (Owen's choice, 25 Sep 2026);
+7	- **Charles & Colvard**, D 18 Nov 2024, as the second case.
+8	
+9	**How decision dates are set:**
+10	- D falls just after the filing that brings the public record up to date. It is justified by that filing, never by when the known outcome lands.
+11	- The dispute is live, with its next steps inside the 180-day horizon.
+12	- The borrower looks stressed but fundable on bank data alone.
+13	- The event's cash reaches Slope's exposure while it is outstanding.
+14	
+15	**Why Akoustis at 20 June rather than 9 October:**
+16	- Uncertainty is at its widest after the verdict. On 20 June the post-trial motions, the injunction, fees and interest are all pending.
+17	- Bank data looks fundable: a $9.3M share sale closed in May.
+18	- The research's warning comes about six months before the 16 Dec 2024 petition, which falls inside the horizon (it ends 17 Dec).
+19	- The cost: a single 90-day draw would be repaid by September, before anything happens. So the loan is modelled as Slope's reusable line (§2.1), whose later draws are outstanding when the petition lands.
+20	
+21	**Governing documents:** where this spec differs from `Slope_Credit_Scenario_Build_Specification.md`, this spec governs for these changes. The alignment document still governs intent.
+22	
+23	## 0. What does not change
+24	
+25	- **Jev** reads the present state and forecasts defined future events. It never sets an amount, a date or a path.
+26	- **Code** owns every window, amount range and date draw, and multiplies conditional probabilities along each path. Every structurally feasible path is kept, and stress is a separate view.
+27	- **Only impossibility changes structure:** an event that has already occurred, or a payment. Every other finding is evidence.
+28	- **Unknown is a typed state, never zero.** Contractual, path-conditioned and probability-weighted series stay distinct.
+29	- **Operating draws:** bank-only and event-adjusted views share them.
+30	- **Isolation:** unchanged. Sources dated after D are `outcome` sources and reach only the reveal.
+31	
+32	---
+33	
+34	## 1. The cases
+35	
+36	### 1.1 Akoustis Technologies (AKTS, CIK 1584754), D = 20 Jun 2024
+37	
+38	**Dispute:** *Qorvo, Inc. v. Akoustis Technologies*, D. Del. 1:21-cv-01417 (CourtListener docket 60622376). The counterparty, Qorvo, is a competitor.
+39	
+40	**State at D:**
+41	- Jury verdict of about $38.6M on 17 May 2024 (D.I. 601); judgment on 20 May (D.I. 602).
+42	- Motions filed 17 Jun, all pending:
+43	  - Akoustis: judgment as a matter of law (D.I. 607, sealed); new trial or remittitur (D.I. 613).
+44	  - Qorvo: permanent injunction (D.I. 608); alter or amend the judgment (D.I. 611); pre- and post-judgment interest (D.I. 615, sealed); attorneys' fees (D.I. 618).
+45	- The post-trial briefing schedule is set by stipulation (D.I. 604).
+46	- **Unknown at D:** the interest amount sought (the motion is sealed) and whether the fee motion states an amount (to be read).
+47	
+48	**Snapshot sources (all verified public before D):**
+49	- **SEC:**
+50	  - the Q3 FY2024 10-Q of 13 May 2024: going-concern doubt; cash of $15.2M at 31 Mar; the Bankruptcy Code language;
+51	  - the 8-K of 20 May: the verdict, the post-trial plan, and "products incorporating design updates are not affected";
+52	  - the 8-K of 22 May;
+53	  - the 424B5 of 23 May and the 8-K of 24 May: the share sale, $9.3M net;
+54	  - the notes: the June 2022 8-K Exhibit 4.1 (the judgment default: "undischarged, unpaid or unstayed") and the 2022 S-3 / 424B3;
+55	  - FY2023 10-K, FY2024 Q1–Q2 10-Qs, the January 2024 offering 8-Ks.
+56	- **RECAP (available):** D.I. 601, 602, 603, 604, 608, 611, 613, and 618 if it is confirmed available (the request was rate-limited mid-check). **Sealed:** 607, 610, 614, 615.
+57	
+58	**Outcome sources (reveal only; all public after D):**
+59	- the fee order D.I. 690 (9 Sep) and interest order D.I. 699 (10 Sep);
+60	- the FY2024 10-K (7 Oct);

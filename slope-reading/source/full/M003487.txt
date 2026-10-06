@@ -1,0 +1,64 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_ccb4aad4]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 22:56:52 (31m20s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1881.2s
+
+--- ✓ TASK 1/1: Re-run the 14 May Akoustis investigation (sweep + agent) on the 52-source snapshot with the step-9 record items, on branch step-9-contracts of owassmer/Slope_Sparse_Events, and commit the new recorded investigation run. Commit and push; open no PR.  (status=completed, api_calls=52, 1880.53s) ---
+I re-ran the 14 May Akoustis investigation on the 52-source snapshot with the step-9 record items, and committed and pushed the run to `step-9-contracts` (no PR). The agent submitted its packet, but the run's status is **INCOMPLETE_REVIEW**, not ready. It filled 52 of the 54 record items and marked the other 2 as not in the record; both of those are agent misses.
+
+**Why the run is incomplete** (two reasons, both in `run.json`):
+- One Jev request was rejected by OpenRouter as too long (`max_tokens_exceeded`). It came from a Jev-backed tool call. The likeliest one is one of the 7 `instantiate_dispute` attempts (only one dispute was created), but I didn't confirm which call.
+- One effect was left disputed: `eff_008`, the company's own Texas claim against Qorvo, which the agent recorded as moving no cash in the loan's horizon.
+
+**Code change** (commit `0a75a05`)
+- `app/disputes/slots.py`: for the pending-claim template, each node's record items now come from its `pending_money_claim` block where it has one. The agent tools (`get_record_items`, `attach_record_item`, `submit_packet`) pick this up without edits to `tools.py`.
+- The analysis build's call needed no change: disputes read under version 4.1.0 or later get the pending chain's items (54, including the new 5.0.0 nodes). The 20 Jun case is read under 4.0.0, so it gets exactly what it got before.
+- Checks: the 20 Jun dump is identical to the earlier baseline on every key. `test_investigation_tools.py` and `test_semantic_layer.py` pass (32 tests). No files in `app/analysis/` or `forecast.py` were touched.
+- To fit the 54 items, I raised the limits in `agent_config` to 320 turns and 2,700 s for the agent, and 12,000 attempts / USD 0.90 for the sweep; the manifest hash is refreshed. None of the limits was reached.
+
+**Run `akoustis_20240514-agent_plus_jev-20260929T030814Z`** (commit `a42e9f1`)
+- **Sweep:** 1,584 sections and 5,009 units; 789 new Jev requests (5,884 answered from cache), **USD 0.039**.
+- **Investigation:** 418 Jev requests, **USD 0.052**. The host counted 87 turns (the SDK counted 285), 1,052 s, 57 findings of which 49 were accepted.
+
+```
+Record item                                                                                                           | Findings (source)                                                                      
+----------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------
+final verdict form                                                                                                    | fnd_011 (D.I. 580)                                                                     
+trial docket; trial's length and scope                                                                                | fnd_001, fnd_008, fnd_042, fnd_011, fnd_027 (docket, D.I. 590)                         
+each side's statement of intended proof; claimant's itemised claims; damages method and figures                       | fnd_002–004, 006, 007, 009, 010 (D.I. 543-1)                                           
+challenges to the damages method; rulings admitting or limiting damages evidence; ruling admitting claimant's damages | fnd_037 (D.I. 553), fnd_038 (D.I. 537), fnd_008, fnd_036 (D.I. 565)                    
+Rule 50(a) motions and rulings                                                                                        | fnd_008 (D.I. 590)                                                                     
+defense's damages positions                                                                                           | fnd_009 (D.I. 543-1)                                                                   
+revenue base left to the jury                                                                                         | fnd_040 (D.I. 476, D.I. 553)                                                           
+record on actual loss                                                                                                 | fnd_007, fnd_004, fnd_008                                                              
+proposed final instructions (elements and burdens; unjust enrichment, actual loss, exemplary damages)                 | fnd_038 (D.I. 537), fnd_010                                                            
+preliminary instructions                                                                                              | fnd_043 (D.I. 533)                                                                     
+limiting instructions                                                                                                 | fnd_036 (D.I. 565)                                                                     
+rulings that narrow the issues                                                                                        | fnd_027, fnd_008, fnd_006                                                              
+relief sought, including injunction (both variants)                                                                   | fnd_006, fnd_004, fnd_027                                                              
+parties' competitive relationship                                                                                     | fnd_023, fnd_004, fnd_002                                                              
+company's own claims against the claimant                                                                             | fnd_023 (10-Q)                                                                         
+company's statements on trial, contesting, likely award, settlement                                                   | fnd_030 (13 May call), fnd_009, fnd_013, fnd_016, fnd_027                              
+cash, assets, going-concern, debt, financing and liquidity (8 variants)                                               | fnd_012–016, 022, 028, 041 (10-Q, 10-K Ex. 21)                                         
+stated plans; counsel on ability to raise money                                                                       | fnd_015, fnd_028; fnd_030                                                              
+ATM program; shelf and share capacity; prior underwritten offering                                                    | fnd_015, fnd_031 (424B5 / 8-K of 29 Jan 2024), fnd_032                                 
+authorized and outstanding shares; last charter-amendment vote                                                        | fnd_032 (8-K of 2 Nov 2023, 10-Q)                                                      
+listing status, deficiency notices, options to regain compliance, closing bid prices                                  | fnd_017 (10-Q)                                                                         
+daily price and volume                                                                                                | fnd_017, fnd_031 (the agent didn't cite the kit's price table `akts_daily_px_20240514`)
+notes' terms; judgment-default terms; interest payment record                                                         | fnd_018–022, 026 (indenture, 8-K); fnd_039 (10-Q)                                      
+where the company and subsidiaries are organised and operate                                                          | fnd_041 (10-K Ex. 21.1)                                                                
+```
+
+**Not filled — both agent misses under DECOMPOSITION_20240514 §8:**
+- **The witness and exhibit lists.** §8 lists D.I. 543-1 Ex. C.1/C.2, D.I. 539, D.I. 585, D.I. 582 and D.I. 543, and all are in the snapshot. The agent read D.I. 539, but the support check rejected its proposed finding.
+- **The holders of record of the notes.** §8 lists the "Selling Stockholders" table in the resale S-3 of 13 May 2024, which is in the snapshot. The agent read that table but judged it doesn't show who holds the notes.
+
+`slope analyze` was not run. I also added a note on the record-item change and this run to the `slope-sparse-events-build` skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_ccb4aad4/task-0.log
+Child's process proc_9e0d1f36832f `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-contracts && S=~/.hermes/prof` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+13821 337 2 39 s
+{'paths': True, 'path_digest': True, 'nodes': True, 'states': True, 'bank_paths': True, 'bank_states': True, 'questions': True}

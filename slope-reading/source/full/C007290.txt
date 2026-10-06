@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/fix1 && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 SLOPE_WALK_CUT=2 SLOPE_WALK_SUBCUT=1 SLOPE_WALK_UNIT_MINUTES=0.0005 timeout 280 uv run python $S/small_tree.py 30 2 2>&1 | grep -v \"^ *[0-9]*s part\" | tail -20", "timeout": 400}

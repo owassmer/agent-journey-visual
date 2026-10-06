@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"node_group\" app/disputes/forecast.py app/disputes/state14.py app/analysis/*.py | head; sed -n 3150,3170p app/analysis/events.py; sed -n 2715,2735p app/analysis/events.py; grep -n '\"@\"\\|startswith(\"@\")' app/analysis/events.py app/disputes/*.py app/analysis/page.py | head -20", "timeout": 30}

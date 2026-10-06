@@ -1,0 +1,1 @@
+{"questions":[{"title":"The personal Slope AWS login has expired again. I’ve started `aws login --profile slope`; please complete the browser sign-in for account 462947327980 and reply “done.” This is needed to retrieve the saved-history trace and manage the paid instance. I’m continuing the local fixes and GitHub checks meanwhile."}]}

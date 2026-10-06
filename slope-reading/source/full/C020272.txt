@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"pwd; rg --files -g 'AGENTS.md' -g 'CLAUDE.md' -g '*refresh*' -g '*assemble*' tools .github/workflows | head -50","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1200}));
+text(await tools.exec_command({cmd:"cat .github/workflows/question-refresh.yml; sed -n '1,215p' tools/question_refresh_assemble.py; sed -n '108,178p' tools/question_refresh.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":5500}));

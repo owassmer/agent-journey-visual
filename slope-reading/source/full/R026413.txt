@@ -1,0 +1,22 @@
+# Slope's Credit Risk Process
+
+## Application Routing
+Slope employs a tiered underwriting approach: "Most underwriting decisions are fully automated through our underwriting system. But for a small percentage of applications, typically driven by higher risk profiles, larger transaction sizes, or edge cases, we require a human-in-the-loop review."
+
+## Human Review Triggers
+Applications escalate to human review based on three primary factors:
+- Higher risk profiles
+- Larger transaction sizes
+- Edge cases not handled by automated systems
+
+## Evidence Gathering for Credit Decisions
+The Credit Review Agent assembles comprehensive credit memos by pulling together: business financials, risk signals, transaction behavior, and qualitative context. The agent accesses multiple data sources including Salesforce, internal analytics systems, and specialized tools to construct underwriting rationale.
+
+## Decision Framework
+Slope's decision-making relies on institutional knowledge: "The moat isn't the model — it's the institutional knowledge the model is executing against." The framework was built from four years of underwriting experience, with agents following templates defining which signals matter and how output is structured.
+
+## Monitoring
+The platform includes continuous quality control through dataset-based scoring and automated recommendations for prompt improvements based on thread analysis.
+
+## Litigation, Public Records, External Events
+The article contains no discussion of litigation, public records usage, or external event monitoring in the underwriting process.

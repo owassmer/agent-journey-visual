@@ -1,0 +1,41 @@
+========== synergy_20240813 | L.O.D.C. alleging damages
+========== synergy_20240813 | paid in full the settlement L.O.D.C.
+  synergy_s1a_20240813#s0210 :: During May 2024, the Company paid in full the settlement to L.O.D.C Group, Ltd.
+========== synergy_20240813 | approximately cash August 12 2024
+  synergy_s1a_20240813#s0009 :: In November 2015, we acquired our second marquee brand, Flat Tummy, for AUD 10.0 million (or approximately $7.0 million), using a mix of cash and stock.
+  synergy_s1a_20240813#s0009 :: Approximately $4.1 million of our outstanding indebtedness comes due in the year ending December 31, 2024, and approximately $12.3 million comes due in the year ending December 31, 2025.
+  synergy_s1a_20240813#s0009 :: As of August 12, 2024, we have approximately $2.0 million of cash.
+========== synergy_20240813 | resulted in a gain reduction of cost of sales
+  synergy_s1a_20240813#s0210 :: The case was settled during December 2023, resulting in a net gain to the company of $2,235,986, reflected as a reduction of cost of sales, and a loan payable of $5,450,000 (see Note 11).
+========== synergy_20240813 | Synergy alleges Atrium misrepresentation
+  synergy_court_20230227#s0009 :: 10
+
+case, Atrium’s allegedly false representations at weekly meetings that it was prioritizing and continuing to manufacture FOCUSfactor and that deliveries were imminent, see FAC ¶¶ 61-62, plausibly could have stemmed from negligence in the form of a failure to investigate the true state of affairs before making those assurances.4 Atrium also fails to demonstrate its entitlement to dismissal of Synergy’s negligent m
+  synergy_court_20230227#s0009 :: Atrium contends that, to the extent Synergy’s claim is based on omissions, it fails as a matter of law because there is no duty to disclose information to a business partner, and to the extent based on communications, it falls short of demonstrating reasonable reliance.
+  synergy_court_20230227#s0009 :: Yet, the gravamen of Synergy’s claim of negligent misrepresentation is not that Atrium failed to communicate, but that it failed to exercise due care in communicating.
+  synergy_court_20230227#s0009 :: And the FAC is not devoid of allegations suffici ent to support reasonable reliance: Synergy alleges that Atrium assured it that the manufacturing of FOCUSfactor products was continuing, deliveries were imminent, and Atrium was prioritizing its orders —representations
+
+4 As Atrium notes, see Defendant’s Reply (“Reply”) (ECF No.
+========== synergy_20240813 | recommend grant motion dismiss Count IV
+  synergy_court_20230227#s0000 :: 2:22-cv-00301-JAW ) HVL, LLC, d/b/a ATRIUM ) INNOVATIONS, ) ) Defendant )
+
+RECOMMENDED DECISION ON MOTION TO DISMISS
+
+Defendant HVL, LLC, doing business as Atrium Innovations, moves pursuant to Federal Rule of Civil Procedure 12(b)(6) to dismiss claims by Plaintiff Synergy CHC Corp.
+  synergy_court_20230227#s0000 :: See Motion to Dismiss (MTD) (ECF No.
+  synergy_court_20230227#s0000 :: I , therefore, recommend that the Court grant the motion to dismiss as to Count IV, deny it as to Count III, dismiss Count IV without prejudice, and direct that Synergy file a
+
+1 Atrium also sought dismissal of a claim by Synergy for unfair or deceptive trade practices (Count V), see MTD at 1-2;
+  synergy_court_20230227#s0000 :: however, that request was mooted by the Court’s grant of Synergy’s unopposed motion to dismiss that claim, see ECF Nos.
+========== barfresh_20241025 | expanded capacity fourth quarter
+  brfh_2024q3_release#s0006 :: The Company expects expanded capacity to become available in the fourth quarter of 2024, subject to the risks and uncertainties associated with pre-production activities.
+========== barfresh_20241025 | disputed payable manufacturer
+  brfh_2024q3_10q#s0020 :: As of September 30, 2024, the Company had $ 1,371,000 of working capital, including $ 401,000 in cash and excluding $ 499,000 in disputed co-manufacturer accounts payable (Note 4).
+========== barfresh_20241025 | non-recourse litigation financing agreement
+  brfh_2024_08_13_litigation_funding#s0000 :: The Company entered into an agreement with a well-known alternative asset investment firm and the Company’s litigation counsel, Boesch Law Group, to provide non-recourse non-dilutive litigation financing.
+  brfh_2024_08_13_litigation_funding#s0000 :: This new non-recourse non-dilutive financing removes the need for additional cash from the Company to fund this pending lawsuit.
+========== barfresh_20241025 | receivables facility available borrowing
+  brfh_2024q3_10q#s0011 :: Line of Credit
+
+In August 2024, the Company secured receivables financing of $ 1,500,000 (the “Facility”).
+  brfh_2024q3_10q#s0011 :: As of September 30, 2024, borrowings under the Facility amounted to $ 86,000 , net of unamortized deferred financing cost of $ 14,000 , and $ 1,400,000 was available to borrow.

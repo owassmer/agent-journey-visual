@@ -1,0 +1,1 @@
+{"command": "sleep 2; curl -s -o /dev/null -w \"%{http_code}\\n\" http://127.0.0.1:8766/runs/chromadex_20240819-agent_plus_jev-20260925T205024Z && uv run --with websocket-client python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/walk.py http://127.0.0.1:8766/runs/chromadex_20240819-agent_plus_jev-20260925T205024Z", "description": "Run the browser walkthrough", "timeout": 180000}

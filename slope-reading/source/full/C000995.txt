@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN uv run python /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/shares.py runs/recorded/akoustis_20240620-agent_plus_jev-20260926T212137Z 2>&1 | tail -20 | cut -c1-260"}

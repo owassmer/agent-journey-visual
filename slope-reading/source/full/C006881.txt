@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/recur/stage/prune && python3 fix_paths.py && cp ~/.hermes/profiles/connor/skills/software-development/slope-sparse-events-build/SKILL.md current.SKILL.md && diff -u current.SKILL.md SKILL.md > prune.diff; wc -c current.SKILL.md SKILL.md; grep -c '^- \\*\\*' current.SKILL.md SKILL.md"}

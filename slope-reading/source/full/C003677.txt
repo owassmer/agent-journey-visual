@@ -1,0 +1,1 @@
+{"command": "ls -t ~/.hermes/profiles/connor/cache/delegation/live/ | head -8; for d in $(ls -t ~/.hermes/profiles/connor/cache/delegation/live/ | head -6); do echo \"== $d\"; for f in ~/.hermes/profiles/connor/cache/delegation/live/$d/*.log; do head -c 300 $f | tr '\\n' ' ' | cut -c1-250; echo; grep -E \"assistant\\|\" $f | tail -2 | cut -c1-300; done; done"}

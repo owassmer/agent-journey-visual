@@ -1,0 +1,1 @@
+{"command": "ps -Ao pid,ppid,etime,%cpu,rss,command -r | head -14 | cut -c1-200; echo; ps -Ao pid,ppid,etime,%cpu,rss,command -m | head -10 | cut -c1-200; for p in 50148 49430 59399; do echo \"children of $p:\"; pgrep -P $p | xargs -I{} ps -o pid,etime,%cpu,rss,command -p {} | tail -n +2 | cut -c1-220; done"}

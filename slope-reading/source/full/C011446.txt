@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"osascript <<'APPLESCRIPT'\ntell application \"System Events\"\nset out to \"\"\nrepeat with p in (every application process whose name is \"Google Chrome\")\nset out to out & (unix id of p as text) & \" \" & (title of every window of p as text) & linefeed\nend repeat\nreturn out\nend tell\nAPPLESCRIPT",max_output_tokens:1500}));
+text(await tools.exec_command({cmd:"ps -axo pid,comm | rg 'Google Chrome.app/Contents/MacOS'","max_output_tokens":1500}));

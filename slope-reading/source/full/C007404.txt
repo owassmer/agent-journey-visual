@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"capacity\" app/analysis/processor.py app/analysis/engine.py | head; echo \"=== runs_put/get sites, arrears_runs\"; grep -n \"arrears_runs\\|runs_get(\\|runs_put(\" app/analysis/*.py | head; echo \"=== shadow engine_cash\"; grep -n \"engine_cash\\|def check\" app/analysis/shadow.py | head -5"}

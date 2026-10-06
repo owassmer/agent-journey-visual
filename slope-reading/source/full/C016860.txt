@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws iam list-roles --profile slope --query 'Roles[].{Name:RoleName,Arn:Arn,Duration:MaxSessionDuration}' --output json; gh api repos/owassmer/Slope_Sparse_Events/actions/jobs/110725871044/logs > /tmp/morning-worker.log; tail -35 /tmp/morning-worker.log","yield_time_ms":1000,"max_output_tokens":1800}));
+text(await tools.write_stdin({session_id:49922,chars:"","yield_time_ms":1000,"max_output_tokens":1800}));

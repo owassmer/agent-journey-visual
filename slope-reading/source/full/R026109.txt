@@ -1,0 +1,64 @@
+====================================================================================================
+CASE syn_entity_unresolvable  (question entity_scope)
+---------------------------------------- instructions
+Global rules:
+- Answer only from the supplied state. Do not use remembered facts about this company, dispute or later events.
+- Each question concerns one statement, one target and the supplied passage. If the input combines claims, choose the unknown or unclear option rather than an arbitrary category.
+- Source authority and claim posture are separate: a regulatory filing can report an allegation or an expectation.
+- Do not compute or compare amounts or dates; code does that separately.
+- No confidence value turns a judgment into an accepted fact, a probability or a financial input.
+- The question identifier is metadata; the complete question is in the instructions.
+
+Question:
+Who does this statement apply to? Judge identity and stated scope of state.claim within state.passage, not whether the claim is true. The target has two parts: the entity and, when named, a specific asset, activity or obligation. Both must match. A statement about the same company but a different obligation, counterparty, asset or activity is 'different'. Do not assume an affiliate's obligations belong to the parent.
+---------------------------------------- criteria (answer options)
+  target: The claim concerns the target entity and, when the target names a specific asset, activity or obligation, that same one.
+  different: The claim concerns a different entity, or the same entity but a different asset, activity, obligation or counterparty than the one the target names.
+  unknown: Cannot tell: identity or scope is unresolved, a definition is missing, or several targets are combined.
+---------------------------------------- state
+{
+ "target": "Synergy CHC Corp. — a settlement loan with an unnamed former supplier",
+ "source": {
+  "source_id": "synergy_s1a_20240813",
+  "title": "Synergy CHC Corp. Form S-1/A registration statement (Amendment No. 2)",
+  "publisher": "SEC EDGAR",
+  "document_kind": "sec_registration_statement",
+  "available_at": "2024-08-13T23:59:59-04:00"
+ },
+ "passage": {
+  "heading_path": "SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 13 — Commitments & Contingencies",
+  "text": "During May 2024, the Company paid in full the settlement to L.O.D.C Group, Ltd."
+ },
+ "claim": "The Company paid in full the settlement to L.O.D.C. Group in May 2024."
+}
+====================================================================================================
+CASE syn_coverage_multi_loan_one  (question coverage_supported)
+---------------------------------------- instructions
+Global rules:
+- Answer only from the supplied state. Do not use remembered facts about this company, dispute or later events.
+- Each question concerns one statement, one target and the supplied passage. If the input combines claims, choose the unknown or unclear option rather than an arbitrary category.
+- Source authority and claim posture are separate: a regulatory filing can report an allegation or an expectation.
+- Do not compute or compare amounts or dates; code does that separately.
+- No confidence value turns a judgment into an accepted fact, a probability or a financial input.
+- The question identifier is metadata; the complete question is in the instructions.
+
+Question:
+Do state.cited_findings account for the specific matter that state.passage describes? A finding accounts for the matter when it states what the passage establishes about that matter's payments, obligations, restrictions, covenants, default terms and earnings items, including that one was paid, released or superseded. Other detail (ownership, governance, procedure, legal reasoning, presentation, ordinary balances) needs no finding. Each finding comes with its verbatim quotes; use them to tell which matter it concerns. Findings about a different matter do not account for it.
+---------------------------------------- criteria (answer options)
+  covered: The findings state each payment, obligation, restriction, covenant, default term and earnings item the passage describes for its matter.
+  partly_covered: The findings address the matter but a payment, obligation, restriction, covenant, default term or earnings item the passage describes (for example an accounting gain) is not stated.
+  not_covered: The findings concern a different matter or aspect.
+  unclear: Cannot tell what matter the passage describes or what the findings state.
+---------------------------------------- state
+{
+ "passage": {
+  "heading_path": "SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable",
+  "text": "[synergy_s1a_20240813#t0045]\n|  | June 30, 2024 | December 31, 2023 |\n| Kenek, related party | $1,181,222 | $— |\n| Knight | 12,333,053 | 12,426,997 |\n| Sanders | 9,794,165 | 10,294,165 |\n| Atrium | 4,802,445 | 4,802,445 |\n| VitBest | 2,920,824 | — |\n| Shopify | 482,725 | 94,525 |\n| Total notes payable | $31,514,434 | $27,630,420 |\n| Unamortized debt issuance cost | (55,535) | (12,288) |\n| Total notes payable, net | 31,458,899 | 27,618,132 |\n| Short term loan payable, related party | (1,181,222) | — |\n| Current portion, related party | (2,000,000) | — |\n| Current portion, other | (5,887,602) | (2,094,525) |\n| Long-term portion, related party | 10,333,053 | 12,426,997 |\n| Long-term portion, other | $12,057,022 | $13,096,610 |"
+ },
+ "cited_findings": [
+  {
+   "finding_id": "fnd_n",
+   "proposition": "Synergy's Knight note payable balance was $12,333,053 at June 30, 2024 and $12,426,997 at December 31, 2023."
+  }
+ ]
+}

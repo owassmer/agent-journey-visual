@@ -1,0 +1,2 @@
+// @exec: {"max_output_tokens": 14000}
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json\nfrom pathlib import Path\nh=json.loads(Path('human.json').read_text())\ns='\\n\\n'.join('USER '+str(x['id'])+' '+x['session_id']+'\\n'+x['content'] for x in h if len(x['content'])<9000 and x['id']<790000)\nPath('human_short_bundle.txt').write_text(s)\nprint('TOTAL',len(s));print(s[:40000])\nPY",workdir:load("digestDir"),max_output_tokens:14000}));

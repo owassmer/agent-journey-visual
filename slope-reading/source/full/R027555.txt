@@ -1,0 +1,36 @@
+app/domain/investigation.py:52:class Frozen(BaseModel):
+app/domain/investigation.py-53-    model_config = ConfigDict(frozen=True)
+app/domain/investigation.py-54-
+app/domain/investigation.py-55-
+app/domain/investigation.py-56-class SourceSpan(Frozen):
+    ReconciliationTask,
+    SemanticObservation,
+)
+
+GENESIS = "0" * 64
+REMOVED_FIELDS = {("inventory", "exclusions")}  # recorded by run 13 under a design later removed
+COLLECTIONS: dict[str, type[BaseModel]] = {
+    "dependencies": DecisionDependency, "candidates": EvidenceCandidate, "jev_calls": JevCallRecord,
+    "observations": SemanticObservation, "findings": AtomicFinding, "reconciliations": ReconciliationTask,
+    "effects": EconomicEffectProposal, "inventory": InventoryItem, "disputes": DisputeInstance,
+}
+# Which collection each event kind writes its object into (None = log-only event).
+EVENT_COLLECTION: dict[str, str | None] = {
+    "dependency_recorded": "dependencies", "candidate_screened": "candidates", "jev_call": "jev_calls",
+    "observation_recorded": "observations", "observation_disposition": "observations",
+    "finding_proposed": "findings", "finding_resolved": "findings", "reconciliation_opened": "reconciliations",
+    "reconciliation_resolved": "reconciliations", "effect_proposed": "effects", "effect_validated": "effects",
+    "inventory_loaded": "inventory", "inventory_accounted": "inventory", "effect_disputed": "effects",
+    "dispute_instantiated": "disputes",
+}
+ID_FIELD = {"dependencies": "dependency_id", "candidates": "candidate_id", "jev_calls": "call_id",
+            "observations": "observation_id", "findings": "finding_id", "reconciliations": "task_id",
+            "effects": "effect_id", "inventory": "item_id", "disputes": "instance_id"}
+
+
+class LockedRunError(RuntimeError):
+    pass
+
+
+def _canonical(obj: Any) -> str:
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), default=str)

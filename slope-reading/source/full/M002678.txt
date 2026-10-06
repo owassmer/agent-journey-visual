@@ -1,0 +1,102 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_78da6187]
+A background fan-out unit you dispatched earlier — 3 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 02:11:28 (30m4s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 718.69s
+
+--- ✓ TASK 1/3: Facet 1 reviewer (cutoff integrity and evidence) for PR #18 of owassmer/Slope_Sparse_Events, pinned at commit 3b21187. Review read-only in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/review18 (detached at 3b21187). Post one PR comment with your findings and report the comment URL plus a short summary.  (status=completed, api_calls=61, 439.43s) ---
+I found no blocking cutoff or evidence problems in PR #18 at 3b21187, and the review is posted: https://github.com/owassmer/Slope_Sparse_Events/pull/18#issuecomment-5864754824
+
+What I checked, all read-only:
+- **Snapshot:** every source dated after 14 May is excluded, and a rebuild from scratch matches the recorded one exactly. None of the 26 isolation probes, nor the extra post-cutoff facts ($305k, $50.3M, $0.20, D.I. 603+, verdict amounts), appears anywhere in it.
+- **Docket view:** it stops at D.I. 590, filed 14 May.
+- **Bank feed:** April and 1–14 May run at exactly the March quarter's monthly rate. No later-reported figure, coupon or offering enters it.
+- **Timing inputs:** the 16–22 May verdict window, the ten ruling-lag samples (all ruled by 2 May) and the 5.13% post-judgment interest rate all come from material dated on or before 14 May.
+- **Amounts:** every known damages amount is quoted verbatim in its cited D.I. 543-1 passage. Unknown components stay unknown rather than becoming zero, and the declared bound is never used.
+- **Record-item slots:** the 23 filled slots cite passages that fill them. I searched the snapshot for all 8 "not in the record" items and none is there.
+- **Lead run:** every match for a post-cutoff string in the packet, events, slots, Jev logs, analysis and sweep log is harmless. They are search queries, conditional branch wording, modelled per-path dates, hashes, or pre-2024 citations.
+- **Tests:** the three isolation test files pass (21 tests).
+
+Noted in the comment, not blocking:
+1. The docket view keeps a clerical note dated after the cutoff ("Modified on 7/5/2024") on D.I. 528.
+2. The probe list could add the extra post-cutoff facts above; all are already absent from the snapshot, so this only hardens the test.
+3. The run's page shows "$23,100,000 (D.I. 616-1)", a 17 Jun filing, from the shared contract's 20 Jun data. The engine and Jev never use it; it is for the page review.
+4. The shared contract still holds 20 Jun text (the $0.20 offering price, "judgment entered on 20 May"). None of it reaches the 14 May agent or Jev.
+5. For facet 3: the bond collateral Jev is told for a pending claim leaves out the post-judgment interest the engine adds. Jev sees $1,432,627 where the engine requires about 5% more, roughly $73k more on the lower award.
+6. D.I. 590, docketed on the review date itself, counts as public. That follows the cutoff rule, and the design flags it.
+
+Files are in `~/.hermes/profiles/connor/cache/scratch/review18/`:
+- `facet1_cutoff_comment.md` — the posted comment
+- `f1/` — a snapshot rebuild and a helper script
+
+Nothing in the repo was changed.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_78da6187/task-0.log
+
+--- ✓ TASK 2/3: Facet 2 reviewer (probability composition and the Jev questions) for PR #18 of owassmer/Slope_Sparse_Events, pinned at commit 3b21187. Review read-only in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/review18 (detached at 3b21187). Post one PR comment with your findings and report the comment URL plus a short summary.  (status=completed, api_calls=38, 537.37s) ---
+I've posted the facet 2 review on PR #18: https://github.com/owassmer/Slope_Sparse_Events/pull/18#issuecomment-5864773960. It has one blocking finding; the probability composition itself holds.
+
+**Blocking: the cash-floor decision is walked after the questions dated later than it.**
+- **Where:** `_Walk.kept` in `app/disputes/forecast.py:1330-1339` records the listing question's facts, then walks the cash floor. `Chain.advance` (`events.py:1064,1068`) reads cash from the steps walked so far. The cash floor (τ, 24–27 Aug) is therefore booked after the 29 Oct listing question and the 1 Nov delisting questions.
+- **Reproduction:** on the heaviest path (26% of path mass), the listing question is told cash on 29 Oct of −$3,163,529 (P5) / −$2,948,867 (P50). A replay of the same path gives the engine's cash that day as +$6,514,341 / +$6,743,231, because the $9.7M raise from τ is included. τ comes before 29 Oct on 100% of trajectories.
+- **Extent:** 71.3% of path mass for the listing question and 7.2% for the delisting acceleration and filing (H2 × D9). The raise → delisted → filing route carries 1.57 points of the 26.6% filing probability. The same inversion reaches some later lower-branch questions (the post-ruling settlement, appeal, stay and enforcement), at up to 2–6% of path mass each.
+- **Why tests pass:** test 7 compares facts against the steps in walk order, not date order.
+
+**Checked and sound:**
+- **Composition:** the 3,698 paths sum to 1 under Jev's answers, 200 random Dirichlet overrides (max error 5.6e−16) and 300 one-hot overrides (error 0).
+- **J1:** the nine verdict-form nodes are disjoint and exhaustive, follow D.I. 580's order, and reproduce no award 7.95%, lower award 52.39% and claimant's theory 39.66%.
+- **Settlement:** all 13 offer/acceptance pairs have identical facts, including the 12-installment terms.
+- **Merits questions:** they receive only claim components, no cash.
+- **Cash facts:** at the settlement before the verdict, the response at judgment entry and the cash floor, a replay matches the recorded figures to the cent, including the $384,839 opening-exposure cash.
+- **Ordinary-risk run:** it asks its own cash-floor question with its own facts.
+- **Removed branches:** paying the $44.0M notes and the holders' own petition are genuinely impossible within the horizon.
+
+**Noted (under 1% of paths or minor):**
+- The cash-floor decision is also keyed on a set-aside ruling or claimant-branch settlement dated after it, on about 0.9% of path mass. There its filing probability is 20% vs 10%, or 10% vs 67%, against the matching path without the later event.
+- The listing question is asked on paths that already filed at τ; this doesn't affect the probabilities.
+- The appeal question receives cash facts the design doesn't list.
+- Three noteholder-petition questions fall after the horizon on every path; they cancel as the design documents.
+
+I also added a note to the slope-sparse-events-build skill: the walk order is not the date order, with the replay check that exposes it. No repository files were changed.
+
+The comment and replay scripts are in `~/.hermes/profiles/connor/cache/scratch/review18/`; `f2_order.py` is the full-tree date-order check (about 40 s):
+- facet2_probability_comment.md
+- f2_order.py
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_78da6187/task-1.log
+
+--- ✓ TASK 3/3: Facet 3 reviewer (event-to-cash transmission and reconciliation) for PR #18 of owassmer/Slope_Sparse_Events, pinned at commit 3b21187. Review read-only in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/review18 (detached at 3b21187). Post one PR comment with your findings and report the comment URL plus a short summary.  (status=completed, api_calls=57, 718.52s) ---
+Opening-state replay matches the recorded state exactly; now reading the event-cash booking in events.py.
+I posted the Facet 3 review on PR #18: https://github.com/owassmer/Slope_Sparse_Events/pull/18#issuecomment-5864822516
+
+The code carries event outcomes through to the loan's cash correctly and the figures reconcile. The one blocking finding is in the recorded summary (commit message and PR body), not the code.
+
+**Blocking (text fix only)**
+- The commit message and PR body report "Due by 10 Nov" as $1,179k. That is actually the full contractual amount, which includes $251k not yet due at the horizon. Due by 10 Nov is $912,879 in the one forecast and $964,620 with the lawsuit given no cash effect.
+- So the collection rate is 90.1%, not 69.8%, and 98.3% without the lawsuit's cash effect, not 72.8%.
+- The lawsuit's effect on the collection rate is therefore −8.2 points, not the −3.0 the PR states. page.json, analysis.json and the CSVs are all correct.
+
+**Checked and correct**
+- **Opening line:** replaying the line from 1 Apr reproduces the recorded opening state exactly ($389,676.66 principal; 8 installments, $404,094.70; +$384,839.35 of line cash).
+- **Collection:** each debit collects an installment in full or fails, never partial. Failed debits are retried on the next due date or month-end. The 30-day cash floor never limits collection. The draw test counts the opening principal. The two relevant test files pass (10 tests).
+- **Path replays:** 7 representative paths reproduce page.json's per-path figures to the cent. Collected + stayed + not yet due + uncollected equals contractual on every trajectory. The cash figures the forecasting model is given match the loan engine's cash exactly up to any filing.
+- **Dated cash:**
+  - The lower-award levy is $1,432,626.86: the judgment plus 31 days of post-judgment interest at 5.13%.
+  - Equity raises arrive as $9.7M in equal daily amounts over 30 days.
+  - Settlements pay in 12 monthly installments, the claim is released that day, and legal spend stops.
+  - Stay security is locked on approval and released on the set-aside.
+  - The June coupon costs $0 cash.
+  - A filing stops draws and collections.
+  - No unknown amount becomes 0 on the cash path.
+
+**Noted, each small in effect**
+- A levy that pays a judgment in full doesn't end the dispute, so legal spend of $633k a month keeps running. Fixing it would move expected collections by +$283 and the chance of a filing by −0.15 points.
+- The Nasdaq listing chain exists only in the one forecast, not in the ordinary-risk view. It accounts for about 1 point of the filing probability attributed to the lawsuit.
+- The ordinary-risk view uses the forecasting model's bank-data answer for the cash-floor decision, which differs from the answers inside the forecast. That difference is worth −1.4 points of filing probability and $5,967 of collections.
+- After a filing, a settled dispute's legal spend reappears in the cash series, and a levy booked on the filing day is erased. Neither changes the loan's cash.
+- The settlement before the verdict is dated 13 Jun, after every modeled verdict day, as the design specifies.
+- One percentile column in `collections.csv` dips by one bin on the last day.
+
+**Files**
+- The comment is `~/.hermes/profiles/connor/cache/scratch/review18/facet3_cash_comment.md`; the replay scripts are in `scratch/review18/f3/`.
+- I added one rule to the `slope-sparse-events-build` skill: due by the horizon is not the contractual amount.
+- The repo was not modified; no Jev calls, no investigation run, no full `slope analyze`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_78da6187/task-2.log

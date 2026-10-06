@@ -1,0 +1,1 @@
+{"subject": "Locked run inputs and baseline profile for Synergy", "description": "cases/synergy_20240813/run_inputs.json: operator request, reserve, offer menu, ordinary baseline facts with verbatim quotes (no event mechanisms), existing merchant loan terms", "activeForm": "Writing locked run inputs"}

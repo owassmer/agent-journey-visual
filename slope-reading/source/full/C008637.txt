@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/diag-joins && cat .github/workflows/join-check.yml; grep -n \"def same_after\" -A 22 tools/diag/join_check.py; grep -n \"KNOWN\\|STATE = \" tools/diag/join_check.py; grep -n \"print(.*paths\\|log(.*paths\\|f\\\"paths\\|'paths\" ../step-9-memo/app/disputes/parallel.py | head", "timeout": 30}

@@ -1,0 +1,68 @@
+turns 56 / 80 sweep 36 {'provider': 'openrouter', 'requests': 0, 'cache_hits': 305, 'physical_attempts': 0, 'attempt_ceiling': 800, 'spent_usd': '0', 'spend_cap_usd': '0.10'}
+DEP dep_001 | How much of the Synergy CHC settlement loan payable to HVL, LLC d/b/a Atrium Innovations (the $5,450,000 December 28, 20
+DEP dep_002 | Does the Knight Therapeutics (Barbados) Inc. amended senior secured loan agreement prohibit Synergy CHC from incurring a
+DEP dep_003 | Is the $100,000 restricted cash of Synergy CHC available for debt service, and what is it held for?
+DEP dep_004 | When must the WebBank/Shopify Capital merchant loans (May 1, 2024 $418,100 and May 22, 2024 $118,650, 25% of daily sales
+DEP dep_005 | How much of the Synergy CHC March 27, 2024 supplier settlement loan ($3,020,824; VitBest row) is scheduled for payment i
+DEP dep_006 | Are the L.O.D.C. Group and Valenti litigation settlements fully paid, so that they carry no remaining cash outflow after
+DEP dep_007 | What is the balance and repayment timing of the short-term related-party note payable to Kenek (entity controlled by the
+ F fnd_001 rejected inf | The Atrium litigation was settled in December 2023 by a contractual settlement agreement that created a $5,450,000 settlement loan payable (5% interes
+ F fnd_002 rejected  | Under the amended Knight Therapeutics consolidated loan (finalized June 2024), the loan is senior secured against all current and future assets of Syn
+ F fnd_003 accepted inf | Synergy's settlement loan payable arising from the December 2023 Atrium settlement requires $2,000,000 of payments in calendar year 2024.
+ F fnd_004 accepted  | The amended Knight consolidated senior secured loan provides that Synergy shall not add any other debt without first paying out Knight (KTI).
+ F fnd_005 rejected inf | The Atrium settlement loan balance was unchanged at $4,802,445 between December 31, 2023 and June 30, 2024. So no payment on it was made in the first 
+ F fnd_006 rejected  | Synergy's $100,000 restricted cash at June 30, 2024 is held as credit card collateral and is not available as operating cash.
+ F fnd_007 accepted  | The amended Knight loan covenants require Synergy to repay and terminate its Shopify debt no later than December 31, 2024.
+ F fnd_008 accepted  | At June 30, 2024, Synergy's Shopify Capital (WebBank) merchant loans had outstanding balances of $333,454 (May 1, 2024 loan, repaid at 25% of daily sa
+ F fnd_009 accepted inf | Synergy's March 27, 2024 supplier settlement loan (balance $2,920,824 at June 30, 2024) requires $600,000 of payments in 2024 under the future-payment
+ F fnd_010 accepted inf | The Atrium settlement loan's outstanding balance was $4,802,445 at June 30, 2024, the same as at December 31, 2023.
+ F fnd_011 accepted  | Synergy's $100,000 restricted cash at June 30, 2024 is held for credit card collateral.
+ F fnd_012 accepted  | Synergy paid the L.O.D.C. Group settlement in full in May 2024, so no further cash is owed on it.
+ F fnd_013 accepted  | Synergy paid the $340,000 Valenti settlement in full during 2023.
+ F fnd_014 accepted  | During July and August 2024, Synergy received $1,716,496 under a short-term note payable to an entity owned and controlled by its CEO and repaid $130,
+ F fnd_015 accepted inf | Under the December 28, 2023 settlement agreement with the former supplier, Synergy is contractually required to make $2,000,000 of settlement-loan pay
+ F fnd_016 accepted inf | Under the March 27, 2024 settlement agreement with a supplier, Synergy is required to make $600,000 of settlement-loan payments in 2024 under the sche
+ F fnd_017 accepted  | The February 27, 2023 recommended decision in Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovations is a procedural ruling on Atrium's motion to dism
+ F fnd_018 accepted  | Synergy's Knight loan had $12,333,053 outstanding at June 30, 2024 at 12% interest, and its covenants require Knight to approve Synergy's quarterly an
+ E eff_001 rejected settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — $5,450,000 settlement loan pay | Up to $2.0M of Atrium settlement cash is due by December 31, 2024, depending on how much was paid after June 3 | problems: ["Category guard: fnd_003 posture is Posture unclear; settlement_pay
+ E eff_002 rejected settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — $5,450,000 settlement loan pay | Schedule up to $2,000,000 of Atrium settlement-loan outflow between August 13 and December 31, 2024, as a date | problems: ["Category guard: fnd_003 posture is Posture unclear; settlement_pay
+ E eff_003 validated settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — $5,450,000 settlement loan pay | The settlement loan requires $2,000,000 of payments in 2024. Because the balance was unchanged at June 30, 202 | problems: [] | overrides: {}
+ E eff_004 validated settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — $3,020,824 March 27, 2024 supp | The March 27, 2024 supplier settlement requires $600,000 of payments in 2024. Up to $600,000 of settlement cas | problems: [] | overrides: {}
+ E eff_005 rejected funding_constraint modify_available_funding | Synergy CHC Corp. — Knight Therapeutics (Barbados) | The Knight senior secured loan says Synergy shall not add any other debt without first paying Knight out. Unle | problems: ['Consequence support: Some claims are not supported by the cited findings. Revise the m
+ E eff_006 rejected restricted_funds modify_available_funding | Synergy CHC Corp. — $100,000 restricted cash held  | The $100,000 held as credit card collateral should not count as cash available to service the advance. If the  | problems: ['Consequence support: Some claims are not supported by the cited findings. Revise the mod
+ E eff_007 validated resolved_obligation exclude_already_paid_obligation | Synergy CHC Corp. — L.O.D.C. Group, Ltd. settlemen | The LODC settlement was paid in full in May 2024 and the Valenti settlement was paid in full in 2023, so neith | problems: [] | overrides: {}
+ E eff_008 rejected funding_constraint modify_available_funding | Synergy CHC Corp. — Knight Therapeutics (Barbados) | The Knight senior secured loan provides that Synergy shall not add any other debt without paying out Knight fi | problems: ['Consequence support: Some claims are not supported by the cited findings. Revise the m
+ E eff_009 validated restricted_funds modify_available_funding | Synergy CHC Corp. — $100,000 restricted cash held  | $100,000 of cash is held for credit card collateral, so it is treated as unavailable for servicing the advance | problems: [] | overrides: {}
+ E eff_010 validated funding_constraint modify_available_funding | Synergy CHC Corp. — Knight Therapeutics (Barbados) | Under its senior secured Knight loan, Synergy agreed not to add any other debt without paying out Knight first | problems: [] | overrides: {'consequence_support': "The consequence restates the quoted covenant (
+ E eff_011 rejected settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — WebBank/Shopify Capital mercha | The Knight covenant requires the Shopify merchant loans, which had $427,190 outstanding at June 30, 2024 and r | problems: ['Consequence support: Some claims are not supported by the cited fi
+ E eff_012 validated settlement_payment_timing already_in_baseline_reclassify_timing | Synergy CHC Corp. — WebBank/Shopify Capital mercha | The Shopify merchant loans, with balances of $333,454 and $93,736 at June 30, 2024, must be repaid and termina | problems: [] | overrides: {}
+ E eff_013 rejected resolved_obligation normalization_only | Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovat | The 2023 ruling only disposed of pleading counts, so it adds no cash outflow to the forecast. | problems: ["Baseline treatment normalization_only does not fit resolved_obligation; use one of ['exclude_already_paid_ob
+ E eff_014 rejected resolved_obligation remove_from_baseline | Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovat | The 2023 ruling only disposed of pleading counts, so it adds no cash outflow to the forecast. | problems: ["Category guard: fnd_017 posture is Imposed by a court or authority (ambiguous); resolved_obligation needs 
+INVENTORY Counter({'not_decision_relevant': 21, 'covered': 15})
+   inv_001 covered legal_matter_o  | ['fnd_017', 'fnd_003', 'fnd_015'] | 
+   inv_002 covered debt_or_financ  | ['fnd_008', 'fnd_007'] | 
+   inv_004 covered debt_or_financ Relationships with Knight Therapeutics | ['fnd_018', 'fnd_004'] | 
+   inv_007 covered debt_or_financ Liquidity and Capital Resources | ['fnd_011', 'fnd_004', 'fnd_010', 'fnd_015', 'fnd_016', 'fnd_008'] | 
+   inv_008 covered legal_matter_o Legal Proceedings | ['fnd_003', 'fnd_015', 'fnd_012', 'fnd_013'] | 
+   inv_009 covered debt_or_financ CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIO | ['fnd_014', 'fnd_018'] | 
+   inv_013 covered cash_restricti Note 2 — Summary of Significant Accounting Policie | ['fnd_011'] | 
+   inv_019 covered debt_or_financ Note 9 — Related Party Transactions | ['fnd_014', 'fnd_018'] | 
+   inv_021 covered debt_or_financ Note 11 — Notes Payable | ['fnd_003', 'fnd_010', 'fnd_015', 'fnd_016', 'fnd_009', 'fnd_004', 'fnd_007', 'fnd_008'] | 
+   inv_022 covered legal_matter_o Note 13 — Commitments & Contingencies | ['fnd_003', 'fnd_012'] | 
+   inv_024 covered debt_or_financ Note 16 — Subsequent Events | ['fnd_014'] | 
+   inv_025 covered cash_restricti Note 2 — Summary of Significant Accounting Policie | ['fnd_011'] | 
+   inv_032 covered debt_or_financ Note 11 — Notes Payable | ['fnd_004', 'fnd_003'] | 
+   inv_033 covered legal_matter_o Note 13 — Commitments and Contingencies | ['fnd_003', 'fnd_012'] | 
+   inv_035 covered debt_or_financ Note 16 — Subsequent Events | ['fnd_012', 'fnd_016', 'fnd_008'] | 
+RECON {'task_id': 'recon_001', 'finding_ids': ['fnd_013', 'fnd_012'], 'observation_ids': ['obs_098'], 'status': 'resolved', 'note': 'The statements agree: Are the L.O.D.C. Group and Valenti litigation settlements fully paid, so that they carry no remaining cash outflow after August 13, 2024? | fnd_012 (LODC, paid in full May 202
+RECON {'task_id': 'recon_002', 'finding_ids': ['fnd_015', 'fnd_010'], 'observation_ids': ['obs_117'], 'status': 'resolved', 'note': 'The statements agree: How much of the Synergy CHC settlement loan payable to HVL, LLC d/b/a Atrium Innovations (the $5,450,000 December 28, 2023 settlement loan) is scheduled in calendar 2024, and 
+RECON {'task_id': 'recon_003', 'finding_ids': ['fnd_018', 'fnd_004'], 'observation_ids': ['obs_207'], 'status': 'resolved', 'note': 'Relation unclear: Does the Knight Therapeutics (Barbados) Inc. amended senior secured loan agreement prohibit Synergy CHC from incurring a new working-capital advance without first paying Knight ou
+SENSITIVITY_RUN {"calculation": "required_net_cash = max(0, sum(bucket - paid) + reserve - (reported cash - unavailable portion))", "opening_cash_basis": "Cash reported by management: approximate $2,000,000 as of 2024-08-12", "reserve_basis": "Illustrative $200,000 liquidity reserve; not Slope policy.", "unavailable_opening_cash
+MISSING_FACT_REQUESTED {"fact": "Has Knight Therapeutics (Barbados) Inc. given written consent, or a waiver of the clause \"Synergy shall not add any other debt without paying out KTI first\", for a new $100,000\u2013$250,000 fixed-installment working-capital advance? If so, on what terms (e.g., permitted basket, subordination, 
+MISSING_FACT_REQUESTED {"fact": "How much of the $2,000,000 2024 installment on the Atrium settlement loan (and of the $600,000 2024 installment on the March 27, 2024 supplier settlement) was paid between July 1 and August 13, 2024, and on what dates are the remaining 2024 installments due?", "why_pivotal": "Sensitivity: with no
+CONCLUSION_CHECKED {"answer": "some_unsupported", "ambiguous": false, "override_reason": null}
+CONCLUSION_CHECKED {"answer": "some_unsupported", "ambiguous": false, "override_reason": null}
+CONCLUSION_CHECKED {"answer": "all_supported", "ambiguous": true, "override_reason": "Each claim restates an accepted finding (fnd_004, fnd_015, fnd_016, fnd_007, fnd_012, fnd_013), a validated effect (eff_003, eff_004, eff_007, eff_010, eff_012), or the run_sensitivity output. The inferred entity links are labeled as inferences
+PACKET_SUBMITTED {"summary": "Borrower: Synergy CHC Corp. As of: August 13, 2024. Request (operator assumption): a $250,000 working-capital advance, 6 months, 6% fixed fee. Alternatives: $100k/6m and $250k/3m.\n\nFindings:\n(1) Atrium settlement. The settlement loan requires $2,000,000 in 2024, and its balance was unchanged at $
+LEDGER Counter({('finding_check', 'used_in_finding'): 62, ('claim_interpretation', 'challenged_agent_draft'): 31, ('claim_interpretation', 'used_in_finding'): 29, ('candidate_screen', 'unused'): 12, ('candidate_screen', 'used_in_finding'): 12, ('finding_check', 'unused'): 12, ('inventory_coverage', 'used_in_finding'): 12, ('inve
+leak-scan exit 1 (1 = none)

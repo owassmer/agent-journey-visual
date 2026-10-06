@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n '^def |watch|_holds|class' app/disputes/pool.py | head -75; rg -n '^def |\"path\"|\"edge\"|watches|read' app/disputes/parallel.py | head -75; sed -n '1,92p' tools/notes_recover.py; sed -n '1,53p' tools/notes_manifest.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

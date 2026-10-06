@@ -1,0 +1,14 @@
+11:    p = next((x for x in sec["text"].split("\n\n") if len(x) > 200 and not x.startswith("|") and not x.startswith("[")), sec["text"][:2500])
+tax_policy :: SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies :: the tax basis of assets and liabilities and their financial reporting amounts based on enacted tax laws and statutory tax rates applicable to the periods in which the differences are expected to affect taxable income. A valuation allowance is recorded when it is “more likely -than -not ” that a defe 
+
+receivables_note :: SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 4 — Accounts Receivable :: Accounts receivable, net of allowances for doubtful accounts, consisted of the following:
+
+[synergy_s1a_20240813#t0039]
+|  | June 30, 2024 | December 31, 2023 |
+| Trade accounts receivable | $3,275,508 | $2,255,540 |
+| Less allowances | (7,422) | (149,446) |
+| Total accounts receivable, net | $3,268 
+
+stock_compensation :: SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 14 — Stock Options :: Stock -based compensation expense related to vested options was $4,611 during the six months ended June 30, 2024. The Company determined the value of share -based compensation for options vesting during the six months ended June 30, 2024 using the Black -Scholes fair value option -pricing model with 
+
+45

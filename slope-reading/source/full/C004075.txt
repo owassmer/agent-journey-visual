@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9f3/mon.sh", "old_string": "P=$(pgrep -f \"slope analyze --run akoustis_20240514\" | head -1)", "new_string": "P=$(pgrep -f \"^/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int/.venv/bin/python .venv/bin/slope analyze\" | sort -n | head -1)"}

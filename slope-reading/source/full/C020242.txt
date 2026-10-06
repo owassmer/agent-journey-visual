@@ -1,0 +1,3 @@
+text(await tools.exec_command({cmd:"aws sts get-caller-identity --profile slope --query Account --output text","max_output_tokens":300}));
+text(await tools.exec_command({cmd:"aws ec2 describe-instances --profile slope --region us-east-2 --instance-ids i-09b42b44a8d35909a --output json","max_output_tokens":1800}));
+text(await tools.exec_command({cmd:"curl -sS --max-time 5 http://127.0.0.1:18766/api/status | python3 -c 'import sys,json;s=json.load(sys.stdin)[\"state\"];print({k:s.get(k) for k in (\"updated\",\"error\",\"inventory_error\",\"pool\")})'","max_output_tokens":1000}));

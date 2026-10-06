@@ -1,0 +1,31 @@
+224:def test_registry_questions_are_generic_and_well_formed():
+225-    reg = question_registry()
+226-    text = json.dumps(reg)
+227-    assert not any(f in text for f in ["Synergy", "Barfresh", "HVL", "Atrium", "L.O.D.C", "Vitabest", "Schreiber"])
+228-    ids = {q["id"] for q in reg["questions"]}
+229-    for profile in reg["profiles"].values():
+230-        assert set(profile["questions"]) <= ids
+231-    for q in reg["questions"]:
+232-        assert q["primitive"] in ("noul", "choice")
+233-        if q["primitive"] == "noul":
+234-            assert set(q["prompt"]["criteria"]) == {"true", "false"}
+        [94massert[39;49;00m c.get([33m"[39;49;00m[33m/[39;49;00m[33m"[39;49;00m).status_code == [94m200[39;49;00m[90m[39;49;00m
+>       [94massert[39;49;00m [96mall[39;49;00m(c.get([33mf[39;49;00m[33m"[39;49;00m[33m/runs/[39;49;00m[33m{[39;49;00mr[33m}[39;49;00m[33m"[39;49;00m).status_code == [94m200[39;49;00m [94mfor[39;49;00m r [95min[39;49;00m RUNS)  [90m# every recorded run verifies and renders[39;49;00m[90m[39;49;00m
+[1m[31mE       assert False[0m
+[31mFAILED[0m tests/test_viewer.py::[1mtest_recorded_run_renders_with_its_causal_chain[0m - assert False
+18:def test_recorded_run_renders_with_its_causal_chain():
+19-    c = TestClient(app)
+20-    assert c.get("/").status_code == 200
+21-    assert all(c.get(f"/runs/{r}").status_code == 200 for r in RUNS)  # every recorded run verifies and renders
+22-    page = c.get(f"/runs/{WITH_EFFECTS[-1]}")
+23-    assert page.status_code == 200
+24-    for text in ("event chain verified", "Model consequence", "Agent finding", "Source"):
+25-        assert text in page.text
+26-    assert c.get("/runs/..%2Fetc").status_code == 404 and c.get("/runs/nope").status_code == 404
+27-
+28-
+29-@pytest.mark.skipif(not RUNS, reason="no recorded runs")
+30-def test_tampered_run_fails_verification(tmp_path):
+31-    shutil.copytree(RECORDED / RUNS[-1], tmp_path / RUNS[-1])
+32-    events = tmp_path / RUNS[-1] / "events.jsonl"
+33-    lines = events.read_text().splitlines()

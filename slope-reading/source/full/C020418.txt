@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --command-id cd66aca4-4276-458d-925a-aa5933a699f2 --instance-id i-00b6051aa298e85e2 --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}'","max_output_tokens":1000}),
+tools.exec_command({cmd:"curl -s http://127.0.0.1:18766/api/status | .venv/bin/python -c 'import json,sys; s=json.load(sys.stdin)[\"state\"];print({k:s.get(k) for k in (\"phase\",\"done\",\"total\",\"stage_histories\",\"error\")})'","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":500})
+]);results.forEach(text);

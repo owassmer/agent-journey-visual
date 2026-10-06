@@ -1,0 +1,1 @@
+{"command": "for i in $(seq 1 30); do grep -q \"^sizes\" ~/.hermes/profiles/connor/cache/scratch/9m2/mem.log && break; sleep 10; done; grep -v -E \"npmrc|nvm|globalconfig\" ~/.hermes/profiles/connor/cache/scratch/9m2/mem.log | sed 's#/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int/##; s#.venv/lib/python3.12/site-packages/##' | head -130", "timeout": 320}

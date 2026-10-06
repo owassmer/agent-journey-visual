@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/memo; env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. MODE=single CLS=award:27980800:27980800:27980800 OUT=$S/single_279.pkl .venv/bin/python $S/par_check.py > $S/single_279.log 2>&1", "background": true, "notify": true}

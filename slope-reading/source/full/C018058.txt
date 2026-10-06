@@ -1,0 +1,4 @@
+await Promise.allSettled([
+tools.exec_command({cmd:"aws s3 cp s3://slope-walk-462947327980-20261001/walk-36781427817/fresh-balanced-coarse/pool/progress.json - --profile slope --region us-east-2\naws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-09b42b44a8d35909a --command-id 09c019ec-89cd-47de-b0ff-24204f8f48bf --query '{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}'",max_output_tokens:1400}),
+tools.exec_command({cmd:"gh run view 37070020554 --repo owassmer/Slope_Sparse_Events --json jobs > /tmp/question-status.json\npython3 - <<'PY'\nimport json,collections\nx=json.load(open('/tmp/question-status.json'));print(collections.Counter((j['status'],j['conclusion']) for j in x['jobs']));print([(j['databaseId'],j['name'],j['conclusion']) for j in x['jobs'] if j['conclusion'] not in ('','success','skipped')])\nPY",max_output_tokens:1200})
+]).then(r=>r.forEach(text));

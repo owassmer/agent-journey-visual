@@ -1,0 +1,1 @@
+{"command": "grep -n \"class NoulAnswer\" -A 14 .venv/lib/python3.12/site-packages/typesafe_sdk/_schemas/models.py; grep -n \"async def system_one\" -A 12 .venv/lib/python3.12/site-packages/typesafe_sdk/_core/client/aio/client.py | head -16; sed -n 60,100p .venv/lib/python3.12/site-packages/typesafe_sdk/_core/retry.py"}

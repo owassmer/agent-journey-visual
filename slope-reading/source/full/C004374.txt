@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"^class \\|^    def \\|^def \" app/disputes/forecast.py | awk -F: '{printf \"%s:%s\\n\",$1,$2}' | tr '\\n' ' ' | fold -w 3000; echo; echo; grep -n \"^class \\|^    def \\|^def \" app/analysis/events.py | awk -F: '{printf \"%s:%s\\n\",$1,$2}' | tr '\\n' ' ' | fold -w 3000"}

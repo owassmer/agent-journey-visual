@@ -1,0 +1,21 @@
+33 cases; 
+  activity_status          1/1
+  cash_access              2/2
+  claim_posture            4/4
+  claims_supported         1/2
+  context_sufficiency      1/1
+  economic_role            3/3
+  entity_scope             1/2
+  finding_atomicity        2/2
+  finding_support          2/2
+  gap_relevance            2/2
+  instruction_like_text    1/1
+  matter_inventory         2/2
+  matter_kind              1/1
+  obligation_status        4/4
+  premise_conflict         1/1
+  statement_relation       1/1
+  usable_evidence          2/2
+  disagree: syn_entity_unresolvable: expected 'unknown', got 'different' (noul=None, probs={'target': 0.38, 'different': 0.51, 'unknown': 0.11})
+  disagree: syn_support_all: expected 'all_supported', got 'some_unsupported' (noul=None, probs={'all_supported': 0.42, 'some_unsupported': 0.56, 'unclear': 0.02})
+31/33 agree; usage {'provider': 'openrouter', 'requests': 33, 'cache_hits': 0, 'physical_attempts': 33, 'attempt_ceiling': 150, 'spent_usd': '0.001161342', 'spend_cap_usd': '0.10'}

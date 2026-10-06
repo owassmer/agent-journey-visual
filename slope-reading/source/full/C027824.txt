@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/settle (per interval, amount as a code-owned share)/settle (per interval; amount and timing per Decision D5)/' Slope_Model_Extensions_Spec.md && grep -c \"code-owned share\" Slope_Model_Extensions_Spec.md; git log --oneline -5", "description": "Fix last range reference and show branch log"}

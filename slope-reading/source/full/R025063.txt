@@ -1,0 +1,84 @@
+120	    seen: dict[str, str] = {}
+121	    for s in base.streams:
+122	        if not s.is_cash:
+123	            raise LedgerError(f"{s.stream_id}: non-cash items (accounting normalizations) cannot enter the cash ledger")
+124	        for d, cents in s.rows:
+125	            if isinstance(cents, bool) or not isinstance(cents, int) or cents < 0:
+126	                raise LedgerError(f"{s.stream_id}: amounts are nonnegative integer cents")
+127	            if d <= opened:
+128	                raise LedgerError(f"{s.stream_id}: {d} is on or before the opening-cash observation "
+129	                                  f"({opened}); the opening balance already reflects it")
+130	        if s.kind in DEBT:
+131	            if not s.obligation_id:
+132	                raise LedgerError(f"{s.stream_id}: debt streams name the obligation they pay")
+133	            if s.obligation_id in seen:
+134	                raise DoubleCountError(f"Obligation {s.obligation_id} appears in both {seen[s.obligation_id]} "
+135	                                       f"and {s.stream_id}")
+136	            seen[s.obligation_id] = s.stream_id
+137	        if s.kind == "new_loan_disbursement" and s.route != "bank":
+138	            raise DoubleCountError(f"{s.stream_id}: only bank-routed proceeds are borrower cash")
+139	    for s in base.streams:
+140	        if s.kind == "other_debt_service":
+141	            uncovered = set(seen) - set(s.excludes_obligations)
+142	            if uncovered:
+143	                raise DoubleCountError(f"{s.stream_id} must state it excludes separately modelled obligations "
+144	                                       f"{sorted(uncovered)}")
+145	    loans = {s.loan_ref for s in base.streams if s.kind in ("new_loan_disbursement", "financed_purchase") and s.loan_ref}
+146	    for ref in loans:
+147	        disb = [s for s in base.streams if s.kind == "new_loan_disbursement" and s.loan_ref == ref]
+148	        bank_purchase = [s for s in base.streams if s.kind == "financed_purchase" and s.loan_ref == ref
+149	                         and s.route == "bank"]
+150	        if bool(disb) != bool(bank_purchase):
+151	            raise DoubleCountError(f"Loan {ref}: a bank disbursement and a bank-paid financed purchase go together; "
+152	                                   "direct-to-vendor funding has neither")
+153	
+154	
+155	def run(base: BorrowerCashBase) -> LedgerResult:
+156	    validate(base)
+157	    missing = []
+158	    values = {}
+159	    for name, ev in [("opening_cash", base.opening_cash), ("unavailable_opening_cash", base.unavailable_opening_cash),
+160	                     ("required_reserve", base.required_reserve)]:
+161	        try:
+162	            values[name] = ev.require(name)
+163	        except UnknownInput:
+164	            missing.append(name)
+165	    if missing:
+166	        return LedgerResult(status="not_computable", missing_inputs=missing)
+167	    if values["unavailable_opening_cash"] > values["opening_cash"]:
+168	        raise LedgerError("Unavailable portion exceeds reported opening cash")
+169	
+170	    start = base.forecast_start
+171	    by_day: dict[date, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+172	    for s in base.streams:
+173	        for d, cents in s.rows:
+174	            if d <= base.end:
+175	                by_day[d][s.kind] += cents
+176	
+177	    reserve = values["required_reserve"]
+178	    balance = values["opening_cash"] - values["unavailable_opening_cash"]
+179	    result = LedgerResult(status="computed", start=start, end=base.end, opening_available_cents=balance,
+180	                          reserve_cents=reserve, min_headroom_cents=balance - reserve, min_headroom_on=start)
+181	    totals: dict[str, int] = defaultdict(int)
+182	    for d in sorted(by_day):
+183	        kinds = by_day[d]
+184	        inflow = sum(v for k, v in kinds.items() if k in INFLOWS)
+185	        outflow = sum(v for k, v in kinds.items() if k not in INFLOWS)
+186	        balance += inflow - outflow
+187	        headroom = balance - reserve
+188	        for k, v in kinds.items():
+189	            totals[k] += v
+190	        result.rows.append(LedgerRow(on=d, inflow_cents=inflow, outflow_cents=outflow, by_kind=dict(kinds),
+191	                                     closing_cents=balance, headroom_cents=headroom))
+192	        if headroom < result.min_headroom_cents:
+193	            result.min_headroom_cents, result.min_headroom_on = headroom, d
+194	        if headroom < 0:
+195	            result.breach_dates.append(d)
+196	            result.first_breach_on = result.first_breach_on or d
+197	        if balance < 0:
+198	            result.deficit_dates.append(d)
+199	    result.closing_cents = balance
+200	    result.totals_by_kind = dict(totals)
+201	    result.assumptions = [f"{s.stream_id}: {s.basis} - {s.note}" for s in base.streams]
+202	    return result
+203	

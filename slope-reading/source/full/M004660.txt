@@ -1,0 +1,40 @@
+[IMPORTANT: 2 background processes completed. Treat these results as one batch and give one consolidated response; preserve failures and actionable results.]
+
+[IMPORTANT: Background process proc_bdfaefbc88e0 completed normally (exit code 0).
+Command: pkill -f "app.disputes.parallel akoustis" ; cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; git status --short | grep -v '^??'; env -u CLAUDE_CODE_OAUTH_TOKEN .venv/bin/ruff check app | tail -2; env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 timeout 900 .venv/bin/pytest -p no:warnings -x --ignore tests/test_semantic_layer.py --ignore tests/test_investigation_tools.py > ~/.hermes/profiles/connor/cache/scratch/9z/pytest.log 2>&1; echo exit $?; grep -v -E "npmrc|nvm|globalconfig" ~/.hermes/profiles/connor/cache/scratch/9z/pytest.log | tail -25
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/QUESTIONS_20240514.md
+ M app/analysis/events.py
+ M app/disputes/forecast.py
+All checks passed!
+exit 1
+.............F
+=================================== FAILURES ===================================
+________________ test_each_saved_variant_records_only_its_knob _________________
+
+    @pytest.mark.skipif(not (RUN / "assumptions.json").exists(), reason="the lead run's assumptions")
+    def test_each_saved_variant_records_only_its_knob() -> None:
+        saved = {v["id"]: v for v in json.loads((RUN / "assumptions.json").read_text())["variants"]}
+        for v in declared(SNAP, _inputs(), load_model(SNAP)):
+>           assert saved[v["id"]]["change"] == {"scenario": v["scenario"], "sens": v["sens"]}
+                   ^^^^^^^^^^^^^^
+E           KeyError: 'atm_pace_10'
+
+tests/test_assumptions.py:82: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_assumptions.py::test_each_saved_variant_records_only_its_knob
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 13 passed in 3.51s
+]
+
+[IMPORTANT: Background process proc_e92cbbe4f53d completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 .venv/bin/pytest -p no:warnings -rf --ignore tests/test_semantic_layer.py --ignore tests/test_investigation_tools.py --deselect tests/test_assumptions.py::test_each_saved_variant_records_only_its_knob > ~/.hermes/profiles/connor/cache/scratch/9z/pytest.log 2>&1; echo exit $?; tail -12 ~/.hermes/profiles/connor/cache/scratch/9z/pytest.log
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+exit 143
+]

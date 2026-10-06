@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -rn \"receipts\" app/analysis/page.py app/web/static/page.js cases/akoustis_20240620/*.json cases/akoustis_20240620/*.py 2>/dev/null | grep -i \"million\\|/month\\|a month\\|\\\\$\" | cut -c1-220 | head -10; sed -n 421,440p app/analysis/page.py"}

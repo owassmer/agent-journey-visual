@@ -1,0 +1,4 @@
+const a=await Promise.allSettled([
+tools.exec_command({cmd:".venv/bin/python /tmp/review82-domain.py > /tmp/review82-domain.log 2>&1",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",yield_time_ms:1000,max_output_tokens:500}),
+tools.exec_command({cmd:"python3 - <<'PY'\ns=open('/tmp/review-native-prospective-catalog.py').read().replace('/tmp/review-native-prospective','/tmp/review-native-domain');open('/tmp/review-native-domain-catalog.py','w').write(s)\nPY\n.venv/bin/python /tmp/review-native-domain-catalog.py > /tmp/review-native-domain-catalog.log 2>&1\n.venv/bin/python /tmp/review-native-gates.py /tmp/review-native-domain > /tmp/review-native-domain-gates.log 2>&1",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",yield_time_ms:1000,max_output_tokens:500})
+]);a.forEach(text);

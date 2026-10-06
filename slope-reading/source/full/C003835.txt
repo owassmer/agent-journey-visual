@@ -1,0 +1,1 @@
+{"command": "cat ~/.hermes/profiles/connor/cache/scratch/9s/full14.log | head -30; ps -Ao pid,etime,%cpu,rss,command | grep -i python | grep -v -E \"grep|hermes|uvicorn|browser_harness|lea_memory\" | cut -c1-200; log show --last 15m --predicate 'eventMessage CONTAINS \"jetsam\" OR eventMessage CONTAINS \"memorystatus\"' 2>/dev/null | tail -5 | cut -c1-200"}

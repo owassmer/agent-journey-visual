@@ -1,0 +1,11 @@
+'Niagen Bioscience': ['niagen_2026q2_10q.html']
+'STIPULATED AMENDED JUDGMENT': ['cacd_16cv2277_d671_amended_judgment.pdf']
+'9.2 million': ['cdxc_2024q3_10q.html', 'cdxc_2024_10k.html', 'niagen_2026q2_10q.html']
+'2.65 million': []
+'1.325 million': []
+'October 28, 2024': ['cdxc_2024q3_10q.html', 'cdxc_2024_10k.html', 'niagen_2026q2_10q.html']
+'letter of credit': ['cdxc_2024_10k.html']
+'September 11, 2024': ['cdxc_2024q3_10q.html', 'cdxc_2024_10k.html']
+'notice of appeal': ['cdxc_2024q3_10q.html', 'cdxc_2024_10k.html', 'niagen_2026q2_10q.html']
+Dec 8-K: is contingent upon ChromaDex securing a bond (the &#8220;Appeal Bond&#8221;) for the amount of the fee judgement, if any, related to the previously disclosed Delaware patent infringement case against Elysium Health, Inc. (&#8220;Elysium&#8221;) filed by the Company and Dartmouth relating to the Dartmouth Patents. As of December 3, 2024, ChromaDex executed the Appeal Bond and intends to promptly make an unopposed motion to the court to stay execution of the judgement awarding fees pending the appeal. SIGNATURES Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized. CHROMADEX CORPORATION Dated: December 4, 2024 By: /s/ Robert Fried Name: Robert Fried Chief Executive Officer
+Nov 8-K: cdxc-20241120 0001386570 FALSE 0001386570 2024-11-20 2024-11-20 UNITED STATES SECURITIES AND EXCHANGE COMMISSION WASHINGTON, D.C. 20549 FORM 8-K CURRENT REPORT Pursuant to Section 13 OR 15(d) of The Securities Exchange Act of 1934 Date of Report (Date of earliest event reported): November 20, 2024 CHROMADEX CORPORATION (Exact name of registrant as specified in its charter) Delaware 001-37752 26-2940963 (State or other jurisdiction of incorporation) (Commission File Number) (IRS Employer Identification No.) 10900 Wilshire Blvd. Suite 600 , Los Angeles , California 90024 (Address of principal e

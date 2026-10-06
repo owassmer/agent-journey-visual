@@ -1,0 +1,34 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_26b4446d]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 21:52:28 (1h21m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 4894.58s
+
+--- ✓ TASK 1/1: Build step 1b of step 9 for owassmer/Slope_Sparse_Events: four corrections to the daily cash processor (arrears paid from the available balance; arrears frozen at a petition; levies outside the general-nonpayment test; a stay's security sized on its approval day and never above the balance). Follow the brief at /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9h/BRIEF_step1b.md exactly. Commit and push to branch step-9-build; open no PR.  (status=completed, api_calls=115, 4894.24s) ---
+All four corrections are built, committed and pushed to `step-9-build`, and all four checks pass at HEAD `6e04627`. I opened no PR. The tree build is slower (243 s against 146 s), and two questions dropped out of the tree.
+
+**Commits**
+- `0668725`: corrections 1–2 (§2.2). After the day's obligations, the available balance pays the non-Slope arrears oldest first. A scheduled arrear is paid in full or not at all; operating arrears are paid up to the balance. From a petition day, nothing pays arrears and no new one arises. File: `app/analysis/processor.py`.
+- `1e4e5dc`: correction 3 (§3.3). A levy is outside the general-nonpayment test. File: `app/analysis/processor.py`.
+- `6e04627`: correction 4 (§2.5). Under daily processing, the Chain re-sizes each walked stay on its approval day, on the balance after everything dated before it (`restay`, `_size_stay`). The stay-approval question's facts now come from each whole path (`Trace.stays` read by `record_late`), so what Jev is told equals what the engine locks. The question structure is unchanged. Files: `app/analysis/events.py`, `app/disputes/forecast.py`.
+- As you instructed, I reverted the speed change (`events.py` is back to `6e04627`) and did not commit it.
+
+**Checks** (I read each output myself)
+- **No negative cash, full 14 May tree:** 15,104 trajectories before, 0 after (2,957 paths, 1,513,984 trajectories). Held `heavy.lock` (owner `1b`) for this run and released it after.
+- **Stated security equals locked:**
+  - 0 locks above the balance at processing.
+  - 0 locks on or after a petition.
+  - On the 762,880 stay-yes trajectories, the stated security differs from the lock on 0 (124,117 of them lock something).
+- **Test 7k:** passes. Daily equals net before either leaves anything unpaid: 0 mismatches across the tree.
+- **Hand computation:** `9j/hand.py` imports nothing and is updated to corrections 1–3. It equals the engine every day (cash, arrears by class, first unpaid day, §3.3 day) on all 56 trajectories: the 40 candidates, 8 with cash above zero while arrears are outstanding, and 8 with a petition while arrears are outstanding. The pinned trajectory's figures from the script are identical to the pinned ones (first unpaid day 132, §3.3 day 162, the same arrears), because its cash is nil throughout. The test file needed no change, and it passes.
+- **20 Jun dump:** equal to the `0e74151` baseline; only the `seconds` field differs.
+- **Suite and lint:** 220 passed and 1 skipped with the Jev cache-only flag, plus 32 passed in the two stubbed-Jev files. Ruff is clean. This full suite ran on the correction-4 code before its commit.
+
+**Tree build:** 243 s and 2,938 paths, against 145 s and 2,956 paths for step 1 timed back to back on this machine. The profile puts the cost in the extra processor runs from re-sizing stays (7,302 engine runs, against 3,595 at step 1).
+
+**Things to know**
+- Two node keys drop out of the tree: `listing_kept|claimant_theory|stayed|levied|seeking` and `petition_on_notes|delisting_delisted_suspension|claimant_theory|stayed|levied|seeking`. They are the stayed-and-levied variants, which likely no longer arise once a levy dated before approval takes the cash first. I haven't traced this in detail.
+- I did not finish checking the reverted speed change: the comparison against always re-sizing reached 400 of 1,492 stay paths with 0 differences before I stopped it. That change also gave a slightly different tree (2,940 paths and one extra node key), so it would need review before any reuse.
+
+My scripts and logs are in `~/.hermes/profiles/connor/cache/scratch/9j/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_26b4446d/task-0.log

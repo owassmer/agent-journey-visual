@@ -1,0 +1,1 @@
+{"command": "A=\"/opt/homebrew/bin/aws --profile slope\"; P=s3://slope-walk-462947327980-20261001/walk-36781427817/fresh-corrected-2; for t in 4-0 4-33 4-32; do echo \"== $t\"; $A s3 cp --quiet $P/refine-v1/live/$t.log - | grep -E \"paths [0-9]+|done,|host|github|aws\" | awk 'NR<=1 || /paths (2000|3000|5000|7000|10000|11000) /' | cut -c1-80 | head -8; done", "timeout": 60}

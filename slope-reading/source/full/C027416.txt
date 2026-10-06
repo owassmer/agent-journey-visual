@@ -1,0 +1,1 @@
+{"command": "git fetch -q origin step-5b-decision-model && git merge-base --is-ancestor origin/step-5b-decision-model HEAD && echo fast-forward-ok && git push -q origin HEAD:step-5b-decision-model && git log --oneline origin/step-5b-decision-model -1", "description": "Push the revision to PR #8's branch"}

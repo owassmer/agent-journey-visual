@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN uv run python /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/noise.py /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/jev_states2.json 2>&1 | grep -v npmrc | tail -12 | cut -c1-300", "timeout": 400}

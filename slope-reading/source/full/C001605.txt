@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && python3 ~/.hermes/profiles/connor/cache/scratch/6c/edit_page.py && uv run ruff check app | tail -2; grep -n \"filed_cash\\|Akoustis files at the cash floor\" app/analysis/page.py app/web/templates/*.html app/web/static/*.js 2>/dev/null | head"}

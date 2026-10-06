@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && git fetch -q && git merge --no-ff --no-commit origin/step-6c-engine 2>&1 | tail -5; git diff --name-only --diff-filter=U; grep -n '^<<<<<<<\\|^=======\\|^>>>>>>>' Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json | head -30"}

@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"pwd; rg --files -g 'AGENTS.md' -g 'CLAUDE.md' -g '*CONTEXT*' -g '*HANDOFF*' -g '*PLAN*' -g '*STATE*' -g '*russell*' -g '*Russell*' -g '*MEMORY*' -g '*SOUL*'","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1800}));
+text(await tools.exec_command({cmd:"rg -n 'Russell|repeatable|invocation|global checks|Jev|pooling|delivery priority' PLAN.md CLAUDE.md README.md | head -100","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":6500}));

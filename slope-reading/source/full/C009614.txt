@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"osascript <<'APPLESCRIPT'\ntell application \"Google Chrome\"\n tell tab id 796873311 of front window\n  return execute javascript \"document.body.innerText.split('Billing and licensing').pop().slice(-14500)\"\n end tell\nend tell\nAPPLESCRIPT","max_output_tokens":4000}));

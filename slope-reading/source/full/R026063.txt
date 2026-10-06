@@ -1,0 +1,23 @@
+  activity_status          1/1
+  adds_matter              2/2
+  cash_access              2/2
+  claim_posture            4/4
+  claims_supported         2/2
+  context_sufficiency      1/1
+  coverage_supported       8/8
+  decision_relevance       5/5
+  economic_role            3/3
+  entity_scope             1/2
+  finding_atomicity        2/2
+  finding_support          2/2
+  gap_relevance            2/2
+  instruction_like_text    1/1
+  matter_inventory         2/2
+  matter_kind              1/1
+  matter_relevance         3/3
+  obligation_status        4/4
+  premise_conflict         1/1
+  statement_relation       1/1
+  usable_evidence          2/2
+  disagree: syn_entity_unresolvable: expected 'unknown', got 'different' (noul=None, probs={'target': 0.38, 'unknown': 0.11, 'different': 0.51})
+50/51 agree; usage {'provider': 'openrouter', 'requests': 51, 'cache_hits': 0, 'physical_attempts': 51, 'attempt_ceiling': 400, 'spent_usd': '0.002021166', 'spend_cap_usd': '0.10'}

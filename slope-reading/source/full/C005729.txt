@@ -1,0 +1,1 @@
+{"command": "pkill -f heavy_check.py; sleep 2; pkill -9 -f heavy_check.py; sleep 1; ps -Ao pid,command | grep -E \"heavy_check|sleep 540\" | grep -v grep | wc -l; top -l 1 -o mem -n 4 -stats pid,mem,command | tail -4; rm -f ~/.hermes/profiles/connor/cache/scratch/9z/hA6.pkl ~/.hermes/profiles/connor/cache/scratch/9z/hB6.pkl; df -h / | tail -1", "timeout": 30}

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && id=$(gh run view 36634378487 --json jobs --jq '.jobs[] | select(.name==\"shard (5)\") | .databaseId'); gh api repos/owassmer/Slope_Sparse_Events/actions/jobs/$id/logs 2>&1 | grep -iE \"paths|DONE|unit|part|walked|nproc|^[0-9]+$\" | tail -20 | cut -c1-220; date -u +%H:%M"}

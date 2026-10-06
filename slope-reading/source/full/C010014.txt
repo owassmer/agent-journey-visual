@@ -1,0 +1,6 @@
+const results = await Promise.allSettled([
+tools.exec_command({cmd:"aws sts get-caller-identity --profile qed-user; aws sts get-caller-identity --profile qed-slack-user",max_output_tokens:1000}),
+tools.exec_command({cmd:"aws ec2 describe-instances --region us-east-1 --filters Name=tag:Name,Values=slope-walk-20260930 Name=instance-state-name,Values=pending,running --query 'Reservations[].Instances[].{Id:InstanceId,Type:InstanceType,State:State.Name,Tags:Tags}' --output json; cat /tmp/slope-production-36781427817/aws.json; tail -5 /tmp/slope-production-36781427817/cloud-control.log",max_output_tokens:1800}),
+tools.web__run({search_query:[{q:"site.aws.amazon.com account resources IAM users billing AWS account"}],response_length:"short"})
+]);results.forEach(text);
+text(await tools.exec_command({cmd:"kill -TERM 66005; pgrep -fl cloud_control",max_output_tokens:500}));

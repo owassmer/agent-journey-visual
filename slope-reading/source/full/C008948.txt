@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 16000}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat /tmp/slope-grounding-1ebb1026/reviews-08.txt",max_output_tokens:8000}),
+tools.exec_command({cmd:"cat /tmp/slope-grounding-1ebb1026/reviews-09.txt",max_output_tokens:8000})
+]);results.forEach((r,i)=>text({i,...r}));

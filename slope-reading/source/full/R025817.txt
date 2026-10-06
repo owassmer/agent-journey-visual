@@ -1,0 +1,66 @@
+     878 app/agent/tools.py
+10:- accepting a finding requires a disposition for each linked observation, a reasoned override for
+51:MAX_SEARCH_RESULTS = 12
+52:DEFAULT_SEARCH_RESULTS = 8
+53:RELATION_CHECKS_PER_ACCEPTANCE = 1  # most recent accepted finding under the same dependency
+67:POSTURE_ONLY = {"funding_constraint", "receipt_delay"}  # posture must not be an allegation, plan or unknown
+68:TREATMENT_MEANING = {
+76:MAX_TEXT = 20_000
+77:OVERRIDE_NOTE_MIN = 20
+103:def _obs_view(o: SemanticObservation) -> dict[str, Any]:
+114:def _unsettled(o: SemanticObservation) -> bool:
+118:def _record_jev_failure(ctx: RunContext, e: Exception) -> None:
+127:def _cents_in_text(cents: int, text: str) -> bool:
+138:def _baseline_item(ctx: RunContext, key: str) -> dict | None:
+146:async def get_mission(ctx: RunContext, _args: dict) -> dict:
+154:async def read_baseline_profile(ctx: RunContext, _args: dict) -> dict:
+158:async def read_loan_terms(ctx: RunContext, _args: dict) -> dict:
+171:async def record_dependency(ctx: RunContext, args: dict) -> dict:
+182:async def search_evidence(ctx: RunContext, args: dict) -> dict:
+222:async def read_evidence(ctx: RunContext, args: dict) -> dict:
+241:async def judge(ctx: RunContext, args: dict) -> dict:
+279:async def propose_finding(ctx: RunContext, args: dict) -> dict:
+318:async def resolve_finding(ctx: RunContext, args: dict) -> dict:
+346:                                f"{', ambiguous' if is_ambiguous(o) else ''}) needs an override with a stated reason")
+365:def _parameter(p: dict, findings: dict[str, AtomicFinding]) -> ParameterRequirement:
+388:async def propose_effect(ctx: RunContext, args: dict) -> dict:
+413:    overrides = {k: v.strip() for k, v in (args.get("override_reasons") or {}).items() if isinstance(v, str)}
+425:            if found and len(overrides.get(name, "")) >= OVERRIDE_NOTE_MIN:
+426:                warnings.append({"overridden": name, "reason": overrides[name], "problems": found})
+427:                _dispose(ctx, [o for o in guard_obs if _guard_name(o) == name], "overridden_by_agent_with_reason", overrides[name])
+436:                                          "override_reasons": {w["overridden"]: w["reason"] for w in warnings
+442:                     "cash flow. To proceed past a failed check, revise, or pass override_reasons "
+446:async def run_sensitivity(ctx: RunContext, args: dict) -> dict:
+496:async def request_missing_fact(ctx: RunContext, args: dict) -> dict:
+503:async def read_inventory(ctx: RunContext, _args: dict) -> dict:
+516:async def account_for_items(ctx: RunContext, args: dict) -> dict:
+534:                    problem = await _check_coverage(ctx, item, fids, entry.get("override_reason", ""))
+538:                                                 "note": entry.get("override_reason") or entry.get("reason", "")})
+554:async def resolve_reconciliation(ctx: RunContext, args: dict) -> dict:
+563:async def submit_packet(ctx: RunContext, args: dict) -> dict:
+579:    if args.get("conclusion_override_reason"):
+580:        summary["conclusion_override_reason"] = args["conclusion_override_reason"]
+588:def _dispose(ctx: RunContext, observations: list[SemanticObservation], disposition: str, note: str) -> None:
+595:def _guard_name(o: SemanticObservation) -> str:
+599:def _attribute_screen(ctx: RunContext, finding: AtomicFinding) -> None:
+610:def _matter_passage(ctx: RunContext, item: InventoryItem) -> tuple[dict | list[dict], tuple[str, ...]]:
+623:async def _check_coverage(ctx: RunContext, item: InventoryItem, fids: tuple[str, ...], override: str) -> str | None:
+632:    if clear_gap and len(override.strip()) < OVERRIDE_NOTE_MIN:
+635:                f"(read {item.section_ids[0]}), cite different findings, or give override_reason.")
+637:             override.strip() if clear_gap else f"coverage check on {item.item_id}")
+641:async def _auto_relations(ctx: RunContext, finding: AtomicFinding) -> list[dict]:
+666:async def _category_guard(ctx: RunContext, effect: EconomicEffectProposal,
+705:async def _consequence_support(ctx: RunContext, effect: EconomicEffectProposal,
+728:async def _check_conclusion(ctx: RunContext, args: dict) -> None:
+743:    reason = (args.get("conclusion_override_reason") or "").strip()
+745:                   payload={"answer": obs.answer, "ambiguous": is_ambiguous(obs), "override_reason": reason or None})
+750:                        "validated effects and sensitivity results support, or give conclusion_override_reason.")
+757:S = {"type": "string"}
+758:CITATION = {"type": "object", "properties": {"item_id": S, "quote": S, "occurrence": {"type": "integer"}},
+760:PARAM = {"type": "object", "properties": {
+766:def obj(props: dict, required: list[str]) -> dict:
+817:          "override_reasons": obj({"category_guard": S, "consequence_support": S}, [])},
+833:         "override_reason": S},
+841:          "supported_effect_ids": {"type": "array", "items": S}, "conclusion": S, "conclusion_override_reason": S},
+846:AGENT_ONLY_DESCRIPTIONS = {
+855:def build_server(ctx: RunContext, allowed: list[str]):

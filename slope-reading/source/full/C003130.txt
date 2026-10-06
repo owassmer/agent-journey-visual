@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/slope_ground && python3 cc_owen_only.py cc_2e338e7b-b5a4-476b-a810-3f7556007f4a.owen.txt 3000; python3 cc_owen_only.py cc_1ebb1026-a1f0-4809-9321-bc3d6f875530.owen.txt 3500 > cc_owen_typed.txt; wc -c cc_owen_typed.txt; grep -c '^=====' cc_owen_typed.txt"}

@@ -1,0 +1,32 @@
+ok
+[1;32mAll checks passed![0m
+tier A floor 6908031.41
+{
+ "bank_only": {
+  "structure": "inst_120_2000000",
+  "requested": "inst_120_2000000",
+  "limit_cents": 357926602,
+  "order_limit_cents": 268444952,
+  "requested_passes": true,
+  "requested_reasons": []
+ },
+ "event_adjusted": {
+  "structure": "inst_120_1840000",
+  "requested": "inst_120_2000000",
+  "limit_cents": 246627764,
+  "order_limit_cents": 184970823,
+  "requested_passes": false,
+  "requested_reasons": [
+   "amount above the order limit (192895354 cents)"
+  ]
+ }
+}
+decline                bank low  26.24M pass True | event low  16.44M pass True limit 2.47M [] econ None
+net_30_2000000         bank low  26.22M pass True | event low  16.42M pass False limit 2.46M ['amount above the order limit (184748073 cents)'] econ 706246
+net_60_2000000         bank low  26.47M pass True | event low  16.67M pass False limit 2.50M ['amount above the order limit (187529084 cents)'] econ 1330477
+net_90_2000000         bank low  26.68M pass True | event low  16.88M pass False limit 2.53M ['amount above the order limit (189934343 cents)'] econ 2107591
+inst_60_2000000        bank low  26.47M pass True | event low  16.67M pass False limit 2.50M ['amount above the order limit (187574084 cents)'] econ 1594468
+inst_90_2000000        bank low  26.71M pass True | event low  16.91M pass False limit 2.54M ['amount above the order limit (190234719 cents)'] econ 2334287
+inst_120_2000000       bank low  26.95M pass True | event low  17.15M pass False limit 2.57M ['amount above the order limit (192895354 cents)'] econ 3071584
+inst_120_1840000       bank low  27.11M pass True | event low  17.31M pass True limit 2.60M [] econ 2825858
+72 paths

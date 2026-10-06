@@ -1,0 +1,30 @@
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:542:    "case_id": "chromadex_elysium_2024",
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:543:    "mission_id": "chromadex_2024_supplier_bill_financing",
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:544:    "borrower": "ChromaDex Corporation",
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:553:    "relationship_claim": "Reconstructed as if ChromaDex applied to Slope on this date to finance a s
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:554:    "product_selection": "Slope bill-pay financing: Slope pays the supplier and ChromaDex repays on n
+app/agent/mission.py:13:MISSION_KEYS = {"chromadex_elysium_2024": "lead_mission", "synergy_chc_2024": "default_mission",
+app/evidence/__init__.py:3:SNAPSHOTS = ("chromadex_20240819", "synergy_20240813", "barfresh_20241025")
+tests/test_analysis.py:22:SNAP = "chromadex_20240819"
+tests/test_analysis.py:37:                           counterparty="Elysium Health, Inc.", finding_ids=("f",), amount=ev(amount),
+tests/test_analysis.py:44:    fc = Forecaster(disputes, {}, borrower="ChromaDex Corporation", review=REVIEW, horizon=SETUP.horizon,
+tests/test_analysis.py:187:    parties = ["ChromaDex Corporation", "Elysium Health, Inc."]
+tests/test_analysis.py:189:    for loaded in ("Fees payable by ChromaDex to Elysium under Dkt. 399", "C.D. Cal. 8:16-cv-02277 $2,500,000",
+tests/test_analysis.py:190:                   "Dkt. 399 award to Elysium", "D. Del. 1:18-cv-01434 (amount sought, ChromaDex intends to appeal)"):
+tests/test_dispute_reading.py:2:forecast evidence rather than a pruned branch. ChromaDex owes Elysium Health the Delaware fee award (D. Del.
+tests/test_dispute_reading.py:19:BORROWER, PAYEE = "ChromaDex Corporation", "Elysium Health, Inc."
+tests/test_dispute_reading.py:66:    """ChromaDex pays; judgment entered; one passage states an appeal of this award is waived."""
+tests/test_dispute_reading.py:79:        assert "debtor_liquidity" not in factor_ids  # ChromaDex pays: its own cash comes from the bank data
+tests/test_evidence_snapshots.py:86:# Facts public only after 19 Aug 2024 (ChromaDex outcome sources): the fee judgment's amount and date, Elysium's
+tests/test_evidence_snapshots.py:88:CHROMADEX_FUTURE_FACTS = ["Niagen Bioscience", "Stipulated Amended Judgment", "9.2 million", "October 28, 2024",
+tests/test_evidence_snapshots.py:92:def test_chromadex_outcome_facts_are_absent(built):
+tests/test_evidence_snapshots.py:95:               if s["mission_membership"].get("chromadex_20240819") == "outcome"]
+tests/test_evidence_snapshots.py:98:    raw = (out / "chromadex_20240819.sqlite").read_bytes().lower()
+tests/test_evidence_snapshots.py:99:    for fact in CHROMADEX_FUTURE_FACTS:
+tests/test_evidence_snapshots.py:103:    # The decision-date judgment itself is admissible: Elysium ordered to pay USD 2.5 million.
+tests/test_evidence_snapshots.py:104:    assert "$2,500,000" in stores["chromadex_20240819"].read("cacd_16cv2277_d618_judgment#s0002")["text"]
+tests/test_investigation_tools.py:382:            "finding_ids": [fid], "counterparty": "Elysium Health, Inc.",
+CLAUDE.md:1
+Slope_Coding_Agent_Context_and_Alignment.md:2
+Slope_Credit_Scenario_Build_Specification.md:14
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/data/sources.json:111

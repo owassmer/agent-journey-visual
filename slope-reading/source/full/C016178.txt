@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"osascript -e 'tell application \"System Events\" to tell process \"Google Chrome\" to get name of menu items of menu \"Developer\" of menu item \"Developer\" of menu \"View\" of menu bar item \"View\" of menu bar 1'","max_output_tokens":1000,"yield_time_ms":1000}));

@@ -1,0 +1,65 @@
+592:                    cmd.extend(["--tools", ""])
+594:                    cmd.extend(["--tools", ",".join(tools)])
+597:                cmd.extend(["--tools", "default"])
+697:            cmd.append("--strict-mcp-config")
+726:            cmd.append(f"--setting-sources={','.join(effective_setting_sources)}")
+774:            cmd.extend(["--effort", self._options.effort])
+805:        if not os.environ.get("CLAUDE_AGENT_SDK_SKIP_VERSION_CHECK"):
+810:            # Merge environment variables. CLAUDE_CODE_ENTRYPOINT defaults to
+815:            inherited_env = {k: v for k, v in os.environ.items() if k != "CLAUDECODE"}
+816:            process_env = {
+841:                            process_env.pop(key, None)
+845:                            process_env[key] = v
+851:                process_env["CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING"] = "true"
+854:                process_env["PWD"] = self._cwd
+865:                env=process_env,
+def tool(
+    name: str,
+    description: str,
+    input_schema: type | dict[str, Any],
+    annotations: _McpToolAnnotations | None = None,
+) -> Callable[[Callable[[Any], Awaitable[dict[str, Any]]]], SdkMcpTool[Any]]:
+    """Decorator for defining MCP tools with type safety.
+
+    Creates a tool that can be used with SDK MCP servers. The tool runs
+    in-process within your Python application, providing better performance
+    than external MCP servers.
+
+    Args:
+        name: Unique identifier for the tool. This is what Claude will use
+            to reference the tool in function calls.
+        description: Human-readable description of what the tool does.
+            This helps Claude understand when to use the tool.
+        input_schema: Schema defining the tool's input parameters.
+            Can be either:
+            - A dictionary mapping parameter names to types (e.g., {"text": str})
+            - A TypedDict class for more complex schemas
+            - A JSON Schema dictionary for full validation
+            Use ``Annotated[type, "description"]`` to add a description to a
+            parameter in either dict-style or TypedDict schemas.
+        annotations: Optional MCP tool annotations (hints such as
+            ``readOnlyHint`` or ``destructiveHint``) advertised to Claude.
+            ``ToolAnnotations(maxResultSizeChars=N)`` additionally raises the
+            size up to which Claude Code keeps this tool's result inline
+            instead of persisting it to a file and showing a preview.
+
+    Returns:
+        A decorator function that wraps the tool implementation and returns
+        an SdkMcpTool instance ready for use with create_sdk_mcp_server().
+
+    Example:
+        Basic tool with simple schema:
+        >>> @tool("greet", "Greet a user", {"name": str})
+        ... async def greet(args):
+        ...     return {"content": [{"type": "text", "text": f"Hello, {args['name']}!"}]}
+
+        Tool with multiple parameters:
+        >>> @tool("add", "Add two numbers", {"a": float, "b": float})
+        ... async def add_numbers(args):
+        ...     result = args["a"] + args["b"]
+        ...     return {"content": [{"type": "text", "text": f"Result: {result}"}]}
+
+        Tool with error handling:
+        >>> @tool("divide", "Divide two numbers", {"a": float, "b": float})
+        ... async def divide(args):
+        ...     if args["b"] == 0:

@@ -1,0 +1,127 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_6780a77b]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 00:58:28 (50m52s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3052.12s
+
+--- ✓ TASK 1/1: Worker F: fix five defects found in the first 14 May run, then re-run the investigation and the analysis. Work in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD 84e737d). Each fix ends in targeted tests, a commit of named files and a push. The re-run is a new recorded run and replaces the first as the lead run; keep the first run's files in git history. Report the SHAs, what each fix changed, the new run id, and the new run's results with the same layout as the previous report.  (status=completed, api_calls=161, 3051.88s) ---
+The five fixes are committed and pushed, and the re-run is recorded as the new lead 14 May run: `akoustis_20240514-agent_plus_jev-20260928T052641Z`. The investigation came back CANDIDATE_READY and the analysis ran. The full suite passed (235 tests) and the 20 Jun tree is unchanged at HEAD (13,821 paths, 337 keys, identical path digest, states and questions). Nothing was tuned toward the verdict or the bankruptcy.
+
+## SHAs (branch step-8-model)
+```
+Fix                           | SHA     | What changed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------+---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2: unknown became zero        | 5623b47 | Unknown component amounts no longer sum as 0 (that summing gave the first run its $0 lower branch). The lower branch now uses the declared bound in `scenario.json` ($1,426,412), labelled as the bound to Jev. Where no bound is declared (the claimant's branch), the analysis raises `UnknownAmount` naming the components. The enhancement kinds (exemplary, trebling, fees, costs, interest) are never summed. The 20 Jun post-trial code and the notes' repurchase terms also stop reading unknown as 0. Design §5.2.
+3: no raise after settlement  | be5f551 | The raise is at the lower capacity only while an adverse money judgment stands: from entry until it is set aside, paid or settled. It no longer closes when the dispute is resolved. Tested in 5 situations. Design §7.12.                                                                                                                                                                                                                                                                                                 
+4: settlement terms           | a2e56f3 | New `settlement_payment` setting in the model; the 20 Jun default stays lump sum. The 14 May case pays the bounded amount in 12 monthly installments from the settlement date, releases the claim that day, and keeps the lump sum as the sensitivity. Jev is told the total, the monthly installment and the schedule, and acceptance is asked on those terms. Design §4.5 and §7.12.                                                                                                                                     
+5: stale text and defense sum | 23d2b62 | The page's cash sentence is now generated from the collection mode (debit or protect_need), and an unknown component shows as "unknown". The claimant's sums exclude components marked as the defense's theory. The model's cash-floor wording is fixed. Tested.                                                                                                                                                                                                                                                           
+1: record-item slots          | d077024 | New tools let the agent read the slot list for its dispute's stage (names and decisions only) and record, per slot, the findings that fill it or that the record has nothing. `submit_packet` refuses while a slot is open, and slots.json is built from the agent's records. Each component now cites its own findings, and its amount must appear in those findings' quotes. The old check pooled all the dispute's quotes, and the page fell back to D.I. 590 as every component's source. Design §7.4.                 
+Budgets                       | 9270b0d | Agent turns raised to 220 and wall clock to 1,800 s to fit the slot work.                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+Run                           | 3b21187 | New run committed. The first run's files are removed from the tree and kept in history.                                                                                                                                                                                                                                                                                                                                                                                                                                    
+```
+
+## New run results
+**One forecast** (event case; ordinary operating risk = the same forecast with the event given no cash effect)
+
+```
+              | New draws | Due        | Collected        | Past due | Stayed at a filing | Not yet due | Filing by 10 Nov | Preference
+--------------+-----------+------------+------------------+----------+--------------------+-------------+------------------+-----------
+One forecast  | $747,345  | $1,179,091 | $822,654 (69.8%) | $9,041   | $96,355            | $251,040    | 26.6%            | $105,807  
+Ordinary risk | $865,933  | $1,302,067 | $947,857 (72.8%) | $3,523   | $18,872            | $331,815    | 5.4%             | $30,420   
+```
+
+The first run had 64.9% collected and a 43.3% filing probability.
+
+**Raise and survival**
+- One forecast: equity raised at the cash floor on 71.4% of paths; 73.4% survive to 10 Nov.
+- Ordinary risk: 93.0% raise; 94.7% survive.
+
+**Verdict-form answers** (probability of "yes")
+- q1a 0.61, then q1b 0.62.
+- If q1a is no: q2a 0.20, q2b 0.40, q2c 0.59; q3a 0.45 or 0.34; q5a 0.71 or 0.65.
+- Composed J1: no award 7.95%, lower award $1,426,412 (from the record, not the bound) 52.39%, claimant's theory 39.66%.
+
+**Settlement answers** (12 monthly installments; offer / accept)
+- Before the verdict: 0.69 / 0.38. Total P5 $5.93M, P50 $6.12M; monthly $494k / $510k.
+- After entry, lower award: 0.76 / 0.49 on $1.43M ($119k a month).
+- After entry, claimant's theory: 0.77 / 0.44 on $5.10M / $6.12M ($425k / $510k a month).
+- Enforceable and unstayed, claimant's theory: 0.80 / 0.47 (appealed 0.78 / 0.43) on $3.17M / $3.42M. Lower award: 0.77 / 0.53 on $1.44M.
+- After the ruling, before the appeal deadline, and while stayed: offers 0.34–0.42, accepts 0.36–0.44. Here the offer is positive only on some paths, so its P5 and P50 read $0.
+
+**Cash-floor answers**
+- Where the raise is available:
+  - after the pre-verdict settlement: raise 0.94, file 0.01 (it was "no raise": file 0.52);
+  - no award 0.87; lower award 0.88–0.89; judgment paid 0.89–0.91;
+  - judgment set aside: raise 0.59, file 0.20;
+  - notes accelerated: raise 0.46, file 0.38.
+- Where a claimant's-theory judgment stands (no raise): file 0.67–0.90.
+
+**Top 6 sensitivities** (collected; 0% → 100% of the named answer)
+
+```
+# | Question                                       | Jev's answer                         | Collected by answer                       | Range
+--+------------------------------------------------+--------------------------------------+-------------------------------------------+------
+1 | Company's response at entry, lower award       | pay 0.46 / file 0.01 / continue 0.53 | $834k / $469k / $819k                     | $365k
+2 | Company's response at entry, claimant's theory | file 0.16 / continue 0.84            | $658k / $854k                             | $197k
+3 | q1b, award on the head-start measure           | yes 0.62                             | $920k → $763k                             | $157k
+4 | q1a, trade-secret liability                    | yes 0.61                             | $915k → $764k                             | $151k
+5 | Claimant accepts the pre-verdict settlement    | yes 0.38                             | $777k → $898k                             | $121k
+6 | Cash-floor decision after that settlement      | raise 0.94                           | raise $827k / file $723k / continue $769k | $103k
+```
+
+Accepting the settlement now raises collections; in the first run it cut them ($757k → $474k).
+
+**Slots:** 23 of 31 filled; 8 recorded as not in the record, each with the searches the agent ran:
+- the company's stay motion and security;
+- the claimant's statements on collecting or enforcing;
+- the claimant's statements on the judgment and verdict;
+- mediation orders;
+- appeal statements;
+- any appeal waiver;
+- the latest charter-amendment vote;
+- noteholder statements.
+
+The filled slots now cite D.I. 543-1, D.I. 553 (the Daubert order), D.I. 580 (the verdict form), D.I. 476 and D.I. 590. The summary-judgment slot is filled from the 10-Q's account rather than D.I. 545/557 directly, and D.I. 535 (the proposed form) is still not cited.
+
+**Components the agent recorded**, each cited to its own finding
+- Cited to D.I. 543-1 Ex. A.2 alone:
+  - head-start unjust enrichment $66,100,000 (the principal measure);
+  - corrective advertising $1,146,604;
+  - patent royalty $279,808;
+  - conspiracy $66.1M, marked as restating the head-start figure;
+  - exemplary, punitive, patent trebling, fees, costs and pre-judgment interest, all unknown (covered by the enhancements term, never summed);
+  - the defense's trade-secret figure, unknown, marked as the defense's theory and excluded.
+- Cited to D.I. 543-1 plus D.I. 590 (the order that bars them):
+  - UDTPA unjust enrichment $66.1M, restating the head-start figure;
+  - poaching $809,772, whose claim D.I. 590 bars.
+- Branch amounts: lower $1,426,412 and claimant's theory $67,526,412, both from these records and matching the fixture.
+
+**Spend**
+
+```
+Item              | Jev requests                      | Jev spend  
+------------------+-----------------------------------+------------
+Investigation     | 322                               | $0.0350    
+Analysis          | 216 forecasts                     | $0.0445    
+Slot screen       | none (the agent filled the slots) | $0         
+Sweep             | cached                            | $0         
+**New Jev total** |                                   | **$0.0795**
+```
+
+The agent (Claude) used 197 turns and 702 s (notional $6.03, covered by the subscription). The analysis took 100 s at 1.05 GB peak memory, 3,698 paths.
+
+## Issues
+- `app/analysis/page.py` still has party names hard-coded in labels (around lines 88–92, 225 and a default actor group). They predate this work and I did not touch them.
+- The lump-sum settlement sensitivity is declared in the case inputs but no variant was computed or reported, so its effect on collections is not measured yet.
+
+Everything is in `~/.hermes/profiles/connor/cache/scratch/8/f`. The figures above come from `report_new.py`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_6780a77b/task-0.log
+Child's process proc_96f3a5397fd6 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && python3 - <<'E'
+from` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+ok
+13821 337 2 30 s
+paths True path_digest True nodes True states True bank_paths True bank_states True questions True 13821 337 .........                                                                [100%]
+81 passed in 46.28s

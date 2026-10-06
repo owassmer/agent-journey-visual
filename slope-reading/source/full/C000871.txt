@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run/app/agent/jev_profiles.py", "old_string": "from app.evidence.store import EvidenceStore", "new_string": "from app.evidence.store import EvidenceStore\n\nFORECAST_CONCURRENCY = 8  # forecast requests in flight at once (see JevProfiles.forecast)"}

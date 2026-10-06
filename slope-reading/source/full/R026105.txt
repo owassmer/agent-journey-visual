@@ -1,0 +1,20 @@
+def registry_question(question_id: str) -> dict:
+    for q in question_registry()["questions"]:
+        if q["id"] == question_id:
+            return q
+    raise KeyError(f"Unknown Jev question {question_id!r}")
+
+
+def build_question(entry: dict) -> Choice | Noul:
+    """Registry mapping: global rules prefixed to the question's instructions; primitive from the entry."""
+    rules = "\n".join(f"- {r}" for r in question_registry()["global_rules"])
+    instructions = f"Global rules:\n{rules}\n\nQuestion:\n{entry['prompt']['instructions']}"
+    if entry["primitive"] == "noul":
+        return Noul(instructions=instructions, criteria=entry["prompt"]["criteria"])
+    return Choice(instructions=instructions, criteria=entry["prompt"]["criteria"])
+
+
+class JevAdapter:
+    def __init__(self, *, run_id: str, provider: JevProvider | None = None,
+                 new_id: Callable[[str], str] | None = None, use_cache: bool = True,
+                 max_attempts: int | None = None, spend_cap_usd: str | None = None) -> None:

@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"gh api 'repos/owassmer/Slope_Sparse_Events/actions/runs/37152829583/jobs?per_page=100' --jq '.jobs[] | select(.conclusion==\"failure\") | {id,name,conclusion}'","max_output_tokens":800}));
+text(await tools.exec_command({cmd:"rg -n 'systemd-run|Environment|AWS_PROFILE' /tmp/slope-mass-coordinate.py /tmp/slope-prepare-review.py /tmp/slope-hybrid-observer.py /tmp/slope-pool-after-refresh.py; sed -n '1,30p' /tmp/slope-mass-coordinate.py","max_output_tokens":1100}));

@@ -1,0 +1,7 @@
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"cat pyproject.toml",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:1500}),
+ tools.exec_command({cmd:"sed -n '214,332p' app/domain/investigation.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:2600}),
+ tools.exec_command({cmd:"sed -n '1,152p' app/decisions/scenarios.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3500}),
+ tools.exec_command({cmd:"cat app/disputes/rules.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:4700}),
+ tools.exec_command({cmd:"sed -n '1,150p' cases/chromadex_20240819/make_bank_feed.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3000})
+]);results.forEach((r,i)=>text({i,...r}));

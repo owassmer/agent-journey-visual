@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"uv run --no-project --with appscript python - <<'PY'\nfrom appscript import app\nprint(app(pid=34693).windows[1].active_tab.execute(javascript='Array.from(document.querySelectorAll(\".js-checks-log-display-container\")).filter(e=>e.textContent.includes(\"unit\"))[0].outerHTML.slice(0,4500)'))\nPY",max_output_tokens:2000}));
+text(await tools.exec_command({cmd:"gh api repos/owassmer/Slope_Sparse_Events/actions/runs/36909118504/artifacts --jq '[.artifacts[]|{name,size_in_bytes}]'",max_output_tokens:1000}));

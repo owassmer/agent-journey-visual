@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --command-id 85b227f8-3454-453f-9568-c1341fae2fff --instance-id i-09b42b44a8d35909a --query '{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}'","max_output_tokens":3000}));
+text(await tools.exec_command({cmd:"gh api repos/owassmer/Slope_Sparse_Events/actions/runs/37041690407/jobs --paginate --jq '.jobs[] | {id,name,status,conclusion}'","max_output_tokens":4000}));

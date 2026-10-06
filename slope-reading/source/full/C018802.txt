@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"sed -n '1,180p' AGENTS.md; sed -n '1,140p' CLAUDE.md; sed -n '1,160p' /Users/owenwassmer/.codex/skills/failure-led-realignment/SKILL.md","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":5500}));
+text(await tools.exec_command({cmd:"rg -n '^def |^class |512|batch|weight|unpack_row|classify_row' tools/question_refresh.py tools/question_refresh_fleet.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3500}));

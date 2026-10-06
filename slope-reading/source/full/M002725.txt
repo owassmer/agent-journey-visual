@@ -1,0 +1,91 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_c9a165d4]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 09:38:21 (1h20m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 4825.42s
+
+--- ✓ TASK 1/1: Worker H2: close the last evidence difference between the no-lawsuit view and the forecast for the 14 May case, then re-run and land it. Work in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD af47df0). Fix, test, re-run the lead analysis and all ten variants, commit and push, then merge into step-8-page (worktree .claude/worktrees/step-8-page, HEAD e544325), rebuild the page, run the figure check and restart the 8012 viewer. Report SHAs, the no-lawsuit figures and attribution, the settles-before-verdict comparison, the variant table, Jev re-asks and spend, and the page check. Do not open a PR or re-run the investigation.  (status=completed, api_calls=80, 4825.1s) ---
+The no-lawsuit questions now carry the notes' terms exactly as the forecast gives them, and everything is re-run, merged, pushed and live on 8012 (HTTP 200). The gap you asked me to report is still there and is now wider: "settles before the verdict" files at **5.9%**, the no-lawsuit view at **11.7%** (was 9.6%). I didn't change any question to close it.
+
+**SHAs (pushed)**
+- step-8-model: `54613b7` is the fix, test 7j, design §7.12 and the kit manifest. `6f4af53` is the lead run and ten variants re-run.
+- step-8-page: `dd640f1` is the merge; `a7015b7` adds the rebuilt page.json. My first merge commit staged page.json before the rebuild, so `a7015b7` adds it; the figure check and suite ran on that content.
+
+**The fix**
+- Each path fact is now classified by where the code gets it (`Forecaster.facts_by_source`):
+  - **Dispute only:** claim components, pending motions, amount owed, a merged class's judgment range, bond and reduced security, settlement terms, and the dates the dispute sets (appeal deadline and judgment-default ripe dates, events.py `DISPUTE_TRIGGERS`).
+  - **Ordinary obligations:** decision dates, cash, operating need, raise available, the notes' own dated triggers, and the notes' principal and judgment-default clause (`obligation_facts`).
+- The no-lawsuit view adds `obligation_facts`; its dates already come from a run with no dispute in it. Forecast path facts are unchanged: no forecast question was re-asked, and the event view is identical in every setting.
+- **Test 7j:** it passes with the fix and fails with the fix line removed (`'notes'` missing on `financing_at_floor`). At `af47df0` itself it also fails, but only because the new builder method and import don't exist there yet.
+- **Records:** design §7.12 records the ruling; skill notes updated.
+
+**No-lawsuit view vs the event view (central)**
+
+```
+                               | Event view | No lawsuit            | Event's effect
+-------------------------------+------------+-----------------------+---------------
+Due by 10 Nov                  | $915,682   | $966,369              |               
+Collected                      | $827,885   | $957,981              | −$130,096     
+Collection rate                | 90.4%      | 99.1%                 | −8.7 pp       
+Filing by 10 Nov               | 27.1%      | 11.7%                 | +15.4 pp      
+Preference exposure (weighted) |            | $62,881 (was $50,858) |               
+```
+
+"Settles before the verdict" (26.2% of paths): rate 98.5%, filing 5.9%.
+
+**Jev's answers, no lawsuit (before → after) vs the settled forecast questions**
+
+```
+Question                                                   | No lawsuit                               | Settled forecast                                                                                           
+-----------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------
+Cash floor: raise / file / continue                        | .92/.02/.06 → .93/.03/.04                | .94/.01/.05 (claims with the jury, settled); .93/.02/.05 (settled, company seeking a sale or new financing)
+Listing kept: yes                                          | .47 → **.43**                            | .54; .49; .51                                                                                              
+Holders after delisting: accelerate / repurchase / neither | .15/.60/.25 → .19/.60/.21                | .18/.56/.26 (both)                                                                                         
+Company files on the notes: yes                            | .72 → **.71**                            | **.35**; .46; .47                                                                                          
+Holders' involuntary petition: yes                         | .30 → .30 (no path facts in either view) | none in the settled class                                                                                  
+Files at zero cash: yes                                    | .61 → **.60**                            | **.42**; .48                                                                                               
+```
+
+**What still differs from the "claims with the jury, settled" questions** (notes' terms are now identical)
+- **Context.** The forecast question adds these two strings; the no-lawsuit context has none of them:
+  - "the claims are with the jury; no judgment exists and nothing is owed until one is entered"
+  - "the company has agreed to settle with Qorvo, Inc., paying the agreed amount in 12 equal monthly installments from the settlement date"
+- **Conditions.** The no-lawsuit question adds one: "the dispute with Qorvo, Inc., including its legal costs, is given no cash effect: it ends on the review date at no cost"
+- **Dispute-only facts, forecast only (by the ruling):** 13 claim components and amount owed $0.
+- **Cash and dates** differ, as expected. On the listing and notes questions the no-lawsuit cash is p5 $35k–$136k and p50 $365k–$415k, against p5 about −$3.0M and p50 about $2.0M in the forecast.
+- **The zero-cash question** is dated 22 Oct–8 Nov in the no-lawsuit view, after the 21 Oct listing deadline, so that date isn't shown there. The settled forecast question is dated about 24 Sep and shows it.
+- **Outside the ruling, not changed:** the no-lawsuit listing, holders and notes questions also carry `operating_need_30_days_at_decision`. The forecast gives that figure only at the cash floor and when cash runs out. It's a true ordinary fact, so test 7j allows it, but it's still a difference in what Jev sees. Decision for you: remove it to make the two views fully identical, or leave it.
+
+**Variants.** The event view is unchanged in every setting.
+
+```
+Setting                        | Paths | Event rate | Event filing | No-lawsuit collected (was) | No-lawsuit filing (was)
+-------------------------------+-------+------------+--------------+----------------------------+------------------------
+central                        | 2962  | 90.4%      | 27.1%        | $957,981 ($960,537)        | 11.7% (9.6%)           
+cost_plan                      | 4300  | 92.7%      | 25.4%        | $979,900 ($980,000)        | 4.7% (4.3%)            
+equity_injection               | 4204  | 93.9%      | 23.0%        | $965,000 ($966,000)        | 7.2% (3.2%)            
+raise_capacity_no_judgment_low | 3293  | 89.0%      | 31.6%        | $955,600 ($958,400)        | 13.6% (10.2%)          
+raise_after_judgment_available | 3701  | 91.5%      | 26.0%        | as central                 | 11.7% (9.6%)           
+settlement_lump_sum            | 2962  | 88.9%      | 29.7%        | as central                 | 11.7% (9.6%)           
+collection_protect_need        | 2962  | 89.0%      | 26.8%        | $949,400 ($952,100)        | 12.1% (9.0%)           
+cash_floor_60_days             | 2737  | 91.2%      | 25.5%        | $954,900 ($960,000)        | 12.8% (9.7%)           
+lower_award_high               | 3160  | 88.3%      | 34.9%        | as central                 | 11.7% (9.6%)           
+coupon_cash                    | 2623  | 90.3%      | 25.9%        | $949,000 ($958,400)        | 10.1% (6.9%)           
+```
+
+**Jev re-asks and spend:** about $0.0036 in all.
+- Lead: 5 re-asks, $0.00066.
+- Variants: 22 re-asks, $0.0030.
+- Page rebuild: all 207 answers from cache, $0, after syncing `var/jev_cache` from the model worktree.
+
+**Checks**
+- Date-order check (`f2_order.py`) is clean.
+- The 20 Jun dump is byte-identical to base20.
+- Suite: 249 passed on step-8-model, 251 passed on step-8-page.
+- Page figure check (`p3/check.py final`): 0 mismatches. The console shows the same one 404 as H's run.
+- Viewer restarted only on 8012, from step-8-page.
+
+**Merge note:** step-8-page words the notes' default clause from the contract's own quote, where step-8-model builds the same sentence in code. I kept the page branch's version inside the new split; the text is unchanged, since every answer came from cache.
+
+**Issue:** free disk dipped once to 168 MB while swap grew between variants, then recovered to 3.3 GB. Nothing failed; all runs returned 0.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_c9a165d4/task-0.log

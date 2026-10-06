@@ -1,0 +1,12 @@
+Exit code 1
+ok
+tax_policy :: SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies :: the tax basis of assets and liabilities and their financial reporting amounts based on enacted tax laws and statutory tax rates applicable to the periods in which the differences are expected to affect taxable income. A valuation allowance is recorded when it is “more likely -than -not ” that a defe 
+
+Traceback (most recent call last):
+  File "/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/add_cases3.py", line 20, in <module>
+    passage = first_para(sid)
+              ^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/add_cases3.py", line 11, in first_para
+    p = next(x for x in sec["text"].split("\n\n") if len(x) > 200 and not x.startswith("|") and not x.startswith("["))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration

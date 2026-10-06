@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/forecast.py", "old_string": "    def _raw(self, steps, full: bool = False) -> _Prefix:\n        return self.fc.bank_trace(tuple(steps), full)", "new_string": "    def _raw(self, steps, full: bool = False) -> _Prefix:\n        return self.fc.bank_trace(tuple(steps), full, light=True)"}

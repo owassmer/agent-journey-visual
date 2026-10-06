@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events && git -C .claude/worktrees/step-6b-chains fetch -q origin; ls app/web app/web/templates app/web/static 2>/dev/null; grep -n \"<h2\\|<section\\|class=\\\"section\" .claude/worktrees/step-6b-chains/app/web/templates/*.html 2>/dev/null | cut -c1-150 | head -30"}

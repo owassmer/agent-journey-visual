@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/cthr && sed -n '205,230p;756,800p' supply_2014_orig.txt | grep -v '^$' | cut -c1-260; echo ==== 2nd amendment; grep -v '^$' supply_2014.txt | grep -i -E \"term|minimum|kilogram|\\\\$|remed|terminat|consign\" | head -25 | cut -c1-260"}

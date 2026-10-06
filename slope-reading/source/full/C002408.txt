@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-7-page && python3 -c \"\nimport json;w=json.load(open('app/web/static/words.json'))\nfor k in ['situation','views','futures','outcomes','measures','why_lower','jev','levers','reveal','dates','situations','steps_short','ui']:\n  print('==',k); print(json.dumps(w.get(k),indent=0,ensure_ascii=False)[:3500])\n\""}

@@ -1,0 +1,1 @@
+{"command": "cat >> /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory/jev-pivot-decisions.md <<'EOF'\n- For step 5: recorded run 4's eff_008 (WebBank sweep labelled funding_constraint) is existing debt service already scheduled by app/finance/merchant.py; never apply it twice.\nEOF\necho ok"}

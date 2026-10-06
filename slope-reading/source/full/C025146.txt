@@ -1,0 +1,1 @@
+{"subject": "Jev adapter (Choice+Noul, call records) and profiles", "description": "Rewrite app/agent/jev.py: JevCallRecord + SemanticObservation, async fan-out, attempt accounting (150), cache; app/agent/jev_profiles.py four profiles with minimal-state builders; update smoke.py", "activeForm": "Building Jev adapter and profiles"}

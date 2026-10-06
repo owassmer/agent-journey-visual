@@ -1,0 +1,19 @@
+app/web/viewmodel.py:118:    check_labels = {"coverage_supported": "Coverage", "adds_matter": "Duplicate", "decision_relevance": "Relevance",
+app/agent/jev_profiles.py:201:    async def adds_matter(self, covered_passage: dict | list[dict], passage: dict, subject_ids: tuple[str, ...],
+app/agent/jev_profiles.py:204:        return await self._ask("inventory_coverage", ["adds_matter"], {"covered_passage": covered_passage, "passage": passage},
+app/agent/jev_profiles.py:210:        return await self._ask("inventory_coverage", ["decision_relevance"],
+tests/test_semantic_layer.py:220:    assert not any(n in t for t in only for n in ("judge", "inventory", "account_for_items", "reconciliation"))
+tests/test_investigation_tools.py:25:                   "coverage_supported": "covered", "adds_matter": "nothing_new", "decision_relevance": "could_not_change"}
+tests/test_investigation_tools.py:293:    bad = call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_
+tests/test_investigation_tools.py:295:    call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": 
+tests/test_investigation_tools.py:319:    from app.agent.sweep import chunks, inventory_groups
+tests/test_investigation_tools.py:327:    groups = inventory_groups(sweep)
+tests/test_investigation_tools.py:339:    out = call(T.account_for_items, ctx, {"items": [entry]})
+tests/test_investigation_tools.py:343:    still = call(T.account_for_items, ctx, {"items": [{**entry, "override_reason": "The schedule is the matter; the gain i
+tests/test_investigation_tools.py:347:    bad = call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "escalate", "observation_id": "o
+tests/test_investigation_tools.py:350:    call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "escalate", "observation_id": failed,
+tests/test_investigation_tools.py:361:    ctx = make_ctx(answers={"adds_matter": "adds_item", "decision_relevance": "could_change"}, name="dup")
+tests/test_investigation_tools.py:367:    call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": 
+tests/test_investigation_tools.py:368:    out = call(T.account_for_items, ctx, {"items": [
+tests/test_investigation_tools.py:373:    out = call(T.account_for_items, ctx, {"items": [
+Slope_Credit_Scenario_Build_Specification.md:268:| `inventory_coverage` | Host, per flagged section, on every inventory item the agent marks covered, duplicate

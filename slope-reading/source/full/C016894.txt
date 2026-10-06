@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm describe-instance-information --profile slope --region us-east-2 --filters Key=InstanceIds,Values=i-0565bbb64797091d5 --query 'InstanceInformationList[*].[InstanceId,PingStatus]'","max_output_tokens":500}));
+text(await tools.exec_command({cmd:"rg -n 'PREFIX|ArgumentParser|profile|tasks.*400' tools/walk_monitor.py; tail -35 PLAN.md; sed -n '1,65p' tools/cloud_walk.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

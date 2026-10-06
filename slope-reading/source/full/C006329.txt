@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && git show origin/step-9-int:.github/workflows/walk.yml | sed -n 1,40p; git log --oneline -2 origin/walk-run 2>/dev/null | cut -c1-80; git merge-base --is-ancestor origin/walk-run origin/step-9-memo && echo \"walk-run is ancestor of step-9-memo\"", "timeout": 30}

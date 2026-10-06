@@ -1,0 +1,113 @@
+# Slope Sparse Events
+
+A proof-of-concept for external-event credit review. An agent, with Jev making focused judgments, researches an unusual borrower event such as a lawsuit. Deterministic code turns the sourced economic effects into a financing decision and the loan's dated collections.
+
+- Lead case: **Synergy CHC**, decision date 13 Aug 2024 (supplier-settlement obligations and an actual merchant loan)
+- Transfer case: **Barfresh**, decision date 25 Oct 2024 (production disruption and a receivables facility)
+
+Start with `Slope_Coding_Agent_Context_and_Alignment.md`, then `Slope_Credit_Scenario_Build_Specification.md`. Evidence and design contracts are in `Slope_Credit_Scenario_Research_and_Design_Kit/`.
+
+```sh
+uv sync
+uv run slope --help
+```
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+.ruff_cache/
+.pytest_cache/
+.env
+.env.*
+
+# Generated per-snapshot evidence stores and run workspaces (rebuildable from the kit)
+var/
+*.sqlite
+*.sqlite3
+*.db
+
+# Recorded runs are committed deliberately under runs/recorded/; scratch runs are not
+runs/scratch/
+
+# Claude Code worktrees
+.claude/worktrees/
+## Build step
+Step N — <name> (spec §9)
+
+**Exit condition (verbatim from spec §9):**
+>
+
+**How it is met:**
+
+## What changed
+-
+
+## Intent check
+- How this helps the reviewer decide what to fund / understand the cash that comes back:
+- Relevant acceptance criteria (spec §10) touched:
+- Critical-error risks considered (entity, leakage, fabricated dates, double counts, unknown→0, invented policy):
+
+## Not done / not verified
+-
+
+## Review
+<!-- Independent intent-grounded review is posted as a comment; `merge-ready` label applied when it passes. Owen merges. -->
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      # Essential financial/isolation tests only; exit code 5 = no tests collected yet
+      - run: uv run pytest || [ $? -eq 5 ]
+app/__init__.py
+app/cli.py
+.claude/worktrees/step-1-runtime-smoke/Slope_Coding_Agent_Context_and_Alignment.md
+.claude/worktrees/step-1-runtime-smoke/uv.lock
+.claude/worktrees/step-1-runtime-smoke/pyproject.toml
+.claude/worktrees/step-1-runtime-smoke/README.md
+.claude/worktrees/step-1-runtime-smoke/.gitignore
+.claude/worktrees/step-1-runtime-smoke/Slope_Credit_Scenario_Build_Specification.md
+.claude/worktrees/step-1-runtime-smoke/.python-version
+.claude/worktrees/step-1-runtime-smoke/.git
+== app/__init__.py
+"""Slope external-event credit scenario module."""
+== app/cli.py
+"""Command-line entry point. Subcommands are added by each build step."""
+
+import typer
+
+cli = typer.Typer(no_args_is_help=True, help="Slope external-event credit scenario module")
+
+
+@cli.command()
+def version() -> None:
+    """Print the package version."""
+    from importlib.metadata import version as _v
+
+    typer.echo(_v("slope-sparse-events"))
+
+
+def main() -> None:
+    cli()
+OPENROUTER_API_KEY=<redacted>* main
++ step-1-runtime-smoke
+  remotes/origin/main
+/Users/owenwassmer/dev/Slope_Sparse_Events                                         70be161 [main]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-1-runtime-smoke  70be161 [step-1-runtime-smoke]

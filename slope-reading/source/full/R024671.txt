@@ -1,0 +1,35 @@
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-1-runtime-smoke/.venv/lib/python3.12/site-packages/claude_agent_sdk:
+__init__.py
+__pycache__
+_bundled
+_cli_version.py
+_errors.py
+_internal
+_version.py
+client.py
+py.typed
+query.py
+testing
+types.py
+
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-1-runtime-smoke/.venv/lib/python3.12/site-packages/claude_agent_sdk/_bundled:
+claude
+4:1965-    tools: list[str] | ToolsPreset | None = None
+15:1976-    allowed_tools: list[str] = field(default_factory=list)
+27:1988-    system_prompt: (
+41:2002-    mcp_servers: dict[str, McpServerConfig] | str | Path = field(default_factory=dict)
+48:2009-    strict_mcp_config: bool = False
+55:2016-    permission_mode: PermissionMode | None = None
+65:2026-    continue_conversation: bool = False
+69:2030-    resume: str | None = None
+72:2033-    session_id: str | None = None
+79:2040-    max_turns: int | None = None
+85:2046-    max_budget_usd: float | None = None
+92:2053-    disallowed_tools: list[str] = field(default_factory=list)
+99:2060-    model: str | None = None
+105:2066-    fallback_model: str | None = None
+108:2069-    betas: list[SdkBeta] = field(default_factory=list)
+118:2079-    permission_prompt_tool_name: str | None = None
+125:2086-    cwd: str | Path | None = None
+128:2089-    cli_path: str | Path | None = None
+134:2095-    settings: str | None = None

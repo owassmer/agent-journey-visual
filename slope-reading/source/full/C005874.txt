@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-core && K=Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts; ls $K; python3 - <<'EOF' 2>&1 | head -60\nEOF\nls cases/ app/ app/*/ | head -80; wc -l app/analysis/*.py app/disputes/*.py app/agent/*.py | sort -n | tail -15"}

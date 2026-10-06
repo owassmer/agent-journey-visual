@@ -1,0 +1,153 @@
+17:KIT = ROOT / "Slope_Credit_Scenario_Research_and_Design_Kit"
+18:CONTRACTS = KIT / "research/revision_v2/contracts"
+29:def agent_config() -> dict:
+30:    return json.loads((CONTRACTS / "agent_config.json").read_text())
+34:def question_registry() -> dict:
+35:    return json.loads((CONTRACTS / "question_registry.json").read_text())
+39:def _dotenv() -> dict[str, str]:
+54:def secret(name: str) -> str | None:
+69:def jev_provider() -> JevProvider:
+84:def jev_credential(provider: JevProvider) -> str:
+107:def metered_overrides_present() -> list[str]:
+120:def main_agent_settings() -> dict:
+124:def allowed_tools(arm: str = "agent_plus_jev") -> list[str]:
+{
+  "registry_id": "slope_external_event_cashflow",
+  "registry_version": "3.9.0",
+  "status": "design_contract_live_checked_against_labelled_cases_in_evals",
+  "model_id": "jev-1.13.0",
+  "sdk_requirement": "typesafe-sdk==0.7.1",
+  "sdk_mapping": "For each question, prefix prompt.instructions with the global_rules text and construct typesafe_sdk.Noul(instructions, criteria) or typesafe_sdk.Choice(instructions, criteria) according to primitive. Questions in one profile that share a state are sent in one request. Other entry metadata is enforced by the host and not forwarded.",
+  "purpose": "Narrow semantic judgments at the boundaries where retrieved text becomes a finding, a finding becomes an economic effect, or evidence conflicts. No question estimates a default probability, produces an amount or date, or makes the lending decision.",
+  "global_rules": [
+    "Answer only from the supplied state. Do not use remembered facts about this company, dispute or later events.",
+    "Each question concerns one statement, one target and the supplied passage. If the input combines claims, choose the unknown or unclear option rather than an arbitrary category.",
+    "Source authority and claim posture are separate: a regulatory filing can report an allegation or an expectation.",
+    "Do not compute or compare amounts or dates; code does that separately.",
+    "No confidence value turns a judgment into an accepted fact, a probability or a financial input.",
+    "The question identifier is metadata; the complete question is in the instructions."
+  ],
+  "profiles": {
+    "candidate_screen": {
+      "primitive": "noul",
+      "trigger": "host, on every search result",
+      "questions": [
+        "gap_relevance",
+        "usable_evidence",
+        "premise_conflict",
+        "instruction_like_text"
+      ]
+    },
+    "claim_interpretation": {
+      "primitive": "choice",
+      "trigger": "agent request",
+      "questions": [
+        "entity_scope",
+        "claim_posture",
+        "obligation_status",
+        "cash_access",
+        "activity_status",
+        "offset_status"
+      ],
+      "selection": "entity_scope and claim_posture always; plus the status question matching the claim's declared subject kind"
+    },
+    "finding_check": {
+      "primitive": "choice",
+      "trigger": "host, on every proposed finding",
+      "questions": [
+        "finding_support",
+        "finding_atomicity",
+        "context_sufficiency",
+        "economic_role"
+      ]
+    },
+    "statement_relation": {
+      "primitive": "choice",
+      "trigger": "agent request; host on possible baseline overlap",
+      "questions": [
+        "statement_relation",
+        "baseline_overlap"
+      ]
+    },
+    "snapshot_sweep": {
+      "primitive": "noul+choice",
+      "trigger": "host, once per snapshot before investigation: every section, then every paragraph and table row of the flagged sections",
+      "questions": [
+        "matter_inventory",
+        "matter_kind"
+      ]
+    },
+    "statement_support": {
+      "primitive": "choice",
+      "trigger": "host, on every effect consequence and on the conclusion",
+      "questions": [
+        "claims_supported"
+      ]
+    },
+    "inventory_coverage": {
+      "primitive": "choice",
+      "trigger": "host, at submission, on every paragraph or table row an accepted finding cites",
+      "questions": [
+        "coverage_supported"
+      ]
+    },
+"""Host-owned judgment profiles: which questions to ask, built from which minimal state.
+
+The agent names a profile and object IDs; this module resolves those objects from the run and the
+admissible snapshot, builds the smallest state that answers the question, asks Jev, and records the
+call and its observations in the run's investigation graph. The agent never supplies raw state or
+question IDs, and nothing outside the snapshot and the run can enter a Jev state.
+
+Profiles (registry v3): candidate_screen (host, every search result), claim_interpretation (agent),
+finding_check (host, every proposed finding), statement_relation (agent; host for baseline overlap).
+"""
+
+from __future__ import annotations
+
+import asyncio
+import re
+
+from app.agent.jev import NOUL_THRESHOLD, JevAdapter, JevBudgetExceeded
+from app.agent.run_store import RunStore
+from app.config import question_registry
+from app.domain.investigation import (
+    AtomicFinding,
+    CandidateScreen,
+    DecisionDependency,
+    EvidenceCandidate,
+    SemanticObservation,
+)
+from app.evidence.store import EvidenceStore
+
+# Code-owned routing thresholds on Noul values (checked against evals/jev_semantic_cases.json).
+RELEVANT = USABLE = CONFLICT = INSTRUCTION = NOUL_THRESHOLD
+# A Choice answer whose top two options are closer than this is ambiguous: read more context or
+# reconcile; never accept it as settled. (Judgment ambiguity, not an event probability.)
+AMBIGUITY_MARGIN = 0.25
+ROUTE_ORDER = {"direct_evidence": 0, "conflict": 1, "unscreened": 2, "context_only": 3, "instruction_flagged": 4}
+PASSAGE_CHARS = 12_000
+STATUS_QUESTION = {"obligation": "obligation_status", "cash_pool": "cash_access", "activity": "activity_status",
+                   "offset": "offset_status"}
+
+
+def profile_questions(profile: str) -> list[str]:
+    return list(question_registry()["profiles"][profile]["questions"])
+
+
+def excerpt(text: str, anchor: str | None = None, limit: int = PASSAGE_CHARS) -> str:
+    """Keep a long section within the state budget, centred on the anchor text when one is given."""
+    if len(text) <= limit:
+        return text
+    at = text.find(anchor) if anchor else -1
+    start = max(0, min(len(text) - limit, (at if at >= 0 else 0) - limit // 3))
+    return ("… " if start else "") + text[start:start + limit] + (" …" if start + limit < len(text) else "")
+
+
+def route(signals: dict[str, float]) -> str:
+    """Order-only routing. A missing signal is unscreened, never silently context-only."""
+    if any(signals.get(q) is None for q in ("gap_relevance", "usable_evidence", "premise_conflict")):
+        return "unscreened"
+    if signals.get("instruction_like_text", 0) >= INSTRUCTION:
+        return "instruction_flagged"  # still shown, ranked last
+    relevant = signals["gap_relevance"] >= RELEVANT
+    if relevant and signals["premise_conflict"] >= CONFLICT:

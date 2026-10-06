@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && python3 ~/.hermes/profiles/connor/cache/scratch/split/lazy_attrs.py app/analysis/events.py; git show 0c5db3079700afe1b9a1b21884fb9dcabdc75441:app/analysis/events.py > /tmp/ev_oct2.py && python3 ~/.hermes/profiles/connor/cache/scratch/split/lazy_attrs.py /tmp/ev_oct2.py", "timeout": 30}

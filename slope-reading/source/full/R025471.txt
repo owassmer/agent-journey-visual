@@ -1,0 +1,7 @@
+71:        "initial_event_seed": ("As of 13 August 2024, assess a proposed incremental working-capital draw for Synergy CHC. "
+72-                               "Reconcile existing merchant financing and supplier-settlement obligations. Compare the requested "
+73-                               "structure with permitted alternatives and identify the binding cash requirements. Synergy's public "
+74-                               "filings describe litigation with a former contract manufacturer."),
+75-    },
+wrote cases/synergy_20240813/run_inputs.json
+34:    "initial_event_seed": "As of 13 August 2024, assess a proposed incremental working-capital draw for Synergy CHC. Reconcile existing merchant financing and supplier-settlement obligations. Compare the requested structure with permitted alternatives and identify the binding cash requirements. Synergy's public filings describe litigation with a former contract manufacturer."

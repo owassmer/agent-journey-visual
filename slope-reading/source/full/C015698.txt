@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"OPENBLAS_NUM_THREADS=1 .venv/bin/python - <<'PY'\nimport sys\nsys.path.insert(0,'tests')\nimport test_notes_decision as f\nfc,d,w,k=f.case.__wrapped__();classes=fc.verdict_classes(d);key=f.MERGE_STEPS[1][2];print('fixture verdict exists:',key in classes);print('actual branches:',list(classes))\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":700,"yield_time_ms":1000}));
+text(await tools.write_stdin({session_id:33503,chars:"","yield_time_ms":1000,"max_output_tokens":700}));

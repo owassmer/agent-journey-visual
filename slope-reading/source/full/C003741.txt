@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-docs && sed -n '/^## 16/,$p' Slope_Model_Extensions_Spec.md | grep -n -i \"raise equity\\|continue\\|one actor\\|damages class\\|scenario class\\|theory\" ; grep -n -i \"raise equity\\|keep going\\|continue\" cases/akoustis_20240514/scenario.json | cut -c1-240"}

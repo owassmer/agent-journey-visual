@@ -1,0 +1,290 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_845be11a]
+A background fan-out unit you dispatched earlier — 4 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-25 19:53:01 (21m11s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1271.77s
+
+--- ✓ TASK 1/4: Round 2 lead-case search, lane W1 (REVISIT): re-examine MusclePharm, Massimo Group, Tel-Instrument Electronics and Barfresh Food Technology under the relaxed public-record standard, and deliver verified, scored dossiers for each.  (status=completed, api_calls=64, 498.66s) ---
+I re-examined all four candidates using the state-court records and the companies' own filings. **Only Tel-Instrument passes the gate, and only with a later decision date of 11 Aug 2023.** Massimo and Barfresh fail criterion 8. MusclePharm passes on the letter but is still a weak demo. Notes are written as I went; the tool check found web search, page fetch, curl to EDGAR and the browser_mcp browser all working, but browser_exec failed (no CDP endpoint).
+
+## 1. Tel-Instrument (TIKK, CIK 96885): recommended D = 11 Aug 2023 — passes criterion 8
+- **Company:** avionics test-set maker. Revenue $8.63M (FY Mar 2023) and $8.81M (FY Mar 2024).
+- **Why this D:** it is the Q1 FY24 10-Q filing date, after the 21 Jul affirmance and before the 15 Sep payment. The 10-Q says TIC is "currently deciding whether to pay the full judgement amount or appeal the decision to the Kansas Supreme Court". Its own 26 Jul press release says it will pay in full, so the two statements conflict.
+- **Why not 16 Jun (round 1):** loan instalments from 16 Jun finish the day before the payment. From 11 Aug, instalments 2 and 3 (about 11 Oct and 10 Nov) land after cash fell to $356,942.
+- **Dispute:** Sedgwick County 09 CV 1141; Kansas Court of Appeals 119,563/119,564, affirmed 21 Jul 2023. At D the accrual was $6.43M, with a $2M supersedeas bond backed by restricted cash. Viavi (Aeroflex's parent) said on 8 Aug that it was "pursuing full payment".
+- **Record route:**
+  - Opened: the EDGAR filings (10-K, both 10-Qs, 8-Ks of 27 Jul and 18 Sep 2023) and the Court of Appeals opinion PDF.
+  - Could not open: the Kansas portal needs registration and a Cloudflare human check, which I did not bypass. Appellate documents filed before 13 Mar 2025 are not online and must be requested from the clerk, so the briefs are unavailable. Whether the Sedgwick trial documents are online is unverified.
+- **Liquidity at D:** $4.53M cash plus $2.01M restricted, against the $6.43M accrual. The Bank of America line is $690k, fully drawn, matured 30 Jul 2023 and in renewal.
+- **Criterion 8:**
+  - (a) pass: the only line is fully drawn and past maturity.
+  - (b) pass, conditional on the payment: about 5.5 months of cash before it, near zero after.
+  - (c) marginal pass: supplier invoices about $100–400k a month, and vendors demand deposits.
+  - (d) pass: the payment exceeds free cash.
+- **Channels beyond the courtroom:** bond collateral, the secured line in renewal, a competitor counterparty, post-judgment interest, and supplier terms.
+- **Loan size:** $250–400k.
+- **After D:**
+  - 15 Sep 2023: no petition for review; TIC paid $6,559,233 and raised $721k of preferred stock that day.
+  - 30 Sep 2023: cash was $356,942 and accounts payable had doubled to $608k.
+  - 31 Mar 2024: cash was $132k, with vendors off normal terms until a Navy payment.
+- **Scores:** 1 / 1 / 1 / 2 / 2 / 2 / 1 / gate pass = **12/16**.
+  - Criterion 2 drops to 1 because the merits were decided before D.
+  - Revenue under $10M only limits the loan size in substance; purchase volumes are in Slope's range.
+- **Risk:** very low fame, so recall risk is low.
+
+## 2. Massimo Group (MAMO, CIK 1952853) — fails criterion 8 at every D
+- **Appeal found:** Dallas Fifth Court of Appeals 05-24-00935-CV (https://search.txcourts.gov/Case.aspx?cn=05-24-00935-CV&coa=coa05). All briefs and orders are free PDFs.
+- **Outcome:** affirmed by memorandum opinion on **10 Aug 2026**. The rehearing deadline was extended to 26 Oct 2026 over Nebula's opposition, so it is still live.
+- **Bond:** the docketing statement shows a **supersedeas bond filed 7 Aug 2024**, which corrects round 1's "no supersedeas". Its collateral is not disclosed anywhere.
+- **Why the gate still fails:**
+  - The $15M Cathay Bank line at prime + 0.75% was undrawn from 2024 through 2025.
+  - From June 2026 there is also an undrawn $4M line from the controlling shareholder at 4%.
+  - Cash was $4.6M at 30 Jun 2026, and management says operations are funded for 12 months.
+- **Best D = 14 Aug 2025:** the court outcome falls within 12 months, but the payment outcome is still unknown. Scores total 13/16 with the gate failing.
+
+## 3. MusclePharm (MSLP, CIK 1415684) — passes on the letter, weak demo
+- **Maricopa docket CV2016-000113 is free:** https://www.superiorcourt.maricopa.gov/docket/CivilCourtCases/caseInfo.asp?caseNumber=CV2016-000113. It shows a dated 2022 sequence:
+  - 1 Jun 2022: ThermoLife moved to release the supersedeas bonds (Atlantic Specialty and SureTec).
+  - June 2022: ThermoLife's former counsel moved to intervene with a fee claim; the mandate issued.
+  - **21 Jul 2022:** the court barred direct payment to ThermoLife; payment must go to the Clerk.
+  - 6 Feb 2023: amended judgment.
+- **Allegheny (Bakery Barn):** not reached. Name search needs a login, case search needs the docket number plus a captcha, and I could not find the docket number anywhere free.
+- **Decision dates tested (Aug 2021, Nov 2021, May 2022, Jul 2022):**
+  - Cash was $0.4–1.2M against about $4M a month of cost of goods, so it is "too collapsing" at every D.
+  - The only D where a loan is impaired (12 Jul 2022) is impaired by lender events (restatement, the Empery sweep), not the disputes.
+- **Scores:** 15/16 on the letter, with criterion 3 raised to 2, but practically a weak demo.
+
+## 4. Barfresh (BRFH) — fails the gate
+- **Dispute:** the manufacturer is **Schreiber Foods**. The state case is in **Orange County Superior Court** (not LA), filed 21 Aug 2023. The case number is masked on UniCourt and unverified.
+- **Counterclaim:** Schreiber is listed as cross-complainant. The amount is unverified, most likely the $499k Barfresh withheld.
+- **Why it fails:**
+  - Trial is set for **April 2027**, so criterion 6 = 0.
+  - Barfresh is the plaintiff and its litigation is funded non-recourse, so criterion 8(d) fails.
+  - A $1.5M receivables line at about 9.2% had $1.4M available, so 8(a) is partial.
+- **Total:** 8/16. I could not reach the OC court portal (the URL I tried returned a 404).
+
+## One-line rejections
+- **Massimo:** cheap undrawn bank and insider credit at every D; the payment outcome is still unknown.
+- **Barfresh:** plaintiff-side, litigation-funded, no outcome until 2027.
+- **MusclePharm (as lead):** collapsing at every D, and the failure ran through the lender, not the disputes.
+
+## Unverified
+- The Sedgwick County and Kansas appellate documents.
+- The Allegheny docket number and docket.
+- Massimo's bond collateral.
+- The OC case number and the cross-complaint amount.
+- The sealed Maricopa filings.
+
+Downloaded PDFs and extracts are in the scratch directory only.
+
+Files are in `/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/case_search/round2/`:
+- `toolcheck_W1.md`
+- `notes_tikk.md`
+- `notes_massimo.md`
+- `notes_musclepharm.md`
+- `notes_barfresh.md`
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_845be11a/task-0.log
+
+--- ✓ TASK 2/4: Round 2 lead-case search, lane W2 (ARBITRATION AND VENUE-REJECTED): re-examine candidates round 1 rejected for arbitration or record-access reasons, and sweep for disclosed arbitration awards/settlements against Slope-scale consumer and light-manufacturing companies; deliver verified, scored dossiers.  (status=completed, api_calls=49, 639.88s) ---
+Lane W2 produced one new candidate. Charles & Colvard v. Wolfspeed scores 15/16 but only partly passes criterion 8: its JPMorgan line still had $2.7M undrawn at about 6%. Jones Soda stays rejected, and the EDGAR sweep found nothing new that is viable.
+
+**Tools:** web search and curl to EDGAR and CourtListener worked. `web_extract` failed on sec.gov and the browser had no CDP endpoint, so I couldn't reach any state portal. Details are in `toolcheck_W2.md`.
+
+## Charles & Colvard (CTHR, CIK 1015155) v. Wolfspeed: revived from round 1's arbitration rejection
+- **Company:** moissanite gemstones and finished jewelry. FY ended June 2024 revenue was about $22.5M ([8-K, 1 Oct 2024](https://www.sec.gov/Archives/edgar/data/1015155/000110465924104971/tm2425308d2_8k.htm)).
+- **Proposed D: 18 Nov 2024.** The hearing (30 Sep–2 Oct) was over and the award had not come out; it arrived 5 Dec, 17 days later. The line matured 31 Jan 2025 and Nasdaq late-filing notices were running.
+- **Dispute:** AAA arbitration under a 2014 exclusive supply agreement. Wolfspeed was the sole supplier of silicon carbide, the core raw material. Its claims:
+  - $4.25M for the FY2023 minimum-purchase shortfall;
+  - $3.30M for crystals delivered but unpaid;
+  - $18.5M for anticipatory breach of the remaining purchase obligations;
+  - interest and fees on top. The company's press release put the total sought at more than $28M.
+- **Record route:** all key facts come from the company's own filings:
+  - the [Q3 FY24 10-Q](https://www.sec.gov/Archives/edgar/data/1015155/000114036124024560/ef20026281_10q.htm) gives the claims by head and the hearing date;
+  - the [NT 10-K](https://www.sec.gov/Archives/edgar/data/1015155/000110465924104965/tm2425308d1_nt10k.htm) and the [NT 10-Q](https://www.sec.gov/Archives/edgar/data/1015155/000110465924119736/tm2428546d1_nt10q.htm) say the arbitration is delaying the filings, and the NT 10-Q expects going-concern doubt;
+  - the [award 8-K](https://www.sec.gov/Archives/edgar/data/1015155/000110465924127622/tm2430786-1_8k.htm) and the [settlement exhibit](https://www.sec.gov/Archives/edgar/data/1015155/000114036125028626/ef20051325_ex10-1.htm) give the outcome and fee petition.
+  - The demand, briefs and the award document itself are confidential. No court petition to confirm or vacate the award exists.
+- **Liquidity at D** (bank-data view, from balance sheets filed later): unrestricted cash was $2.74M at 30 Sep 2024 and $1.52M at 31 Dec. Restricted cash of $5.33M was pledged to the $5M JPMorgan line, which had $2.3M drawn and was renewed only three months at a time. Net burn was about $1.3M a quarter. The S-3 shelf had expired and Nasdaq deficiencies were open.
+- **Criterion 8:**
+  - **(a) Partial.** The only facility is the cash-collateralised JPMorgan line, with a default clause for material adverse change or anything that "may impair the prospect of repayment". But $2.7M of it sat nominally undrawn at SOFR+1.35%, and the company never drew it, even at $1.5M of cash. I couldn't verify why.
+  - **(b) Pass.** Going-concern doubt, and about 1–1.5 months of gross outflows (my estimate). No default had been declared, so it is stressed rather than collapsing.
+  - **(c) Pass, estimated.** Gold and contract jewelry-assembly invoices, with payables of $7.4–8.6M. Payables rose $3.5M during FY24, so it was stretching vendors.
+  - **(d) Pass.** More than $26M claimed against $2.7M of cash. Even the realised $4.77M was 1.7× cash.
+- **Channels beyond the courtroom:**
+  - the counterparty is the sole supplier;
+  - the short-renewal line with its adverse-change default;
+  - the arbitration itself delayed the 10-K and 10-Q, which led to the Nasdaq notices and cut off equity access;
+  - FY24 legal fees rose $680k (only partly the arbitration);
+  - going concern depends on "evaluating financing arrangements".
+- **Plausible Slope loan:** $0.5–1M.
+- **After D:**
+  - 5 Dec 2024: interim award of $3.3M. The $18.5M expectation claim was rejected.
+  - 10 Feb 2025: settlement of $4.77M, payable $0.5M on 10 Feb, $1.83M by 28 Feb and $2.44M by 31 Dec 2025, with a lien on the company's assets.
+  - The restricted cash went to repay the JPMorgan line.
+  - Apr 2025: delisted from Nasdaq. Jun 2025: $2M convertible from Ethara, subordinated to Wolfspeed. Nov 2025: Ethara default notice.
+  - 2 Mar 2026: Chapter 11 in E.D.N.C., case 26-00969. The sale order preserves Wolfspeed's first-priority lien, which suggests the December balloon was never paid (my inference, not checked against a claims register).
+  - A three-instalment loan from D would have its third payment around 16 Feb 2025, which collides with the $2.33M settlement payments due that month.
+- **Scores:**
+
+```
+1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | Total     | Gate 8 
+--+---+---+---+---+---+---+---+-----------+--------
+2 | 2 | 2 | 2 | 2 | 2 | 2 | 1 | **15/16** | partial
+```
+
+- **Risks:** the undrawn JPMorgan headroom is the obvious objection, the same failure type as Massimo but milder. Recall risk is low to moderate (small cap, local business press). The award document itself is not public.
+
+## Rejections (one line each)
+- **Jones Soda / Core Manufacturing:** 10/16. The public record is only the $7.22M break-up-fee claim, "early stages" and the counterclaim types. The Feb 2025 settlement is confidential; a $135k accrual suggests it was small, but that is my inference. The related W.D. Mich. case has no free RECAP documents. See `notes_jones_soda.md`.
+- **Reed's / California Custom Beverage (co-packer):** amounts never disclosed and the company calls a loss "remote".
+- **Pacific Ventures, Restaurant.com, Greenlane:** awards or claims under $0.35M.
+- **Applied UV:** a $0.6M award to a former executive, not a trade partner.
+- **Aterian:** an earn-out dispute that went to an independent accountant, which ruled in the company's favour; not a trade partner.
+- **TechPrecision:** only an employee/PAGA matter.
+- **Upexi:** it was the creditor in the Bloomios matter, then pivoted in 2025; not pursued.
+- **Kaspien, Real Good Food:** round 1 rejected these on substance, so I didn't redo them.
+- **8-K "arbitration award" sweep:** 80 consumer filers; Algorhythm (Singing Machine), Borealis, Dragonfly, Solesence, Energy Focus, Connexa, TechPrecision and Forward were all contract boilerplate, not disclosed awards.
+
+**Unverified:** the Charles & Colvard monthly purchase figure and gross outflows are estimates. So is the Wolfspeed non-payment; I haven't checked the claims register. The same goes for the Jones Soda settlement amount.
+
+Files are in `round2/`:
+- `toolcheck_W2.md`
+- `notes_charles_colvard.md`
+- `notes_jones_soda.md`
+- `notes_W2_sweep.md`
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_845be11a/task-1.log
+
+--- ✓ TASK 3/4: Round 2 lead-case search, lane W3 (STATE COMMERCIAL COURTS): sweep easy-to-search state commercial/business courts for Slope-scale consumer-goods and light-manufacturing public companies fighting their trade partners, and deliver verified, scored dossiers for the best 1-4 candidates.  (status=completed, api_calls=47, 599.37s) ---
+No case in the state-commercial-court lane passes all eight criteria. The one real candidate, Nanophase Technologies (a supplier being sued by its biggest customer, BASF), scores 11/16 and only partly passes the criterion-8 gate. It works better as a "dispute that ends without any cash changing hands" control case than as a lead.
+
+**Tool check (`toolcheck_W3.md`):**
+- Web search, page extract and shell curl to EDGAR full-text search all work (the test query returned HTTP 200 with 799 hits).
+- The Browser Use CLI fails because it gets no browser connection. The browser extension works instead.
+- NYSCEF's search page loads, but it shows an hCaptcha.
+- New Jersey's civil docket portal needs a login.
+
+## Candidate: Nanophase Technologies (NANX, now Solésence, SLSN), CIK 883107
+- **Company:** makes zinc-oxide skin-care ingredients and, through Solésence, contract-manufactures finished skin-care and sunscreen products for beauty brands. Revenue $37.3M in both 2022 and 2023. BASF was about 30% of revenue in 2023.
+- **Proposed D: 14 Nov 2023,** the day the Q3 10-Q was filed. Discovery was ongoing. The parties signed binding settlement memoranda on 27 Nov 2023, which only became public in April 2024, so D must fall before 27 Nov.
+- **Dispute:** *BASF Corp. v. Nanophase*, N.J. Superior Court, Morris County, MRS-L-1396-22, filed 9 Aug 2022.
+  - BASF claims Nanophase broke the exclusivity, capacity and inventory terms of their 1999 zinc-oxide supply agreement.
+  - It seeks unspecified damages and a permanent injunction against Nanophase's sales of its own zinc-oxide products.
+  - Nanophase counterclaimed. It also filed a declaratory-judgment case in Cook County, which was dismissed on 16 Mar 2023 as a duplicate.
+  - Rulings so far: Nanophase's motion to dismiss denied 10 Feb 2023; BASF's motion to dismiss the counterclaims split 6 Oct 2023. Nothing is accrued.
+- **Record route:**
+  - Opened on EDGAR: the 10-Qs Q1 2022–Q3 2025, the 10-Ks FY2021–FY2025, and the settlement agreement (Ex. 99.2 of the 11 Apr 2024 8-K, which gives the docket number).
+  - Could not open: the NJ docket (login wall). I found no published opinion. Pre-D evidence is therefore the company's own SEC narrative, which does give ruling dates and holdings.
+- **Liquidity at 30 Sep 2023:**
+  - Cash $1.19M, accounts payable $6.27M, quarterly cost of revenue $6.43M. No going-concern doubt, but the auditor flagged going concern as a critical audit matter.
+  - All working-capital credit comes from the majority holder's affiliates (Beachcorp and Strandler) at prime + 0.75%, about 9.25%:
+    - a receivables revolver up to $8M;
+    - an inventory line raised to $5.2M on 13 Nov 2023;
+    - a new $2M bridge note;
+    - $6.34M was drawn.
+- **Criterion 8:**
+  - **(a) 1:** there is no bank revolver, but insider credit is cheap and was just expanded.
+  - **(b) 2:** cash is about two weeks of gross outflows.
+  - **(c) 2:** purchases run about $2M a month on invoice.
+  - **(d) 0–1:** the exposure was never quantified, and no dated cash event was likely within 180 days.
+- **Channels beyond the courtroom:** the counterparty is the key customer and exclusive buyer; the requested injunction would hit the Solésence growth business; legal costs visibly raised SG&A in 2023; and the company depends on insider lines maturing 31 Mar 2024.
+- **Plausible Slope loan:** about $0.5–1M against raw-material and packaging invoices.
+- **After D:**
+  - 1 Mar 2024: Strandler bought $6M of preferred stock.
+  - 10 Apr 2024: settlement plus Amendment No. 5 to the supply agreement. **No payment either way.** The case was dismissed with prejudice on 11 Apr 2024.
+  - Cash was $2.02M at 31 Mar 2024. A Slope loan made at D would have been repaid.
+- **Scores:** 1=2, 2=1, 3=1, 4=1, 5=2, 6=2, 7=1, 8=1 → **11/16.**
+- **Risks:** low fame (OTC, niche), so little recall risk. Weak on 8(a) and 8(d) because the outcome was non-monetary and the lender is an insider.
+- **Unverified:** borrowing-base headroom of about $1.4M at D is my own estimate.
+
+## Rejected (one line each)
+- **ToughBuilt:** only a landlord suit at D ($375k accrued); cash $1.8M against $41M payables, so already collapsing; no filings through 2024.
+- **Singing Machine / Algorhythm:** a NY lease suit settled for $250k.
+- **Applied UV:** no legal proceedings disclosed.
+- **Aterian:** the NY case is an investor dispute.
+- **Minim:** the NY case is a restraining order against Nasdaq delisting.
+- **Neptune Wellness:** an arbitration award to a former seller, not a trade partner; collapsing.
+- **Youngevity, Cosmos, CV Sciences, Connexa, Samsara, Synergy CHC, Heritage Distilling, Edible Garden:** no live trade-partner state-court dispute in the filings I read.
+- **Tandy Leather, Dixie Group, biote:** false hits ("Commercial Division" is a business segment at Tandy and Dixie; biote's hit is a forum clause).
+- **Safety Shot, Life On Earth, Rocky Mountain High, Veroni Brands, Nutriband:** revenue far below $10M; not examined in depth.
+
+## Why the lane came up dry
+- Across 2021–2025 10-Qs and 10-Ks, "co-packer" and "co-manufacturer" never appear alongside any business-court name.
+- Filings that do name a business court belong to large companies or are false hits.
+- Searching court opinions first turned up only private-company disputes.
+
+The filing-first search that uses generic court names ("Supreme Court of the State of New York", "Superior Court of New Jersey") is the more productive route; I ran it only partly within the time budget.
+
+Files are in `round2/`:
+- `toolcheck_W3.md`
+- `notes_nanophase.md`
+- `sweep_W3.md` (queries and rejections)
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_845be11a/task-2.log
+
+--- ✓ TASK 4/4: Round 2 lead-case search, lane W4 (STATE-COURT WORDING + DISTRESS-FIRST): run EDGAR full-text sweeps for state-court trade-partner disputes at distressed Slope-scale consumer and light-manufacturing companies, fully funded this time, and deliver verified, scored dossiers for the best 1-4 candidates.  (status=completed, api_calls=49, 1271.04s) ---
+# W4 final report: no candidate passes
+
+The filing-first sweep found no candidate that passes all eight criteria, even with the target widened to light manufacturers and distributors. I have no dossier to put forward. The sweep kept surfacing one of two shapes:
+
+- **The borrower fits, but there is no material dispute.** Coffee Holding is the clearest example.
+- **There is a trade dispute, but the borrower is collapsing, the dispute is immaterial, or the borrower is unfundable.** Yunhong CTI, JanOne and Unrivaled Brands fall here.
+
+## What I ran
+- **Tool check** (`toolcheck_W4.md`):
+  - Shell curl to EDGAR full-text search works.
+  - Web search works.
+  - `web_extract` fails.
+  - The Browser Use CLI fails; the browser_mcp Chrome extension can navigate.
+- **558 EDGAR full-text queries**, 40,056 hit rows, about 1,800 distinct filers, 10-Q and 10-K forms, 2021-01-01 to 2025-09-30.
+  - Every combination of state court × trade partner × distress wording: 360 of 360 queries.
+  - State court × trade partner × cash-event wording: 184 of 480, stopped when you said to stop sweeping.
+  - 14 targeted queries: writ of attachment, supersedeas, appeal bond, confession of judgment, arbitration award.
+- **Re-ranking:** after your industry-code fix, the skip list and a $500M revenue cap, 220 consumer-SIC filers remained, plus a separate light-manufacturing and distribution pass.
+- **Filing reads:** about 20 companies' legal-proceedings and liquidity text, straight from EDGAR.
+
+## Closest candidates
+1. **Coffee Holding (JVA, CIK 1007019)**, a wholesale coffee roaster: the best borrower shape, but it fails criteria 2 and 4. At 31 Oct 2023:
+   - Cash was $2.73M, $9.62M was drawn on the Webster line, a covenant had been breached with no waiver, the line matured on 30 Jun 2024, and the auditor gave a going-concern opinion. That is a clean pass on 8(a) and 8(b).
+   - Item 3 says "not currently a party to any material legal proceedings." The only live matter is a customer indemnity for a federal labelling class action.
+   - Revenue is unverified.
+   - Source: https://www.sec.gov/Archives/edgar/data/1007019/000149315224005726/form10-k.htm
+2. **Yunhong CTI (YHGJ, CIK 1042187)**, a foil-balloon manufacturer with $24M revenue:
+   - At 30 Jun 2021 it had cash of $273k, was in forbearance with PNC ($1M forbearance fee, Walmart receivables made ineligible), and carried going-concern doubt.
+   - Its disputes are vendor collection suits of $98k and $164k, plus an underwriter suit in federal court.
+   - It fails criterion 4, and it is already collapsing, so bank data alone would decline it.
+
+## One-line rejections (details in `notes_W4_screened.md`)
+- **Unrivaled Brands:** the *Fusion LLF* trade-creditor suit (at least $4.55M, writ of attachment sought and denied, then settled) is a real fight, but the company is a cannabis operator and not Slope-fundable.
+- **JanOne:** the Skybridge vendor judgment dates from 2021, cash was $115k, and the company pivoted to pharma.
+- **Eastside Distilling:** a $245k vendor claim, settled.
+- **Innovative Food Holdings:** a Philadelphia Common Pleas case, settled January 2024. Not a trade dispute; I did not confirm its nature.
+- **Maison Solutions, Venus Concept, ADOMANI/Envirotech:** securities suits only.
+- **TechPrecision:** a PAGA wage case only.
+- **Vystar:** a convertible-note lender dispute in federal court.
+- **Sientra:** product liability; also a medical-device maker.
+- **Smart for Life, BranchOut Food, ThermoGenesis, Kewaunee:** the hits were only forum clauses, board biographies or credit-agreement boilerplate.
+
+## What I did not verify
+- Coffee Holding's revenue and anything after its FY2023 10-K.
+- The later history of Yunhong CTI.
+- The details of the Unrivaled Brands case.
+- I opened no state portal for any of these, because none reached dossier stage.
+
+## Observations for the coordinator
+- **The phrase sweep mostly surfaces boilerplate.** Queries built on "supplier" plus "going concern" plus a court name are dominated by exclusive-forum clauses and credit-agreement exhibits.
+- **Specific filing wording looked sharper, but I tested it only briefly.** Phrases such as "right to attach order", "writ of attachment", "unpaid invoices" or "confession of judgment" near a docket number are more likely to find live trade-creditor fights. The "right to attach order" query returned only 17 hits.
+- **Suggested next step: search 8-Ks rather than 10-Qs,** because settlement and forbearance agreements are filed as 8-K exhibits. I did not run this.
+- **The cash-event family is 296 queries short,** but it can resume from the local query log without repeating finished queries.
+
+## Files
+All in `round2/`:
+- `toolcheck_W4.md`
+- `sweep_W4.md`
+- `notes_coffee_holding.md`
+- `notes_yunhong_cti.md`
+- `notes_W4_screened.md`
+
+Scripts and raw hits are in `~/.hermes/profiles/connor/cache/scratch/w4/`. Background sweeps are stopped, and nothing was written to any git repository.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_845be11a/task-3.log
+Child's process proc_b33be49cf551 `cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/w4 && python3 sweep.py distress > distre` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

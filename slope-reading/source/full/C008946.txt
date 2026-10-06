@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 18000}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat app/finance/settlements.py app/finance/streams.py app/finance/thresholds.py app/finance/fixed_installment.py app/finance/valuation.py app/finance/calendar.py app/finance/reference_check.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:8300}),
+tools.exec_command({cmd:"sed -n '264,360p' /tmp/slope-grounding-1ebb1026/reviews-06.txt && sed -n '1,85p' /tmp/slope-grounding-1ebb1026/reviews-07.txt && sed -n '190,340p' /tmp/slope-grounding-1ebb1026/reviews-07.txt",max_output_tokens:9000})
+]);results.forEach((r,i)=>text({i,...r}));

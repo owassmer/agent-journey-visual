@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && git worktree remove --force .claude/worktrees/sweep-replay; ~/.hermes/profiles/connor/scripts/wait_job ~/.hermes/profiles/connor/cache/scratch/6f_log/analyze.log 380 | grep -v \"npmrc\\|nvm use\\|globalconfig\" | tail -6; df -h / | tail -1", "timeout": 400}

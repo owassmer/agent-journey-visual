@@ -1,0 +1,5 @@
+const results=await Promise.allSettled([
+  tools.web__run({search_query:[{q:'TypeSafe Jev Noul Score probability decision examples community github'},{q:'Jev TypeSafe real world use cases forecasting finance probabilities'}],response_length:"long"}),
+  tools.exec_command({cmd:"rg -n 'https?://|probabil|weight|Score|Noul|calibrat|atomic' Jev_Pivot.md",max_output_tokens:7000,workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events"}),
+  tools.exec_command({cmd:"rg -n 'probabil|argmax|max\\(|threshold|record_points|points_to|worst|expected|policy_checks|factor|level' app/disputes/evaluate.py app/agent/jev_profiles.py app/decisions/scenarios.py app/finance/bank.py",max_output_tokens:6500,workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model"})
+]);results.forEach((r,i)=>text({i,...r}));

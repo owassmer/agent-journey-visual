@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/memo/smoke.py", "old_string": "for steps, _edges, _outcome in ref[\"paths\"][:N]:", "new_string": "START = int(os.environ.get(\"START\", \"0\"))\nstays = 0\nfor steps, _edges, _outcome in ref[\"paths\"][START:START + N]:\n    stays += any(s[0] == \"stay\" for s in steps)"}

@@ -1,0 +1,1 @@
+{"command": "python3 -c \"\nimport json; m=json.load(open('Slope_Credit_Scenario_Research_and_Design_Kit/PACKAGE_MANIFEST.json'))\nprint([k for k in m if k!='files']); print(json.dumps(m['files'][:2],indent=1)); print(len(m['files']))\nprint([f for f in m['files'] if 'recent_cases/synergy' in f['path']][:1])\""}

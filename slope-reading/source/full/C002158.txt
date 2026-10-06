@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -rln \"recall\" app tests cases CLAUDE.md Slope_Model_Extensions_Spec.md Slope_Coding_Agent_Context_and_Alignment.md --include=* 2>/dev/null | grep -v __pycache__; echo; grep -rn \"recall\" app --include=*.py --include=*.js --include=*.html | grep -v \"^app/disputes/recall.py\" | cut -c1-160"}

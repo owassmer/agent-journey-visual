@@ -1,0 +1,1 @@
+{"command": "D=~/.hermes/profiles/connor/cache/scratch/split/joins-cancel; for p in 0 4; do echo \"=================== partition $p\"; f=$(ls $D/join-check-*/out/log-$p.txt $D/join-check-*/log-$p.txt 2>/dev/null | grep -E \"join-check-(9|10)/\" | head -1); grep -v \"merge checks agree\" $f | cut -c1-260; done", "timeout": 30}

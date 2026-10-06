@@ -1,0 +1,18 @@
+648:def _disputes(ctx: RunContext) -> list[dict]:
+649-    """Escalated items and effects, open for the reviewer. Those that leave a matter or a cash effect unresolved block."""
+650-    out = []
+651-    for i in ctx.run.graph["inventory"].values():
+652-        if i.status == "disputed":
+653-            out.append({"id": i.item_id, "kind": i.kind, "blocking": i.kind in BLOCKING_KINDS,
+654-                        "reason": f"disputed inventory item {i.item_id} ({i.kind.replace('_', ' ')}): {i.note}"})
+655-    for e in ctx.run.graph["effects"].values():
+656-        if e.status == "disputed":
+657-            out.append({"id": e.effect_id, "kind": e.mechanism, "blocking": e.mechanism not in CASH_FREE_MECHANISMS,
+658-                        "reason": f"disputed effect {e.effect_id} ({e.mechanism.replace('_', ' ')}): {e.dispute}"})
+659-    return out
+660-
+661-
+662-# --- 4c host checks --------------------------------------------------------------------------------
+app/agent/investigation.py:72:  An escalated legal, settlement, debt, covenant, cash-restriction or accounting item leaves the review incomplete.
+331:      "escalated_matter_inventory_item_or_cash_moving_effect_dispute": "INCOMPLETE_REVIEW"
+354:    assert any("disputed inventory item inv_001" in r for r in ctx.incomplete_reasons)  # a matter kind: INCOMPLETE_REVIEW

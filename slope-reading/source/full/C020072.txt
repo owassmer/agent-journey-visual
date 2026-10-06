@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"PYTHONDONTWRITEBYTECODE=1 .venv/bin/ruff check tools/question_refresh.py tools/question_refresh_assemble.py tests/test_question_refresh.py; git diff --check","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}));
+text(await tools.write_stdin({session_id:21031,chars:"",yield_time_ms:1000,max_output_tokens:1500}));

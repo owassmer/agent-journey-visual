@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && sqlite3 state.db \"select id, length(content) from system_prompts limit 3\" 2>/dev/null; sqlite3 state.db \".schema system_prompts\"; sqlite3 state.db \"select system_prompt_hash from sessions where id in ('20260928_172908_0aef31','20260929_020301_63c14b')\""}

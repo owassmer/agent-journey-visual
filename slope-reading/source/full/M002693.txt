@@ -1,0 +1,36 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_50393f7f]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 03:30:53 (12m44s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 764.19s
+
+--- ✓ TASK 1/1: Page reviewer for the 14 May analysis page of owassmer/Slope_Sparse_Events, branch step-8-page pinned at 595e8db (worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-page; a viewer is already serving it at http://127.0.0.1:8012/runs/akoustis_20240514-agent_plus_jev-20260928T052641Z). Review read-only and write one findings report to ~/.hermes/profiles/connor/cache/scratch/8/page_review.md; report its path and a short summary. Do not edit the repo, commit, or stop the viewer.  (status=completed, api_calls=41, 763.96s) ---
+I've written the review to `~/.hermes/profiles/connor/cache/scratch/8/page_review.md`. The page reads top to bottom as the approved chain and every figure I checked is right, but it has 8 must-fix wording and labelling defects. Most of the fixes are small edits to words, labels or case inputs. M6 (the assumption notes) needs a new plain-language note per assumption in the case inputs, and M7 (the override label) needs a one-line change in `page.js`. No redesign is needed.
+
+**Must-fix**
+1. **Key figures (section 2):** Due minus Collected is $90k, but Past due shows $9k. The other $81k is due but frozen by a filing, and no visible figure shows it. Balance at filing ($96k) and Preference exposure are averages over all outcomes, and that's only said in hover tooltips. Given a filing, the balance is about $360k.
+2. **"Lawsuit given no cash effect" still includes the lawsuit's current legal costs.** In the full forecast those costs stop at a settlement, so "Settles before the verdict" (3% filing, $952k collected) looks better than the no-lawsuit reading (5%, $948k). A quantitative reader will take that as an error.
+3. **"Most likely next" percentages are shares of that outcome, and the page doesn't say so.** The same filing event shows as 16% in the table and 5% in the path tree.
+4. **The traced question's answer doesn't connect to section 3.** Its answer is labelled "principal measure", while section 3 says "Jury adopts Qorvo's damages theory". Question 1(a) is never explained (it's the trade-secret liability finding). "(never the amount)" is scoping text meant for Jev, and CSS capitalisation turns "1(b)" into "1(B)".
+5. **"Chosen because settling it…" misleads.** On a lawsuit page, "settling" reads as the legal settlement.
+6. **The assumption section shows internal authoring notes.** Readers see "Owen, O1 (27 Sep 2026)", "J1", "spec §16.3", docket paragraph references and "the agent's record". The compared label, "The lower verdict branch at $9,999,999", also doesn't state its central value ($1.4M).
+7. **After you drag the slider, the effect table calls your override "Jev".** Its middle column reads "Jev 0%" when Jev said 62%, which blurs the judgment-versus-override distinction the completion test depends on.
+8. **The path tree says "Qorvo executes before the ruling".** That's a legal term; the rest of the page says "enforces".
+
+**Checked and correct**
+- All key figures match page.json and assumptions.json. I spot-checked four of the nine assumption switches. The no-lawsuit column changes with each assumption, as it should.
+- Due by 10 Nov, Not yet due and contractual amounts are kept apart, and the collection rate is collected ÷ due.
+- The verdict table re-weights to 27% and $823k. The outcome grid adds up to 27% filed and 73% not filed.
+- The damages-measure effect (12% / 36%) matches the saved sensitivity in the run's analysis.json, and moving the slider to 0% updates the page to match.
+- No public fact from after 14 May appears outside "What actually happened".
+- The plain wording matches DECOMPOSITION §5.2 and §7.12.
+- No chart text overlaps or is clipped (checked from the DOM), and there are no page errors. One 404 appeared on first load and didn't come back; it's probably the favicon, but I didn't confirm.
+
+About 15 minor points are listed as one-liners under NOTED in the report. The most notable: the monthly chart shows the P5–P95 range only on hover, where spec §16.7 asks for distributions. The defense position is labelled "claimed" in the Inputs. And `page.py` still contains old case-specific strings, none of which appear on this page.
+
+I didn't edit the repo or commit anything, and the viewer on 8012 is still running.
+
+Files are in `~/.hermes/profiles/connor/cache/scratch/8/`:
+- page_review.md
+- rv/ (page text dumps, screenshots and the check scripts)
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_50393f7f/task-0.log

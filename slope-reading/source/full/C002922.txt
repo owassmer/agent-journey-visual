@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && gh pr checks 18 2>&1 | head; gh pr checks 19 2>&1 | head; for w in step-8-model step-8-page; do echo \"== $w\"; (cd .claude/worktrees/$w && env -u CLAUDE_CODE_OAUTH_TOKEN uv run ruff check . 2>&1 | tail -25); done; cat .github/workflows/*.yml 2>/dev/null | grep -n \"ruff\\|pytest\\|run:\" | head", "timeout": 120}

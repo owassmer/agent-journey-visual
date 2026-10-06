@@ -1,0 +1,40 @@
+[IMPORTANT: 2 background processes completed. Treat these results as one batch and give one consolidated response; preserve failures and actionable results.]
+
+[IMPORTANT: Background process proc_c374a38fb619 completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/memo && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. MODE=single CLS=award:27980800:27980800:27980800 OUT=$S/single_279_new.pkl .venv/bin/python $S/par_check.py > $S/single_279_new.log 2>&1; MODE=cmp A=$S/single_279.pkl B=$S/single_279_new.pkl .venv/bin/python $S/par_check.py >> $S/single_279_new.log 2>&1; grep -v "npmrc\|nvm\|globalconfig" $S/single_279_new.log | tail -12
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+single award:27980800:27980800:27980800 1038 paths 190.3s 
+paths        equal
+nodes        equal
+facts        DIFFERENT 120 keys differ, e.g. ['claim:registration_early|post|award27980800|stay_pending', 'claim:enforce_after_final|award27980800|final|executing']
+late_seen    equal
+node_group   equal
+remitted     equal
+verdict_asks equal
+raise_open   equal
+time 290.3s single, 190.3s parallel
+MISMATCH
+]
+
+[IMPORTANT: Background process proc_d28e6d5598df completed normally (exit code 0).
+Command: S=~/.hermes/profiles/connor/cache/scratch/memo; C=award:27980800:27980800:27980800; cd ~/dev/Slope_Sparse_Events/.claude/worktrees; (cd step-9-int && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. MODE=dump N=999999 CLS=$C OUT=$S/rowsF_old.pkl .venv/bin/python $S/rows.py > $S/rowsF_old.log 2>&1) & (cd step-9-memo && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. MODE=dump N=999999 CLS=$C OUT=$S/rowsF_new.pkl .venv/bin/python $S/rows.py > $S/rowsF_new.log 2>&1) & wait; cd step-9-memo && tail -1 $S/rowsF_old.log $S/rowsF_new.log; MODE=cmp A=$S/rowsF_old.pkl B=$S/rowsF_new.pkl .venv/bin/python $S/rows.py 2>&1 | tail -8
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+==> /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/memo/rowsF_old.log <==
+OSError: [Errno 28] No space left on device
+
+==> /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/memo/rowsF_new.log <==
+Traceback (most recent call last):
+  File "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/memo/rows.py", line 50, in <module>
+    a, b = (pickle.load(open(os.environ[x], "rb")) for x in ("A", "B"))
+    ^^^^
+  File "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/memo/rows.py", line 50, in <genexpr>
+    a, b = (pickle.load(open(os.environ[x], "rb")) for x in ("A", "B"))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: Ran out of input
+]

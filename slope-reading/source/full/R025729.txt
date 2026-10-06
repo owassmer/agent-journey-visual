@@ -1,0 +1,31 @@
+279:def test_cited_screened_passages_are_recorded_as_used(make_ctx):
+280-    ctx = make_ctx(name="attrib")
+281-    _settlement_flow(ctx)
+282-    cited = {s.section_id for f in ctx.run.graph["findings"].values() for s in f.spans}
+283-    screened = [c for c in ctx.run.graph["candidates"].values() if c.screen and c.item_id in cited]
+284-    if screened:
+285-        assert all(ctx.run.get("observations", o).downstream_disposition == "used_in_finding"
+286-                   for c in screened for o in c.screen.observation_ids)
+287-
+288-
+289-def test_sweep_chunks_and_groups():
+290-    from app.agent.sweep import chunks, inventory_groups
+291-    parts = chunks("a" * 9000 + "\n\n" + "b" * 10)
+292-    assert all(len(x) <= 8000 for x in parts) and "".join(parts).replace("\n", "").count("a") == 9000
+293-    sweep = {"records": [
+294-        {"flagged": True, "source_id": "court", "heading_path": ["Page 1"], "kind": "legal_matter_or_settlement", "section_id": "c#1", "signal": 0.9, "excerpt": "x"},
+295-        {"flagged": True, "source_id": "court", "heading_path": ["Page 2"], "kind": "legal_matter_or_settlement", "section_id": "c#2", "signal": 0.95, "excerpt": "y"},
+296-        {"flagged": True, "source_id": "s1a", "heading_path": ["NOTES", "Note 11"], "kind": "debt_or_financing_agreement", "section_id": "s#1", "signal": 0.9, "excerpt": "z"},
+297-        {"flagged": False, "source_id": "s1a", "heading_path": ["RISK"], "kind": "none_or_generic", "section_id": "s#2", "signal": 0.2, "excerpt": ""}]}
+298-    groups = inventory_groups(sweep)
+299-    assert len(groups) == 2 and groups[0]["section_ids"] == ["c#1", "c#2"] and groups[0]["excerpt"] == "y"
+300-
+301-
+302-def test_covered_claims_are_checked(make_ctx):
+303-    from app.domain.investigation import InventoryItem
+304-    ctx = make_ctx(answers={"coverage_supported": "not_covered"}, name="coverage")
+305-    note11 = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")["id"]
+306-    ctx.run.put("inventory_loaded", InventoryItem(item_id="inv_001", section_ids=(note11,), source_id="synergy_s1a_20240813",
+307-                                                 heading_path=("Note 11",), kind="accounting_item_from_a_matter", signal=0.9))
+308-    _, fid = _accepted_settlement_finding(ctx)
+309-    entry = {"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": [fid]}

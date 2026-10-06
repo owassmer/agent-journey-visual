@@ -1,0 +1,26 @@
+bank_only       lender PV $47,225.54  full by maturity 100.0%  min cash mean $24,704,437.58  P5 $23,846,311.28  shortfall 0.0%
+event_adjusted  lender PV $47,225.54  full by maturity 100.0%  min cash mean $21,354,382.57  P5 $15,154,217.95  shortfall 0.0%
+  driver: Elysium attorney fee and cost award in Delaware patent case: the court fixes the amount of this obligation (Jev {'yes': 0.56, 'no': 0.43999999999999995})
+  driver: Elysium attorney fee and cost award in Delaware patent case: the parties settle this obligation before the court fixes the amount (Jev {'yes': 0.24, 'no': 0.76})
+  driver: Elysium attorney fee and cost award in Delaware patent case: the payer obtains a stay of this obligation secured by a bond or other security (Jev {'yes': 0.58, 'no': 0.42000000000000004})
+60 joint paths; Jev {'provider': 'openrouter', 'requests': 17, 'cache_hits': 0, 'physical_attempts': 17, 'attempt_ceiling': 400, 'spent_usd': '0.002541420', 'spend_cap_usd': '0.10'}; wrote analysis.json, collections.csv, cashflows.csv
+D. Del. fee award · ChromaDex pays | D. Del. 1:18-cv-01434, Dkt. 399 | sought by a party, not fixed amount_pending {} ['the court has decided the payer is liabl']
+C.D. Cal. judgment · Elysium pays | C.D. Cal. 8:16-cv-02277, Dkt. 618 | fixed by the court judgment_entered constraint ['the court has decided the payer is liabl', "the court has fixed this obligation's am", 'a money judgment for this obligation has']
+  Settle before the ruling |  {'yes': 0.24, 'no': 0.76}
+  Court fixes the amount | if no settlement first {'yes': 0.56, 'no': 0.44}
+  Settle after judgment | once the amount is fixed {'yes': 0.22, 'no': 0.78}
+  Appeal filed | once the amount is fixed {'yes': 0.69, 'no': 0.31}
+  Secured stay | if it appeals {'yes': 0.58, 'no': 0.42}
+  Form of security | if it secures a stay {'cash_deposit': 0.07, 'surety_bond': 0.91, 'letter_of_credit': 0.02}
+  Settle during the appeal | during a secured appeal {'yes': 0.24, 'no': 0.76}
+  Pays voluntarily | if it appeals without a secured stay {'yes': 0.25, 'no': 0.75}
+  Collected by enforcement | if still unpaid (appeal, no secured stay) {'yes': 0.35, 'no': 0.65}
+  Pays voluntarily | if it does not appeal {'yes': 0.52, 'no': 0.48}
+  Collected by enforcement | if still unpaid (no appeal) {'yes': 0.43, 'no': 0.57}
+  Settle after judgment | Elysium is paid in the D. Del. fee award {'yes': 0.14, 'no': 0.86}
+  Pays voluntarily | if it does not appeal; Elysium is paid in the D. Del. fee award {'yes': 0.46, 'no': 0.54}
+  Collected by enforcement | if still unpaid (no appeal); Elysium is paid in the D. Del. fee award {'yes': 0.31, 'no': 0.69}
+  Settle after judgment | no payment in the D. Del. fee award {'yes': 0.16, 'no': 0.84}
+  Pays voluntarily | if it does not appeal; no payment in the D. Del. fee award {'yes': 0.45, 'no': 0.55}
+  Collected by enforcement | if still unpaid (no appeal); no payment in the D. Del. fee award {'yes': 0.29, 'no': 0.71}
+[]

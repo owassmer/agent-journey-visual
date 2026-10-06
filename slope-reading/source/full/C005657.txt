@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; grep -n \"runs\\b\\|\\.runs\\|runs\\[\" app/analysis/events.py | head -30; grep -n \"^class Basis\" -A30 app/analysis/events.py | head -40; grep -n \"digest\\|blake2b\" app/disputes/forecast.py app/analysis/events.py app/disputes/parallel.py | grep -v \\\"#\\\" | head -30", "timeout": 30}

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && python3 ~/.hermes/profiles/connor/cache/scratch/6c/edit_tests_slots.py && env -u CLAUDE_CODE_OAUTH_TOKEN uv run pytest -p no:warnings tests/test_dispute_reading.py tests/test_chains.py -k \"waiver or composition_sums\" 2>&1 | tail -3", "timeout": 400}

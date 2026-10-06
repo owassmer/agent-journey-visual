@@ -1,0 +1,56 @@
+    d = feed.period_end + timedelta(days=1)
+    while d <= horizon:
+        cash += flows.get(d, 0)
+        owed += due.get(d, 0)
+        month_end = (d + timedelta(days=1)).month != d.month
+        if owed and (d in due or month_end):
+            take = min(owed, max(cash, 0))
+            if take:
+                cash -= take
+                owed -= take
+                collected.append((d, take))
+            if d in due:
+                pays.append((d, due[d], cash))
+        path[d] = cash
+        d += timedelta(days=1)
+    return path, collected, owed, pays
+
+
+@dataclass
+class Comparison:
+    tier: str
+    tier_measures: dict
+    base_limits: dict
+    structures: dict[str, SlopeOffer | None]
+    outcomes: list[Outcome]
+    request: Request
+    liquidity_floor_cents: int
+    scenarios: list[Scenario]
+    horizon: date
+    feed: BankFeed = field(repr=False, default=None)
+
+
+def _run(comp: Comparison, name: str) -> list[Outcome]:
+    out = []
+    for sc in comp.scenarios:
+        daily, collected, shortfall, pays = simulate(comp.feed, comp.request, comp.structures[name], sc.cash,
+                                                     sc.placement, comp.horizon)
+        low = min(daily, key=daily.get)
+        out.append(Outcome(sc, name, daily[low], low, collected, shortfall, pays))
+    return out
+
+114:    elif rule in ("settle", "settle_release"):
+115-        s_lo, s_hi = param_range(model, "settlement_share_bps")
+116-        lo, hi = _scale(amount, s_lo, s_hi)
+117-        w = win(at.start, at.end + timedelta(days=param(model, "settlement_window_days")))
+118-        items.append((pays, "Settlement payment", lo, hi, w,
+119-                      "60% to 100% of the amount (model settlement range), paid within 90 days of the stage's start."))
+120:        if rule == "settle_release" and role == "debtor":
+121-            c_lo, c_hi = bond_collateral(model, amount)
+122-            items.append(("inflow", "Bond collateral returned", c_lo, c_hi, Window(w.end, w.end),
+123-                          "The bond is discharged when the judgment is settled, and the collateral is returned."))
+124-    out = []
+125-    for kind, label, lo, hi, w, why in items:
+126-        if w.start > horizon or w.end < w.start:
+127-            continue
+128-        out.append(BranchCash(kind=kind, label=label, amount=_derived(lo, hi, why), window_start=w.start,

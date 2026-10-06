@@ -1,0 +1,6 @@
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"git status --short --branch",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:1000}),
+ tools.exec_command({cmd:"cat CLAUDE.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:2500}),
+ tools.exec_command({cmd:"rg -n 'class |def |@|reconstruct|provenance|review|incomplete|probabil|confidence|source|policy|recommend|expected' app/domain/investigation.py app/decisions/case.py app/decisions/scenarios.py app/web/viewmodel.py app/web/templates/run.html app/agent/mission.py app/agent/investigation.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:6500}),
+ tools.exec_command({cmd:"python - <<'PY'\nimport json\nfrom pathlib import Path\nbase=Path('Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts')\nd=json.loads((base/'dispute_model.json').read_text())\nprint(json.dumps(d,indent=2))\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:6500})
+]);results.forEach((r,i)=>text({i,...r}));

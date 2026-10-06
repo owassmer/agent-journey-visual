@@ -1,0 +1,120 @@
+p 0 EX-10.32
+p 0 40
+p 0 ea020832401ex10-32_synergy.htm
+p 0 MERCHANT LOAN AGREEMENT, DATED MAY 1, 2024, BETWEEN WEBBANK AND SYNERGY CHC CORP
+p 0 Exhibit 10.32
+p 0 Merchant Loan Agreement
+p 0 Total Payment Amount: Loan Amount: Cost of Funds:
+p 0 $418,100.00 $370,000.00 USD $48,100.00 USD
+p 0 Repayment rate: Term:
+p 0 USD 25% of daily sales 18 Months
+p 0 This Merchant Loan Agreement (“ Agreement ”), dated as of the Effective Date (as defined below) is between Web
+p 0 1. Definitions
+p 0 As used in this Agreement, the following words have the meanings specified below:
+p 0 Account has the meaning set forth in Section 4.2.1.
+p 0 Arbitration Provision has the meaning set forth in Section 12.1.
+p 0 Authorized Representative means any individual, including but not limited to the Store Owner, who has been aut
+p 0 Business Day means any Day that is not a Saturday, Sunday, or a Day on which banking institutions in the State
+p 0 Claims has the meaning set forth in Section 12.1.
+p 0 Collateral has the meaning set forth in Section 5.2.
+p 0 Confidential Information means any and all information associated with a party’s business and not publicly kno
+p 0 Day means any calendar day.
+p 0 Daily Payment means the daily payment due to Lender, which shall be an amount equal to the Shopify Account Cre
+p 0 Daily Payment Percentage means 25%
+p 0 Effective Date means the date on which we deliver the funding to You.
+p 0 Event of Default means the occurrence of an event described in Section 8.
+p 0 Lender Information has the meaning set forth in Section 10.16.2.
+p 0 Loan means the closed-end business purpose loan made by Lender to Borrower under this Agreement.
+p 0 Field: Page; Sequence: 1
+p 0 Field: /Page
+p 0 Loan Amount means the total amount of funding provided by Lender to the Borrower pursuant to this Agreement.
+p 0 Make-up Payments means deductions from Your Account, as applicable, initiated by Lender or Processor or any Ot
+p 0 Manual Payment has the meaning set forth in Section 4.1.2.
+p 0 Minimum Payment means thirty (30) percent of the Total Payment Amount.
+p 0 Month means a calendar month.
+p 0 Obligations means, collectively, Borrower’s obligations under this Agreement, including Your obligation to pay
+p 0 Other Business Account means, collectively, all bank accounts associated with Shopify Services accounts and st
+p 0 Other Business Credits means any funds of a business owned or operated by Borrower or the Owners, subsidiaries
+p 0 Other Processor means, collectively and individually, any processor, acquirer, service provider or financial i
+p 0 Outstanding Total Payment Amount means the Total Payment Amount, less the aggregate amounts of Payments receiv
+p 0 Owner means any parent company, any individual who, directly or indirectly, through any contract, arrangement,
+p 0 Payments means, collectively, the Daily Payments and any Minimum Payments or Manual Payments.
+p 0 Processor means, collectively and individually, any processor, acquirer, service provider or financial institu
+p 0 Field: Page; Sequence: 2; Options: NewSection; Value: 2
+p 0 Field: Sequence; Type: Arabic; Name: PageNo 2 Field: /Sequence
+p 0 Field: /Page
+p 0 Processor Terms of Service means the agreement, as it may be amended from time to time, under which Processor 
+p 0 Register has the meaning set forth in Section 13.1.
+p 0 Shopify Account Credits means all funds from transactions associated with Your Shopify Services Account while 
+p 0 Shopify Admin means the administrative dashboard associated with Borrower’s Shopify Services Account.
+p 0 Shopify Merchant Business Account or means the bank account or other business stored-value account of Borrower
+p 0 SMBA Shopify Account Credits settle (less any transaction or other related fees); and (b) the Loan would be fu
+p 0 Shopify Services means the ecommerce software and services provided to Borrower by Shopify Inc.
+p 0 Shopify Services Account means the account provisioned by Shopify Inc. to Borrower in respect of the Shopify S
+p 0 Shopify Store means Synergy CHC Corp.
+p 0 Shopify Terms of Service means the agreement, including the Shopify Acceptable Use Policy and any other docume
+p 0 Store Owner means the person signing up for the Shopify Services by opening a Shopify account, who will be the
+p 0 Total Payment Amount means $418,100.00 USD, which is the total amount that Borrower promises to pay Lender as 
+p 0 Term means the eighteen (18) Month time period within which the Total Payment is due beginning on the Effectiv
+p 0 Field: Page; Sequence: 3; Value: 2
+p 0 Field: Sequence; Type: Arabic; Name: PageNo 3 Field: /Sequence
+p 0 Field: /Page
+p 0 2. Loan Funding
+p 0 2.1. By clicking on “Submit Application,” You accept this Agreement and are making a request for Lender to com
+p 0 2.2. As provided above, You authorize Us to obtain account information from third-party services for the purpo
+p 0 2.3. If Lender approves Your application, in its sole and absolute discretion, Lender shall accept the Agreeme
+p 0 3. Business Purpose; Business Account
+p 0 3.1. Business Purpose. You agree that You are obtaining this Loan and will use the funds received in connectio
+h 2 3.2. Business Account. You agree that the SMBA, any substitute Account, and the Shopify Services Account are e
+p 0 4. Repayment of the Loan; Authorizations
+p 0 4.1. Repayment Terms.
+p 0 4.1.1. Borrower promises to pay Lender (i) a Minimum Payment within the first six (6) Month period from the Ef
+p 0 4.1.2. In addition to the Daily Payments, You may make one or more additional payments for any amount, up to a
+p 0 Field: Page; Sequence: 4; Value: 2
+p 0 Field: Sequence; Type: Arabic; Name: PageNo 4 Field: /Sequence
+p 0 Field: /Page
+p 0 4.2. Fund Transfers. To the extent that Processor or Other Processor, if applicable, is not acting on behalf o
+p 0 4.2.1. Processing Arrangement. Borrower explicitly authorizes and directs Processor or Other Processor to tran
+p 0 4.2.2. Lender Electronic Fund Transfer Authorization. You irrevocably authorize Us (which includes, for the pu
+p 0 4.3. Make-up Payments; Transfer Size/Timing. If any of Lender, Processor or Other Processor is unable to effec
+p 0 Field: Page; Sequence: 5; Value: 2
+p 0 Field: Sequence; Type: Arabic; Name: PageNo 5 Field: /Sequence
+p 0 Field: /Page
+p 0 5. Security Interest; Collateral
+p 0 5.1. As security for all Obligations, Borrower hereby grants, assigns, and pledges to Lender a continuing and 
+p 0 5.2. You authorize Us to file one or more financing statements to perfect the security interest granted to Us 
+p 0 6. Representations and Warranties
+p 0 Borrower represents and warrants that, as of the date of this Agreement and during the term of this Agreement:
+p 0 6.1. Your form of organization is correctly set forth in the Shopify Admin. Unless You are an individual or so
+p 0 6.2. No consent or authorization of, filing with, notice to, or other act by, or in respect of, any government
+p 0 6.3. There is no action, suit, proceeding, or investigation pending or, to Your knowledge, threatened against 
+p 0 6.4. This Agreement is Borrower’s valid, legal, and binding obligation, enforceable against Borrower in accord
+p 0 6.5. You have not sold nor are subject to any other contract or agreement that provides for the sale, assignme
+p 0 6.6. Borrower does not presently intend to cease to operate the business, either permanently or temporarily. B
+p 0 6.7. All federal, state, local, and foreign tax returns and tax reports, and all taxes due and payable that ar
+p 0 6.8. You are entering into this Agreement for business purposes and not as a consumer or for personal, family,
+p 0 Field: Page; Sequence: 6; Value: 2
+p 0 Field: Sequence; Type: Arabic; Name: PageNo 6 Field: /Sequence
+p 0 Field: /Page
+p 0 6.9. Any attempt to receive the Loan or pay Your Daily Payment, Make-Up Payment, Manual Payment, or Outstandin
+p 0 6.10. Each Authorized Representative is at least eighteen (18) years of age and has the legal capacity and all
+p 0 6.11. You are a business located in the United States and all payments under this Agreement will be made in Un
+p 0 7. Covenants
+p 0 Borrower agrees to comply with the covenants in this Agreement and to be bound by the terms and conditions of 
+p 0 7.1. cause the SMBA and any substitute Accounts to remain in good standing;
+p 0 7.2. comply with the Processor or Other Processor Terms of Service in connection with all payments Borrower ac
+p 0 7.3. provide account statements for any account into which Shopify Account Credits are deposited or transferre
+p 0 7.4. not take any action that would discourage those making payments to Borrower from paying via a method that
+p 0 7.5. not withdraw funds from the SMBA prior to Lender receiving the Daily Payment for such day;
+p 0 7.6. not, without Our prior written consent: (a) change Your name (including any d/b/a name), place of busines
+p 0 7.7. (a) preserve, renew, and maintain, in full force and effect, Your corporate or organizational existence; 
+p 0 7.8. not permit any event to occur that could cause diversion of: (a) any amounts payable to or from any Accou
+p 0 7.9. maintain all of Your contact information current, including primary electronic mail, Your phone number, a
+p 0 7.10. cooperate fully with Lender to take all necessary actions required to effectuate Borrower’s obligations 
+p 0 7.11. only use the Loan, the SMBA, any substitute Account, and the Shopify Services Account for commercial or 
+p 0 7.12. not, without Our prior written consent, merge or consolidate with or into any other business entity or e
+p 0 7.13. be solely responsible for the payment of any fees and charges imposed on Lender with respect to the Acco
+p 0 7.14. provide promptly to Lender, from time to time at Lender’s request, purchase transaction files maintained
+p 0 Field: Page; Sequence: 7; Value: 2
+p 0 Field: Sequence; Type: Arabic; Name: PageNo 7 Field: /Sequence
+p 0 Field: /Page

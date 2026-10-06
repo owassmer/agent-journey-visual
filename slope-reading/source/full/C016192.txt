@@ -1,0 +1,4 @@
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"gh api repos/owassmer/Slope_Sparse_Events/actions/jobs/110694591486/logs > /tmp/refresh0-complete.log\nrg '\"unit\":' /tmp/refresh0-complete.log","max_output_tokens":1200}),
+tools.exec_command({cmd:"gh api repos/owassmer/Slope_Sparse_Events/actions/jobs/110694591653/logs > /tmp/refresh6258-complete.log\nrg '\"unit\":' /tmp/refresh6258-complete.log","max_output_tokens":1200})
+]);r.forEach(text);

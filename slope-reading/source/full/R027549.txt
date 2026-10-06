@@ -1,0 +1,65 @@
+    if_satisfied: str
+    if_not: str
+
+
+class DisputeInstance(Frozen):
+    """A live dispute grouped by the agent and read by Jev. The agent supplies the findings, a docket reference, the
+    obligation's nature, the counterparty, the quoted amount and any judgment date; Jev reads each finding with its
+    surrounding evidence (who pays, the amount's status, procedural events, factors); code places the stage and
+    records the constraints an established fact imposes. Forecasts and cash paths are built by the analysis."""
+
+    instance_id: str
+    dependency_id: str
+    model_id: str
+    model_version: str
+    title: str
+    order_reference: str
+    nature: str
+    counterparty: str
+    finding_ids: tuple[str, ...] = Field(min_length=1)
+    amount: EvidenceValue
+    judgment_date: date | None = None
+    borrower_role: Literal["debtor", "creditor"] | None = None  # from Jev's readings (the agent's, in the agent-only arm)
+    amount_status: str = "unknown"
+    amount_includes_interest: bool = False
+    stage: str | None = None
+    established: dict[str, Decisive] = Field(default_factory=dict)  # procedural event -> the passage establishing it
+    readings: tuple[FindingReading, ...] = ()
+    factors: tuple[FactorResult, ...] = ()
+            "stage": d.stage, "status": d.status,
+            "established": [{"event": model["readings"]["events"][k], "finding": v.finding_id, "date": v.source_date,
+                             "quote": v.quote} for k, v in d.established.items()],
+            "factors": [{"label": f.label, "reading": f.level_label, "distribution": f.distribution,
+                         "probability": f.probability, "conflict": f.conflict,
+                         "finding": f.decisive.finding_id if f.decisive else None,
+                         "quote": f.decisive.quote if f.decisive else None}
+                        for f in d.factors if f.distribution or f.probability is not None],
+            "constraints": d.constraints}
+
+
+def _judgment_meta(j: Judgment, disputes: dict[str, DisputeInstance], order: dict[str, DisputeInstance | None],
+                   borrower: str) -> dict:
+    q = next(x for x in question_registry()["questions"] if x["id"] == j.question_id)
+    context = j.key.split(":", 1)[1].split("|")
+    ctx = next((c for c in context[1:] if not c.startswith("cls=")), "")
+        ctx.run.put("dispute_instantiated", live[replaced].model_copy(update={"status": "superseded",
+                                                                              "superseded_by": instance.instance_id}))
+    ctx.run.put("dispute_instantiated", instance)
+    labels = model["readings"]["amount_status_labels"]
+    return {"instance_id": instance.instance_id, "status": instance.status,
+            "borrower": {"debtor": "pays", "creditor": "is paid"}.get(instance.borrower_role or "", "not established"),
+            "amount_status": labels.get(instance.amount_status, instance.amount_status),
+            "stage": instance.stage,
+            "established_events": {k: v.finding_id for k, v in instance.established.items()},
+            "factors": [{"factor": f.label, "reading": f.level_label} for f in instance.factors
+                        if f.level_label != "unknown"],
+            "constraints": instance.constraints,
+            "evidence_requests": [r.action for r in instance.evidence_requests],
+            **({"proposed_extension": "recorded and flagged; the model is unchanged"} if instance.proposed_extension else {}),
+            "note": ("Jev read the present state from the passages. After your run the host asks Jev for the conditional "
+                     "probabilities of each future development and builds the financial analysis.")}
+
+
+app/agent/run_store.py:35:REMOVED_FIELDS = {("inventory", "exclusions")}  # recorded by run 13 under a design later removed
+app/agent/run_store.py:154:                       if (name, field) not in REMOVED_FIELDS):
+app/analysis/build.py:83:            "constraints": d.constraints}

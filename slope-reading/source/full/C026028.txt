@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/inspect9.py 2>&1 | cut -c1-400 | grep -vE \"^  eff_\" | head -40; uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/timing9.py; grep -E '\"requests\"|\"physical_attempts\"|\"turns_used\"' /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/run12.log"}

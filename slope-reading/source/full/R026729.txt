@@ -1,0 +1,22 @@
+app/cli.py:124:    summary = decide(meta["snapshot_id"], inputs, list(store.graph["dispute_nodes"].values()), review)
+app/web/viewmodel.py:149:        "dispute_nodes": [{"id": n.node_id, "decision_point": n.decision_point, "findings": list(n.finding_ids),
+app/web/viewmodel.py:156:                          for n in g.get("dispute_nodes", {}).values()],
+app/web/templates/run.html:43:{% for n in v.dispute_nodes %}<div class="card"><h5>{{ n.decision_point }}</h5>
+app/web/templates/run.html:47:{% if v.dispute_nodes %}<p class="muted">{{ d.weights_label }}</p>{% endif %}
+app/agent/investigation.py:63:  appeal and its bond, whether a judgment debtor pays) with propose_dispute_node: mutually exclusive branches, each with its
+tests/test_investigation_tools.py:369:def test_dispute_node_amounts_windows_and_weights(make_ctx):
+tests/test_investigation_tools.py:377:        call(T.propose_dispute_node, ctx, {**base, "branches": [
+tests/test_investigation_tools.py:381:        call(T.propose_dispute_node, ctx, {**base, "branches": [
+tests/test_investigation_tools.py:384:    out = call(T.propose_dispute_node, ctx, {**base, "branches": [
+tests/test_investigation_tools.py:387:    node = ctx.run.get("dispute_nodes", out["node_id"])
+tests/test_decision_model.py:6:from app.domain.investigation import BranchCash, DisputeBranch, DisputeNode
+tests/test_decision_model.py:20:def node(branches) -> DisputeNode:
+tests/test_decision_model.py:21:    return DisputeNode(node_id="node_001", dependency_id="dep_001", decision_point="fee award", finding_ids=("fnd_001",),
+tests/test_decision_model.py:51:    empty = node((DisputeBranch(branch_id="br_1", label="a", description="a"),
+tests/test_decision_model.py:52:                  DisputeBranch(branch_id="br_2", label="b", description="b")))
+tests/test_decision_model.py:85:    lock = DisputeBranch(branch_id="br_1", label="appeal with bond", description="x", cash=(
+tests/test_decision_model.py:88:    pay = DisputeBranch(branch_id="br_2", label="pay", description="y", cash=(
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:107:          "mcp__credit__propose_dispute_node",
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:200:        "dispute_branching": {
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:203:            "dispute_branch"
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:277:      "propose_dispute_node": "Model one pending decision of a live dispute as 2-5 mutually exclusive branches with dated cash consequences (documented amounts, or derived with a stated basis; windows after the review date). In the Jev arm, Jev judges which branch the record supports and its distribution weights the branches (labelled model judgment).",

@@ -1,0 +1,24 @@
+const boot=`#!/bin/bash
+set -euo pipefail
+exec > >(tee -a /var/log/slope-recovery-bootstrap.log) 2>&1
+dnf install -y python3.12 python3.12-pip git
+python3.12 -m pip install uv boto3
+mkdir -p /opt/slope-recovery /opt/slope-pool
+touch /opt/slope-pool/HOLD_JEV
+cd /opt/slope-recovery
+python3.12 - <<'PY'
+import boto3,tarfile
+s=boto3.client('s3',region_name='us-east-2')
+b='slope-walk-462947327980-20261001'
+for key,name in [('walk-36781427817/question-refresh/code.tgz','base.tgz'),('walk-36781427817/question-refresh/recovery/current-c13331d.tgz','current.tgz')]:
+ s.download_file(b,key,'/tmp/'+name)
+ with tarfile.open('/tmp/'+name) as t:t.extractall('.',filter='data')
+PY
+python3.12 -m uv sync --locked --python python3.12
+python3.12 -m uv pip install boto3
+PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m app.cli evidence build akoustis_20240514 || .venv/bin/slope evidence build akoustis_20240514
+systemd-run --unit=slope-safe-stop --on-active=4h /sbin/shutdown -h now
+touch /opt/slope-recovery/BOOTSTRAP_READY
+`;
+store("recoveryboot",boot);
+text(await tools.exec_command({cmd:"PYTHONDONTWRITEBYTECODE=1 .venv/bin/python - <<'PY'\nimport boto3,json\ns=boto3.Session(profile_name='slope',region_name='us-east-2').client('ec2')\nboot=json.loads(r'''"+JSON.stringify(boot)+"''')\nr=s.run_instances(ImageId='ami-0d3d85815a9746bc5',InstanceType='m6a.4xlarge',MinCount=1,MaxCount=1,ClientToken='slope-question-recovery-retained-20261003',IamInstanceProfile={'Name':'slope-walk-20261001'},SubnetId='subnet-02d0e7608120675ae',SecurityGroupIds=['sg-0cab20d466c1513fc'],InstanceInitiatedShutdownBehavior='stop',DisableApiTermination=True,MetadataOptions={'HttpTokens':'required'},BlockDeviceMappings=[{'DeviceName':'/dev/xvda','Ebs':{'VolumeSize':512,'VolumeType':'gp3','Encrypted':True,'DeleteOnTermination':False}}],UserData=boot,TagSpecifications=[{'ResourceType':'instance','Tags':[{'Key':'Name','Value':'slope-question-recovery-retained'},{'Key':'Project','Value':'Slope'}]},{'ResourceType':'volume','Tags':[{'Key':'Name','Value':'slope-question-recovery-KEEP'},{'Key':'Project','Value':'Slope'}]}])\nprint(json.dumps({'instance':r['Instances'][0]['InstanceId'],'state':r['Instances'][0]['State']['Name']}))\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:500}));

@@ -1,0 +1,24 @@
+        for view in views:
+            v = e["views"][view]
+            row[view] = {"passes": v["policy"]["passes"], "lowest": usd(v["lowest_cash_cents"]),
+                         "reasons": v["policy"]["reasons"],
+                         "fee": usd(v["economics"]["fee_cents"]) if "economics" in v else "",
+                         "apr": f"{v['economics']['apr_equivalent_bps'] / 100:.1f}%" if "economics" in v else "",
+                         "npv": usd(v["economics"]["npv_at_cost_of_funds_cents"]) if "economics" in v else ""}
+        rows.append(row)
+    rec = {view: {**r, "limit": usd(r["limit_cents"]), "order_limit": usd(r["order_limit_cents"]),
+                  "label": s["structures"][r["structure"]]["label"] if r["structure"] in s["structures"] else r["structure"]}
+           for view, r in s["recommendation"].items()}
+    return {"views": views, "rows": rows, "recommendation": rec, "conditions": s["conditions"], "tier": s["tier"],
+            "bank_feed": s["bank_feed"], "slope_terms": s["slope_terms"], "weights_label": s["weights_label"],
+            "request": s["request"]}
+
+
+def run_source_title(inputs: dict, source_id: str) -> str:
+    cfg = CASES_DIR / (inputs.get("snapshot_id") or "") / "snapshot.json"
+    if cfg.exists():
+        return json.loads(cfg.read_text()).get("source_display", {}).get(source_id, {}).get("title", source_id)
+    return source_id
+40:def _money(ev: dict | None) -> str:
+94:                                        "value": _money(p.value.model_dump(mode="json")) if p.value else "unknown",
+153:                                         "cash": [{"kind": c.kind, "label": c.label, "amount": _money(c.amount.model_dump(mode="json")),

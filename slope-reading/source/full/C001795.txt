@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && sed -n 182,200p app/analysis/build.py; grep -n \"setup_from_inputs\\|load_feed(\" app/analysis/build.py app/cli.py app/*.py 2>/dev/null | head; ls runs/recorded/akoustis_20240620-agent_plus_jev-20260926T212137Z/ cases/akoustis_20240620/"}

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --command-id 38569a57-d9b0-43bc-a9d4-749bc1a57670 --instance-id i-09b42b44a8d35909a --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' --output json","max_output_tokens":3000}));

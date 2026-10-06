@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && .venv/bin/python -u -m tools.flow_view --profile slope --prefix walk-36781427817/fresh-corrected-3 --run 37354170828 --port 18766 > ~/.hermes/profiles/connor/cache/scratch/split/flow_view.log 2>&1", "background": true}

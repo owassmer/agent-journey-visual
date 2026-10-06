@@ -1,0 +1,4 @@
+// @exec: {"max_output_tokens": 10000}
+const r=await tools.exec_command({cmd:"ls -lh",workdir:load("digestDir"),max_output_tokens:10000});text(r);
+text(await tools.exec_command({cmd:"sed -n '1,160p' read.py",workdir:load("digestDir"),max_output_tokens:1000}));
+text(await tools.clock__curr_time({}));

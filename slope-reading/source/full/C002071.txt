@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN uv run python ~/.hermes/profiles/connor/cache/scratch/6d_run/causes.py 2>&1 | grep -v \"npmrc\\|nvm\\|globalconfig\"; python3 ~/.hermes/profiles/connor/cache/scratch/6d_run/bank.py 2>/dev/null | head -3", "timeout": 200}

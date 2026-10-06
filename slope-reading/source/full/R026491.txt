@@ -1,0 +1,62 @@
+"""Proposed Slope-style fixed-installment working-capital draw (an analytical offer, not a quote).
+
+Pricing convention (declared, from the kit's proposal fixtures): a fixed total fee equal to a
+stated fraction of the advance, repaid in equal monthly payments rounded half up to the cent,
+with the final payment adjusted so payments sum exactly to advance + fee. The fee fraction is not
+an APR. Payment rows start as month indices; calendar dates exist only once an operator or
+scenario chooses a funding date.
+
+Fee/principal split, used only for loan-asset economics: a declared demonstration convention
+(each payment carries principal in proportion advance / total repayment; the last payment
+absorbs rounding). It is labelled as a convention and never applied to the actual merchant loan.
+"""
+
+from __future__ import annotations
+
+import json
+from datetime import date
+from decimal import Decimal
+from pathlib import Path
+
+from pydantic import BaseModel, ConfigDict
+
+from app.domain.values import cents_round
+from app.finance.calendar import add_months, next_business_day
+
+ALLOCATION_CONVENTION = "pro_rata_fee_demo_convention"
+
+
+class ScheduledPayment(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    month_index: int
+    due: date | None
+    amount_cents: int
+    principal_cents: int
+    fee_cents: int
+
+
+class FixedInstallmentOffer(BaseModel):
+    model_config = ConfigDict(frozen=True)
+app/finance/valuation.py:18:def present_value_cents(flows: list[tuple[int, int]], annual_rate: Decimal | str) -> Decimal:
+app/finance/valuation.py:28:def dated_flows(flows: list[tuple[date, int]], decision: date) -> list[tuple[int, int]]:
+app/finance/valuation.py:37:def principal_dollar_days(disbursements: list[tuple[int, int]], principal_receipts: list[tuple[int, int]]) -> int:
+app/domain/values.py:20:class Status(StrEnum):
+app/domain/values.py:27:class Basis(StrEnum):
+app/domain/values.py:34:class Unit(StrEnum):
+app/domain/values.py:43:class UnknownInput(ValueError):
+app/domain/values.py:51:class Provenance(BaseModel):
+app/domain/values.py:61:class EvidenceValue(BaseModel):
+app/domain/values.py:104:def unknown(unit: Unit, note: str) -> EvidenceValue:
+app/domain/values.py:108:def documented(value: Any, unit: Unit, *, facts: tuple[str, ...] = (), observed_on: date | None = None,
+app/domain/values.py:115:def assumed(value: Any, unit: Unit, assumption_id: str, note: str, *, observed_on: date | None = None) -> EvidenceValue:
+app/domain/values.py:120:def derived(value: Any, unit: Unit, derivation: str, *, facts: tuple[str, ...] = ()) -> EvidenceValue:
+app/domain/values.py:125:def dec(value: str | int | Decimal) -> Decimal:
+app/domain/values.py:134:def cents_round(amount: Decimal) -> int:
+app/domain/values.py:139:def usd(cents: int) -> str:
+app/finance/calendar.py:25:def is_business_day(d: date) -> bool:
+app/finance/calendar.py:29:def next_business_day(d: date) -> date:
+app/finance/calendar.py:36:def previous_business_day(d: date) -> date:
+app/finance/calendar.py:42:def add_months(d: date, months: int) -> date:
+app/finance/calendar.py:49:def month_ends(start: date, end: date) -> list[date]:
+app/finance/calendar.py:60:def days(start: date, end: date) -> list[date]:

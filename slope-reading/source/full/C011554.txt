@@ -1,0 +1,4 @@
+const rs=await Promise.allSettled([
+tools.exec_command({cmd:"aws s3 ls s3://slope-walk-462947327980-20261001/walk-36781427817/pool/ --recursive --profile slope --region us-east-2 | rg '(states|answers).*\\.(json|gz)' | head -30",yield_time_ms:1000,max_output_tokens:1500}),
+tools.exec_command({cmd:"tail -n 3 /tmp/notes-5171-diagnostic.log\ntail -n 3 /tmp/notes-11-diagnostic.log\nrg -n 'state|bucket|prefix' /tmp/inspect-pool-key.py | head -30",max_output_tokens:1800})
+]);for(let i=0;i<rs.length;i++)text({i,...rs[i]});

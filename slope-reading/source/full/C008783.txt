@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split && head -30 github_creds.py | grep -n \"argv\\|variable\\|secret\\|Duration\\|PREFIX\" | head; python3 github_creds.py walk-36781427817/fresh-corrected-3 2>&1 | tail -3; cd /Users/owenwassmer/dev/Slope_Sparse_Events && gh variable list | grep -i fresh", "timeout": 120}

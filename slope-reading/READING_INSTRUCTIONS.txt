@@ -1,0 +1,27 @@
+Purpose
+Recover how Slope's work develops through the assigned history. We want to understand what the work is for, how the agent understands the situation, what shapes its choices, and how those choices affect what happens next. These readings will join into a continuous account from which meaningful measurements of a session's trajectory can be developed.
+
+The reading
+Read the supplied context and the assigned history in order, including full tool arguments and results. Follow the developing situation. What is the agent trying to accomplish here? What has it learned? What does it treat as important or worth doing next? How does its chosen work affect the intended outcome, the available options, and the remaining work?
+
+Explain the connections that make the sequence intelligible. A discovery may change an assumption, open an alternative, or leave a prior approach intact. An instruction may change the desired outcome, restore an existing understanding, or affect a particular part of the work. A plan or delegated assignment can shape which questions receive attention. Trace how those changes carry into subsequent choices and results where the assigned history shows them.
+
+Give ordinary work the same interpretive attention as corrections. Consider relevant alternatives or dependencies when they help explain the chosen course, including necessary work that never became an explicit task. Ground their relevance in the purpose and information available at that time. Concentration, persistence, preparation, and substantial changes in direction can each serve the work; understand their role in the situation.
+
+Organizing understanding
+Delegation relies on shared meaning and contextual judgment. The connection to Law Informs Code is how background understanding and standards guide discretion where instructions leave details unspecified. Here, we are examining how that understanding is carried through actual work. A focused judgment concerns one meaningful relationship with enough context to understand it. These relationships should make the larger course of work explainable.
+
+Writing the account
+Write trace.txt as a connected account in plain prose, organized around meaningful stretches of work. Explain what drove the course and what changed through it. Include source references alongside the passages that support the explanation. Use the amount of detail each stretch needs. Where the sources leave an important explanation unresolved, say what is unresolved and how it affects the account. A qualification belongs where it changes the interpretation of a choice, consequence, or relationship.
+
+End with the situation at the boundary: the direction being pursued, what has become possible or settled, and the important threads another reading must pick up. The coordinator will connect these accounts across assignments.
+
+Source context
+Treat these as selected source context. Preserve each passage's authorship, timing, and role. Check whether intervening instructions or evidence change its applicability to the assigned section. Agent-authored guidance is evidence of the agent's understanding, with authority established from the surrounding history.
+
+Use sources to establish the sequence and support your interpretation. Tool results often supply the information that makes the next choice intelligible. Preserve when information reached the relevant actor. Recover truncated displays; identical payloads may reuse an earlier reading while retaining their place in the history. Flag a missing connection when it matters to your explanation.
+
+Working arrangement
+Start fresh with this assignment and its supplied material. Save the developing account while enough context remains to describe it accurately. The assignment is sized to finish before compaction. If context pressure prevents completion, save the exact unread range and stop. If compaction occurs, stop and report it.
+
+Alongside trace.txt, write reading.json with the source range actually read, any unread material and its cause, and whether compaction occurred. Keep this record brief. Keep sources and project files unchanged; write only in the assigned output directory and omit secrets. The coordinator handles further delegation.

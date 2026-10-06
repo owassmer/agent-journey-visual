@@ -1,0 +1,38 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_ae768b9a]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 02:42:32 (1h4m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3857.49s
+
+--- ✓ TASK 1/1: Worker G: fix PR #18's review findings on branch step-8-model (worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model, HEAD 6718bf2), re-run the lead analysis and the economic-assumption variants, and report. Each fix ends in targeted tests, a commit of named files and a push. Report SHAs, each fix's effect on the headline, the new lead figures (with due by the horizon, not contractual), the variant table, and the Jev re-asks and spend. Do not open a PR, re-run the investigation, or touch the page (app/web, page.js, page.html, words.json); a page worker owns those on step-8-page.  (status=completed, api_calls=104, 3857.26s) ---
+I've added the no-lawsuit legal-spend fix to the plan, before the final re-run. Nothing is committed or pushed yet, and nothing has been re-run.
+
+**How I'll apply the ruling.** In the no-lawsuit view, legal spend attributable to the dispute stops from the review date, as if the dispute ended then at no cost. It reads the same single dispute-end rule I'm writing for fix 4 (a levy or payment that satisfies the judgment ends the dispute, and legal spend never comes back after that). Everything else in that view stays identical: operations, existing debt, the coupon, the listing chain (fix 3) and the cash-floor decision.
+- **Test:** with no dispute events, the no-lawsuit view's cash equals the full forecast's cash on a path where the dispute ends at no cost on the review date.
+- **Wording:** I'll record the ruling in design §7.12 and change spec §16.1 to "ordinary operating risk is the same forecast with the event, including its legal costs, given no cash effect".
+- **Report:** the new attribution figures come after the lead run.
+
+**Fix 1 (date order), in progress.** The changes are in `app/analysis/events.py`, `app/disputes/forecast.py` and `tests/test_pending_claim.py`.
+- **What changed:**
+  - The cash floor and cash exhaustion now book on each trajectory on their own day, whatever the walk order.
+  - On the 14 May template, the walker asks each one before the first question it comes before on some trajectory. Their facts come from the whole path.
+  - The pending pre-ruling levy is ordered together with them.
+- **20 Jun tree:** identical after every edit (13,821 paths, 337 keys, same state and bank hashes).
+- **14 May test tree:** now 1,974 paths and 210 questions, down from 3,698 and 216. `test_pending_claim` passed 29 of 29 before my last two edits; I haven't re-run it since.
+- **Date-order check (`scratch/8g/order14.py`, every path):**
+  - Before the fix it finds dated-before violations on 10 steps, including the listing question, delisting and the I2 settlement.
+  - Now the cash facts equal the engine on every step, and one violation class is left: `settle|I3`, 1,292 trajectory-steps. The trajectories are appealed judgments registered early: the post-ruling levy and the company's response fall on the ruling day (day 115). The I3 settlement window opens at day 145, but I3 is walked before them. On other trajectories the levy comes after the window, which is why the all-or-nothing reorder I tried (`levy_first`) changes nothing.
+  - I'll fix it by booking the post-ruling levy on its own day per trajectory, as the floor now does.
+
+**Next:**
+1. Close `settle|I3`, then rewrite test 7 to check in date order and confirm it fails at 6718bf2. Commit and push.
+2. Fixes 2, 3 plus this one, 4, 5 and 6, each with a test that would have failed before, then a commit and push.
+3. The lead run, then the variants.
+4. `f2_order.py`, the 20 Jun check and the full suite once.
+
+The plan is saved at `scratch/8g/PLAN.md`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_ae768b9a/task-0.log
+Child's process proc_711eed64195a `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && env -u CLAUDE_CODE_O` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

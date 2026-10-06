@@ -1,0 +1,1 @@
+{"command": "cd ~/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory && for f in MEMORY.md speed-over-verification.md lead-case-akoustis.md probabilistic-analysis.md no-contrived-cases.md; do echo \"== $f\"; cat $f; done; cd ..; for f in $(ls -t *.jsonl | head -3); do echo \"== $f $(stat -f '%Sm' $f) $(wc -c <$f)\"; done"}

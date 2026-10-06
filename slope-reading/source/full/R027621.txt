@@ -1,0 +1,39 @@
+1:"""Host-owned judgment profiles: which questions to ask, built from which minimal state.
+3:The agent names a profile and object IDs; this module resolves those objects from the run and the
+4:admissible snapshot, builds the smallest state that answers the question, asks Jev, and records the
+6:question IDs, and nothing outside the snapshot and the run can enter a Jev state.
+21:from app.config import question_registry
+42:def profile_questions(profile: str) -> list[str]:
+43:    return list(question_registry()["profiles"][profile]["questions"])
+46:def excerpt(text: str, anchor: str | None = None, limit: int = PASSAGE_CHARS) -> str:
+55:def route(signals: dict[str, float]) -> str:
+69:def is_ambiguous(observation: SemanticObservation) -> bool:
+77:class Semantics:
+80:    def __init__(self, run: RunStore, evidence: EvidenceStore, jev: JevAdapter) -> None:
+87:    def _source(self, source_id: str) -> dict:
+92:    def _passage(self, item_id: str, anchor: str | None = None) -> tuple[dict, str]:
+101:    async def _ask(self, profile: str, question_ids: list[str], state: dict, subject_ids: tuple[str, ...],
+103:        call, observations = await self.jev.judge(profile=profile, question_ids=question_ids, state=state,
+110:    # --- profiles ------------------------------------------------------------------------------
+112:    async def screen(self, dependency: DecisionDependency, candidates: list[EvidenceCandidate]) -> list[EvidenceCandidate]:
+117:        unanswered = {"question": dependency.question, "premises": list(dependency.premises),
+120:        async def one(c: EvidenceCandidate) -> EvidenceCandidate:
+124:                obs = await self._ask("candidate_screen", profile_questions("candidate_screen"),
+125:                                      {"unanswered_question": unanswered, "passage": passage},
+127:                signals = {o.question_id: o.noul_value for o in obs if o.noul_value is not None}
+142:    async def interpret(self, *, item_id: str, claim: str, target: str, subject_kind: str = "other",
+144:        """claim_interpretation: entity scope and posture, plus the status question for the claim's subject.
+149:        questions = ["entity_scope", "claim_posture"]
+153:            questions.append(STATUS_QUESTION[subject_kind])
+155:        return await self._ask("claim_interpretation", questions, state, (item_id,), (sha,))
+157:    async def check_finding(self, finding: AtomicFinding) -> list[SemanticObservation]:
+168:        # One request: the finding-quality questions read state.proposed_finding, and the host-mandated entity check
+172:        return await self._ask("finding_check", [*profile_questions("finding_check"), "entity_scope"], state,
+175:    async def relate(self, a: AtomicFinding, b: AtomicFinding, proposed_fact: str) -> list[SemanticObservation]:
+177:        def statement(f: AtomicFinding) -> dict:
+185:    async def support(self, statement: str, cited: list[AtomicFinding], engine_results: list[str],
+195:    async def coverage(self, passage: dict, cited: list[AtomicFinding], subject_ids: tuple[str, ...],
+     253 app/agent/jev_profiles.py
+     283 app/analysis/build.py
+      41 app/disputes/hydrate.py
+     577 total

@@ -1,0 +1,1 @@
+{"command": "A=/opt/homebrew/bin/aws; B=slope-walk-462947327980-20261001; $A --profile slope s3 ls s3://$B/walk-36781427817/ | head -50; for p in fresh-balanced-coarse fresh-balanced-tail fresh-balanced-fanout fresh-balanced-nested; do echo \"== $p\"; $A --profile slope s3 ls s3://$B/walk-36781427817/$p/ ; $A --profile slope s3 ls s3://$B/walk-36781427817/$p/refine-v1/ ; done"}

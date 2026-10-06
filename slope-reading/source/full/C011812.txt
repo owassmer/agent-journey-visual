@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:21418,chars:"",yield_time_ms:1000,max_output_tokens:1000}));
+text(await tools.exec_command({cmd:"python3 /tmp/collect_terminal_scope.py; gh run view 36916420788 --repo owassmer/Slope_Sparse_Events --json status,conclusion","yield_time_ms":1000,"max_output_tokens":600}));

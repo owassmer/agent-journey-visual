@@ -1,0 +1,1 @@
+{"action": "steer", "subagent_id": "sa-0-810e6dea", "message": "Owen: no baseline runs. Drop the slice old-vs-new comparison. Commit and push what you have now (kernels plus the processed/line_net memoization), with the three tests and ruff passing, and report your SHAs and the per-engine-run time. The integration worker (branch step-9-int) merges step-9-speed next."}

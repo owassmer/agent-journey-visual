@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/akts && grep -v '^$' 8k_0522.txt | sed -n '86,100p'; echo ===== ex992; grep -v '^$' 8k_0522_ex992.txt | sed -n '5,20p'; echo ===== 0524; grep -v '^$' 8k_0524.txt | grep -n -A25 \"Item 1.01\" | head -40; echo ==== 424b3; grep -v '^$' 424b3_0524.txt | sed -n '1,60p' | cut -c1-400"}

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && sed -n 237,266p app/analysis/build.py; grep -n \"def judge\\b\\|async def judge\\|def bank_paths\\|def all_paths\" app/disputes/forecast.py; grep -n \"def metrics\\|def view_metrics\\|def views\\b\\|def payload\" app/analysis/core.py app/analysis/build.py | head"}

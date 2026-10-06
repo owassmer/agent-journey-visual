@@ -1,0 +1,1 @@
+{"command": "ls -la /private/var/vm/ 2>/dev/null | tail -5; du -sh ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run/var/analysis/* ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-*/var 2>/dev/null; memory_pressure -Q | tail -1; ps -axo pid,rss,command | grep \"slope analyze\" | grep -v grep | cut -c1-80"}

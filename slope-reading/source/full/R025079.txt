@@ -1,0 +1,120 @@
+60	        received_to_date_cents=a(received), window_daily_cents={1: a(w1_daily), 2: a(0)},
+61	        window_manual_credit_cents={1: a(w1_manual), 2: a(0)}, unmet_prior_obligation_cents=a(0))
+62	
+63	
+64	def flat_credits(start: date, end: date, daily_cents: int) -> AccountCredits:
+65	    d, out = start, {}
+66	    while d <= end:
+67	        out[d] = daily_cents
+68	        d += timedelta(days=1)
+69	    return AccountCredits(store_scope="test store", daily_gross_cents=out, provenance_note="test")
+70	
+71	
+72	def test_first_window_excess_does_not_cover_the_second_window():
+73	    t = MerchantTerms()
+74	    # 50% already paid in window 1 by the analysis date; low credits afterwards.
+75	    state = seasoned_state(AUG12, received=cents("209050"), w1_daily=cents("209050"))
+76	    horizon = add_months(FUNDING, 12) + timedelta(days=10)
+77	    p = project(t, state, flat_credits(AUG13, horizon, 0), horizon=horizon)
+78	    w1_end, w2_end = t.window_bounds(FUNDING, 1)[1], t.window_bounds(FUNDING, 2)[1]
+79	    top_ups = [r for r in p.rows if r.kind == "window_top_up"]
+80	    assert [r.window for r in top_ups] == [2]  # window 1 already met
+81	    assert top_ups[0].on == next_business_day(w2_end) and top_ups[0].amount_cents == t.minimum_payment_cents
+82	    assert all(r.on != next_business_day(w1_end) or r.kind != "window_top_up" for r in p.rows)
+83	
+84	
+85	def test_seasoned_clocks_run_from_funding_not_the_analysis_date():
+86	    t = MerchantTerms()
+87	    horizon = date(2025, 12, 31)
+88	    for as_of in (date(2024, 6, 30), AUG12):
+89	        p = project(t, seasoned_state(as_of, 0, 0), flat_credits(as_of + timedelta(1), horizon, 0), horizon=horizon)
+90	        top_ups = [r.on for r in p.rows if r.kind == "window_top_up"]
+91	        assert top_ups == [next_business_day(add_months(FUNDING, 6)), next_business_day(add_months(FUNDING, 12))]
+92	        assert p.paid_off_on is not None and p.paid_off_on < add_months(FUNDING, 18)
+93	        assert sum(r.amount_cents for r in p.rows) == t.total_payment_cents  # never beyond the total
+94	
+95	
+96	def test_daily_payments_use_account_credits_and_next_business_day():
+97	    t = MerchantTerms()
+98	    sat = date(2024, 8, 17)
+99	    credits = AccountCredits(store_scope="test", daily_gross_cents={sat: 400_00}, provenance_note="test")
+100	    p = project(t, seasoned_state(AUG12, 0, 0), credits, horizon=date(2024, 8, 31))
+101	    assert [(r.on, r.amount_cents) for r in p.rows] == [(date(2024, 8, 19), 100_00)]
+102	    with pytest.raises(TypeError):
+103	        project(t, seasoned_state(AUG12, 0, 0), ConsolidatedRevenue(daily_cents={sat: 1}), horizon=date(2024, 8, 31))
+104	
+105	
+106	def test_unknown_funding_date_blocks_the_dated_schedule():
+107	    state = seasoned_state(AUG12, 0, 0).model_copy(update={"funding_date": unknown(Unit.DATE, "not disclosed")})
+108	    with pytest.raises(UnknownInput):
+109	        project(MerchantTerms(), state, flat_credits(AUG13, AUG13, 0), horizon=AUG13)
+110	
+111	
+112	# --- settlement calendar ---------------------------------------------------------------------
+113	
+114	HVL = settlements.SettlementObligation(
+115	    obligation_id="hvl_atrium_settlement", label="HVL / Atrium settlement loan", measured_on=JUN30,
+116	    remaining_by_year_cents={2024: 200_000_000, 2025: 200_000_000, 2026: 80_244_500},
+117	    source_fact_ids=("synergy_hvl_h2_2024_payment", "synergy_hvl_2025_payment", "synergy_hvl_2026_payment"))
+118	
+119	
+120	def test_june_schedule_needs_an_explicit_bridge_and_counts_payments_once():
+121	    with pytest.raises(UnknownInput):
+122	        settlements.calendar(HVL, unknown(Unit.CENTS, "July-August payments not observed"), start=AUG13,
+123	                             timing="early", through=date(2026, 12, 31))
+124	    pays = settlements.calendar(HVL, a(40_000_000), start=AUG13, timing="monthly_even", through=date(2026, 12, 31))
+125	    assert sum(p.amount_cents for p in pays) == HVL.total_remaining_cents - 40_000_000
+126	    assert sum(p.amount_cents for p in pays if p.bucket_year == 2024) == 160_000_000
+127	    assert all(date(p.bucket_year, 1, 1) <= p.on <= date(p.bucket_year, 12, 31) and p.on >= AUG13 for p in pays)
+128	    with pytest.raises(ValueError):
+129	        settlements.remaining_after_bridge(HVL, a(200_000_001))
+130	
+131	
+132	def test_timing_scenarios_place_buckets_without_inventing_amounts():
+133	    early = settlements.calendar(HVL, a(0), start=AUG13, timing="early", through=date(2025, 12, 31))
+134	    late = settlements.calendar(HVL, a(0), start=AUG13, timing="late", through=date(2025, 12, 31))
+135	    assert [(p.on, p.amount_cents) for p in early] == [(date(2024, 8, 13), 200_000_000), (date(2025, 1, 2), 200_000_000)]
+136	    assert [(p.on, p.amount_cents) for p in late] == [(date(2024, 12, 31), 200_000_000), (date(2025, 12, 31), 200_000_000)]
+137	
+138	
+139	# --- borrower cash ledger --------------------------------------------------------------------
+140	
+141	def base(streams, *, opening=None, unavailable=None, reserve=None, start=AUG13, end=date(2025, 3, 31)):
+142	    return BorrowerCashBase(
+143	        borrower_id="synergy_chc_corp", forecast_start=start,
+144	        opening_cash=opening or documented(200_000_000, Unit.CENTS, observed_on=AUG12, approximate=True,
+145	                                           facts=("synergy_cash_20240812_approx",)),
+146	        unavailable_opening_cash=unavailable or a(0), required_reserve=reserve or a(20_000_000),
+147	        end=end, streams=tuple(streams))
+148	
+149	
+150	def receipts(rows, sid="receipts"):
+151	    return CashStream(stream_id=sid, kind="operating_receipts", rows=tuple(rows), basis=Basis.OPERATOR, note="test")
+152	
+153	
+154	def test_no_fake_opening_balance():
+155	    r = ledger.run(base([], unavailable=unknown(Unit.CENTS, "restricted share not reported")))
+156	    assert r.status == "not_computable" and r.missing_inputs == ["unavailable_opening_cash"]
+157	    june_cash = documented(8_729_300, Unit.CENTS, observed_on=JUN30)
+158	    with pytest.raises(LedgerError, match="cannot open a forecast"):
+159	        ledger.run(base([], opening=june_cash))
+160	    with pytest.raises(LedgerError, match="already reflects"):
+161	        ledger.run(base([receipts([(AUG12, 1)])]))
+162	
+163	
+164	def test_each_obligation_is_counted_once():
+165	    pays = settlements.calendar(HVL, a(0), start=AUG13, timing="late", through=date(2025, 3, 31))
+166	    s = settlement_stream(HVL.obligation_id, pays)
+167	    with pytest.raises(DoubleCountError):
+168	        ledger.run(base([s, s.model_copy(update={"stream_id": "dup"})]))
+169	    aggregate = CashStream(stream_id="other_debt", kind="other_debt_service", rows=((date(2024, 9, 30), 1),),
+170	                           basis=Basis.OPERATOR, note="all notes payable service")
+171	    with pytest.raises(DoubleCountError, match="excludes"):
+172	        ledger.run(base([s, aggregate]))
+173	    ok = aggregate.model_copy(update={"excludes_obligations": (HVL.obligation_id,)})
+174	    assert ledger.run(base([s, ok])).status == "computed"
+175	
+176	
+177	def test_noncash_normalization_never_becomes_cash():
+178	    gain = CashStream(stream_id="fy2023_settlement_gain", kind="operating_outflow", rows=((date(2024, 9, 1), 223_598_600),),
+179	                      basis=Basis.DOCUMENTED, note="accounting gain normalization", is_cash=False)

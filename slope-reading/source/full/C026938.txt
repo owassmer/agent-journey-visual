@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory && cat lead-case-chromadex.md && echo \"- [Scenario compiler](scenario-compiler.md) \u2014 Jev reads passages atomically; code keeps every feasible cash path; no forecast weights\" >> MEMORY.md", "description": "Check related memory; index the new one"}

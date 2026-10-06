@@ -1,0 +1,78 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_1a1c4cd8]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 11:07:25 (1h5m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3782.45s
+
+--- ✓ TASK 1/1: Step 6b-page for the Slope demo: make core.Analysis memory-bounded (per-path totals plus fixed-bin daily distributions instead of full trajectories), then build the approved one-screen analysis page, in small checkpointed steps on branch step-6b-page, and open a PR.  (status=completed, api_calls=131, 3782.18s) ---
+PR #14 is open and its CI check passed (1m54s): https://github.com/owassmer/Slope_Sparse_Events/pull/14. The full Akoustis Analysis now peaks at 464 MB instead of an extrapolated ~43 GB, the page works in headless Chrome at both sizes, and the viewer server is stopped. I have not labelled or merged it.
+
+**Commits** (`step-6b-page`, off 7dc90f1):
+- `093ce0f`: memory-bounded Analysis.
+- `5338348`: page payload, dev route and `slope viewer --dev`.
+- `65ae3df`: the one-screen page (`page.html`, `page.js`).
+- `6246a13`: fixes from the Chrome checks, plus the two viewer tests.
+
+**Tests:** 132 pass and ruff is clean. The new tests are:
+- In `test_analysis.py`, the reduced Analysis against the full trajectories on the $2M fixture: means equal, per-draw quantiles exact, daily and headroom quantiles within one bin width.
+- In `test_viewer.py`, the page renders from its payload.
+- In `test_viewer.py`, the browser's reweight arithmetic matches the analysis for one override.
+
+**Full Akoustis Analysis** (5,558 paths, uniform judgments):
+
+```
+            | Before                                                                                  | After                                                                       
+------------+-----------------------------------------------------------------------------------------+-----------------------------------------------------------------------------
+Peak memory | 1,548 MB for the first 200 paths; about 43 GB for the full tree (extrapolated, not run) | 464 MB (592 MB including views, attribution and sensitivity); 1.8 GB max RSS
+Time        | 15 s per 200 paths; about 7 min (extrapolated)                                          | 142 s, plus 51 s to build the tree                                          
+```
+
+It takes over two minutes, so pytest uses the small fixture only.
+
+**Payload the browser downloads:** 2.29 MB page HTML with the JSON inline; the JSON alone is 1.99 MB (90 KB gzipped, but the server doesn't compress it). The 318 MB pickle stays in `var/dev/`.
+
+**Viewer peak memory:** 3.24 GB while the server built the dev page itself (tree, Analysis and worst-paths run). A viewer that only loads the cached page peaks at 0.90 GB RSS.
+
+**Slider reweight:** median 66 ms, max 192 ms (the first move), from input to charts redrawn. The server's part is about 60 ms.
+
+**Headless Chrome:**
+- No page scroll at 1440x900 or at 1024x768.
+- All tabs, the six tile clicks and the tile hover work.
+- Slider moves, the outcome segment filter with its top three sequences, Worst paths, the Law/Record/Data/Calculation/Jev drill-down and the tablet drawer open/close all work.
+- No console errors.
+
+The first screenshots showed the right edge cut off (the sixth tile, the view switch and the right panel). I fixed that and re-ran every check before the last commit.
+
+**Deviations:**
+- The daily chart series are reweighted on the server, because per-day data for 5,558 paths won't fit a ~5 MB payload. Tiles, the outcomes bar and the 0% / Jev / 100% bars are reweighted exactly in the browser.
+- For questions with more than two answers, a dropdown picks the answer and the slider sets it; the other answers are rescaled proportionally (evenly if they were all zero).
+- Cash above the 30-day need at due dates is now read from monthly bins, so its quantiles are within one bin rather than exact. Lowest-cash quantiles are still exact.
+- "Filed" means a path includes a filing, but on some draws that filing falls after 17 Dec. So the Filed share (73.4%) is higher than the bankruptcy probability (71.9%).
+- I added a "Paid" outcome class, which the brief's list didn't have.
+- No settings are precomputed; they run on request with a progress bar and are cached per setting. A full run takes several minutes. The fee options 2.5% / 3.7% / 5.0% are my choice.
+- The Akoustis pre-D record moved from `tests/akoustis_fixture.py` to `app/disputes/akoustis_pre_d.py` so the dev page can use it; the fixture re-exports it. The engine now records the day of each headroom value.
+
+**Not built yet:**
+- "Actual outcome" is disabled (the reveal is step 6c), and "Investigation log" is plain text because there is no recorded run.
+- The drill-down has no source quotes or Jev answers yet, since the dev data has no Jev evidence.
+- Recorded runs still show the old `analysis.html`.
+
+**Worth checking in the event tree:** under neutral judgments, 77.9% of the "Filed: Qorvo enforcement" share is Qorvo executing before the ruling and Akoustis filing on 21 Jun, the day after the review date. The page shows what the tree records; whether that timing is right needs checking in the tree logic. It's flagged in the PR.
+
+Screenshots are in `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6b_page/shots/`:
+- desktop_exposure.png
+- desktop_cash.png
+- desktop_collections.png
+- desktop_tile_hover.png
+- desktop_after_sliders.png
+- desktop_segment.png
+- desktop_worst.png
+- desktop_drilldown.png
+- desktop_bank_only.png
+- desktop_terms.png
+- desktop_settings.png
+- tablet.png
+- tablet_drawer.png
+
+I also added these lessons to the `slope-sparse-events-build` skill: checking a server with curl instead of waiting on it, the reduced Analysis's memory and time, and the CSS fix for the clipped right edge.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_1a1c4cd8/task-0.log

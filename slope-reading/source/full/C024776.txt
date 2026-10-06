@@ -1,0 +1,1 @@
+{"command": "grep -o -i '[^.]\\{0,300\\}vit[a]\\{0,1\\}best[^.]\\{0,300\\}' Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/synergy_chc/2024_s1a.txt | head -8; grep -c -i 'vitbest\\|vitabest' Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/synergy_chc/2024_s1a.txt"}

@@ -1,0 +1,37 @@
+or for the benefit of Lender if any of Lender, Processor or Other Processor, as applicable, was unable to effect a transfer for any payment due hereunder on a particular Day because of insufficient funds in Your Account or any other reason. Manual Payment has the meaning set forth in Section 4.1.2. Minimum Payment means thirty (30) percent of the Total Payment Amount. Month means a calendar month. Obligations means, collectively, Borrower’s obligations under this Agreement, including Your obligation to pay the Total Payment Amount within the Term, pay any applicable Minimum Payments, and pay any other fees or expenses due hereunder (including, without limitation, the reasonable attorney’s fees and expenses that arise upon an Event of Default, including after the filing of a bankruptcy or o
+---
+
+<class 'dict'> ['schema_version', 'case_selection', 'missions', 'rules', 'sources']
+{
+ "source_id": "synergy_merchant_agreement_20240501",
+ "case_id": "synergy_chc_2024",
+ "primary_url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024056991/ea020832401ex10-32_synergy.htm",
+ "original_relative_path": "research/recent_cases/synergy_chc/2024_05_01_webbank_shopify_loan.html",
+ "package_relative_path": "research/recent_cases/synergy_chc/2024_05_01_webbank_shopify_loan.html",
+ "sha256": "ac8e4d3a6bb05cb51ed876299199acb7e7536f817a350209cb8298dd2b404ada",
+ "bytes": 120450,
+ "availability": {
+  "date": "2024-06-28",
+  "precision": "day",
+  "basis": "SEC filing index lists agreement as Exhibit 10.32 within June 28, 2024 S-1.",
+  "verification_url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024056991/0001213900-24-056991-index.htm",
+  "accepted_at_as_displayed": "2024-06-28 11:32:30",
+  "intraday_runtime_policy": "Conservative end of stated date in America/New_York; do not invent an acceptance time."
+ },
+ "event_dates": [
+  {
+   "type": "agreement_date",
+   "date": "2024-05-01"
+  },
+  {
+   "type": "effective_funding_date",
+   "date": null,
+   "precision": "unknown"
+  }
+ ],
+ "relative_to_lead_cutoff": "eligible",
+ "mission_membership": {
+  "synergy_20240813": "eligible",
+  "barfresh_20241025": "out_of_case"
+ }
+}

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"range(100)\\|\\['jobs'\\]\\|config\\[.jobs.\\]\\|% 100\\|done/{\" tools/cloud_walk.py tools/pool_fleet.py tools/merge_fleet.py tools/refine_walk.py tools/fresh_walk.py tools/tail_walk.py app/disputes/pool.py tools/path_archives.py tools/archive* 2>/dev/null | head -40"}

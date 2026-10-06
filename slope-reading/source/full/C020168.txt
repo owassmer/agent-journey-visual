@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --command-id 8c76adac-cb62-4d19-bd19-406abeb3dfb6 --instance-id i-09b42b44a8d35909a --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' --output json","max_output_tokens":2100}));
+text(await tools.exec_command({cmd:"curl -sS --max-time 5 http://127.0.0.1:18766/api/status | python3 -c 'import sys,json;s=json.load(sys.stdin)[\"state\"];print(s[\"pool\"])'","max_output_tokens":700}));

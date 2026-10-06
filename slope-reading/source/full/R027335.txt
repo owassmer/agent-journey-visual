@@ -1,0 +1,42 @@
+{
+"key": "dispute_003:settle_before_ruling",
+"dispute": "dispute_003",
+"dispute_title": "Elysium attorneys' fees and costs award against ChromaDex (D. Del.)",
+"node": "settle_before_ruling",
+"question": "Will the parties settle this obligation within the window?",
+"event": "the parties settle this obligation before the court fixes the amount",
+"assumptions": [],
+"window": "from 20 Aug 2024 to 17 Nov 2024",
+"distribution": {
+"yes": 0.27,
+"no": 0.73
+},
+"confidence": null,
+"readings": {
+"How final the amount is": {
+"distribution": {
+"No amount has been stated": 0.0,
+"An amount is claimed or requested by a party": 0.02,
+"The amount has been fully briefed or submitted to the court for decision": 0.98,
+"The court has fixed the amount": 0.0
+},
+"passage_dated": "2024-08-07"
+},
+"The payer's conduct on this obligation": {
+"distribution": {
+"The payer has complied promptly": 0.01,
+"The passage describes no conduct by the payer on this obligation": 0.05,
+"The payer contested or delayed but complied in the end": 0.275,
+"The payer has refused, or contested enforcement of, this obligation": 0.665
+},
+"passage_dated": "2024-08-07"
+}
+},
+"mechanism": "A settlement before the ruling: 60%-100% of the amount, paid inside the settlement window."
+}
+{"source": "ChromaDex Corp. Form 10-Q for the quarter ended June 30, 2024", "date": "2024-08-07", "heading": "ChromaDex Corporation and Subsidiaries > Unaudited Condensed Consolidated Statements of Cash Flows > (C) Delaware - Patent Infringement Action", "quotes": ["On March 25, 2024, the Court granted Elysium\u2019s motion for attorneys\u2019 fees and costs. On April 9, 2024, the Court entered a stipulated schedule and procedure for resolving the amount of fees and costs. On May 23, 2024, Elysium filed its opening brief. On June 6, 2024, ChromaDex filed its response brief. On June 13, 2024, E
+['key', 'dispute_title', 'event', 'window', 'assumptions', 'jev', 'jev_model', 'variants', 'at_jev', 'range'] ['0%', '100%'] ['lender_pv', 'dollar_days', 'uncollected_maturity', 'uncollected_horizon', 'min_cash', 'shortfall_p', 'shortfall', 'full_p', 'peak_locked', 'peak_capacity']
+{'index': 1, 'probability': 0.11016, 'paths': [{'dispute': 'dispute_003', 'outcome': 'settled', 'label': 'settle before the ruling'}, {'dispute': 'dispute_001', 'outcome': 'paid', 'label': 'paid'}], 'min_cash_mean_cents': 1915931936.9882812, 'min_cash_p5_cents': 1721324560.3, 'uncollected_maturity_cents': 0.0, 'lender_pv_cents': 4722554.242819488, 'dollar_days': 123333333.94000004, 'peak_locked_cents': 0.0, 'peak_capacity_cents': 0.0}
+{'index': 27, 'probability': 0.030496487928496137, 'paths': [{'dispute': 'dispute_003', 'outcome': 'appeal_pending', 'label': 'amount fixed → appeal → secured stay → surety bond → appeal still pending'}, {'dispute': 'dispute_001', 'outcome': 'uncollected', 'label': 'uncollected'}], 'min_cash_p5_cents': 1159648457.4, 'min_cash_p50_cents': 1249962456.0, 'uncollected_maturity_cents': 0.0, 'lender_pv_cents': 4722554.242819488}
+{'label': '50%', 'lender_pv': 4722554.242819488, 'dollar_days': 123333333.94000006, 'uncollected_maturity': 0.0, 'uncollected_horizon': 0.0, 'min_cash': 2166849950.5007353, 'shortfall_p': 0.0, 'shortfall': 0.0, 'full_p': 1.0, 'peak_locked': 66033155.27424002, 'peak_capacity': 2662627.2288000006, 'min_cash_p5': 1558630936.0}
+{'label': 'How final the amount is', 'reading': 'The amount has been fully briefed or submitted to the court for decision', 'distribution': {'No amount has been stated': 0.0, 'An amount is claimed or requested by a party': 0.02, 'The amount has been fully briefed or submitted to the court for decision': 0.98, 'The court has fixed the amount': 0.0}, 'probability': None, 'conflict': False, 'finding': 'fnd_008', 'quote': 'On March 25, 2024, the Court granted Elysium’s motion for attorneys’ fees and costs. On April 9, 2024, the Court entered a stipulated schedule and procedure for resolving the amount of fees and costs. On May 23, 2024, Elysium filed its opening brief. On June 6, 2024, ChromaDex filed its response bri…'}

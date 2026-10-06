@@ -1,0 +1,38 @@
+[1;32mAll checks passed![0m
+synergy_20240813: cutoff 2024-08-13T23:59:59-04:00  manifest 4bc47ec44c54
+  + synergy_s1a_20240813: 269 sections, 87 tables
+  + synergy_merchant_agreement_20240501: 12 sections, 0 tables
+  + synergy_court_20230227: 16 sections, 0 tables
+  - synergy_annual_2024: membership_outcome
+  - synergy_credit_agreement_20250530: membership_outcome
+  - synergy_quarterly_20250630: membership_outcome
+  - brfh_2024q2_10q: other_case
+  - brfh_2024q2_index: other_case
+  - brfh_2024q2_release: other_case
+  - brfh_2024q1_10q: other_case
+  - brfh_2023_10k: other_case
+  - brfh_2024q3_10q: other_case
+  - brfh_2024q3_release: other_case
+  - brfh_2024_10k: other_case
+  - brfh_2025q1_10q: other_case
+  - brfh_sec_submissions: other_case
+  - brfh_2024_08_13_litigation_funding: other_case
+barfresh_20241025: cutoff 2024-10-25T23:59:59-04:00  manifest 9bcd8edad58d
+  + brfh_2024q2_10q: 40 sections, 18 tables
+  + brfh_2024q2_index: 0 sections, 0 tables
+  + brfh_2024q2_release: 12 sections, 1 tables
+  + brfh_2024q1_10q: 39 sections, 17 tables
+  + brfh_2023_10k: 113 sections, 26 tables
+  + brfh_2024q3_10q: 40 sections, 19 tables
+  + brfh_2024q3_release: 13 sections, 2 tables
+  + brfh_2024_08_13_litigation_funding: 3 sections, 0 tables
+  - synergy_s1a_20240813: other_case
+  - synergy_merchant_agreement_20240501: other_case
+  - synergy_court_20230227: other_case
+  - synergy_annual_2024: other_case
+  - synergy_credit_agreement_20250530: other_case
+  - synergy_quarterly_20250630: other_case
+  - brfh_2024_10k: membership_outcome
+  - brfh_2025q1_10q: membership_outcome
+  - brfh_sec_submissions: availability_unknown_quarantined
+uv run slope evidence build  1.39s user 0.15s system 33% cpu 4.529 total

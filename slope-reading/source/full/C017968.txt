@@ -1,0 +1,5 @@
+await Promise.allSettled([
+tools.exec_command({cmd:"aws s3 cp s3://slope-walk-462947327980-20261001/walk-36781427817/fresh-balanced-coarse/pool/progress.json - --profile slope --region us-east-2\naws s3 ls s3://slope-walk-462947327980-20261001/walk-36781427817/fresh-balanced-coarse/pool/fleet-v3/prepared/ --profile slope --region us-east-2",max_output_tokens:1200}),
+tools.exec_command({cmd:"python3 - <<'PY'\nimport json\njson.dump({'commands':['tail -15 /var/log/slope-finish.log','df -h /opt/slope-scratch','ps -eo pid,stat,pcpu,rss,etime,args --sort=-pcpu | head -8','systemctl is-active slope-analysis-continuation slope-assembly-logs','iostat -xz 1 2 | tail -8']},open('/tmp/slope-observe.json','w'))\nPY\naws ssm send-command --profile slope --region us-east-2 --instance-ids i-09b42b44a8d35909a --document-name AWS-RunShellScript --parameters file:///tmp/slope-observe.json --query Command.CommandId --output text",max_output_tokens:1000})
+]).then(r=>r.forEach(text));
+text(await tools.write_stdin({session_id:63809,chars:"",yield_time_ms:1000,max_output_tokens:1000}));

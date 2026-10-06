@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/registry_v3.py && grep -n \"failure_policy\" Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/question_registry.json | cut -c1-200; grep -rln \"question_registry\" Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/*.py"}

@@ -1,0 +1,38 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_ee15b27c]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 02:20:36 (28m53s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1733.6s
+
+--- ✓ TASK 1/1: Worker C (analysis page) for owassmer/Slope_Sparse_Events PR #17: make the one-screen Akoustis analysis page ready for a screen-recorded walkthrough to Russell, on branch step-6c-run in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run, in the numbered steps below, each ending in targeted tests, a commit of named files, and a push. Finish with a headless-browser check of the recorded run's page and report commit SHAs, screenshots' paths and what the check showed.  (status=completed, api_calls=96, 1733.32s) ---
+Old watcher stopped; the new gate waits for `ANALYSIS_DONE`. My changes alter the payload (new scalars, links, and the fee and installments in the meta), so page.json will have to be regenerated. While I wait, I'm looking for a way to rebuild it from analysis.json without calling Jev.
+
+Steps 1–4 are committed and pushed. Step 5, the headless check, has not run: your `ANALYSIS_DONE` gate hasn't cleared, and my tools stopped responding right after I started the new watcher. So nothing is verified in a browser yet.
+
+**Commits on step-6c-run:**
+- **c86b89d (step 1):** the views are "Bank data" and "Bank data + research", and the difference is "Research adds". The top bar states the limit, the 3.7% fee, three monthly installments per draw and 20 Jun to 17 Dec 2024. `PAGE_FORMAT` is now 6, and `fee_bps` and `installments` were added to the meta.
+- **4139842 (steps 2–3):**
+  - **Tiles:** Funded, Payments due by 17 Dec, Collected, Due and unpaid (hover splits it into past due and frozen by a filing), Chance of a filing by 17 Dec, and Clawback exposure (gross, before new value). Each shows both views and what research adds, green when it helps the lender and red when it hurts.
+  - **Per-path figures:** a new `path_scalars()` computes them per path in whole cents, so on every path collected plus due-and-unpaid equals payments due, and past due plus frozen equals due-and-unpaid. `core._scalars` is unchanged.
+  - **Bridge line:** it splits the collected difference into fewer installments due and more due but unpaid. The second part is taken as the remainder in whole dollars, so the line adds up exactly.
+  - **Exposure tab:** it now shows peak outstanding and capital tied up (time-weighted outstanding, the figure the payload already carried). The chart plots both views' outstanding, frozen claim and cumulative chance of a filing, with bank data dashed and no date captions.
+  - **Question rows:** one change you didn't ask for: their effect line now measures Collected instead of the removed Unrecovered tile.
+- **df41fec (step 4):**
+  - **Case terms:** the remittitur row shows the model's $23,100,000 scenario with D.I. 616-1, never the $305,000 request. The interest row reads "sealed; amount not public" (D.I. 615) plus the §24-5(b) 8% rate and the §1961 rate the engine uses, and each component's source links to its filing.
+  - **Drill-down:** sourced components and pending motions link to their docket entries. Computed amounts print as readable money with their arithmetic. A new "Cash" step shows how the decision reaches the loan, and Jev's answer and readings print as text instead of JSON.
+  - **Plain labels:** the entered-judgment default, the notes' default date, the holders' petition ("after no-action period"), the bank-only row and the notes coupon all read in words. No raw ids appear on any row of the Akoustis fixture tree (344 questions, 36 tags).
+
+**Tests:** `tests/test_viewer.py` passes, 10 tests. The new test checks that the bridge's two parts sum to the collected difference. The reweight test covers every new per-path figure, and the collections-table test reconciles the table to the tiles in both views. ruff and `node --check` are clean. The full suite has not run.
+
+**Still to do and open issues:**
+1. **The receipt typo isn't on the page.** The only receipt figure I could find, $2.381M a month, is in `design/DECOMPOSITION.md`, not the page. None of the page code, templates or the recorded page.json states a receipt range, so I changed nothing rather than invent a line. ChromaDex, Elysium and Synergy don't appear on the page either.
+2. **page.json has to be regenerated.** The recorded page.json (02:39) predates my changes: it has the old scalar keys and lacks the links and the new meta fields. `load_page_state` only rebuilds the reweight state, not page.json itself, and `run_page` needs the Forecaster tree. I was about to look in `build.py` for a path that rebuilds it from analysis.json without calling Jev when the tools stopped.
+3. **Step 5 once the gate clears:**
+   - Watch `scratch/6d_page/gate2.log` with `wait_job`.
+   - Regenerate the page via `bg_job`, then serve it with `slope viewer`.
+   - Run `scratch/6d_page/verify.py <url>` with the Python in `scratch/6b_page/.pw/bin`.
+   - Save the three screenshots in `scratch/6d_page/`, then kill the server.
+   - Run the full test suite, once no analysis is running and at least 20% memory is free.
+
+   `verify.py` is written but has never been run.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_ee15b27c/task-0.log

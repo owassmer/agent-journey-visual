@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN timeout 380 uv run python ~/.hermes/profiles/connor/cache/scratch/6f_log/slots_log.py 2>&1 | grep -v \"npmrc\\|nvm\\|globalconfig\" | tail -4; ls -la runs/recorded/akoustis_20240620-agent_plus_jev-20260926T212137Z/jev_log*", "timeout": 400}

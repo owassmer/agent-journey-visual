@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int && sed -n 30,148p app/disputes/parallel.py | cut -c1-170; grep -n \"def record\\b\\|def record(\\|self.facts\\b\\|self.facts\\[\\|facts.setdefault\\|def _keep_late\\|self.late_facts\\|def row(\" app/disputes/forecast.py | head -20"}

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"pgrep -fl 'Google Chrome.app/Contents/MacOS|Chromium.app/Contents/MacOS'; gh api 'repos/owassmer/Slope_Sparse_Events/actions/runs/36939735152/jobs?per_page=100' --jq '[.jobs[]|{status,conclusion}]|group_by(.)|map({state:.[0],count:length})'","max_output_tokens":500}));

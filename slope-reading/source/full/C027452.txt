@@ -1,0 +1,1 @@
+{"command": "gh pr edit 8 --add-label merge-ready >/dev/null && gh pr comment 8 --body-file /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/merge_ready_pr8.md >/dev/null && gh pr view 8 --json labels,headRefOid,mergeable --jq '{labels:[.labels[].name], head:.headRefOid[0:7], mergeable}'", "description": "Apply merge-ready and post summary"}

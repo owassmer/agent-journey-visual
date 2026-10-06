@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '380,506p' app/disputes/pool.py\nrg -n 'def live|def group|def question|post_trial_ruling|def facts' app/disputes/forecast.py app/disputes/state14.py | head -50\nrg -n 'dead|never_live' app/disputes/*.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":5500}));

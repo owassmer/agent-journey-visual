@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && sed -n 103,106p app/analysis/core.py; grep -n \"limit\" app/analysis/core.py app/analysis/page.py | cut -c1-140 | head -10; grep -n \"\\\"petition\\\\|cum_petition\\|petition_cdf\\|by_date\" app/analysis/page.py | cut -c1-140 | head -5"}

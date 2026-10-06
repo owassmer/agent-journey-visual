@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && sqlite3 state.db \".tables\"; echo ---; sqlite3 state.db \".schema sessions\" | head -40; echo ---; sqlite3 state.db \"select id, source, title, substr(created_at,1,19), substr(updated_at,1,19), message_count from sessions order by updated_at desc limit 20\" 2>&1"}

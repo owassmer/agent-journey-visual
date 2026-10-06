@@ -1,0 +1,38 @@
+EFTS: 2022-09-23 424B3 0001213900-22-058453:ea166156-424b3_akoustis.htm
+EFTS: 2022-09-13 S-3 0001213900-22-055428:ea165229-s3_akoustistech.htm
+EFTS: 2022-06-10 8-K 0001213900-22-032130:ea161358ex4-1_akoustistech.htm
+EFTS: 2022-09-13 S-3 0001213900-22-055428:ea165229ex4-2_akoustistech.htm
+603 2024-05-20 avail 603 None Final Report to the Commissioner of Patents and Trademarks for Patent/Trademark Number(s) 
+604 2024-05-31 avail 604 None STIPULATION and [Proposed] Order Regarding Post-Trial Briefing by Qorvo, Inc.. (Tigan, Jer
+606 2024-06-11 NOT 606 None Redaction of D.I. 528 Official Transcript of Motion Hearing held on 4/2/2024 before Judge 
+607 2024-06-17 NOT 607 None [SEALED] MOTION for Judgment as a Matter of Law - filed by Akoustis Technologies, Inc., Ak
+608 2024-06-17 avail 608 1 MOTION for Permanent Injunction Against Defendants Akoustis Technologies, Inc. and Akousti
+608 2024-06-17 avail 608 None MOTION for Permanent Injunction Against Defendants Akoustis Technologies, Inc. and Akousti
+610 2024-06-17 NOT 610 None [SEALED] OPENING BRIEF in Support re 607 MOTION for Judgment as a Matter of Law filed by A
+611 2024-06-17 avail 611 None MOTION to Alter Judgment - Plaintiff Qorvo, Inc.'s Motion to Alter or Amend the May 20, 20
+613 2024-06-17 avail 613 1 MOTION for New Trial or in the Alternative Remittitur - filed by Akoustis Technologies, In
+613 2024-06-17 avail 613 None MOTION for New Trial or in the Alternative Remittitur - filed by Akoustis Technologies, In
+614 2024-06-17 NOT 614 None [SEALED] OPENING BRIEF in Support re 613 MOTION for New Trial or in the Alternative Remitt
+615 2024-06-17 NOT 615 None [SEALED] MOTION for Prejudgment and Post-Judgment Interest - filed by Qorvo, Inc.. (Attach
+Traceback (most recent call last):
+  File "/private/tmp/claude-501/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/scratchpad/akts_june2.py", line 18, in <module>
+    r = json.load(urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30)).get("results", [])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 429: Too Many Requests

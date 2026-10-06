@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n '393,446p' app/disputes/forecast.py; echo \"=== stress rows\"; grep -n \"def _stress_rows\\|def stress_rows\\|def event_cash\\|def _bins_from\\|BATCH =\" app/analysis/core.py; awk '/    def _stress_rows/{f=1} f{print NR\": \"$0; n++} n>40{exit}' app/analysis/core.py"}

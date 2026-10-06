@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; grep -nE \"collateral_required\\[[^]]*\\]\\s*(\\+|-|\\*|\\||&)?=|collateral_required\\s*(\\+|-|\\*|\\||&)=\" app/analysis/events.py | head; sed -n 2244,2252p app/analysis/events.py; grep -n \"np.copyto\\|\\.fill(\\|out=self\\.\" app/analysis/events.py | head", "timeout": 30}

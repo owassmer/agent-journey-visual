@@ -1,0 +1,19 @@
+bank_only pv 47226 dd 123.3 M full 1.0 min mean $24.70M p5 $23.85M horizon $25.49M locked $0.00M cap $0.00M short 0.0
+event_adjusted pv 47226 dd 123.3 M full 1.0000000000000016 min mean $21.35M p5 $15.15M horizon $22.35M locked $1.18M cap $0.03M short 0.0
+ D D. Del. fee award · ChromaDex pays | Court fixes the amount if no settlement first | jev {'yes': 0.56, 'no': 0.43999999999999995} | 0%:$24.11M 100%:$19.19M
+ D D. Del. fee award · ChromaDex pays | Settle before the ruling  | jev {'yes': 0.24, 'no': 0.76} | 0%:$22.35M 100%:$18.21M
+ D D. Del. fee award · ChromaDex pays | Secured stay if it appeals | jev {'yes': 0.58, 'no': 0.42000000000000004} | 0%:$22.01M 100%:$20.88M
+ D D. Del. fee award · ChromaDex pays | Form of security if it secures a stay | jev {'cash_deposit': 0.07, 'surety_bond': 0.91, 'letter_of_credit': 0.02} | cash_deposit:$21.27M surety_bond:$21.34M letter_of_credit:$22.28M
+ D C.D. Cal. judgment · Elysium pays | Pays voluntarily if it does not appeal; Elysium is paid in the D. Del. fee award | jev {'yes': 0.46, 'no': 0.54} | 0%:$21.00M 100%:$21.77M
+ P 0.126 ['no ruling in the period', 'paid'] $26.77M
+ P 0.11 ['no ruling in the period', 'uncollected'] $24.70M
+ P 0.095 ['settle before the ruling', 'paid'] $19.12M
+ P 0.077 ['settle before the ruling', 'uncollected'] $16.79M
+ P 0.054 ['no ruling in the period', 'settle'] $26.70M
+ S 0.03 ['amount fixed → appeal → secured stay → surety bond → appeal still pending', 'uncollected'] $11.60M
+ S 0.012 ['amount fixed → appeal → secured stay → surety bond → appeal still pending', 'collected by enforcement'] $11.84M
+ S 0.015 ['amount fixed → appeal → secured stay → surety bond → appeal still pending', 'settle'] $13.10M
+ X collateral_share [('50%', '$21.68M', '$15.56M'), ('75%', '$21.36M', '$15.39M'), ('100%', '$21.00M', '$14.13M')]
+ X exposure [('75%', '$22.56M', '$17.61M'), ('87.5%', '$21.96M', '$16.39M'), ('100%', '$21.35M', '$15.15M')]
+ X operating_variability [('0.5x', '$21.46M', '$15.27M'), ('1x', '$21.35M', '$15.15M'), ('1.5x', '$21.18M', '$14.93M')]
+[{'due': '2024-09-20', 'amount_cents': 69133333, 'principal_cents': 66666666, 'fee_cents': 2466667}, {'due': '2024-10-21', 'amount_cents': 69133333, 'principal_cents': 66666666, 'fee_cents': 2466667}, {'due': '2024-11-20', 'amount_cents': 69133334, 'principal_cents': 66666668, 'fee_cents': 2466666}]

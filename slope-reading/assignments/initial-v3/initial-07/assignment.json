@@ -1,0 +1,25 @@
+{
+  "id": "initial-07",
+  "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+  "source_lines": [
+    174,
+    202
+  ],
+  "subject": "Toolchain inspection, primary-source checks and claim of completed grounding",
+  "context_source_lines": [
+    9,
+    37,
+    134
+  ],
+  "input_tokens_estimate": 41038,
+  "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+  "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+  "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+  "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-07/input.txt",
+  "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-07/context.txt",
+  "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-07",
+  "requested_outputs": [
+    "trace.txt",
+    "reading.json"
+  ]
+}

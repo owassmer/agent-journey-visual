@@ -1,0 +1,1 @@
+(await Promise.allSettled([[59],[63],[132],[2206,6258]].map(ids=>tools.exec_command({cmd:".venv/bin/python /tmp/probe_enforcement_date.py "+ids.join(" ")+" > /tmp/enforcement-date-"+ids[0]+".log 2>&1",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",yield_time_ms:1000,max_output_tokens:500})))).forEach(text);

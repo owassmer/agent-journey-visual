@@ -1,0 +1,24 @@
+2024_s1a.html sections 270 tables 87 secs 1.5
+max section chars 19922
+== 122 ['BUSINESS', 'Legal Proceedings'] 1 1 2860
+== 202 ['SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS', 'Note 11 — Notes Payable'] 1 1 914
+  TABLE caption: The Company’s notes payable at June 30, 2024 and December 31, 2023 are as follows:
+  units: None header_rows 1
+  ctx_after: F-18
+|  | June 30, 2024 |  | December 31, 2023 |  |
+| Kenek, related party |  | $1,181,222 |  | $— |
+| Knight |  | 12,333,053 |  | 12,426,997 |
+| Sanders |  | 9,794,165 |  | 10,294,165 |
+| Atrium |  | 4,802,445 |  | 4,802,445 |
+| VitBest |  | 2,920,824 |  | — |
+| Shopify |  | 482,725 |  | 94,525 |
+| Total notes payable |  | $31,514,434 |  | $27,630,420 |
+| Unamortized debt issuance cost |  | (55,535) |  | (12,288) |
+| Total notes payable, net |  | 31,458,899 |  | 27,618,132 |
+| Short term loan payable, related party |  | (1,181,222) |  | — |
+| Current portion, related party |  | (2,000,000) |  | — |
+| Current portion, other |  | (5,887,602) |  | (2,094,525) |
+| Long-term portion, related party |  | 10,333,053 |  | 12,426,997 |
+| Long-term portion, other |  | $12,057,022 |  | $13,096,610 |
+== 211 ['SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS', 'Note 13 — Commitments & Contingencies'] 1 1 1932
+== 256 ['SYNERGY CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS', 'Note 13 — Commitments and Contingencies'] 1 1 2954

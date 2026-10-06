@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-7-page && R=akoustis_20240620-agent_plus_jev-20260926T212137Z && mkdir -p var/analysis && ln -sfn ~/dev/Slope_Sparse_Events/var/analysis/$R var/analysis/$R && ls -la var/analysis/ && ls var/ && ls ~/.hermes/profiles/connor/cache/scratch/6b_page/.pw/bin/python"}

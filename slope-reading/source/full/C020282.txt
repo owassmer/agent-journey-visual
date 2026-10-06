@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"tar -tzf /tmp/slope-recovery-base.tgz | rg '^(runs/recorded/.*/run.json|var/|uv.lock|pyproject.toml)' | head -15; aws ec2 describe-images --profile slope --region us-east-2 --image-ids ami-0d3d85815a9746bc5 --query 'Images[].{Name:Name,Root:RootDeviceName,State:State}' --output json","max_output_tokens":1000}));

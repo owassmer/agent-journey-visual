@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1510" viewBox="0 0 1800 1510" role="img" aria-labelledby="title desc">
+<title id="title">What steers an agent?</title><desc id="desc">Four conceptual diagrams compare precedent lock-in, rigid guardrails, reactive overcorrection, and principled adaptation. Each uses the same realistic journey, hindsight straight line, and provisional destination. All agent paths and boundaries are dotted.</desc>
+<rect width="1800" height="1510" fill="#f6f5f0"/><g font-family="Helvetica Neue,Arial,sans-serif">
+<text x="70" y="65" font-size="17" fill="#63717a" font-weight="600">FAITHFUL DELEGATION  /  A VISUAL MODEL</text>
+<text x="70" y="129" font-size="55" fill="#243039" font-weight="600">What steers an agent?</text>
+<text x="70" y="174" font-size="27" fill="#63717a" font-weight="400">Stable purpose. Revisable understanding. Adaptable execution.</text>
+<path d="M70 222 L125 222" fill="none" stroke="#71828c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<text x="140" y="229" font-size="19" fill="#233039" font-weight="400">Realistic journey</text>
+<path d="M355 222 L410 222" fill="none" stroke="#c6cecf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<text x="425" y="229" font-size="19" fill="#233039" font-weight="400">Hindsight ideal</text>
+<path d="M630 222 L685 222" fill="none" stroke="#243039" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="1" stroke-dasharray="1 10"/>
+<text x="700" y="229" font-size="19" fill="#233039" font-weight="400">Agent path</text>
+<path d="M875 222 L930 222" fill="none" stroke="#243039" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" stroke-dasharray="1 10"/>
+<text x="945" y="229" font-size="19" fill="#233039" font-weight="400">Agent boundaries</text>
+<circle cx="1195" cy="222" r="8" stroke="#b39a66" fill="none" stroke-width="2"/>
+<text x="1215" y="229" font-size="19" fill="#233039" font-weight="400">Provisional destination</text>
+<text x="70" y="272" font-size="18" fill="#63717a" font-weight="400">Same starting point and reference journey in every panel. Space represents possible work states, not a measured time series.</text>
+<g transform="translate(70 305)">
+<rect width="810" height="525" rx="16" fill="#fffefa" stroke="#e0e3df"/>
+<text x="27" y="44" font-size="21" fill="#bd5949" font-weight="600">01</text>
+<text x="76" y="45" font-size="29" fill="#243039" font-weight="600">Precedent lock-in</text>
+<text x="27" y="79" font-size="19" fill="#63717a" font-weight="400">The first direction becomes the whole strategy.</text>
+<g transform="translate(30 113)">
+<path d="M45 270 L665 65" fill="none" stroke="#c6cecf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M45 270 C100 274 125 300 173 246 S230 160 282 184 S330 252 378 177 S440 123 480 141 S534 75 575 100 S628 87 665 65" fill="none" stroke="#71828c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M603 27 Q635 18 651 35 Q677 37 665 65" fill="none" stroke="#b39a66" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+<circle cx="603" cy="27" r="6" stroke="#e0d8c4" fill="none" stroke-width="2"/>
+<circle cx="651" cy="35" r="6" stroke="#cbbd9b" fill="none" stroke-width="2"/>
+<circle cx="665" cy="65" r="9" stroke="#b39a66" fill="none" stroke-width="2"/>
+<path d="M45 270 L700 320" fill="none" stroke="#bd5949" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="1" stroke-dasharray="1 10"/>
+<circle cx="700" cy="320" r="5" stroke="#bd5949" fill="#bd5949" stroke-width="2"/>
+<text x="365" y="289" font-size="17" fill="#bd5949" font-weight="400">Early precedent → persistent drift</text>
+<text x="547" y="10" font-size="15" fill="#63717a" font-weight="400">Destination evolves</text>
+<circle cx="45" cy="270" r="5" stroke="#243039" fill="#243039" stroke-width="2"/>
+<text x="13" y="327" font-size="15" fill="#63717a" font-weight="400">Start</text>
+</g>
+</g>
+<g transform="translate(920 305)">
+<rect width="810" height="525" rx="16" fill="#fffefa" stroke="#e0e3df"/>
+<text x="27" y="44" font-size="21" fill="#a67834" font-weight="600">02</text>
+<text x="76" y="45" font-size="29" fill="#243039" font-weight="600">Rigid guardrails</text>
+<text x="27" y="79" font-size="19" fill="#63717a" font-weight="400">The rules become the steering mechanism.</text>
+<g transform="translate(30 113)">
+<path d="M45 270 L665 65" fill="none" stroke="#c6cecf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M45 270 C100 274 125 300 173 246 S230 160 282 184 S330 252 378 177 S440 123 480 141 S534 75 575 100 S628 87 665 65" fill="none" stroke="#71828c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M603 27 Q635 18 651 35 Q677 37 665 65" fill="none" stroke="#b39a66" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+<circle cx="603" cy="27" r="6" stroke="#e0d8c4" fill="none" stroke-width="2"/>
+<circle cx="651" cy="35" r="6" stroke="#cbbd9b" fill="none" stroke-width="2"/>
+<circle cx="665" cy="65" r="9" stroke="#b39a66" fill="none" stroke-width="2"/>
+<path d="M45 245 L705 135" fill="none" stroke="#a67834" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" stroke-dasharray="1 10"/>
+<path d="M45 300 L705 234" fill="none" stroke="#a67834" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" stroke-dasharray="1 10"/>
+<path d="M45 270 L115 233.33 L210 283.5 L310 200.83 L410 263.5 L510 167.5 L610 243.5 L705 178" fill="none" stroke="#a67834" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="1" stroke-dasharray="1 10"/>
+<circle cx="705" cy="178" r="5" stroke="#a67834" fill="#a67834" stroke-width="2"/>
+<text x="493" y="286" font-size="17" fill="#a67834" font-weight="400">Bounded, but misdirected</text>
+<circle cx="45" cy="270" r="5" stroke="#243039" fill="#243039" stroke-width="2"/>
+<text x="13" y="327" font-size="15" fill="#63717a" font-weight="400">Start</text>
+</g>
+</g>
+<g transform="translate(70 860)">
+<rect width="810" height="525" rx="16" fill="#fffefa" stroke="#e0e3df"/>
+<text x="27" y="44" font-size="21" fill="#8563aa" font-weight="600">03</text>
+<text x="76" y="45" font-size="29" fill="#243039" font-weight="600">Reactive overcorrection</text>
+<text x="27" y="79" font-size="19" fill="#63717a" font-weight="400">Each correction rewrites the local rulebook.</text>
+<g transform="translate(30 113)">
+<path d="M45 270 L665 65" fill="none" stroke="#c6cecf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M45 270 C100 274 125 300 173 246 S230 160 282 184 S330 252 378 177 S440 123 480 141 S534 75 575 100 S628 87 665 65" fill="none" stroke="#71828c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M603 27 Q635 18 651 35 Q677 37 665 65" fill="none" stroke="#b39a66" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+<circle cx="603" cy="27" r="6" stroke="#e0d8c4" fill="none" stroke-width="2"/>
+<circle cx="651" cy="35" r="6" stroke="#cbbd9b" fill="none" stroke-width="2"/>
+<circle cx="665" cy="65" r="9" stroke="#b39a66" fill="none" stroke-width="2"/>
+<path d="M45 240 L140 246 L245 112 L340 202 L438 69 L535 153 L630 35 L704 105" fill="none" stroke="#8563aa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" stroke-dasharray="1 10"/>
+<path d="M45 299 L140 310 L245 173 L340 287 L438 151 L535 218 L630 111 L704 193" fill="none" stroke="#8563aa" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" stroke-dasharray="1 10"/>
+<path d="M45 270 L140 305 L245 112 L340 285 L438 69 L535 217 L630 35 L704 159" fill="none" stroke="#8563aa" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="1" stroke-dasharray="1 10"/>
+<circle cx="704" cy="159" r="5" stroke="#8563aa" fill="#8563aa" stroke-width="2"/>
+<circle cx="245" cy="112" r="9" stroke="#8563aa" fill="none" stroke-width="2"/>
+<path d="M245 100 L245 69" fill="none" stroke="#8563aa" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+<text x="153" y="61" font-size="17" fill="#8563aa" font-weight="400">“Never do that”</text>
+<circle cx="340" cy="285" r="9" stroke="#8563aa" fill="none" stroke-width="2"/>
+<path d="M340 297 L340 291" fill="none" stroke="#8563aa" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+<text x="294" y="312" font-size="17" fill="#8563aa" font-weight="400">“Do the opposite”</text>
+<circle cx="45" cy="270" r="5" stroke="#243039" fill="#243039" stroke-width="2"/>
+<text x="13" y="327" font-size="15" fill="#63717a" font-weight="400">Start</text>
+</g>
+</g>
+<g transform="translate(920 860)">
+<rect width="810" height="525" rx="16" fill="#fffefa" stroke="#e0e3df"/>
+<text x="27" y="44" font-size="21" fill="#267e74" font-weight="600">04</text>
+<text x="76" y="45" font-size="29" fill="#243039" font-weight="600">Principled adaptation</text>
+<text x="27" y="79" font-size="19" fill="#63717a" font-weight="400">Purpose and context guide the next decision.</text>
+<g transform="translate(30 113)">
+<path d="M45 270 L665 65" fill="none" stroke="#c6cecf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M45 270 C100 274 125 300 173 246 S230 160 282 184 S330 252 378 177 S440 123 480 141 S534 75 575 100 S628 87 665 65" fill="none" stroke="#71828c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="1"/>
+<path d="M603 27 Q635 18 651 35 Q677 37 665 65" fill="none" stroke="#b39a66" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+<circle cx="603" cy="27" r="6" stroke="#e0d8c4" fill="none" stroke-width="2"/>
+<circle cx="651" cy="35" r="6" stroke="#cbbd9b" fill="none" stroke-width="2"/>
+<circle cx="665" cy="65" r="9" stroke="#b39a66" fill="none" stroke-width="2"/>
+<path d="M45 232 C150 228 178 126 275 137 S355 134 402 94 S484 72 538 55 S621 13 704 30" fill="none" stroke="#267e74" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" stroke-dasharray="1 10"/>
+<path d="M45 310 C144 318 198 227 270 241 S364 246 409 199 S478 161 539 150 S624 112 704 106" fill="none" stroke="#267e74" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" stroke-dasharray="1 10"/>
+<path d="M45 270 C122 286 171 180 258 188 S348 205 402 156 S480 128 536 112 S621 83 665 65" fill="none" stroke="#267e74" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="1" stroke-dasharray="1 10"/>
+<text x="370" y="284" font-size="17" fill="#267e74" font-weight="400">Anticipate • contextualize • adjust</text>
+<text x="370" y="311" font-size="16" fill="#63717a" font-weight="400">Guardrails remain a second defense.</text>
+<circle cx="45" cy="270" r="5" stroke="#243039" fill="#243039" stroke-width="2"/>
+<text x="13" y="327" font-size="15" fill="#63717a" font-weight="400">Start</text>
+</g>
+</g>
+<rect x="92" y="750" width="766" height="67" rx="6" fill="#fffefa"/>
+<text x="97" y="773" font-size="18" fill="#63717a" font-weight="400">An early pattern is extrapolated after its relevance fades.</text>
+<text x="97" y="798" font-size="18" fill="#63717a" font-weight="400">No boundary interrupts the drift.</text>
+<rect x="942" y="750" width="766" height="67" rx="6" fill="#fffefa"/>
+<text x="947" y="773" font-size="18" fill="#63717a" font-weight="400">The agent complies with a corridor aimed at the wrong outcome.</text>
+<text x="947" y="798" font-size="18" fill="#63717a" font-weight="400">Every turn is a collision with “always” or “never.”</text>
+<rect x="92" y="1305" width="766" height="67" rx="6" fill="#fffefa"/>
+<text x="97" y="1328" font-size="18" fill="#63717a" font-weight="400">Local feedback swings both behavior and its boundaries.</text>
+<text x="97" y="1353" font-size="18" fill="#63717a" font-weight="400">The response reverses direction instead of correcting proportionally.</text>
+<rect x="942" y="1305" width="766" height="67" rx="6" fill="#fffefa"/>
+<text x="947" y="1328" font-size="18" fill="#63717a" font-weight="400">Research and judgment avoid some of the reference journey’s detours.</text>
+<text x="947" y="1353" font-size="18" fill="#63717a" font-weight="400">Boundaries catch exceptions; they rarely dictate the route.</text>
+<text x="70" y="1431" font-size="30" fill="#243039" font-weight="500">The aim: sound judgment that reduces the need for intervention.</text>
+<text x="70" y="1471" font-size="18" fill="#63717a" font-weight="400">Conceptual, not empirical. The straight line is a hindsight reference; fewer turns alone do not prove better decisions.</text>
+</g></svg>

@@ -1,0 +1,3 @@
+text(await tools.exec_command({cmd:"cat /tmp/check_unit11_missing_decision.py; UV_CACHE_DIR=/tmp/slope-uv-cache env -u CLAUDE_CODE_OAUTH_TOKEN uv run --no-sync python - <<'PY'\nimport pickle,pprint\nfor n,indices in [(6910,[32,45]),(11,[168])]:\n v=pickle.load(open(f'/tmp/notes-{n}-diagnostic.pkl','rb'))\n for i in indices:\n  print(n,i);pprint.pp(v['paths'][i].steps)\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));
+text(await tools.write_stdin({session_id:41534,chars:"",yield_time_ms:1000,max_output_tokens:1000}));
+text(ALL_TOOLS.find(x=>x.name.endsWith("github_fetch")).description);

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'uses_appeal_status|classification|class_cache' tools/question_refresh.py; sed -n '1,20p' app/disputes/notes.py; rg -n 'situation_keys:' -g '*14*' -g '*.yaml' | head","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2000}))

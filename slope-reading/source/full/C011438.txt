@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"/Users/owenwassmer/.codex/skills/playwright/scripts/playwright_cli.sh -s=slope-recovery tab-list",max_output_tokens:2000}));
+text(await tools.exec_command({cmd:"osascript -e 'tell application \"Google Chrome\" to get {title, URL} of tabs of windows'",max_output_tokens:3000}));

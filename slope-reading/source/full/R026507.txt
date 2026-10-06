@@ -1,0 +1,27 @@
+Exit code 1
+[1m[91mB007[0m[1m Loop control variable `m` not used within loop body[0m
+  [1m[94m--> [0mcases/chromadex_20240819/make_bank_feed.py:88:13
+   [1m[94m|[0m
+[1m[94m86[0m [1m[94m|[0m         receipts = spec["receipts"]
+[1m[94m87[0m [1m[94m|[0m         outflows = receipts + spec["other_inflows"] - spec["net"]
+[1m[94m88[0m [1m[94m|[0m         for m, ds in month_days.items():
+   [1m[94m|[0m             [1m[91m^[0m
+[1m[94m89[0m [1m[94m|[0m             share = len(ds) / n_days
+[1m[94m90[0m [1m[94m|[0m             for cp, cat, s, cad in RECEIPT_MIX:
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Rename unused `m` to `_m`[0m
+
+[1m[91mB007[0m[1m Loop control variable `m` not used within loop body[0m
+  [1m[94m--> [0mcases/chromadex_20240819/make_bank_feed.py:88:13
+   [1m[94m|[0m
+[1m[94m86[0m [1m[94m|[0m         receipts = spec["receipts"]
+[1m[94m87[0m [1m[94m|[0m         outflows = receipts + spec["other_inflows"] - spec["net"]
+[1m[94m88[0m [1m[94m|[0m         for m, ds in month_days.items():
+   [1m[94m|[0m             [1m[91m^[0m
+[1m[94m89[0m [1m[94m|[0m             share = len(ds) / n_days
+[1m[94m90[0m [1m[94m|[0m             for cp, cat, s, cad in RECEIPT_MIX:
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Rename unused `m` to `_m`[0m
+
+Found 1 error.
+No fixes available (1 hidden fix can be enabled with the `--unsafe-fixes` option).

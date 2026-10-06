@@ -1,0 +1,30 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_63a290fe]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 00:21:11 (4m7s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 247.36s
+
+--- ✓ TASK 1/1: Two fixes to the 14 May investigation on branch step-9-contracts of owassmer/Slope_Sparse_Events, then stop before any re-run: (1) under the 14 May mission, get_record_items returns only the record items of the pending-claim chain's questions, never another template's; (2) run.json's incomplete_reasons records an unsubmitted packet. Commit and push; open no PR.  (status=completed, api_calls=29, 247.02s) ---
+Both fixes are in commit `50041e6` on `step-9-contracts` (on top of `fecec8d`), pushed to origin. I opened no PR and ran no new investigation.
+
+**1. Record items are limited to the pending-claim chain**
+- The 14 May mission in `agent_config.json` now names its chain: `"dispute_template": "pending_money_claim"`. The agent never sees this setting; the mission whitelist strips it.
+- Under that mission, `get_record_items` returns the 54 items of the pending template's `asks`, whatever stage the agent passes.
+- `submit_packet` now counts only those 54 when it checks for open items.
+- I also made `attach_record_item` refuse any other template, so the agent can't fill items that no longer count.
+- Missions without the setting, including 20 Jun, work as before.
+
+**2. An unsubmitted packet is now recorded in run.json**
+- When the session ends without a submitted packet, `investigation.py` adds `"packet not submitted"` to the incomplete reasons, followed by the failure if there was one. The packet and run.json both carry it; in run `034443Z`, run.json had `[]`.
+- I couldn't exercise this without re-running the investigation, so it is checked only by reading the code.
+
+**Check results**
+- **Each stage:** under the 14 May mission, all six stages return the same 54 items as the pending template. Without the setting, every stage after `liability_pending` returns `federal_post_judgment`'s 36 items, which is how run `034443Z` reached 90.
+- **Replay of run `034443Z`:** its saved records split 54 pending and 36 post-judgment. Under the new rule the open-item check finds nothing open, whether the dispute's stage is `liability_pending` or `judgment_entered`.
+- **20 Jun dump:** equals `scratch/9h/dump20_final.json` on every key but `seconds` (69 s).
+- **Tests:** `tests/test_investigation_tools.py` and `tests/test_semantic_layer.py` give 32 passed; `tests/test_mission_isolation.py` gives 5 passed. Ruff is clean.
+
+**Files changed:** `app/agent/tools.py`, `app/agent/investigation.py`, `Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json`, and the kit's `PACKAGE_MANIFEST.json` (the config's hash and size, refreshed by hand since no test checks them). The check script is `scratch/9n/check_items.py`. I added a note on this to the `slope-sparse-events-build` skill.
+
+The mission's own instructions still tell the agent to call `get_record_items` "for each stage the dispute reaches." It will now get the same 54 items each time, which wastes a few calls but no longer sends it after post-verdict items. I didn't change that text because it is quoted word for word from the mission.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_63a290fe/task-0.log

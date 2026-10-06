@@ -1,0 +1,15 @@
+Exit code 1
+ok
+  - cdxc_2024_10k: membership_outcome
+  - niagen_2026q2_10q: membership_outcome
+  - cacd_16cv2277_d671_amended_judgment: membership_outcome
+Traceback (most recent call last):
+  File "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5a-chromadex-evidence/cases/chromadex_20240819/make_run_inputs.py", line 105, in <module>
+    out.write_text(json.dumps(inputs, indent=2, ensure_ascii=False) + '\n')
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'cases/chromadex_20240903/run_inputs.json'

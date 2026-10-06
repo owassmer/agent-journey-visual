@@ -1,0 +1,6 @@
+const results=await Promise.allSettled([
+  tools.web__run({find:[{ref_id:"turn8view1",pattern:"HTML"},{ref_id:"turn8view1",pattern:"Abstract"}],response_length:"medium"}),
+  tools.exec_command({cmd:"gh api repos/WebGrga/btc-jev-signal/contents/src/experiment-jev.ts -H 'Accept: application/vnd.github.raw+json'",max_output_tokens:4800}),
+  tools.exec_command({cmd:"gh api repos/WebGrga/btc-jev-signal/contents/src/experiment-report.ts -H 'Accept: application/vnd.github.raw+json'",max_output_tokens:2400}),
+  tools.exec_command({cmd:"sed -n '11,105p' Slope_Coding_Agent_Context_and_Alignment.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:3400})
+]);results.forEach((r,i)=>text({i,...r}));

@@ -1,0 +1,82 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_a52c0804]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 02:54:22 (1h15m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 4533.87s
+
+--- ✓ TASK 1/1: Fix the step-9 tree explosion in owassmer/Slope_Sparse_Events: within-path option groups fork the path by trajectory group instead of enumerating every combination of the groups' answers, with the analysis weighting each trajectory by its own path. Integrate the page and speed branches first. Then build the full 14 May tree once on the fast code. Branch step-9-int. Commit and push; open no PR.  (status=completed, api_calls=114, 4533.59s) ---
+I've stopped the full build and everything is pushed: step-9-int is at **bf852cc** and the worktree is clean. Across a 3,000-path slice, the tree walks the same money outcomes about 5 times over. The copies come from a few questions whose answers change no cash inside the horizon on those paths. I have not implemented any reduction yet; the proposal is below for your decision.
+
+**What's on the branch**
+- **34ebce8:** bounds the walk's cache of traced prefixes at 512 and keeps only the last step's facts per prefix. The engine-run cache is 64. The killed build held flat at 1.41 GB peak memory from 6,000 paths to 29,000.
+- **2b2ff5c:** the fork fix. A question asked per option group now forks the path once per (group, answer), and every read goes through the path's draw mask. Node keys, context tags and answer sets are unchanged. test_1 now checks that the paths following each draw sum to 1.
+- **bf852cc:** the analysis weighs each path over its own draws, as you specified. It also changes the page payload and page.js (the page format is bumped to 10).
+- The 20 Jun dump equals `9h/dump20_final.json`, and ruff is clean. `test_page_data_20240514` and `test_cash_processing` pass (4 tests). `test_pending_claim`, checks (a)–(d), the verdict checks and `tree_paths_check` are not run, because they need the full tree.
+
+**Visits per step kind** (the slice never left the first verdict class; 4,637 distinct prefixes)
+
+```
+step                               | decision points | mean children | paths with it | max per path             
+-----------------------------------+-----------------+---------------+---------------+--------------------------
+delisting (holders' response)      | 441             | 3.00          | 1,605         | 1                        
+listing                            | 420             | 3.00          | 2,996         | 1                        
+cash floor (D7)                    | 299             | 3.57          | 2,171         | 3 (1,878 paths repeat it)
+offering closes after a floor (N1) | 155             | 1.99          | 1,548         | 3 (504 repeat)           
+settlement, during the appeal      | 117             | 2.00          | 1,602         | 1                        
+appeal                             | 51              | 1.98          | 2,250         | 1                        
+response on the levy day (D2)      | 12              | 4.83          | 357           | 1                        
+```
+
+- Settlement is asked up to 4 times per path across its windows, on 2,990 paths.
+- D2 is asked twice per path on 1,823 paths, and the offering up to 4 times on 1,822.
+- The tree grows by (upstream histories) × (listing 3 × delisting 3 × a floor loop of up to 3 rounds at about 3.6 children each).
+
+**Do different histories reach the same state?**
+- **Same whole engine state, walker fields and mask:** only 30 of 4,637 prefixes (32 paths). Exact merging would save almost nothing.
+- **Same event cash, waiting steps and mask:** 516 prefixes, with 2,120 of the 3,000 paths below them. What keeps them apart:
+  - the appeal flag and marks (870 paths below);
+  - the hearing-requested date (375);
+  - notes-due status (218 + 310);
+  - stay collateral (175) and ruling dates (152), which do move later cash, so these are not merge candidates.
+- **Whole paths:** the 3,000 paths fall into **604** financially distinct classes (same mask, same event cash to the horizon), a 5.0× redundancy. Class sizes come in powers of two, which points to binary questions that book nothing.
+- **Differences inside those classes:**
+
+```
+pairs                      | cash-identical histories                                                                        
+---------------------------+-------------------------------------------------------------------------------------------------
+293 (+~200 in combination) | appeal yes vs appeal no                                                                         
+220 (+~200)                | listing compliant vs hearing requested                                                          
+204 (+~185)                | delisting: holders accelerate vs neither                                                        
+158 (+~330)                | D7 initiate offering, then the offering fails vs D7 neither                                     
+72 (+~78)                  | creditor executes before the ruling, stay no, early registration no vs creditor does not execute
+49                         | offering closes vs does not (close falls after the horizon)                                     
+35                         | D7 initiate, then offering closes vs neither                                                    
+29                         | stay after the ruling yes vs stay no, then no settlement                                        
+```
+
+- A declined settlement vs none, and a denied stay vs none, are already single branches (settlement and stay are each one yes/no composite), so they don't appear.
+
+**Proposed reduction** (your rules: financially equivalent paths merge as composite '=' edges; decisions that cannot change cash inside the horizon are not asked)
+1. **Appeal:** ask it only where a question it opens (the stay pending appeal, or the settlement during the appeal) can arise inside the horizon on the path's draws. Otherwise, fold yes into no.
+2. **Listing:** merge compliant and hearing requested into one "listed through the horizon" class, because a hearing request stays the suspension until after the period. Later questions would then see that listing status as unstated.
+3. **Failed offering:** a failed offering books nothing, so fold it into "neither" as a composite. This drops the "after a failed offering" context from later questions.
+4. **Offering after the horizon:** don't ask whether the offering closes where its close date falls after the horizon on every one of the path's draws. **Decision for you:** the stricter version, treating an offering as "available" (bit 1) only if it can close inside the horizon, changes your grouping definition. I won't do it without your say-so.
+5. **Holders' acceleration after a delisting, and the creditor executing before the ruling:** where no later petition or cash question can arise inside the horizon on the path's draws, fold "accelerated" into "none", and fold "executes, no stay, no early registration" into "does not execute".
+6. **Backstop at the end of each path:** merge paths with the same mask, the same event cash to the horizon, the same verdict class and the same post-trial ruling into one path with a composite edge, keeping the first path's steps for the page. Measured at 5.0× on this slice, but it cuts only the analysis and page cost, not the walk. Rules 1–5 cut the walk. I haven't measured their combined factor.
+
+I can't give a firm full-tree size. The killed run's node count jumped near 20,000 paths, which suggests the first verdict class alone is about 19–20k paths. The scripts, logs and slice pickle are in `~/.hermes/profiles/connor/cache/scratch/9i2/`; `mult.log` and `mult2.log` hold the tables above, and `mult3.py` produced the within-class differences.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_a52c0804/task-0.log
+Child's process proc_20889bc3bf39 `cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int && df -h / | tail -1 && env -u CLAUDE_CODE` finished (exit code 0) but the child never read its result; output tail:
+                   3.0 MB ['ndarray']
+  entry                    3.0 MB ['ndarray']
+  ruling                   3.0 MB ['ndarray']
+  delisted                 3.0 MB ['ndarray']
+  stayed_from              3.0 MB ['ndarray']
+fc.facts 69.7 MB rows 260
+basis.runs 163 arrears_runs 4 stack depth {('claim',): 13}
+       21.09 real        12.57 user         0.51 sys
+          1019838464  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            10387912  peak memory footprint

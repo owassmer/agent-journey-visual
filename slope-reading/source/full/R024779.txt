@@ -1,0 +1,19 @@
+4902-Atrium
+4903-4,802,445
+4904-4,802,445
+4905:VitBest
+4906-2,920,824
+4907-—
+4908-Shopify
+459:If our outside suppliers and manufacturers fail to supply products in sufficient quantities and in a timely fashion, our business could suffer;
+473:We and our suppliers are subject to numerous laws and regulations that apply to the manufacturing and sale of nutritional supplements, and compliance with these laws and regulations, as they currently exist or as modified in the future, may increase our costs, limit or eliminate our ability to s
+813:If our outside suppliers and manufacturers fail to supply products in sufficient quantities and in a timely fashion, our business could suffer.
+816:suppliers. We also depend on outside suppliers for the packaging materials for our products. In the event we were to lose any significant suppliers or contract manufacturers and have trouble in finding or transitioning to alternative suppliers or manufacturers, it could result in product shortag
+818:manner. Our ability to enter new markets and sustain satisfactory levels of sales in each market depends on the ability of our suppliers and contract manufacturers to provide required levels of ingredients and products and to comply with all applicable regulations. The failure of our outside sup
+858:Recently it has become more and more common for suppliers and competitors to apply for patents or develop proprietary technologies and processes. We seek to ensure that we do not infringe the intellectual property rights of others, but there can be no assurance that third parties will not assert
+892:We may be subject to product recalls, withdrawals or seizures if any of the products we sell are believed to cause injury or illness or if we are alleged to have violated governmental regulations in the manufacturing, labeling, promotion, sale or distribution of those products. A significant rec
+902:The occurrence of one or more natural disasters, such as hurricanes, fires, floods, earthquakes, tornadoes, high winds and other severe weather, could materially and adversely affect our operations and results of operations. To the extent these events result in the suspension of shipping by our 
+904:disruption in the supply of products from suppliers, delay in the delivery of goods to our distribution centers or stores, the temporary reduction in the availability of products in our stores and disruption to our information systems, as noted above. These events also could have indirect conseq
+1040:operations depends upon the secure transmission of confidential information over public networks, including the use of cashless payments, and we use computers in substantially all other aspects of our business operations. Such uses give rise to cybersecurity risks, including security breach, es
+1191:our outside suppliers and manufacturers failing to supply products in sufficient quantities and in a timely fashion;
+1209:the impact of numerous laws and regulations that apply to the manufacture, sale, and manufacturing of nutritional supplements, and compliance with these laws and regulations, as they currently exist or as modified in the future, on us and our suppliers;

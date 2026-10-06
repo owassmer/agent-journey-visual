@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-chains && env -u CLAUDE_CODE_OAUTH_TOKEN uv run pytest -q -p no:warnings > /tmp/p12b.txt 2>&1; echo \"exit $?\"; tail -1 /tmp/p12b.txt; uv run ruff check . | tail -1; git diff --stat origin/main | tail -1; gh pr edit 12 --add-label merge-ready | tail -1", "timeout": 900}

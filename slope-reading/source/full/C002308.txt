@@ -1,0 +1,1 @@
+{"image_url": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6d_page/default.png", "question": "Describe this page's layout region by region, transcribe all visible labels/headings/tile text, and judge how intelligible it would be to a head of lending seeing it cold. Note jargon, density, and what the eye lands on first."}

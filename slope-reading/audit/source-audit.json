@@ -1,0 +1,90 @@
+{
+  "scope": "Structural/provenance audit only; no claim of semantic reading of whole session. Original sources read-only. Raw normalization is extraction, not comprehension.",
+  "repaired_export": {
+    "directory": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source",
+    "manifest": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source-manifest.json",
+    "files": 21,
+    "events": 88097,
+    "bytes": 372558186,
+    "schema": "Each record retains untouched raw event/DB row, original source locator, actor, source sequence, full-precision timestamp. No deduplication/filtering/semantic classification. Raw bytes encoded as hex where needed. Actor knowledge follows actor sequence, not global wall time.",
+    "snapshot_note": "Hermes read in one explicit SQLite read transaction; JSONL selected files copied eventwise without omission. Live sources may subsequently grow."
+  },
+  "findings": [
+    {
+      "id": "text_dedup",
+      "severity": "critical",
+      "finding": "Exact text match is labeled replay and skips whole assistant record before processing its calls. 129 assistant records and 53 user records suppressed; 66 suppressed assistant records have tool_calls. Repetition is not evidence of transport replay.",
+      "evidence": "source/export2.py Hermes seen/hash/continue; raw-source-manifest.json repeated record IDs",
+      "repair": "Read original native-order records with IDs and active/compacted/display metadata. Preserve all occurrences; infer replay only from identity and source context."
+    },
+    {
+      "id": "instruction_context",
+      "severity": "critical",
+      "finding": "Codex drops developer messages, XML-leading user messages, turn_context, world_state and compaction events. Selected raw sources contain 111 developer messages, 33 XML-leading user messages, 450 turn_context, 114 world_state and 76 compacted records.",
+      "evidence": "source/export2.py Codex response_item-only filter; raw-source-manifest.json",
+      "repair": "Restored in raw-source. Readers track context changes and summaries at actual exposure positions."
+    },
+    {
+      "id": "agent_messages",
+      "severity": "critical",
+      "finding": "Codex agent_message records are omitted entirely. Many payloads and some outgoing collaboration calls are encrypted in stored source.",
+      "evidence": "source/export2.py recognized types; raw-source Codex response_item agent_message and collaboration calls",
+      "repair": "Preserved raw; plaintext unavailable must be marked unavailable. Do not reconstruct parent knowledge by silently substituting child full history."
+    },
+    {
+      "id": "chronology",
+      "severity": "critical",
+      "finding": "Global merged ordering truncates timestamps to seconds; source-call IDs, original ordinals and actor metadata are lost. Global availability is not actor exposure.",
+      "evidence": "source/export2.py iso, events.sort, role rendering",
+      "repair": "Use each actor source order; retain original timestamp, ordinal, call_id, thread/turn IDs, parent and delivery links. Merge for display only."
+    },
+    {
+      "id": "source_population",
+      "severity": "high",
+      "finding": "Exporter selected hard-coded Hermes parents, 10 Codex files by first-line cwd substring, 4 top-level Claude files. 119 Hermes candidate sessions (includes selected parents and child sessions) and 22 Claude nested subagent files exist. This is not a verified complete corpus.",
+      "evidence": "audit/linked-source-candidates.json",
+      "repair": "Bounded linked-source recovery: inspect named children/forks when establishing action outcomes or delivered context. Do not blanket import unrelated projects."
+    },
+    {
+      "id": "claude_filtering",
+      "severity": "high",
+      "finding": "Claude export omits sidechains, isMeta and XML-leading user text, attachment/system/file-history/queue records, thinking and nontext content.",
+      "evidence": "source/export2.py Claude branch; raw-source-manifest.json",
+      "repair": "All top-level source events now preserved. Determine visibility from native parent UUIDs/sidechain/attachment semantics rather than role guesses."
+    },
+    {
+      "id": "hermes_metadata",
+      "severity": "high",
+      "finding": "Exporter drops session metadata and row fields such as active, compacted, _compressed_summary, api_content, display_metadata, tool_call_id. Current DB flags do not alone establish historical exposure.",
+      "evidence": "raw-source first metadata rows and full message rows",
+      "repair": "Preserved all fields under explicit SQLite read transaction. Use native IDs and summary insertion to understand transitions."
+    },
+    {
+      "id": "payload_storage",
+      "severity": "resolved",
+      "finding": "All 15,575 full/ references in all.txt exist in snapshot. Nevertheless the reading spec still references old ACTIONS collapse and omission policy, and full payload existence is not evidence they were read.",
+      "evidence": "source/all.txt; source/full; source/TRACE_SPEC.md",
+      "repair": "Use full native source reading plus explicit coverage records. Supersede old spec; source/all.txt is a convenience index only."
+    },
+    {
+      "id": "source_duplicates",
+      "severity": "high",
+      "finding": "Codex includes 3 primary 01a0f371 continuation files and 3 explicit child actor files carrying inherited context. UI item_completed may mirror response_item. Equal text is insufficient for dedup.",
+      "evidence": "audit/codex-source-map.json history_base, forked_from_id, subagent_history_start_ordinal",
+      "repair": "Preserve raw; identify same occurrence from original ordinal/item/call/turn IDs and history_base. Keep inherited child exposure distinct from fresh action. Pure token telemetry may be excluded from semantic reading with counts recorded."
+    },
+    {
+      "id": "knowledge_vs_artifact",
+      "severity": "high",
+      "finding": "A historical artifact can confirm a change without proving the actor had read it. Current repo state cannot substitute for historical context.",
+      "evidence": "Source structure: tool results vs git artifact history",
+      "repair": "Use received tool/message contents for knowledge; timestamped artifacts for independent outcome verification. Track unavailable original tool output/truncation separately."
+    }
+  ],
+  "remaining_limits": [
+    "Encrypted stored contents unavailable as semantic evidence.",
+    "Linked delegate population identified but not yet fully exported or semantically read.",
+    "Original runtime may have truncated outputs before persistence; full stored result means full available stored result, not original command output.",
+    "Native replay/fork exposure requires identity/ancestry interpretation; raw preserves all records without assuming equal text equals duplication."
+  ]
+}

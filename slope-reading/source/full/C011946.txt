@@ -1,0 +1,20 @@
+const patch = [
+"*** Begin Patch",
+"*** Update File: /Users/owenwassmer/.hermes/profiles/connor/skills/software-development/slope-sparse-events-build/SKILL.md",
+"@@",
+"-" + "- **Proving a speed change exact: shadow checks, not walks.** `app/analysis/shadow.py`: with `SLOPE_SHADOW=1` each fast path also runs the Python it replaced and raises on any bit difference, naming where. One smoke replays recorded paths at every prefix in seconds (`scratch/memo/smoke.py`, refs `scratch/memo/ref_*.pkl`); whole-band walks and timing runs are not proof and Owen rules them out. Object-dtype arrays (strings) compare by value, never by `tobytes` (pointers).",
+"@@",
+"-" + "- **Build the full 14 May tree once per code version and share it.** The `tests/akoustis_20240514_fixture` tree *is* the full tree. One run pickles `{paths, bank, nodes, bank_nodes}`; other work replays single paths from it (`Chain(d, setup, m, Draws(n, basis=basis_for(feed, setup)), {}).run(steps)`, ~5 ms each) and never rebuilds.",
+"@@",
+"-" + "- **See a heavy unit finish before promising a date.** Every walk before 30 Sep was cancelled for a fix before its heavy jobs completed, so their size was unknown until the deadline passed. Measure the heaviest finished part (`part*.pkl`: paths, distinct equivalence keys, repeated steps, branch points) first.",
+"-" + "- **Fix every identified inefficiency before relaunching; never defer one to a later commit.** Owen rejects 'queued' fixes, waiting on a run to prove redundancy exists, and quoting each fix's share of the walk. Redundant or repeated work is fixed on its merits from the code; percentage-by-percentage tuning is the failure mode, not the method. Aim at the structural causes (repeated simulation, oversized units, dense widening), not marginal shares.",
+"-" + "- **Once a cause is measured, fix it and launch.** A local equality or timing check whose reference is the slow walk being removed costs the time the fix saves, and Owen rules it out; the runners' walk is the check. Never use the $279,808 band as a test case: it isn't representative. Use the heavy bands ($10.65M, $26.7M).",
+"+" + "- **Fix structural inefficiency.** Reason from the mechanism, remove understood redundancy, and carry the approved work through to the deliverable.",
+"*** Update File: /Users/owenwassmer/.hermes/profiles/connor/SOUL.md",
+"@@",
+"-" + "- **Verification proves something external.** A check earns its place when its expected value comes from outside the change (a record figure, a hand computation, an invariant of the core chain). Tests that restate the design, and repeated reference runs, prove nothing. Invariants that guard the core chain always run.",
+"+" + "- **Verification earns its cost.** Judge a check by the consequence it protects and the information it adds. Scale the effort to what remains uncertain.",
+"*** End Patch"
+].join("\n");
+text(await tools.apply_patch(patch));
+text(await tools.exec_command({cmd:"rg -n 'Proving a speed change exact|Build the full 14 May tree once per code version|See a heavy unit finish|Once a cause is measured|Fix every identified inefficiency|Fix structural inefficiency|Verification proves something external|Verification earns its cost' /Users/owenwassmer/.hermes/profiles/connor/skills/software-development/slope-sparse-events-build/SKILL.md /Users/owenwassmer/.hermes/profiles/connor/SOUL.md",max_output_tokens:1000}));

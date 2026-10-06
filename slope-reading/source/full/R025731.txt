@@ -1,0 +1,20 @@
+4:import asyncio
+5:import json
+7:import pytest
+9:import app.agent.jev as jev_module
+10:from app.agent import tools as T
+11:from app.agent.jev import JevAdapter
+12:from app.agent.jev_profiles import Semantics
+13:from app.agent.run_store import RunStore
+14:from app.config import CASES_DIR, CONTRACTS
+15:from app.evidence import snapshot
+16:from app.evidence.store import EvidenceStore
+123:    with pytest.raises(T.ToolError, match="Citation rejected"):
+126:    with pytest.raises(T.ToolError, match="disposition"):
+139:    with pytest.raises(T.ToolError, match="entity scope is ambiguous"):
+167:    with pytest.raises(T.ToolError, match="found in its cited quotes"):  # agent-stated amounts never feed the engine
+187:    with pytest.raises(T.ToolError, match="Unknown disposition"):
+202:    with pytest.raises(T.ToolError, match="not checked"):
+206:    with pytest.raises(T.ToolError, match="no completed finding check"):
+216:    with pytest.raises(T.ToolError):
+268:    with pytest.raises(T.ToolError, match="inventory items are still open"):

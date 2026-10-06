@@ -1,0 +1,1 @@
+{"command": "ps -Ao pid,etime,%cpu,rss,command | grep -E \"worktrees/step-9|scratch/9\" | grep -v grep | cut -c1-220; top -l 1 -stats pid,command,mem,cmprs,cpu -pid $(pgrep -f \"scratch/9s\" | head -1) 2>/dev/null | tail -2; ls -la ~/.hermes/profiles/connor/cache/scratch/9s/*.log | tail -5; tail -3 ~/.hermes/profiles/connor/cache/scratch/9s/full14*.log 2>/dev/null"}

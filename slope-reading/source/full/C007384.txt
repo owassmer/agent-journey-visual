@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/pool.py", "old_string": "    ctl = {\"nodes\": nodes, \"reads\": reads, \"raised\": raised_live,", "new_string": "    ctl = {\"nodes\": nodes, \"reads\": reads, \"raised\": raised_live, \"top_owner\": owner,"}

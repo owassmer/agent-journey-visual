@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && for w in step-7-page step-8-model step-9-record; do git worktree remove --force .claude/worktrees/$w && echo removed $w; done; rm -rf .claude/worktrees/step-8-page/var/analysis .claude/worktrees/step-8-page/var/dev; git worktree prune; sleep 5; df -h / | tail -1"}

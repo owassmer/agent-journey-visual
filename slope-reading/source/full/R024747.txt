@@ -1,0 +1,48 @@
+worktree-step-2-evidence-ingestion
+73187fa Merge pull request #1 from owassmer/step-1-runtime-smoke
+{
+ "schema_version": "1.0",
+ "case_selection": {
+  "lead": "synergy_chc_2024",
+  "transfer": "barfresh_schreiber_2024"
+ },
+ "missions": {
+  "synergy_20240813": {
+   "cutoff": "2024-08-13T23:59:59-04:00",
+   "financial_measurement": "2024-06-30",
+   "latest_cash_measurement": "2024-08-12"
+  },
+  "barfresh_20240815": {
+   "cutoff": "2024-08-15T23:59:59-04:00"
+  },
+  "barfresh_20241025": {
+   "cutoff": "2024-10-25T23:59:59-04:00",
+   "financial_measurement": "2024-09-30"
+  }
+ },
+ "rules": [
+  "Event, agreement, measurement and public-availability dates are different fields.",
+  "Outcome is a relationship to a mission cutoff, never a permanent property of a document.",
+  "Other-case records are excluded regardless of chronological eligibility.",
+  "Indexes and metadata must not expose later filing contents to a historical agent.",
+  "Original and package relative paths are relative to the research-kit root; preserve this directory layout."
+ ]
+}
+17
+synergy_s1a_20240813 synergy_chc_2024 2024-08-13 day {'synergy_20240813': 'eligible', 'barfresh_20241025': 'out_of_case'} research/recent_cases/synergy_chc/2024_s1a.html
+synergy_merchant_agreement_20240501 synergy_chc_2024 2024-06-28 day {'synergy_20240813': 'eligible', 'barfresh_20241025': 'out_of_case'} research/recent_cases/synergy_chc/2024_05_01_webbank_shopify_loan.html
+synergy_court_20230227 synergy_chc_2024 2023-02-27 day {'synergy_20240813': 'eligible', 'barfresh_20241025': 'out_of_case'} research/recent_cases/synergy_chc/2023_02_27_court_order.pdf
+synergy_annual_2024 synergy_chc_2024 2025-03-31 day {'synergy_20240813': 'outcome', 'barfresh_20241025': 'out_of_case'} research/recent_cases/synergy_chc/2024_annual_report.html
+synergy_credit_agreement_20250530 synergy_chc_2024 2025-06-04 day {'synergy_20240813': 'outcome', 'barfresh_20241025': 'out_of_case'} research/recent_cases/synergy_chc/2025_05_30_credit_agreement.html
+synergy_quarterly_20250630 synergy_chc_2024 2025-08-14 day {'synergy_20240813': 'outcome', 'barfresh_20241025': 'out_of_case'} research/recent_cases/synergy_chc/2025_06_30_quarterly_report.html
+brfh_2024q2_10q barfresh_schreiber_2024 2024-08-14 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'eligible', 'barfresh_20241025': 'eligible'} research/barfresh_case/brfh_2024q2_10q.html
+brfh_2024q2_index barfresh_schreiber_2024 2024-08-14 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'metadata_only', 'barfresh_20241025': 'metadata_only'} research/barfresh_case/brfh_2024q2_index.html
+brfh_2024q2_release barfresh_schreiber_2024 2024-08-14 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'eligible', 'barfresh_20241025': 'eligible'} research/barfresh_case/brfh_2024q2_release.html
+brfh_2024q1_10q barfresh_schreiber_2024 2024-05-15 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'eligible', 'barfresh_20241025': 'eligible'} research/barfresh_case/brfh_2024q1_10q.html
+brfh_2023_10k barfresh_schreiber_2024 2024-03-22 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'eligible', 'barfresh_20241025': 'eligible'} research/barfresh_case/brfh_2023_10k.html
+brfh_2024q3_10q barfresh_schreiber_2024 2024-10-24 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'outcome', 'barfresh_20241025': 'eligible'} research/barfresh_case/brfh_2024q3_10q.html
+brfh_2024q3_release barfresh_schreiber_2024 2024-10-24 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'outcome', 'barfresh_20241025': 'eligible'} research/barfresh_case/brfh_2024q3_release.html
+brfh_2024_10k barfresh_schreiber_2024 2025-03-27 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'outcome', 'barfresh_20241025': 'outcome'} research/barfresh_case/brfh_2024_10k.html
+brfh_2025q1_10q barfresh_schreiber_2024 2025-05-01 second {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'outcome', 'barfresh_20241025': 'outcome'} research/barfresh_case/brfh_2025q1_10q.html
+brfh_sec_submissions barfresh_schreiber_2024 None unknown {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'metadata_only', 'barfresh_20241025': 'metadata_only'} research/barfresh_case/brfh_sec_submissions.json
+brfh_2024_08_13_litigation_funding barfresh_schreiber_2024 2024-08-13 day {'synergy_20240813': 'out_of_case', 'barfresh_20240815': 'eligible', 'barfresh_20241025': 'eligible'} research/barfresh_case/brfh_2024_08_13_litigation_funding.html

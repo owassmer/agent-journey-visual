@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch && python3 dump_session.py 20260928_172908_0aef31 slope_0aef31.txt && python3 dump_session.py 20260929_020301_63c14b slope_63c14b.txt && python3 dump_session.py 20260926_234625_5c0cc6 slope_5c0cc6.txt && python3 dump_session.py 20260928_172908_0aef31 slope_0aef31_user.txt user && wc -l slope_*.txt"}

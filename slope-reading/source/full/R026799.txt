@@ -1,0 +1,271 @@
+__pycache__
+add_cases2.py
+add_cases3.py
+add_cases4.py
+add_cases5.py
+add_cases6.py
+add_cov_cases.py
+bankfix.py
+budget_run7.py
+c4_budget.py
+c4_cases.py
+c4_contracts.py
+c4_coverage.py
+c4_domain.py
+c4_partial.py
+c4_repairs.py
+c4_runner.py
+c4_spec.py
+c4_support_fix.py
+c4_tests.py
+c4_tools.py
+c4_viewer.py
+case_eval_before.json
+cdx
+cdx_run1.log
+check_cases.py
+check2.py
+claude_md.py
+concl.py
+config_4a.py
+count_units.py
+cov.py
+dbg_unit.py
+dbg.py
+dispo.py
+disputes12.py
+domain.py
+dropped.py
+dump.py
+find_baseline.py
+find_cov.py
+find_passages.py
+find2.py
+find3.py
+fix_case.py
+fix_closed_window.py
+fix_entity_scope.py
+fix_ledger.py
+fix_merchant.py
+fix_profiles.py
+fix_rest.py
+fix_tests.py
+fix4a_domain.py
+fix4a_eval.py
+fix4a_jev.py
+fix4a_minors.py
+fix4a_profiles.py
+fix4a_registry.py
+fix4a_store.py
+fix4a_tests.py
+fix4b_core.py
+fix4b_minor2.py
+fix4b_runner.py
+fix4b_tests.py
+fix4b_tools.py
+fix4b_turns.py
+fix4b_viewer.py
+gain.py
+group_sweep.py
+inspect_cdx.py
+inspect_run5.py
+inspect15.py
+inspect8.py
+inspect8b.py
+inspect8c.py
+inspect9.py
+inv_events.py
+inv_notes.py
+invcmp.py
+investigate_run1.log
+investigate_run2.log
+investigate_run3.log
+investigate_run4.log
+investigate_run5.log
+investigate_run6.log
+investigate_run7.log
+investigate_run8.log
+jev_eval_first_run.json
+jev_smoke_only.py
+jevfix.py
+jevprobe.py
+live_screen.py
+make_evals.py
+make_evals2.py
+make_run_inputs.py
+mission.py
+noise.py
+obs.py
+p1_domain.py
+p10_live.py
+p11_windows.py
+p12_excl.py
+p12b.py
+p13_view_tests.py
+p14_simplify.py
+p15_reviewer.py
+p16_units.py
+p17_atomic.py
+p18_tests.py
+p19_header.py
+p2_tools.py
+p20_view_docs.py
+p21_repairs.py
+p22_prtext.py
+p3_fix.py
+p4_view.py
+p5_docs.py
+p5b_config.py
+p5b_inputs.py
+p5b_nodes.py
+p5b_rec.py
+p5b_tool.py
+p5b_tools2.py
+p5b_viewer.py
+p6_tests.py
+p7_spec6.py
+p8_parallel.py
+p9_dedent.py
+patch_4b_cfg.py
+patch_cli3.py
+patch_cli4a.py
+patch_eval.py
+patch_events.py
+patch_facts.py
+patch_headings.py
+patch_items.py
+patch_ledger.py
+patch_manifest_4a.py
+patch_manifest_4b.py
+patch_manifest_4c.py
+patch_manifest.py
+patch_pr2.py
+patch_pr2b.py
+patch_pr3.py
+patch_pr4a.py
+patch_pr4b.py
+patch_spec.py
+patch_table.py
+patch_table2.py
+patch_table3.py
+patch_tests.py
+patch_tests2.py
+patch_tests3.py
+peek_run.py
+pr1.md
+pr2.md
+pr3.md
+pr4a.md
+pr4b.md
+pr4c_final.md
+pr4c_old.md
+pr4c.md
+pr5a_fix.py
+pr5a.md
+pr5b.md
+pr6_ready.md
+pr6_ready2.md
+probe_vita.py
+probe.py
+probe2.py
+probe3.py
+probe4.py
+probe5.py
+prof.py
+raw_equity.py
+registry_4c2.py
+registry_cal.py
+registry_cov.py
+registry_cov2.py
+registry_excl.py
+registry_v3.py
+registry.py
+removed_fields.py
+render.py
+render8.py
+rere.py
+rereview_pr2.md
+rereview_pr4.md
+rereview_pr6.md
+rereview_probe.py
+rereview.md
+rereview2_pr2.md
+rereview2_pr6.md
+rereview3_pr6.md
+rereview4_pr6.md
+review_pr2.md
+review_pr4.md
+review_pr6.md
+review.md
+rmtest.py
+rulesfix.py
+run_jev_cases.py
+run_sweep.py
+run1.html
+run10.log
+run11.log
+run12.log
+run13.log
+run14.log
+run15.log
+run15.out
+run15.py
+run8.py
+run9.log
+runs
+runs_summary.py
+runstore_probe.py
+scan_cells.py
+scan_tables.py
+scan2.py
+score_smoke.py
+show_prompts.py
+show_tables.py
+show.py
+smoke_engine.py
+span_probe.py
+spec_4a.py
+spec.py
+sweephash.py
+tamper.py
+terms.py
+test_rereview.py
+timing9.py
+tool.py
+tools_diff.txt
+units_check.py
+validate_out.json
+viewer_check.py
+viewer_run8.py
+viewer_runs.py
+viewer.py
+"""Refresh the kit PACKAGE_MANIFEST.json in the current working directory's kit: update changed files, add new ones."""
+import hashlib
+import json
+from pathlib import Path
+
+kit = Path.cwd() / 'Slope_Credit_Scenario_Research_and_Design_Kit'
+p = kit / 'PACKAGE_MANIFEST.json'
+raw = p.read_text()
+m = json.loads(raw)
+known = {f['path'] for f in m['files']}
+changed, added = [], []
+for f in m['files']:
+    fp = kit / f['path']
+    if not fp.exists():
+        print('missing', f['path'])
+        continue
+    data = fp.read_bytes()
+    sha, size = hashlib.sha256(data).hexdigest(), len(data)
+    if (sha, size) != (f['sha256'], f['bytes']):
+        f['sha256'], f['bytes'] = sha, size
+        changed.append(f['path'])
+for fp in sorted((kit / 'research/recent_cases').rglob('*')):
+    rel = str(fp.relative_to(kit))
+    if fp.is_file() and rel not in known and not fp.name.startswith('.'):
+        data = fp.read_bytes()
+        m['files'].append({'path': rel, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+        added.append(rel)
+m['files'].sort(key=lambda f: f['path'])
+indent = 2 if raw.startswith('{\n  "') else None
+p.write_text(json.dumps(m, indent=indent, ensure_ascii=False) + ('\n' if raw.endswith('\n') else ''))

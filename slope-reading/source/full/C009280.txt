@@ -1,0 +1,2 @@
+// @exec: {"max_output_tokens": 8500}
+text((await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport json\np=Path('.')\nx=json.loads((p/'inventory.json').read_text())\nprint(json.dumps(x,indent=2)[:18000])\nfor b in ['extra_context','contracts','delegation']:\n s=(p/(b+'_bundle.txt')).read_text()\n print('\\nBUNDLE',b,len(s))\n for line in s.splitlines():\n  if line.startswith('FILE ') or line.startswith('SESSION '): print(line)\nPY",workdir:load("digestDir"),max_output_tokens:8500})).output);

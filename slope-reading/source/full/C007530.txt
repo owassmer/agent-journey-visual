@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && gh pr create -R owassmer/Slope_Sparse_Events --base main --head step-9-memo --title \"Step 9: the 14 May tree at its size \u2014 daily cash, equity, the notes' clocks, and the runner pipeline\" --body-file ~/.hermes/profiles/connor/cache/scratch/fix1/pr_step9_body.md 2>&1 | tail -2", "timeout": 60}

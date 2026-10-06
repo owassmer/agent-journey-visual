@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n '2204,2245p' app/disputes/forecast.py; echo \"=== situation_class/group_classes/class_entry\"; sed -n '309,392p' app/disputes/forecast.py; echo \"=== CLASS_TAG\"; grep -n \"^CLASS_TAG\\|def _classified\\|def classed_key\\|CLASS_TAG in k\" app/disputes/forecast.py | head"}

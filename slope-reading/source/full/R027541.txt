@@ -1,0 +1,347 @@
+1	"""Conditional forecasting: the event tree of each interpreted dispute, Jev's probability at every node, and the paths.
+2	
+3	The tree is bounded by cash: settlement, the amount being fixed, an appeal, a secured stay and its form, voluntary
+4	payment, collection by enforcement, and settlement during a secured appeal. At each node Jev is asked for the
+5	probability of one defined event, under the parent assumptions of that node (in words, with dates set by code), given
+6	the relevant hydrated passages and the present-state factor distributions. Only an established fact changes the tree
+7	(an appeal waiver covering the obligation removes the appeal branch). Every structurally feasible path is enumerated,
+8	whatever its probability.
+9	
+10	Dependence: a later dispute with the same counterparty is asked once per outcome class of the earlier dispute (whether
+11	the counterparty receives or pays cash in it within the horizon); joint probability = P(earlier path) x P(later | class).
+12	"""
+13	
+14	from __future__ import annotations
+15	
+16	import asyncio
+17	import itertools
+18	from collections.abc import Callable
+19	from dataclasses import dataclass, field
+20	from datetime import date, timedelta
+21	from typing import Protocol
+22	
+23	from app.disputes.interpret import ESTABLISHED
+24	from app.disputes.rules import load_model
+25	from app.domain.investigation import AtomicFinding, DisputeInstance, SemanticObservation
+26	from app.domain.values import usd
+27	
+28	MAX_PASSAGES = 6
+29	PAYS_OUT = {"settled", "paid", "collected", "settled_during_appeal"}  # outcomes where the payer pays within the horizon
+30	
+31	
+32	class ForecastJudge(Protocol):
+33	    async def forecast(self, question_id: str, state: dict, subject_ids: tuple[str, ...]) -> SemanticObservation: ...
+34	
+35	
+36	@dataclass(frozen=True)
+37	class Node:
+38	    key: str  # instance:node[|context][|cls=...]
+39	    instance_id: str
+40	    node: str
+41	    context: str
+42	    cls: str
+43	    question_id: str
+44	    event: str
+45	    assumptions: tuple[str, ...]
+46	    window: str
+47	    branches: tuple[str, ...]  # ("yes", "no") or the security options
+48	
+49	
+50	@dataclass
+51	class Judgment:
+52	    """Jev's conditional judgment at one node: the full distribution over its branches."""
+53	    key: str
+54	    instance_id: str
+55	    node: str
+56	    question_id: str
+57	    event: str
+58	    assumptions: tuple[str, ...]
+59	    window: str
+60	    distribution: dict[str, float]  # branch -> probability (Noul: yes = value, no = 1 - value)
+61	    confidence: float | None = None
+62	    finding_ids: tuple[str, ...] = ()
+63	    readings: dict = field(default_factory=dict)
+64	    evidence: list = field(default_factory=list)
+65	    observation_id: str = ""
+66	
+67	
+68	@dataclass(frozen=True)
+69	class DisputePath:
+70	    """One path through one dispute's tree: the steps taken (node, context, branch), its outcome, and the edges that
+71	    carry its probability (node key, branch)."""
+72	    instance_id: str
+73	    steps: tuple[tuple[str, str, str], ...]
+74	    outcome: str
+75	    edges: tuple[tuple[str, str], ...]
+76	    cls: str = ""
+77	
+78	
+79	def fmt(d: date) -> str:
+80	    return f"{d.day} {d.strftime('%b %Y')}"
+81	
+82	
+83	class Forecaster:
+84	    def __init__(self, disputes: list[DisputeInstance], findings: dict[str, AtomicFinding], *, borrower: str,
+85	                 review: date, horizon: date, hydrate: Callable[[AtomicFinding], dict],
+86	                 model: dict | None = None) -> None:
+87	        self.m = model or load_model()
+88	        self.disputes = [d for d in disputes if d.status == "interpreted"]
+89	        self.findings, self.borrower, self.review, self.horizon, self.hydrate = findings, borrower, review, horizon, hydrate
+90	        self.nodes: dict[str, Node] = {}
+91	
+92	    # --- order and dependence ---------------------------------------------------------------------
+93	
+94	    def ordered(self) -> list[tuple[DisputeInstance, DisputeInstance | None]]:
+95	        """Each dispute with the earlier same-counterparty dispute it is conditioned on (None if independent).
+96	        The borrower-as-payer dispute comes first: its outcome changes the counterparty's position."""
+97	        ds = sorted(self.disputes, key=lambda d: (d.borrower_role != "debtor", d.instance_id))
+98	        out, first_by_cp = [], {}
+99	        for d in ds:
+100	            parent = first_by_cp.get(d.counterparty)
+101	            out.append((d, parent))
+102	            first_by_cp.setdefault(d.counterparty, d)
+103	        return out
+104	
+105	    @staticmethod
+106	    def path_class(d: DisputeInstance, outcome: str) -> str:
+107	        if outcome not in PAYS_OUT:
+108	            return "no_cash"
+109	        return "counterparty_receives" if d.borrower_role == "debtor" else "counterparty_pays"
+110	
+111	    def class_assumption(self, parent: DisputeInstance, cls: str) -> str:
+112	        cp = parent.counterparty
+113	        return {"counterparty_receives": f"In the other dispute between these parties ({parent.order_reference}), "
+114	                                         f"{self.borrower} pays {cp} (by payment, settlement or enforcement).",
+115	                "counterparty_pays": f"In the other dispute between these parties ({parent.order_reference}), "
+116	                                     f"{cp} pays {self.borrower} (by payment, settlement or enforcement).",
+117	                "no_cash": f"In the other dispute between these parties ({parent.order_reference}), nothing is paid "
+118	                           f"while this obligation is pending (no ruling, an appeal still pending, or unpaid)."}[cls]
+119	
+120	    # --- the tree ---------------------------------------------------------------------------------
+121	
+122	    def _windows(self, d: DisputeInstance) -> dict[str, str]:
+123	        r = self.m["rules"]
+124	        stay, notice = r["automatic_stay_days"]["value"], r["appeal_notice_days"]["value"]
+125	        vol, enf, settle = (r["voluntary_payment_days_after_stay"]["value"], r["enforcement_period_days"]["value"],
+126	                            r["settlement_window_days"]["value"])
+127	        first, h = self.review + timedelta(days=1), self.horizon
+128	
+129	        def span(a: date, b: date) -> str:
+130	            if b < first:
+131	                return f"from {fmt(a)} to {fmt(b)} (already closed on the review date)"
+132	            return f"from {fmt(max(a, first))} to {fmt(b)}"
+133	
+134	        w = {"settle_before_ruling": span(first, self.review + timedelta(days=settle)),
+135	             "amount_fixed": span(first, h), "settle_during_appeal": f"from the stay to {fmt(h)}"}
+136	        if d.stage == "amount_pending" or d.judgment_date is None:
+137	            j = "the day the court fixes the amount"
+138	            w.update({"settle_after_judgment": f"within {notice} days after {j}",
+139	                      "appeal": f"within {notice} days after {j}", "secured_stay": f"within {stay} days after {j}",
+140	                      "voluntary_payment": f"between {stay} and {stay + vol} days after {j}",
+141	                      "enforcement": f"between {stay} and {stay + enf} days after {j}",
+142	                      "security_form": "when the stay is secured"})
+143	        else:
+144	            dj = d.judgment_date
+145	            w.update({"settle_after_judgment": span(dj, dj + timedelta(days=notice)),
+146	                      "appeal": span(dj, dj + timedelta(days=notice)), "secured_stay": span(dj, dj + timedelta(days=stay)),
+147	                      "voluntary_payment": span(dj + timedelta(days=stay), dj + timedelta(days=stay + vol)),
+148	                      "enforcement": span(dj + timedelta(days=stay), dj + timedelta(days=stay + enf)),
+149	                      "security_form": "when the stay is secured"})
+150	        return w
+151	
+152	    def _assume(self, d: DisputeInstance, prefix: list[tuple[str, str, str]]) -> list[str]:
+153	        """Parent conditions, in words, from the steps taken so far."""
+154	        payer = self.borrower if d.borrower_role == "debtor" else d.counterparty
+155	        judged = (f"the judgment of {fmt(d.judgment_date)}" if d.judgment_date and d.stage != "amount_pending"
+156	                  else "the court's ruling on the amount")
+157	        text = {("settle_before_ruling", "no"): "The parties do not settle before the court rules on the amount.",
+158	                ("amount_fixed", "yes"): f"The court fixes the amount between {fmt(self.review + timedelta(days=1))} "
+159	                                         f"and {fmt(self.horizon)}.",
+160	                ("settle_after_judgment", "no"): "The parties do not settle before the appeal deadline.",
+161	                ("appeal", "yes"): f"{payer} files a notice of appeal against {judged}.",
+162	                ("appeal", "no"): f"{payer} does not appeal {judged}.",
+163	                ("secured_stay", "yes"): f"{payer} obtains a stay secured by a bond or other security.",
+164	                ("secured_stay", "no"): f"{payer} does not obtain a secured stay.",
+165	                ("voluntary_payment", "no"): f"{payer} does not pay voluntarily."}
+166	        out = [text[(n, b)] for n, _, b in prefix if (n, b) in text]
+167	        out += [f"{payer} secures the stay with {self.m['nodes']['security_form']['options'][b].split(' (')[0]}."
+168	                for n, _, b in prefix if n == "security_form"]
+169	        return out
+170	
+171	    def _node(self, d: DisputeInstance, node: str, context: str, cls: str, prefix: list, cls_text: str) -> Node:
+172	        spec = self.m["nodes"][node]
+173	        key = f"{d.instance_id}:{node}" + (f"|{context}" if context else "") + (f"|cls={cls}" if cls else "")
+174	        if key not in self.nodes:
+175	            if node == "settle_during_appeal":  # one judgment whatever form secures the stay
+176	                prefix = [s for s in prefix if s[0] != "security_form"]
+177	            branches = tuple(spec["options"]) if "options" in spec else ("yes", "no")
+178	            assumptions = tuple(self._assume(d, prefix) + ([cls_text] if cls_text else []))
+179	            self.nodes[key] = Node(key=key, instance_id=d.instance_id, node=node, context=context, cls=cls,
+180	                                   question_id=spec["question"], event=spec["event"], assumptions=assumptions,
+181	                                   window=self._windows(d)[node], branches=branches)
+182	        return self.nodes[key]
+183	
+184	    def paths(self, d: DisputeInstance, cls: str = "", cls_text: str = "") -> list[DisputePath]:
+185	        out: list[DisputePath] = []
+186	
+187	        def emit(steps, outcome):
+188	            out.append(DisputePath(instance_id=d.instance_id, steps=tuple(steps), outcome=outcome, cls=cls,
+189	                                   edges=tuple((self._node(d, n, c, cls, [s for s in steps[:i]], cls_text).key, b)
+190	                                               for i, (n, c, b) in enumerate(steps))))
+191	
+192	        def payment(prefix, ctx):
+193	            emit(prefix + [("voluntary_payment", ctx, "yes")], "paid")
+194	            no = prefix + [("voluntary_payment", ctx, "no")]
+195	            emit(no + [("enforcement", ctx, "yes")], "collected")
+196	            emit(no + [("enforcement", ctx, "no")], "uncollected")
+197	
+198	        def appeal_pending(prefix):
+199	            emit(prefix + [("settle_during_appeal", "", "yes")], "settled_during_appeal")
+200	            emit(prefix + [("settle_during_appeal", "", "no")], "appeal_pending")
+201	
+202	        def judgment(prefix):
+203	            emit(prefix + [("settle_after_judgment", "", "yes")], "settled")
+204	            p = prefix + [("settle_after_judgment", "", "no")]
+205	            if "appeal" in d.constraints:
+206	                payment(p, "no_appeal")
+207	                return
+208	            a = p + [("appeal", "", "yes")]
+209	            s = a + [("secured_stay", "", "yes")]
+210	            if d.borrower_role == "debtor":
+211	                for form in self.m["nodes"]["security_form"]["options"]:
+212	                    appeal_pending(s + [("security_form", "", form)])
+213	            else:
+214	                appeal_pending(s)
+215	            payment(a + [("secured_stay", "", "no")], "appeal_unsecured")
+216	            payment(p + [("appeal", "", "no")], "no_appeal")
+217	
+218	        if d.stage == "amount_pending":
+219	            emit([("settle_before_ruling", "", "yes")], "settled")
+220	            p = [("settle_before_ruling", "", "no")]
+221	            emit(p + [("amount_fixed", "", "no")], "unresolved")
+222	            judgment(p + [("amount_fixed", "", "yes")])
+223	        elif d.stage == "judgment_entered":
+224	            judgment([])
+225	        elif d.stage == "appeal_pending":
+226	            appeal_pending([])
+227	        elif d.stage == "enforcement":
+228	            emit([("enforcement", "", "yes")], "collected")
+229	            emit([("enforcement", "", "no")], "uncollected")
+230	        return out
+231	
+232	    def all_paths(self) -> dict[str, dict[str, list[DisputePath]]]:
+233	        """instance_id -> class ('' if independent) -> paths."""
+234	        out: dict[str, dict[str, list[DisputePath]]] = {}
+235	        for d, parent in self.ordered():
+236	            if parent is None:
+237	                out[d.instance_id] = {"": self.paths(d)}
+238	            else:
+239	                classes = sorted({self.path_class(parent, p.outcome) for p in out[parent.instance_id][""]})
+240	                out[d.instance_id] = {c: self.paths(d, c, self.class_assumption(parent, c)) for c in classes}
+241	        return out
+242	
+243	    # --- forecast state and Jev -------------------------------------------------------------------
+244	
+245	    def _case(self, d: DisputeInstance) -> dict:
+246	        payer, payee = (self.borrower, d.counterparty) if d.borrower_role == "debtor" else (d.counterparty, self.borrower)
+247	        amount = d.amount.value if d.amount.value is not None else d.amount.upper
+248	        status = self.m["readings"]["amount_status_labels"].get(d.amount_status, "status not established")
+249	        return {"as_of": fmt(self.review), "analysis_period_ends": fmt(self.horizon), "payer": payer, "payee": payee,
+250	                "obligation": f"{self.m['natures'].get(d.nature, d.nature)}, {d.order_reference}",
+251	                "amount": f"{usd(amount)} ({status})",
+252	                "established": [f"{self.m['readings']['events'][k]} (passage dated {v.source_date})"
+253	                                for k, v in d.established.items()]}
+254	
+255	    def _evidence(self, d: DisputeInstance, node: str) -> tuple[list[dict], tuple[str, ...]]:
+256	        factors = set(self.m["nodes"][node]["context_factors"])
+257	        chosen = [r.finding_id for r in d.readings
+258	                  if any((r.bears_on.get(f) or 0) >= ESTABLISHED for f in factors)
+259	                  or any((r.events.get(e) or 0) >= ESTABLISHED for e in r.events)]
+260	        if not chosen:
+261	            chosen = [r.finding_id for r in d.readings]
+262	        dated = sorted(chosen, key=lambda fid: next(r.source_date for r in d.readings if r.finding_id == fid),
+263	                       reverse=True)[:MAX_PASSAGES]
+264	        return [self.hydrate(self.findings[fid]) for fid in dated], tuple(dated)
+265	
+266	    def _readings(self, d: DisputeInstance, node: str) -> dict:
+267	        out = {}
+268	        for f in d.factors:
+269	            if f.factor_id not in self.m["nodes"][node]["context_factors"]:
+270	                continue
+271	            if f.kind == "present" and f.probability is not None:
+272	                out[f.label] = {"probability_present": round(f.probability, 3)}
+273	            elif f.distribution:
+274	                out[f.label] = {"distribution": {k: round(v, 3) for k, v in f.distribution.items()},
+275	                                **({"conflicting_readings": True} if f.conflict else {}),
+276	                                **({"passage_dated": f.decisive.source_date} if f.decisive else {})}
+277	        return out
+278	
+279	    def state(self, n: Node) -> tuple[dict, tuple[str, ...], dict]:
+280	        d = next(x for x in self.disputes if x.instance_id == n.instance_id)
+281	        evidence, fids = self._evidence(d, n.node)
+282	        readings = self._readings(d, n.node)
+283	        return ({"case": self._case(d), "assumptions": list(n.assumptions),
+284	                 "question": {"event": n.event, "window": n.window}, "evidence": evidence, "readings": readings},
+285	                fids, readings)
+286	
+287	    async def judge(self, judge: ForecastJudge) -> dict[str, Judgment]:
+288	        async def one(n: Node) -> Judgment:
+289	            st, fids, readings = self.state(n)
+290	            o = await judge.forecast(n.question_id, st, (n.instance_id, *fids))
+291	            if n.branches == ("yes", "no"):
+292	                if o.noul_value is None:
+293	                    raise RuntimeError(f"Jev returned no probability for {n.key}")
+294	                dist = {"yes": float(o.noul_value), "no": 1.0 - float(o.noul_value)}
+295	            else:
+296	                probs = {k: float(v) for k, v in (o.probabilities or {}).items() if k in n.branches}
+297	                total = sum(probs.values())
+298	                if total <= 0:
+299	                    raise RuntimeError(f"Jev returned no distribution for {n.key}")
+300	                dist = {k: probs.get(k, 0.0) / total for k in n.branches}
+301	            return Judgment(key=n.key, instance_id=n.instance_id, node=n.node, question_id=n.question_id,
+302	                            event=n.event, assumptions=n.assumptions, window=n.window, distribution=dist,
+303	                            confidence=o.confidence, finding_ids=fids, readings=readings,
+304	                            evidence=st["evidence"], observation_id=o.observation_id)
+305	
+306	        results = await asyncio.gather(*(one(n) for n in self.nodes.values()))
+307	        return {j.key: j for j in results}
+308	
+309	
+310	def path_probability(edges: tuple[tuple[str, str], ...], dist: dict[str, dict[str, float]]) -> float:
+311	    p = 1.0
+312	    for key, branch in edges:
+313	        p *= dist[key][branch]
+314	    return p
+315	
+316	
+317	def joint_paths(per: dict[str, dict[str, list[DisputePath]]], order: list[tuple[DisputeInstance, DisputeInstance | None]]
+318	                ) -> list[tuple[DisputePath, ...]]:
+319	    """Every combination of paths, the later same-counterparty dispute taken from the class its parent path implies."""
+320	    combos: list[tuple[DisputePath, ...]] = [()]
+321	    for d, parent in order:
+322	        nxt = []
+323	        for combo in combos:
+324	            if parent is None:
+325	                options = per[d.instance_id][""]
+326	            else:
+327	                ppath = next(p for p in combo if p.instance_id == parent.instance_id)
+328	                options = per[d.instance_id][Forecaster.path_class(parent, ppath.outcome)]
+329	            nxt += [combo + (p,) for p in options]
+330	        combos = nxt
+331	    return combos
+332	
+333	
+334	def combo_probability(combo: tuple[DisputePath, ...], dist: dict[str, dict[str, float]]) -> float:
+335	    return path_probability(tuple(itertools.chain.from_iterable(p.edges for p in combo)), dist)
+336	
+337	
+338	def distributions(judgments: dict[str, Judgment], overrides: dict[str, dict[str, float]] | None = None
+339	                  ) -> dict[str, dict[str, float]]:
+340	    """Node key -> branch distribution, with any overrides applied (a Noul override sets yes and its complement)."""
+341	    out = {k: dict(j.distribution) for k, j in judgments.items()}
+342	    for k, v in (overrides or {}).items():
+343	        if k in out:
+344	            out[k] = dict(v)
+345	    return out
+346	
+347	

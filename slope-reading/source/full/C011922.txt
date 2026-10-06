@@ -1,0 +1,8 @@
+text(ALL_TOOLS.filter(x=>/mcp__codex_tui__(list_threads|read_thread)$|search.*docs|docs.*search|fetch.*docs|docs.*fetch/.test(x.name)));
+const results = await Promise.allSettled([
+  tools.mcp__codex_tui__list_threads({limit:40}),
+  tools.exec_command({cmd:"rg --files --hidden -g 'AGENTS.md' -g 'AGENTS.override.md' -g '!node_modules' -g '!.git' -g '!venv' -g '!.venv' /Users/owenwassmer/dev/Slope_Sparse_Events /Users/owenwassmer/.codex/memories /Users/owenwassmer/.codex/rules",max_output_tokens:3000}),
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor d in ['/','/Users','/Users/owenwassmer','/Users/owenwassmer/dev','/Users/owenwassmer/dev/Slope_Sparse_Events','/Users/owenwassmer/.codex']:\n for n in ['AGENTS.md','AGENTS.override.md']:\n  p=Path(d)/n\n  if p.exists():\n   print('\\nFILE',p)\n   print(p.read_text())\nPY",max_output_tokens:9000}),
+  tools.web__run({search_query:[{q:"Codex AGENTS.md persistent instructions",domains:["developers.openai.com"]}],response_length:"short"})
+]);
+results.forEach((r,i)=>text({i,...(r.status==="fulfilled"?{result:r.value}:{error:String(r.reason)})}));

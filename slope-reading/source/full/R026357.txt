@@ -1,0 +1,50 @@
+13:@pytest.fixture(scope="module")
+21:def test_only_admissible_sources_enter_each_snapshot(built):
+35:def test_catalog_research_annotations_stay_out_of_the_agent_db(built):
+44:def test_excluded_source_ids_are_absent_and_unreadable(built):
+67:def test_2025_only_facts_are_absent_but_the_admissible_label_is_kept(built):
+86:def test_settlement_schedule_table_keeps_its_original_context(built):
+102:def test_financial_table_headers_align_with_values(built):
+122:def test_mdna_is_not_labelled_as_financial_statement_notes(built):
+124:    hits = [h for h in stores["barfresh_20241025"].search("Liquidity and Capital Resources", source_ids=["brfh_2024q3_10q"])
+132:def test_catalog_inconsistency_and_hash_mismatch_stop_the_build(monkeypatch, tmp_path):
+"""Isolation and provenance of the dated evidence snapshots (spec §9 step 2 exit condition):
+future and other-case source IDs are inaccessible, and original table context is retrievable."""
+
+import json
+from datetime import datetime
+
+import pytest
+
+from app.evidence import SNAPSHOTS, snapshot
+from app.evidence.store import EvidenceAccessError, EvidenceStore
+
+
+@pytest.fixture(scope="module")
+def built(tmp_path_factory):
+    out = tmp_path_factory.mktemp("evidence")
+    manifests = {sid: snapshot.build_snapshot(sid, out_dir=out) for sid in SNAPSHOTS}
+    stores = {sid: EvidenceStore(sid, out / f"{sid}.sqlite") for sid in SNAPSHOTS}
+    return out, manifests, stores
+
+
+def test_only_admissible_sources_enter_each_snapshot(built):
+    _, manifests, stores = built
+    catalog = json.loads(snapshot.SOURCES_JSON.read_text())["sources"]
+    for sid, store in stores.items():
+        present = {s["source_id"]: s["access"] for s in store.list_sources()}
+        expected = {s["source_id"]: s["mission_membership"].get(sid) for s in catalog
+                    if s["mission_membership"].get(sid) in ("eligible", "metadata_only")
+                    and s["availability"].get("date")}
+        assert set(present) == set(expected)
+        assert all((acc == "full") == (expected[k] == "eligible") for k, acc in present.items())
+        limit = datetime.fromisoformat(manifests[sid]["cutoff"])
+        assert all(datetime.fromisoformat(s["available_at"]) <= limit for s in store.list_sources())
+
+
+def test_catalog_research_annotations_stay_out_of_the_agent_db(built):
+    out, _, _ = built
+    for sid in SNAPSHOTS:
+        raw = (out / f"{sid}.sqlite").read_bytes()
+        for hint in (b"event_dates", b"updated_cash_measurement", b"effective_funding_date",
+                     b"alleged_operational_events", b"mission_membership"):

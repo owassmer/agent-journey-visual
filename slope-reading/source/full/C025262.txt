@@ -1,0 +1,1 @@
+{"command": "grep -n \"def __init__\" -A 14 .venv/lib/python3.12/site-packages/typesafe_sdk/_core/client/aio/client.py | head -30; uv run python -c \"\nimport httpx2, inspect\nprint(httpx2.__version__ if hasattr(httpx2,'__version__') else '')\nprint('event_hooks' in inspect.signature(httpx2.AsyncClient.__init__).parameters)\n\"; grep -n \"def jev_eval\\|jev_cli\" app/cli.py"}

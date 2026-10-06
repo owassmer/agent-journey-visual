@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch && python3 slope_lead.py a82c6af0d563951d5 briefs > lead_briefs.txt; wc -c lead_briefs.txt; tail -3 lead_briefs.txt; for a in abe0242a231d15557 a0eb0d3aaf56c241f aa0b0b9ea588cb279 a790c8a27dc3c6b9f acbf3e9e9af5cdc5c; do echo \"== $a\"; python3 slope_lead.py $a none | tail -2 | cut -c1-400; done"}

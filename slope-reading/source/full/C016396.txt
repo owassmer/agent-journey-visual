@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-0d1ad1d0761e877d8 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"OMP_NUM_THREADS=1 nproc\",\"OMP_NUM_THREADS=1 nproc --all\"]}' --query Command.CommandId --output text","max_output_tokens":300}));

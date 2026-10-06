@@ -1,0 +1,43 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_a40a35a8]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 14:50:34 (9m23s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 563.45s
+
+--- ✓ TASK 1/1: Worker B9b: build step 9 (equity access as the investors' decision; the jury's award split at the notes' $10M threshold) for the 14 May Akoustis case in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-financing (branch step-9-financing, off main cc8adf7), re-run the lead analysis and variants once, rebuild the page, open a PR, and report.  (status=completed, api_calls=62, 563.23s) ---
+I've re-read sections 2 and 2b. No verdict or floor code has been written against them yet, and nothing is committed. One conflict between the new section 2 and 2b needs your ruling before I build the entry-day decision.
+
+**Conflict: the $12M identity may not hold once 2b adds an entry-day raise.**
+- At entry the company holds at most $11.81M. A funded offering adds $10.4M five days later, so a raised path could hold up to about $22M before burn. That figure is my arithmetic, not yet measured.
+- On those paths, an award of $12M or $15M could be paid, or levied in full, at a later response or levy. $67,526,412 cannot. Those paths would book different cash.
+- So the identity test with substitutes of $12M, $15M and $30M will probably fail on raised paths. $30M should hold.
+- Options:
+  - (a) Keep $12M and accept a second sliver: awards of about $12–22M that become payable after a raise. Record it in §7.13 beside the $10–12M sliver.
+  - (b) Raise the line above what cash can reach after a raise, so the test still holds.
+  - (c) Keep the test to the paths that did not raise.
+- Once the entry decision is in, I'll run the substitution check and report measured figures for all three. Until you rule, I'll build on (a).
+
+**Decisions I'm making unless you say otherwise:**
+- **Entry decision replaces the company's response at entry, on the above-$12M class only.** At entry that class can't pay, so the existing response there is only continue or file. Asking the financing decision the same day as well would ask about filing twice. So the entry decision (raise / file / continue, then the investors' question) takes its place. It is tagged `entry` and booked on the entry day, not left waiting like the floor. 'Continue' then goes on to motions, stay and enforcement as today.
+- **One offering per path.** The offering is unavailable once the path has raised. After an offering fails at entry, the later floor offers raise_equity again, tagged `offering_failed`. The floor's date and cash always differ from the entry day's. If you read "only if the path's facts differ" more strictly, the floor would offer only file / continue there.
+- **The at-or-below-$12M class** becomes a new case parameter declaring the band ($1,426,412 to $12,000,000) and its booked midpoint of $6,713,206. The engine books that parameter, not the notes' threshold. The contract's label tells Jev the band and that the booked figure is its midpoint.
+
+**What changes in the uncommitted edits:**
+- **Case inputs (scenario.json):**
+  - The two new jury questions `q1t` and `q2t`: the line becomes $12,000,000, "more than the company holds on the entry day on any trajectory".
+  - Their "no" branch is renamed from `claimant_theory_within_threshold` to `claimant_theory_payable`.
+  - The reader words and the collapsed 1(c)/1(d) reason lose the ceiling wording.
+  - Record items gain the "eight-figure verdict" finding (`fnd_011`).
+- **Contract (dispute_model.json) and question_registry.json:**
+  - The jury question and its registry entry are reworded to the $12M line.
+  - The threshold-based amount rule is replaced by the case parameter, and "taken at its ceiling" comes out of the labels.
+  - The company's financing node gains the `entry` timing and situation.
+- **Engine (events.py):** the threshold amount rule is replaced by the declared midpoint. `raise_available` returns 0 where the path has already raised.
+- **Walker (forecast.py):**
+  - The labels are rewritten for the new ranges.
+  - I'll remove leftover no-op lines from the no-lawsuit view's floor code.
+  - The entry decision is added only on the above-$12M class.
+- **Kept unchanged:** the offering parameters, the investors' question, the second floor decision after a failed offering, and the no-lawsuit view's investor question.
+
+The 20 Jun baseline dump is taken (13,821 paths, 337 nodes, 2 bank paths) for the byte-identity check. The final report will list the results by $12M class and add the entry-day decision: Jev's answers, how often it is reached, and funded versus not.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_a40a35a8/task-0.log

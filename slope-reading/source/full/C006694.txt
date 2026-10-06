@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/memo/smoke.py", "old_string": "print(f\"{N} paths, every prefix, {time.time() - t0:.0f}s; {shadow.report()}\")", "new_string": "print(f\"{N} paths from {START} ({stays} with a stay step), every prefix, {time.time() - t0:.0f}s; {shadow.report()}\")"}

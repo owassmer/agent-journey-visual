@@ -1,0 +1,26 @@
+== brfh_2024q3_10q#t0001 header_rows 2 | BARFRESH FOOD GROUP INC. > Not Applicable
+   ['', '', 'Page Number']
+   ['PART I - FINANCIAL INFORMATION', 'PART I - FINANCIAL INFORMATION', '']
+   ['Item 1.', 'Financial Statements.', '3']
+   ['Item 2.', 'Management’s Discussion and Analysis of Financial Condition and Results of Operations.', '14']
+   ['Item 3.', 'Quantitative and Qualitative Disclosures About Market Risk.', '18']
+   ['Item 4.', 'Controls and Procedures.', '18']
+   ['PART II - OTHER INFORMATION', '', '19']
+== brfh_2024q3_10q#t0004 header_rows 1 | BARFRESH FOOD GROUP INC. > Item 1. Financial Statements.
+   ['', '2024', '2023']
+   ['Net loss', '$(1,973,000)', '$(2,123,000)']
+   ['Adjustments to reconcile net loss to net cash used in operating activities', '', '']
+   ['Stock-based compensation', '757,000', '514,000']
+   ['Depreciation and amortization', '217,000', '325,000']
+   ['Amortization of debt discounts', '17,000', '-']
+   ['Stock and options issued for services', '-', '11,000']
+brfh_2023_10k#s0068  [section]  PART II > Item 8. Financial Statements and Supplementary Data.
+    Our consolidated financial statements are included beginning immediately following the signature [page] to this report. See Item 15 for a list of the consolidated financial statements included herein.
+brfh_2023_10k#s0082  [section]  PART IV > 3. Exhibits
+    See the Exhibit Index, which follows the signature [page] of this Annual Report on Form 10-K, which is incorporated herein by reference.
+
+(b) Exhibits
+
+See Item 15(a) (3) above.
+
+(c …

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-contracts && git log --oneline -1 | cut -c1-40 && git status --short | head -3; python3 ~/.hermes/profiles/connor/cache/scratch/9k/peek.py Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts stay_approved execute_pre_ruling verdict_amount financing_at_floor 2>&1 | cut -c1-300"}

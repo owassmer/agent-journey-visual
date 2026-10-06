@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && echo \"=== renderer\"; grep -rn \"share_capacity_left\\|earlier_attempts\\|offerings_available\\|\\\"offering_pending\\\"\" app/ --include=*.py | grep -v \"events.py:29[34]\" | head -12; echo \"=== milestones\"; sed -n '2040,2050p;2288,2300p' app/analysis/events.py"}

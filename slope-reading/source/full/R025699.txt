@@ -1,0 +1,47 @@
+   inv_005 not_decision_relevant covenant_or_re A significant number of our total outstanding shar | [] | IPO lock-up on share resales; no cash obligation or cash-access effect on Synergy.
+   inv_006 not_decision_relevant accounting_ite Results of Operations for the Years Ended December | [] | 2023 results discussion. The Atrium settlement gain there is a noncash reduction of cost of sales; the cash ob
+   inv_007 covered debt_or_financ Liquidity and Capital Resources | ['fnd_011', 'fnd_004', 'fnd_010', 'fnd_015', 'fnd_016', 'fnd_008'] | 
+   inv_008 covered legal_matter_o Legal Proceedings | ['fnd_003', 'fnd_015', 'fnd_012', 'fnd_013'] | 
+   inv_009 covered debt_or_financ CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIO | ['fnd_014', 'fnd_018'] | 
+   inv_014 not_decision_relevant accounting_ite Note 2 — Summary of Significant Accounting Policie | [] | Income-tax accounting policy; no matter-specific cash obligation.
+   inv_015 not_decision_relevant accounting_ite Note 3 — Income Taxes | [] | Deferred tax note; noncash.
+   inv_016 not_decision_relevant accounting_ite Note 4 — Accounts Receivable | [] | Trade receivables composition; no restriction or matter-specific receipt delay identified.
+   inv_017 not_decision_relevant accounting_ite Note 7 — Inventory | [] | Inventory valuation policy; no cash obligation.
+   inv_018 not_decision_relevant accounting_ite Note 8 — Intangible Assets | [] | Knight license-fee intangible, noncash amortization. The related payable was consolidated into the Knight loan
+   inv_020 not_decision_relevant accounting_ite Note 10 — Accounts Payable and Accrued Liabilities | [] | Ordinary accounts payable and accrued liabilities, already part of the working-capital baseline; no specific m
+   inv_023 not_decision_relevant accounting_ite Note 14 — Stock Options | [] | Stock-based compensation; noncash.
+   inv_026 not_decision_relevant accounting_ite Note 3 — Income Taxes | [] | NOL limitation evaluation; noncash tax attribute.
+   inv_027 not_decision_relevant accounting_ite Note 4 — Accounts Receivable | [] | December 31, 2023 receivables, superseded by June 30, 2024 data; no restriction.
+   inv_028 not_decision_relevant accounting_ite Note 7 — Inventory | [] | December 31, 2023 inventory note; noncash valuation.
+   inv_029 not_decision_relevant accounting_ite Note 8 — Fixed Assets and Intangible Assets | [] | Fixed and intangible assets; noncash.
+   inv_031 not_decision_relevant accounting_ite Note 10 — Accounts Payable and Accrued Liabilities | [] | December 31, 2023 accounts payable detail, superseded by interim data; ordinary operating liabilities.
+   inv_034 not_decision_relevant accounting_ite Note 14 — Stock Options | [] | Stock options; noncash.
+not_covered challenged_agent_draft coverage check on inv_001 ['inv_001', 'fnd_003']
+covered used_in_finding coverage check on inv_001 ['inv_001', 'fnd_017']
+partly_covered used_in_finding coverage check on inv_002 ['inv_002', 'fnd_008']
+not_covered challenged_agent_draft coverage check on inv_004 ['inv_004', 'fnd_004']
+covered used_in_finding coverage check on inv_001 ['inv_001', 'fnd_017']
+partly_covered used_in_finding coverage check on inv_002 ['inv_002', 'fnd_008']
+partly_covered challenged_agent_draft coverage check on inv_004 ['inv_004', 'fnd_018']
+partly_covered overridden_by_agent_with_reason The balance, rate and budget-approval covenant are covered by fnd_018, and the d ['inv_004', 'fnd_018']
+covered used_in_finding coverage check on inv_001 ['inv_001', 'fnd_017']
+partly_covered used_in_finding coverage check on inv_002 ['inv_002', 'fnd_008']
+not_covered challenged_agent_draft coverage check on inv_007 ['inv_007', 'fnd_004']
+covered used_in_finding coverage check on inv_001 ['inv_001', 'fnd_017']
+partly_covered used_in_finding coverage check on inv_002 ['inv_002', 'fnd_008']
+not_covered overridden_by_agent_with_reason The liquidity section repeats the June 30, 2024 cash and restricted cash (fnd_01 ['inv_007', 'fnd_011']
+partly_covered challenged_agent_draft coverage check on inv_008 ['inv_008', 'fnd_003']
+covered used_in_finding coverage check on inv_001 ['inv_001', 'fnd_017']
+partly_covered used_in_finding coverage check on inv_002 ['inv_002', 'fnd_008']
+not_covered overridden_by_agent_with_reason The liquidity section repeats the June 30, 2024 cash and restricted cash (fnd_01 ['inv_007', 'fnd_011']
+partly_covered overridden_by_agent_with_reason Legal Proceedings lists three matters: Valenti (paid in full 2023, fnd_013), Atr ['inv_008', 'fnd_003']
+not_covered overridden_by_agent_with_reason This section reports the Kenek short-term note ($1,181,222 at June 30, 2024); fn ['inv_009', 'fnd_014']
+covered used_in_finding coverage check on inv_013 ['inv_013', 'fnd_011']
+not_covered overridden_by_agent_with_reason The related-party note covers the Knight loan (fnd_018/fnd_004) and the CEO-affi ['inv_019', 'fnd_014']
+partly_covered overridden_by_agent_with_reason The Knight and Sanders balances and interest-only 2024 terms in this note have n ['inv_021', 'fnd_003']
+partly_covered overridden_by_agent_with_reason Note 13 lists the Atrium settlement (fnd_003) and the LODC settlement paid in fu ['inv_022', 'fnd_003']
+covered used_in_finding coverage check on inv_024 ['inv_024', 'fnd_014']
+partly_covered overridden_by_agent_with_reason The December 31, 2023 restricted-cash reconciliation concerns the same $100,000  ['inv_025', 'fnd_011']
+not_covered overridden_by_agent_with_reason The annual Note 11 repeats the Knight covenant text and the Atrium settlement lo ['inv_032', 'fnd_004']
+not_covered overridden_by_agent_with_reason The annual Note 13 repeats the Atrium settlement and LODC settlement disclosures ['inv_033', 'fnd_003']
+partly_covered overridden_by_agent_with_reason The December 31, 2023 subsequent-events note reports the 2024 Shopify loans, the ['inv_035', 'fnd_012']

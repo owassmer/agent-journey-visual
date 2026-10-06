@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"gh run view 37031694637 --repo owassmer/Slope_Sparse_Events --json status,jobs --jq '{status: .status, jobs: [.jobs[]|{name,status,conclusion,step: [.steps[]|select(.status==\"in_progress\")|.name]}]}'","max_output_tokens":1800}));
+text(await tools.exec_command({cmd:"curl -fsS http://127.0.0.1:18766/api/status | python3 -c 'import json,sys; print(json.dumps(json.load(sys.stdin)[\"state\"],indent=2))'","max_output_tokens":1000}));

@@ -1,0 +1,32 @@
+[IMPORTANT: 3 background processes completed. Treat these results as one batch and give one consolidated response; preserve failures and actionable results.]
+
+[IMPORTANT: Background process proc_479c32185a79 completed normally (exit code 0).
+Command: cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN uv run slope analyze --run akoustis_20240620-agent_plus_jev-20260926T212137Z --roles > /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/analyze11.log 2>&1
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+]
+
+[IMPORTANT: Background process proc_27ba8cea8fd4 completed normally (exit code 0).
+Command: while kill -0 85907 2>/dev/null; do sleep 10; done; grep -v "npmrc\|nvm" ~/.hermes/profiles/connor/cache/scratch/6c/analyze11.log | tail -8 | cut -c1-400
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+bank_only       lender PV -$284,147.73  full by maturity 3.9%  min cash mean $1,434,326.36  P5 $1,064,965.41  shortfall 0.0%
+event_adjusted  lender PV -$287,833.70  full by maturity 3.7%  min cash mean -$375,367.65  P5 -$9,723,384.42  shortfall 20.9%
+  driver: Qorvo trade-secret and patent judgment against Akoustis: files for bankruptcy when its available cash first falls below its 30-day operating need (Jev {'yes': 0.31, 'no': 0.69})
+  driver: Qorvo trade-secret and patent judgment against Akoustis: offers to settle for its available cash above its 30-day operating need (Jev {'yes': 0.31, 'no': 0.69})
+  driver: Qorvo trade-secret and patent judgment against Akoustis: files for bankruptcy when its available cash first falls below its 30-day operating need (Jev {'yes': 0.4, 'no': 0.6})
+recall check: 231 questions, mean change 2.9%, max 15.0%, 3 moved more than 10%; Jev {'provider': 'openrouter', 'requests': 231, 'cache_hits': 0, 'physical_attempts': 231, 'attempt_ceiling': 1200, 'spent_usd': '0.022444086', 'spend_cap_usd': '0.10'}
+8729 joint paths; Jev {'provider': 'openrouter', 'requests': 231, 'cache_hits': 0, 'physical_attempts': 231, 'attempt_ceiling': 1200, 'spent_usd': '0.022616118', 'spend_cap_usd': '0.10'}; wrote analysis.json, collections.csv, cashflows.csv
+]
+
+[IMPORTANT: Background process proc_a67eb1a52c59 completed normally (exit code 0).
+Command: cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN uv run slope analyze --run akoustis_20240620-agent_plus_jev-20260926T212137Z --roles > /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/analyze12.log 2>&1
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+]

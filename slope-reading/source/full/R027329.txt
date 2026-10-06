@@ -1,0 +1,17 @@
+[1m[91mB008[0m[1m Do not perform function call `Body` in argument defaults; instead, perform the call within the function, or read the default from a module-level singleton variable[0m
+  [1m[94m--> [0mapp/web/app.py:78:45
+   [1m[94m|[0m
+[1m[94m77[0m [1m[94m|[0m @app.post("/runs/{run_id}/analysis")
+[1m[94m78[0m [1m[94m|[0m def post_analysis(run_id: str, body: dict = Body(default_factory=dict)) -> JSONResponse:
+   [1m[94m|[0m                                             [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m79[0m [1m[94m|[0m     from app.analysis.build import recompute
+   [1m[94m|[0m
+
+[1mapp/web/app.py[0m[36m:[0m78[36m:[0m45[36m:[0m [1m[31mB008[0m Do not perform function call `Body` in argument defaults; instead, perform the call within the function, or read the default from a module-level singleton variable
+Found 1 error.
+28:    {% for d in v.submitted.disputes or [] %}{% if not d.blocking %}<p class="muted"><span class="tag warn">Open for the reviewer</span> {{ d.reason }}</p>{% endif %}{% endfor %}
+45:  <span class="tag finding">Agent effect</span>{% if e.status == "validated" %}<span class="tag engine">Validated</span>{% elif e.status == "disputed" %}<span class="tag warn">Disputed: open for the reviewer, no cash stream</span>{% else %}<span class="tag warn">{{ e.status }}</span>{% endif %}
+53:  {% if e.problems %}<p><span class="tag warn">{{ "Failed check" if e.status == "disputed" else "Rejected" }}</span> {{ e.problems | join("; ") }}</p>{% endif %}
+54:  {% if e.dispute %}<p><span class="tag warn">Agent disagrees</span> {{ e.dispute }}</p>{% endif %}
+102:<p class="muted">Jev read every admissible section once and flagged specific matters. The agent had to account for each before submitting, and Jev checked each claim section by section. A <em>disputed</em> item failed a check the agent could not resolve; it is open for the reviewer.</p>
+105:  <td>{{ i.kind }}</td><td>{% if i.status == "disputed" %}<span class="tag warn">Disputed: open</span>{% else %}{{ i.status }}{% endif %}{% if i.duplicate_of %} (duplicate of {{ i.duplicate_of }}){% endif %}{% if i.findings %}<br><span class="muted">{{ i.findings | join(", ") }}</span>{% endif %}{% if i.note %}<br><span class="muted">{{ i.note }}</span>{% endif %}

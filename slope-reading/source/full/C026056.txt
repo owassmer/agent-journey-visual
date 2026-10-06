@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/{\"window\": window, \"matter\": \"The debt issuance cost line\",/{\"window\": window, \"matter\": f\"The debt issuance cost line ({answer})\",/' tests/test_investigation_tools.py && uv run pytest -q -p no:warnings 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^FAILED|^E  \" | head"}

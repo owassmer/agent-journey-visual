@@ -1,0 +1,46 @@
+synergy_20240813-agent_plus_jev-20260925T043308Z INCOMPLETE_REVIEW turns 83 failure None
+incomplete: ["disputed inventory item inv_001 (legal matter or settlement): Court decision pages s0002–s0003 (pleading-standard analysis of Synergy's fraud/negligent-misrepresentation counts) lack their own finding; the matter is superseded by the December 2023 settlement (fnd_036, fnd_007) and its cash effect is scheduled via eff_003.", 'disputed inventory item inv_003 (debt or financing agreemen
+disputes: [
+ {
+  "id": "inv_001",
+  "kind": "legal_matter_or_settlement",
+  "blocking": true,
+  "reason": "disputed inventory item inv_001 (legal matter or settlement): Court decision pages s0002\u2013s0003 (pleading-standard analysis of Synergy's fraud/negligent-misrepresentation counts) lack their own finding; the matter is superseded by the December 2023 settlement (fnd_036, fnd_007) and its cash effect is scheduled via eff_003."
+ },
+ {
+  "id": "inv_003",
+  "kind": "debt_or_financing_agreement",
+  "blocking": true,
+  "reason": "disputed inventory item inv_003 (debt or financing agreement): Remaining WebBank definitions (Account, Collateral, Event of Default, Other Business Credits cross-collateral sweep) need individual findings; payment terms are covered by fnd_015, fnd_037, fnd_038."
+ },
+ {
+  "id": "inv_004",
+  "kind": "debt_or_financing_agreement",
+  "blocking": true,
+  "reason": "disputed inventory item inv_004 (debt or financing agreement): Knight affiliate's ~19.6% equity ownership and distribution agreements in s0027 lack a finding; loan balance, rate and covenants are covered by fnd_041, fnd_033, fnd_002."
+ },
+ {
+  "id": "inv_006",
+  "kind": "accounting_item_from_a_matter",
+  "blocking": true,
+  "reason": "disputed inventory item inv_006 (accounting item from a matter): 2022 one-off items in s0083 (inventory write-off $12,456,346, NASCAR spend, 2022 legal-fee accrual) need a normalization finding; the 2023 Atrium gain is covered by fnd_031/eff_019."
+ },
+ {
+  "id": "inv_007",
+conclusion: No financing conclusion can be reached on the admitted evidence.
+
+The Knight amended loan provides that Synergy shall not add any other debt without paying out Knight first. A default on any third-party debt automatically puts the Knight loan into default, and inventory is pledged to Knight. So no new advance option can be treated as available unless Knight's consent or a carve-out is shown (fact_001).
+
+If consent exists, cash capacity is the next binding test. Synergy's 2024 obligations include $2,000,000 of Atrium settlement-loan payments and $600,000 of remaining VitBest settlement payments; linking these rows to the named suppliers is an inference from matching amounts and dates. The Shopify debt ($482,725 at June 30, 2024) must be repaid by December 31, 2024, and Synergy also owes short-term
+
+The sensitivity uses about $2.0M of reported cash, less $100k restricted and the $200k illustrative reserve. On the two settlement buckets alone, the cumulative cash requirement is $900,000 if none was paid after June 30, $250,000 if 25% was paid, and $0 if half or more was paid. This is a necessary condition, not a dated feasibility test. The unresolved facts are the settlement payments made sinc
+
+No offer, account change or Slope policy judgment is made.
+inventory: Counter({'disputed': 18, 'not_decision_relevant': 12, 'covered': 6}) Counter({'debt_or_financing_agreement': 11, 'legal_matter_or_settlement': 3, 'accounting_item_from_a_matter': 2, 'covenant_or_restriction': 1, 'cash_restriction': 1})
+  inv_001 disputed legal_matter_or_settlement  | Court decision pages s0002–s0003 (pleading-standard analysis of Synergy's fraud/negligent-misrepresentation counts) lack their own finding; the matter is supers
+first occurrence (s): {'run_started': 0, 'inventory_loaded': 0, 'evidence_read': 8, 'dependency_recorded': 47, 'search': 66, 'jev_call': 67, 'observation_recorded': 67, 'candidate_screened': 67, 'finding_proposed': 83, 'observation_disposition': 89, 'finding_resolved': 89, 'reconciliation_opened': 101, 'reconciliation_resolved': 111, 'effect_proposed': 319, 'effect_validated': 321, 'effect_disputed': 405, 'sensitivity_run': 440, 'inventory_accounted': 541, 'missing_fact_requested': 672, 'conclusion_checked': 725, 'packet_submitted': 738}
+jev calls by profile: {'candidate_screen': 41, 'claim_interpretation': 31, 'finding_check': 43, 'statement_relation': 29, 'statement_support': 20, 'inventory_coverage': 141}
+inventory phase: 541 -> 711 s
+last event: packet_submitted 738
+    "requests": 276,
+    "physical_attempts": 276,

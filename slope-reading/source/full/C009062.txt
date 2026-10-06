@@ -1,0 +1,3 @@
+// @exec: {"max_output_tokens": 12500}
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nroot=Path(Path('/tmp/connor-slope-digest-current').read_text())\nfor kind in ['code','context','contracts']:\n s=(root/(kind+'_bundle.txt')).read_text();print('\\n',kind)\n off=0\n for t in s.split('\\n\\nFILE ')[1:]:\n  print(s.find('\\n\\nFILE '+t.split('\\n',1)[0]+'\\n'),t.split('\\n',1)[0])\nPY",max_output_tokens:5500}));
+text(await tools.exec_command({cmd:"python3 /var/folders/t1/05nck9rj6w7_jqgkkycxjcxw0000gn/T/connor-slope-digest-20260930-cy_n99a6/read.py human 170000 30000",max_output_tokens:6500}));

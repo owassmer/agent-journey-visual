@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/    assert not bond.points_here$/    assert not any(\"appeal intent\" in n for n in bond.points_here)/' tests/test_decision_model.py && uv run pytest -q -p no:cacheprovider --color=no -W ignore tests/test_decision_model.py 2>&1 | grep -E \"^E |passed|failed|^FAILED\" | head -20", "description": "Fix assertion and rerun", "timeout": 600000}

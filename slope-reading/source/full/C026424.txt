@@ -1,0 +1,1 @@
+{"command": "sed -n 159p Slope_Credit_Scenario_Build_Specification.md; grep -n -e \"3 September\" -e \"3 Sep\" -e \"2024-09-03\" Slope_Credit_Scenario_Build_Specification.md CLAUDE.md Slope_Coding_Agent_Context_and_Alignment.md | cut -c1-160; sed -n 226,238p Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json | cut -c1-400"}

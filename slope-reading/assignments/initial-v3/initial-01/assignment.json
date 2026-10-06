@@ -1,0 +1,21 @@
+{
+  "id": "initial-01",
+  "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+  "source_lines": [
+    1,
+    37
+  ],
+  "subject": "Initial assignment, environment context, inventory, and complete organizing-purpose document",
+  "context_source_lines": [],
+  "input_tokens_estimate": 64445,
+  "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+  "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+  "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+  "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-01/input.txt",
+  "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-01/context.txt",
+  "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-01",
+  "requested_outputs": [
+    "trace.txt",
+    "reading.json"
+  ]
+}

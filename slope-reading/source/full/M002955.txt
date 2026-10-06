@@ -1,0 +1,50 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_6d97781a]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 14:40:06 (9m1s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 541.98s
+
+--- ✓ TASK 1/1: Worker B9: replace the 14 May case's hard-coded equity raise with the approved financing mechanism (company decides, investors decide, one committed offering) and split the jury's head-start award at the notes' $10M judgment-default threshold. Build in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-financing (branch step-9-financing, off main cc8adf7). Then re-run the 14 May lead analysis once and the assumption variants once, rebuild the page, open a PR, and report.  (status=completed, api_calls=55, 541.7s) ---
+I stopped at the cash-identity check, as the brief says to when it fails: the class above $10M is not fully cash-identical. Nothing is built, committed or pushed. There are no analyze or variant runs, no PR, and no Jev spend.
+
+**The standard check passes.** I took the current tree built from the test fixture (2,962 paths, 2,021 of them on the claimant's-theory branch). On each of those paths I replaced the $67,526,412 award with $10,000,001, $10.5M, $11M, $12M and $15M. Cash, locked security, petition day and decision days came out the same on every path.
+
+**It fails on whether the company can pay the judgment when it is entered.** Judgments are entered 17–23 May. On those days the company holds a median of $11.65M, and at most $11,807,656, which is the most cash any trajectory holds. So an award just above $10M can be paid in full on some trajectories, and the tree would offer "pay" at that response. At $67.5M it cannot, so the class's tree has no "pay" branch:
+
+```
+Award (USD)                                        | 10,000,001 | 10.5M–11.5M | 11.7M   | 11.8M  | 12.0M and above
+---------------------------------------------------+------------+-------------+---------+--------+----------------
+Trajectories that can pay in full on the entry day | 512/512    | 334/512     | 191/512 | 47/512 | 0              
+```
+
+Everywhere after the entry day the members match:
+- **Later responses:** no trajectory can pay at the pre-ruling levy-day response or after it, because cash is under $10M by then.
+- **Settlement:** capped by cash above the 30-day need, at most $8.97M, so the same for every award.
+- **Levies and stay security:** identical.
+
+So the mismatch is one place: the company's response on the day of entry, for awards from just above $10.0M to about $11.81M. The ruling classes' own merge rule is stricter: it counts a class as beyond cash only when 80% of the award exceeds the most cash on any trajectory. By that rule nothing below $14.76M would merge.
+
+**Decision for you or Owen:** the band from $10.0M to about $11.8M needs one of these before the verdict split can be built:
+- **Accept the approximation:** leave out the pay-at-entry branch for awards in that band.
+- **Split the band into its own class**, with "pay" offered at entry.
+- **Book the class above $10M at a different figure.**
+
+**Part 1 (the investors' offering decision) doesn't depend on this.** My worked-out plan for it is in `scratch/9b/NOTES.md`:
+- **Engine:** the investors' answer rides on the cash-floor step (`raise_equity:funded` / `raise_equity:not_funded:file` / `raise_equity:not_funded:continue`), so the existing same-day booking machinery is reused. The offering is available on any day before delisting and before a petition, regardless of any judgment.
+- **Re-investigation:** not needed. The new offering question's record items are already filled in the lead run's slots.json:
+  - financing routes: fnd_003, fnd_027
+  - cash, going-concern status and plans: fnd_001, fnd_003
+  - listing deficiency notice and deadline: fnd_020, fnd_027
+  - the notes' judgment-default terms: fnd_017, fnd_018
+  - the company's statements on the trial, including counsel's "eight-figure verdict": fnd_011, fnd_016
+- **Jury question:** the new $10M question can reuse the measure question's filled items: fnd_004 (55 months, $66.1M), fnd_031 (revenue, not profit), fnd_028 (D.I. 553) and fnd_011.
+- **Existing checks and wording:** the notes list the tests that assert the old raise design and every place that uses the raise names.
+
+The worktree `step-9-financing` is clean at cc8adf7; the only change is a `.venv` that `uv run` created. The check processes are stopped.
+
+Files are in `~/.hermes/profiles/connor/cache/scratch/9b/`:
+- NOTES.md
+- ident.py
+- ident.log
+- payable.py
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_6d97781a/task-0.log

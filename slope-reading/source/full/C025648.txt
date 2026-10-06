@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/inspect_run5.py 2>&1 | cut -c1-420; grep -l -i \"vitabest nutrition\\|delayed draw\\|vitabest settlement agreement\\|case_eval_private\\|expected_findings\" -r runs/recorded/synergy_20240813-agent_plus_jev-20260925T023111Z; echo \"leak-scan exit $? (1 = none)\""}

@@ -1,0 +1,41 @@
+        if k not in self.cache:
+            self.cache[k] = np.random.default_rng([SEED, zlib.crc32(k.encode())]).random(self.n)
+        return self.cache[k]
+
+
+def amount_cents(d: DisputeInstance, setup: Setup) -> int:
+    a = int(d.amount.value if d.amount.value is not None else d.amount.upper)
+    return int(round(a * setup.exposure_scale)) if d.borrower_role == "debtor" else a
+
+
+def event_cash(d: DisputeInstance, path: DisputePath, setup: Setup, model: dict, draws: Draws) -> EventCash:
+    n, days = draws.n, (setup.horizon - setup.review).days
+    out = EventCash.zeros(n, days)
+    rows = np.arange(n)
+    debtor = d.borrower_role == "debtor"
+    sign = -1 if debtor else 1
+    amount = amount_cents(d, setup)
+    iid = d.instance_id
+    notice, stay_days = param(model, "appeal_notice_days"), param(model, "automatic_stay_days")
+    vol, enf = param(model, "voluntary_payment_days_after_stay"), param(model, "enforcement_period_days")
+    settle_days = param(model, "settlement_window_days")
+    s_lo, s_hi = (x / 10_000 for x in param_range(model, "settlement_share_bps"))
+    c_lo, c_hi = setup.collateral_share or tuple(x / 10_000 for x in param_range(model, "bond_collateral_share_bps"))
+    r_lo, r_hi = (x / 10_000 for x in param_range(model, "post_judgment_interest_bps_per_year"))
+    multiple = param(model, "supersedeas_multiple_bps") / 10_000
+
+    def offset(a, b, *key):
+        """A day offset from the review date (1 = the day after) drawn inside [a, b] clipped to the horizon; payments
+        early in stress. A window that opens after the horizon returns a day past it, so nothing is booked there and
+        nothing that depends on it (a release, a payment) is either."""
+        a, b = np.maximum(np.asarray(a), 1), np.minimum(np.maximum(np.asarray(b), 1), days)
+        u = draws.u(iid, *key, adverse_high=not debtor)
+        inside = np.minimum(a + np.floor(u * (b - a + 1)).astype(np.int64), b)
+        return np.where(a > b, np.maximum(a, days + 1), inside)  # a window opening after the horizon books nothing
+
+    def book(arr, when, cents):
+        idx = when - 1
+        ok = idx < days
+        np.add.at(arr, (rows[ok], idx[ok]), np.asarray(cents)[ok] if np.ndim(cents) else cents)
+
+    def share(*key):

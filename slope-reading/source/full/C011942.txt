@@ -1,0 +1,5 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"nl -ba /Users/owenwassmer/.hermes/profiles/connor/skills/software-development/slope-sparse-events-build/SKILL.md | sed -n '28,60p'",max_output_tokens:4000}),
+  tools.exec_command({cmd:"nl -ba /Users/owenwassmer/.hermes/profiles/connor/SOUL.md | sed -n '23,36p'",max_output_tokens:2500})
+]);
+results.forEach((r,i)=>text({i,...(r.status==="fulfilled"?{result:r.value}:{error:String(r.reason)})}));

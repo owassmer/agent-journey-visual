@@ -1,0 +1,62 @@
+DEP dep_001 | What settlement terms, if any, resolve Synergy CHC's litigation with former contract manufacturer HVL, LLC d/b | target: Synergy CHC Corp. – settlement obligation to HVL, LLC d/b/a Atrium Innovations (
+DEP dep_002 | What are the payment rules of Synergy CHC's WebBank merchant loan (25% of daily sales, minimum payment require | target: Synergy CHC Corp. – WebBank merchant loan dated 2024-05-01 ($370,000 principal, 
+DEP dep_003 | Is any portion of Synergy CHC's ~$2.0 million cash reported at August 12, 2024 restricted or otherwise unavail | target: Synergy CHC Corp. – restricted cash balance and 2024-maturing indebtedness compo
+  FIND= fnd_001 rejected The Atrium litigation (D. Me. 2:22-cv-00301) was settled in December 2023; the settlement produced a
+  FIND= fnd_002 rejected The $5,450,000 December 28, 2023 former-supplier settlement loan (5% interest) had an unchanged $4,8
+  FIND= fnd_003 rejected The 'Atrium' row of $4,802,445 in the June 30, 2024 notes payable table is the December 28, 2023 for
+  FIND= fnd_004 rejected A separate March 27, 2024 supplier settlement loan ($3,020,824) had $100,000 paid in 2024 and a $2,9
+  FIND= fnd_005 rejected The LODC litigation settlement (April 2024) was expensed in 2023 and reported paid in full in May 20
+  FIND= fnd_006 rejected The Valenti class-action settlement ($340,000 in twelve installments ending December 1, 2023) was fu
+  FIND= fnd_007 accepted The Atrium case settlement created a $5,450,000 loan payable for Synergy CHC Corp.
+  FIND= fnd_008 accepted The $2,235,986 Atrium settlement gain was an accounting entry recorded as a reduction of cost of sal
+  FIND= fnd_009 accepted The December 28, 2023 former-supplier settlement loan requires payments of $2,000,000 in 2024.
+  FIND= fnd_010 rejected No principal was repaid on the December 28, 2023 former-supplier settlement loan during the first ha
+  FIND= fnd_011 accepted The 'Atrium' notes payable row ($4,802,445) is the December 28, 2023 former-supplier settlement loan
+  FIND= fnd_012 accepted The March 27, 2024 supplier settlement loan requires payments of $600,000 in 2024.
+  FIND= fnd_013 accepted Synergy paid the L.O.D.C. Group settlement in full in May 2024.
+  FIND= fnd_014 accepted Synergy fully paid the $340,000 Valenti settlement during 2023.
+  FIND= fnd_015 accepted The December 28, 2023 settlement loan's 2024 amount of $2,000,000 is measured from June 30, 2024: th
+  FIND= fnd_016 accepted The March 27, 2024 settlement loan's 2024 amount of $600,000 is measured from June 30, 2024: the fut
+  FIND= fnd_017 accepted At June 30, 2024 Synergy held $100,000 of restricted cash held for credit card collateral.
+  FIND= fnd_018 accepted Under the WebBank merchant loan, the Minimum Payment is 30 percent of the $418,100 Total Payment Amo
+  FIND= fnd_019 accepted Management disclosed that approximately $4.1 million of Synergy's outstanding indebtedness comes due
+  EFFECT eff_001 validated settlement_payment_timing | Synergy CHC Corp. – Atrium (Dec 28, 2023 former-supplier) se | Up to $2.0M of cash outflow falls in Aug-Dec 2024, overlapping the proposed advance's firs []
+  EFFECT eff_002 validated settlement_payment_timing | Synergy CHC Corp. – March 27, 2024 supplier settlement loan  | Adds up to $0.6M of Aug-Dec 2024 outflow on top of the Atrium settlement loan. []
+  EFFECT eff_003 validated noncash_normalization | Synergy CHC Corp. – $2,235,986 Atrium settlement gain in cos | FY2023 gross margin and earnings-based capacity are overstated by $2.24M; do not treat as  []
+  EFFECT eff_004 validated resolved_obligation | Synergy CHC Corp. – L.O.D.C. Group settlement | No future cash effect. []
+  EFFECT eff_005 validated resolved_obligation | Synergy CHC Corp. – Valenti class-action settlement | No future cash effect. []
+  EFFECT eff_006 validated restricted_funds | Synergy CHC Corp. – $100,000 restricted cash (credit card co | Available opening cash may be ~$1.9M rather than ~$2.0M. []
+  EFFECT eff_007 rejected funding_constraint | Synergy CHC Corp. – WebBank merchant loan (May 1, 2024): 25% | 25% of Shopify-channel receipts are swept before reaching operating cash through the propo ["Baseline treatment already_
+  SENS [('0', None), ('0.25', None), ('0.5', None), ('1', None)] unknown
+  SENS [('0', 90000000), ('0.25', 25000000), ('0.5', 0), ('1', 0)] 10000000
+  EFFECT eff_008 validated funding_constraint | Synergy CHC Corp. – WebBank merchant loan (May 1, 2024): 25% | 25% of Shopify-channel receipts are swept before reaching operating cash during the propos []
+  SENS [('0', 80000000), ('0.25', 15000000), ('0.5', 0), ('1', 0)] 0
+  MISSING How much of the $2,000,000 (Atrium/Dec 28, 2023 settlement loan) and $600,000 (March 27, 2024 supplier settlement loan) 
+  MISSING What is the composition of the ~$2.0M cash at August 12, 2024 (does it include the $100k restricted credit-card collater
+  MISSING WebBank merchant loan: Effective Date and Daily Payments received to date versus the $125,430 month-6 Minimum Payment.
+turns 25 / 80 duration_s 254
+eff_001 validated settlement_payment_timing | already_in_baseline_reclassify_timing | [('remaining_current_year_bucket_cents', 200000000, 'documented_evidence'), ('paid_since_measurement_date_cents', None, None), ('installment_dates_2024', None, None)]
+eff_002 validated settlement_payment_timing | already_in_baseline_reclassify_timing | [('remaining_current_year_bucket_cents', 60000000, 'documented_evidence'), ('paid_since_measurement_date_cents', None, None)]
+eff_003 validated noncash_normalization | normalization_only | [('noncash_gain_cents', 223598600, 'documented_evidence')]
+eff_004 validated resolved_obligation | exclude_already_paid_obligation | []
+eff_005 validated resolved_obligation | exclude_already_paid_obligation | []
+eff_006 validated restricted_funds | modify_available_funding | [('restricted_cents', 10000000, 'documented_evidence'), ('included_in_aug12_2m', None, None)]
+eff_007 rejected funding_constraint | already_in_baseline_reclassify_timing | [('minimum_payment_month6_cents', 12543000, 'model_derived'), ('daily_payments_received_to_date_cents', None, None), ('effective_date', None, None)]
+eff_008 validated funding_constraint | modify_available_funding | [('minimum_payment_month6_cents', 12543000, 'model_derived'), ('daily_payments_received_to_date_cents', None, None), ('effective_date', None, None)]
+{
+ "conclusion": "The decision can't be made from the admissible evidence alone. The binding cash requirement is the $2.6M of 2024 installments on the two supplier-settlement loans. Of that, $2.0M is the Atrium settlement, which became a loan payable rather than being resolved in cash. Against ~$2.0M of reported cash and a $200k reserve, the requested $250k/6-month advance (about $44k a month, roughly 4\u20135 payments in 2024) can be supported only if at least about half of those settlement installments were paid after June 30, or fall due after the advance term, or a named inflow is committed. If they are largely unpaid and due in Q3\u2013Q4 2024, the needed $0.8\u20130.9M is not met from cash on hand; only the $100k offer or no advance fits the reserve, and the 3-month $250k offer ($85.8k a month) makes things worse. Two links are inferences: the 'Atrium' row identity (by matching balance) and the June 30 measurement date of the 2024 buckets (by schedule totals). No default probability or litigation severity adjustment is applied.",
+ "pivotal_unknowns": [
+  "Amount of the $2.0M Atrium settlement-loan and $0.6M March 2024 supplier settlement-loan 2024 installments paid July 1\u2013Aug 13, 2024, and the dates of the remaining installments",
+  "Composition of ~$2.0M cash at Aug 12, 2024 (restricted $100k included? temporary financing proceeds?) and itemization of the ~$4.1M 2024 maturities beyond the settlement loans"
+ ],
+ "supported_effect_ids": [
+  "eff_001",
+  "eff_002",
+  "eff_003",
+  "eff_004",
+  "eff_005",
+  "eff_006",
+  "eff_008"
+ ]
+}
+leak-scan exit 1 (1 = none)

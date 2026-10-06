@@ -1,0 +1,164 @@
+total 368
+drwxr-xr-x  20 owenwassmer  staff    640 Sep 24 18:43 .
+drwxr-xr-x  45 owenwassmer  staff   1440 Sep 24 18:03 ..
+drwxr-xr-x@  3 owenwassmer  staff     96 Sep 24 18:43 .claude
+-rw-r--r--@  1 owenwassmer  staff  10244 Sep 24 18:08 .DS_Store
+-rw-r--r--   1 owenwassmer  staff     92 Sep 24 18:39 .env
+drwxr-xr-x@ 13 owenwassmer  staff    416 Sep 24 18:43 .git
+drwxr-xr-x@  4 owenwassmer  staff    128 Sep 24 18:24 .github
+-rw-r--r--@  1 owenwassmer  staff    338 Sep 24 18:23 .gitignore
+-rw-r--r--@  1 owenwassmer  staff      5 Sep 24 18:23 .python-version
+drwxr-xr-x@  5 owenwassmer  staff    160 Sep 24 18:24 .ruff_cache
+drwxr-xr-x@  8 owenwassmer  staff    256 Sep 24 18:24 .venv
+drwxr-xr-x@  4 owenwassmer  staff    128 Sep 24 18:24 app
+-rw-r--r--@  1 owenwassmer  staff   4833 Sep 24 18:24 CLAUDE.md
+-rw-r--r--@  1 owenwassmer  staff   1179 Sep 24 18:23 pyproject.toml
+-rw-r--r--@  1 owenwassmer  staff    756 Sep 24 18:24 README.md
+-rw-r--r--   1 owenwassmer  staff  19594 Sep 24 18:11 Slope_Coding_Agent_Context_and_Alignment.md
+-rw-r--r--@  1 owenwassmer  staff  43158 Sep 24 18:05 Slope_Credit_Scenario_Build_Specification.md
+drwx------@  6 owenwassmer  staff    192 Sep 24 18:04 Slope_Credit_Scenario_Research_and_Design_Kit
+drwxr-xr-x@  2 owenwassmer  staff     64 Sep 24 18:24 tests
+-rw-r--r--@  1 owenwassmer  staff  79129 Sep 24 18:24 uv.lock
+70be161 Bootstrap: research kit, specs, uv env, CI, delivery workflow
+PACKAGE_MANIFEST.json
+README.md
+research
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research:
+barfresh_case
+recent_cases
+revision_v2
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case:
+acquired_sources.json
+brfh_2023_10k.html
+brfh_2023_10k.txt
+brfh_2024_08_13_litigation_funding.html
+brfh_2024_08_13_litigation_funding.txt
+brfh_2024_10k.html
+brfh_2024_10k.txt
+brfh_2024q1_10q.html
+brfh_2024q1_10q.txt
+brfh_2024q2_10q.html
+brfh_2024q2_10q.txt
+brfh_2024q2_index.html
+brfh_2024q2_index.txt
+brfh_2024q2_release.html
+brfh_2024q2_release.txt
+brfh_2024q3_10q.html
+brfh_2024q3_10q.txt
+brfh_2024q3_release.html
+brfh_2024q3_release.txt
+brfh_2025q1_10q.html
+brfh_2025q1_10q.txt
+brfh_sec_submissions.json
+case_facts.json
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases:
+synergy_chc
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/synergy_chc:
+2023_02_27_court_order.pdf
+2024_05_01_webbank_shopify_loan.html
+2024_annual_report.html
+2024_s1a.html
+2024_s1a.txt
+2025_05_30_credit_agreement.html
+2025_06_30_quarterly_report.html
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2:
+contracts
+data
+deliverables
+package_kit.py
+README.md
+reference
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts:
+agent_config.json
+barfresh-economic-effects.json
+build_contracts.py
+build_proposal_fixtures.py
+build_synergy_example.py
+build-contracts.schema.json
+case_eval_private.json
+economic-effects.json
+proposal-fixtures.json
+proposal-fixtures.schema.json
+question_registry.json
+README.md
+synergy-decision-context.json
+validate_contracts.py
+validation-report.json
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/data:
+build_case_index.py
+facts_synergy.json
+outcome_checks_synergy.json
+sources.json
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/deliverables:
+Slope_Credit_Scenario_Build_Specification.md
+
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/reference:
+calculation_outputs.json
+calculator.py
+README.md
+test_calculator.py
+[project]
+name = "slope-sparse-events"
+version = "0.1.0"
+description = "External-event credit scenario module: agent + Jev research into loan cash flows and financing decisions"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    # Agent runtime (native Claude subscription auth; no API key path)
+    "claude-agent-sdk==0.2.159",
+    # Jev (TypeSafe) — separately billed service
+    "typesafe-sdk==0.7.1",
+    # Domain + contracts
+    "pydantic>=2.9,<3",
+    "jsonschema>=4.26,<5",
+    # Evidence ingestion
+    "beautifulsoup4>=4.12",
+    "lxml>=5.3",
+    # Viewer
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+    "jinja2>=3.1",
+    # CLI
+    "typer>=0.12",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[project.scripts]
+slope = "app.cli:main"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+extend-exclude = ["Slope_Credit_Scenario_Research_and_Design_Kit"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pull_request_template.md
+workflows
+.github/pull_request_template.md
+.github/workflows/ci.yml

@@ -1,0 +1,33 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_ba7cd23c]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 19:34:09 (4m13s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 253.29s
+
+--- ✓ TASK 1/1: Focused review of PR #17 in owassmer/Slope_Sparse_Events (branch step-6c-run): the L11 rule, the per-trajectory filing-cause classing, and the recorded Akoustis run's isolation. Post one PR comment with demonstrated defects only.  (status=completed, api_calls=35, 253.06s) ---
+I found no defects in the evidence → Jev → cash → loan chain on PR #17 (head 0f32ad5), and posted one comment saying so: https://github.com/owassmer/Slope_Sparse_Events/pull/17#issuecomment-5850965151
+
+- **(a) L11 rule:** The judgment default never comes due before the post-trial ruling, under all three pre-ruling paths I ran. After the ruling it comes due exactly 60 days later, when the surviving amount is above the $10M threshold ($30.1M did; $0.9M did not). The rule text in `dispute_model.json` matches the code.
+- **(b) Filing-cause split:** I rebuilt each trajectory's earliest petition independently and it matched the code's cause on all 512 draws. On a path with two filing rules, the split was 184 Qorvo enforcement and 328 cash floor. The three Filed shares sum exactly to the path's petition probability. In the recorded page they match to within 1e-4, which is rounding in page.json.
+- **(c) Isolation:** No post-20-Jun-2024 fact appears in run.json, packet.json, events.jsonl or sweep.json. Every match on the post-D search strings was pre-D material. The only later dates are pre-D deadlines and the 2026 run timestamps. page.json holds no outcome content; only the viewer reads `outcomes/`.
+- **(d) Tiles:** I re-ran page.js's probability arithmetic on page.json and the tiles match analysis.json and collections.csv:
+
+```
+Tile                   | With litigation | Without litigation
+-----------------------+-----------------+-------------------
+Collected              | $542,118        | $663,752          
+Frozen by bankruptcy   | $227,952        | $0                
+Clawback exposure      | $270,146        | $0                
+Bankruptcy probability | 71.83%          | 0%                
+```
+
+- **Tests and lint:** pytest gave 144 passed in 67.6 s, and ruff reported all checks passed.
+
+One small thing, not in the comment because it doesn't affect the numbers: the `judgment_default_ripe` clock text in `dispute_model.json` still says the default can come due before the ruling. No code reads that text and Jev never sees it.
+
+I edited nothing in the checkout and did not add a label. The probes and the comment text are in `~/.hermes/profiles/connor/cache/scratch/pr17/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_ba7cd23c/task-0.log
+Child's process proc_47a2915dc978 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && mkdir -p /Users/owenw` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

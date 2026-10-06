@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-build && git status --short | grep -v '^??'; git push -q 2>&1 | grep -v \"npmrc\\|nvm\\|globalconfig\"; git log --oneline -3 | cut -c1-90; grep -n \"def stay_security\\|def _seen\\|stay_offer\\|def run_many\\|def process\" app/analysis/events.py app/analysis/processor.py | cut -c1-140 | head -20"}

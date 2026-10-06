@@ -1,0 +1,1 @@
+{"subject": "Update spec, CLAUDE.md, agent_config, registry v3", "description": "Spec \u00a77/\u00a79/\u00a710 both copies; agent_config tools/budgets/jev/comparison modes; question_registry v3.0.0; PACKAGE_MANIFEST; CLAUDE.md reference to Jev_Pivot.md", "activeForm": "Updating authoritative docs and contracts"}

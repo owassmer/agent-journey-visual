@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/fix-a4-milestone && python3 -c \"\nimport json;m=json.load(open('Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json'))\np=m['parameters']['ruling_lag_days'];print({k:v for k,v in p.items()})\""}

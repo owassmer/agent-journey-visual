@@ -1,0 +1,7 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"pwd",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:1000}),
+  tools.exec_command({cmd:"rg --files -g 'AGENTS.md' -g '!node_modules' -g '!vendor' /Users/owenwassmer/dev /Users/owenwassmer/.claude",max_output_tokens:5000}),
+  tools.exec_command({cmd:"cat Slope_Coding_Agent_Context_and_Alignment.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:20000}),
+  tools.exec_command({cmd:"cat Slope_Credit_Scenario_Build_Specification.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:24000})
+]);
+for (let i=0;i<results.length;i++) text({i,...results[i]});

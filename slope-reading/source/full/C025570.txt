@@ -1,0 +1,1 @@
+{"command": "uv run ruff check app && uv run python -c \"\nfrom app.agent.sweep import chunks\nfrom app.evidence.store import EvidenceStore\nst=EvidenceStore('synergy_20240813'); secs=st.list_sections()\nn=[len(chunks(s['text'])) for s in secs]; print(len(secs),'sections', sum(n),'chunks', max(n),'max chunks/section', sum(len(s['text']) for s in secs)//1000,'k chars')\n\""}

@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"curl -s http://127.0.0.1:18766/api/status | python3 -c 'import json,sys; s=json.load(sys.stdin)[\"state\"]; print({k:s.get(k) for k in (\"phase\",\"done\",\"total\",\"active\",\"updated\",\"error\")})'","max_output_tokens":300}));
+text(await tools.exec_command({cmd:"gh run view 37139000532 --repo owassmer/Slope_Sparse_Events --json jobs --jq '[.jobs[] | (.conclusion // \"\") + \":\" + .status] | group_by(.) | map({state: .[0], count:length})'","max_output_tokens":300}));

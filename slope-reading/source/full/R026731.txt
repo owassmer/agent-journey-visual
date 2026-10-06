@@ -1,0 +1,198 @@
+    from datetime import date
+    from pathlib import Path
+
+    from app.agent.run_store import RunStore
+    from app.config import ROOT
+    from app.decisions.case import decide, export
+
+    base = Path(root) if root else ROOT / "runs" / "recorded"
+    store = RunStore(run, root=base)
+    meta = store.events[0].payload
+    inputs = meta["run_inputs"]
+    from app.evidence.store import EvidenceStore
+
+    review = date.fromisoformat(str(EvidenceStore(meta["snapshot_id"]).snapshot_info()["cutoff"])[:10])
+    summary = decide(meta["snapshot_id"], inputs, list(store.graph["dispute_nodes"].values()), review)
+    js, csv = export(summary, base / run)
+    for view, rec in summary["recommendation"].items():
+        typer.echo(f"{view:15s} -> {rec['structure']} (limit {rec['limit_cents'] / 100:,.0f}, "
+                   f"order limit {rec['order_limit_cents'] / 100:,.0f})")
+    for c in summary["conditions"]:
+        typer.echo(f"  condition: {c['action']}")
+    typer.echo(f"wrote {js.name} and {csv.name}")
+
+
+@cli.command()
+def investigate(
+    for o in g["observations"].values():
+        if o.question_id in check_labels and o.subject_ids:
+            coverage_by_item.setdefault(o.subject_ids[0], []).append({
+                "label": check_labels[o.question_id], "id": o.observation_id,
+                "meaning": meaning(o.question_id, o.answer), "answer": o.answer, "ambiguous": is_ambiguous(o),
+                "disposition": o.downstream_disposition.replace("_", " "), "note": o.disposition_note,
+                "findings": list(o.subject_ids[1:])})
+    inventory = [{"id": i.item_id, "kind": i.kind.replace("_", " "), "source": titles.get(i.source_id, i.source_id),
+                  "heading": " › ".join(i.heading_path[-2:]) or "(whole document)", "sections": len(i.section_ids),
+                  "status": i.status.replace("_", " "), "findings": list(i.finding_ids), "note": i.note,
+                  "duplicate_of": i.duplicate_of, "unit_kind": i.unit_kind.replace("_", " "), "excerpt": i.excerpt,
+                  "coverage_checks": coverage_by_item.get(i.item_id, [])}
+                 for i in sorted(g["inventory"].values(), key=lambda i: i.item_id)]
+    cited_checks = [e.payload for e in run.events if e.kind == "cited_units_checked"]
+    conclusion_checks = [e.payload for e in run.events if e.kind == "conclusion_checked"]
+    conclusion_check = conclusion_checks[-1] if conclusion_checks else None
+    return {
+        "late_failure": (record.get("status") not in (None, status)) and (record.get("failure") or record.get("status")),
+        "run_id": run_id, "verified_head": run.head[:16], "record": record, "meta": meta, "status": status,
+        "inputs_locked": inputs_locked,
+        "borrower": inputs.get("baseline_profile", {}).get("borrower", meta.get("case_id")),
+        "review_date": (meta.get("snapshot_cutoff") or inputs.get("snapshot_id", ""))[:10],
+        "request": inputs.get("run_inputs", {}), "submitted": submitted, "effects": effects, "dependencies": deps,
+        "missing_facts": [e.payload for e in run.events if e.kind == "missing_fact_requested"],
+        "sensitivities": [e.payload for e in run.events if e.kind == "sensitivity_run"],
+        "reconciliations": [t.model_dump() for t in g["reconciliations"].values()],
+        "jev_ledger": dict(ledger), "jev_calls": len(g["jev_calls"]), "observations": len(g["observations"]),
+        "inventory": inventory, "conclusion_check": conclusion_check, "conclusion_checks": conclusion_checks,
+        "decision": _decision(root / run_id),
+        "dispute_nodes": [{"id": n.node_id, "decision_point": n.decision_point, "findings": list(n.finding_ids),
+                           "branches": [{"label": b.label, "description": b.description,
+                                         "weight": (f"{n.weights_bps[b.branch_id] / 100:.0f}%" if b.branch_id in n.weights_bps
+                                                    else "not judged"),
+                                         "cash": [{"kind": c.kind, "label": c.label, "amount": _money(c.amount.model_dump(mode="json")),
+                                                   "window": f"{c.window_start.isoformat()} to {c.window_end.isoformat()}"}
+                                                  for c in b.cash]} for b in n.branches]}
+                          for n in g.get("dispute_nodes", {}).values()],
+        "atomic_inventory": any(i.unit_start >= 0 for i in g["inventory"].values()),
+        "cited_checks": [{**c, "checked": [{**r, "meaning": meaning("coverage_supported", r["answer"])} for r in c["checked"]]}
+                         for c in cited_checks],
+        "reviewer_checklist": submitted.get("reviewer_checklist"),
+        "sweep": next((e.payload for e in run.events if e.kind == "inventory_loaded"), None),
+    }
+
+
+def _decision(run_dir: Path) -> dict | None:
+    """The deterministic decision written by `slope compare` next to the recorded run, if present."""
+    path = run_dir / "scenarios.json"
+    if not path.exists():
+        return None
+    s = json.loads(path.read_text())
+    views = list(s["recommendation"])
+    rows = []
+    for name, e in s["structures"].items():
+        row = {"name": name, "label": e["label"]}
+        for view in views:
+      {% elif c.answer == "all_supported" and not c.ambiguous %}supported by findings and engine results
+      {% else %}{{ c.answer.replace("_", " ") }} (near-even; not blocking){% if c.override_reason %} · agent's recorded reason: {{ c.override_reason }}{% endif %}{% endif %}</p>{% endfor %}
+    {% if v.submitted.incomplete_reasons %}<p><span class="tag warn">Incomplete</span> {{ v.submitted.incomplete_reasons | join("; ") }}</p>{% endif %}
+    {% for d in v.submitted.disputes or [] %}{% if not d.blocking %}<p class="muted"><span class="tag warn">Open for the reviewer</span> {{ d.reason }}</p>{% endif %}{% endfor %}
+  </div>
+</div>
+
+{% if v.decision %}{% set d = v.decision %}
+<h3>Financing decision <span class="tag engine">Engine result</span></h3>
+<div class="grid2">
+  {% for view in d.views %}{% set r = d.recommendation[view] %}
+  <div class="card">
+    <h5>{{ "Bank data only" if view == "bank_only" else "With the dispute's branches" }}</h5>
+    <p><strong>{{ r.label }}</strong>{% if not r.requested_passes %} <span class="tag warn">below the request</span>{% endif %}</p>
+    <p class="muted">Limit {{ r.limit }} · order limit {{ r.order_limit }}{% if r.requested_reasons %} · request: {{ r.requested_reasons | join("; ") }}{% endif %}</p>
+  </div>{% endfor %}
+</div>
+{% if d.conditions %}<p><strong>Conditions</strong></p><ul>{% for c in d.conditions %}<li>{{ c.action }} <span class="muted">({{ c.why }})</span></li>{% endfor %}</ul>{% endif %}
+{% for n in v.dispute_nodes %}<div class="card"><h5>{{ n.decision_point }}</h5>
+  {% for b in n.branches %}<p style="margin:.2rem 0"><span class="tag jev">{{ b.weight }}</span><strong>{{ b.label }}</strong>: {{ b.description }}
+    {% for c in b.cash %}<br><span class="muted">{{ c.kind }} {{ c.amount }} ({{ c.label }}), {{ c.window }}</span>{% endfor %}</p>{% endfor %}
+</div>{% endfor %}
+{% if v.dispute_nodes %}<p class="muted">{{ d.weights_label }}</p>{% endif %}
+<table><thead><tr><th>Structure</th>{% for view in d.views %}<th>{{ "Bank only" if view == "bank_only" else "With dispute" }}</th>{% endfor %}</tr></thead><tbody>
+{% for row in d.rows %}<tr><td>{{ row.label }}{% if row[d.views[0]].fee %}<br><span class="muted">fee {{ row[d.views[0]].fee }} · {{ row[d.views[0]].apr }} effective</span>{% endif %}</td>
+  {% for view in d.views %}{% set c = row[view] %}<td>{% if c.passes %}<span class="tag engine">passes</span>{% else %}<span class="tag warn">fails</span>{% endif %}
+    <span class="muted">lowest cash {{ c.lowest }}{% if c.npv %} · NPV {{ c.npv }}{% endif %}{% if c.reasons %}<br>{{ c.reasons | join("; ") }}{% endif %}</span></td>{% endfor %}</tr>{% endfor %}
+</tbody></table>
+<p class="muted">Risk tier {{ d.tier }} from connected bank data. {{ d.bank_feed.provenance }} {{ d.slope_terms.provenance }}</p>
+{% endif %}
+
+{% if v.submitted.pivotal_unknowns or v.missing_facts %}
+<h3>Pivotal unresolved inputs</h3>
+{% for m in v.missing_facts %}
+<div class="card"><strong>{{ m.fact }}</strong>
+  <p class="muted">Why it matters: {{ m.why_pivotal }}<br>Acceptable evidence: {{ m.acceptable_evidence }}{% if m.if_resolved %}<br>If resolved: {{ m.if_resolved }}{% endif %}</p></div>
+{% endfor %}
+{% if not v.missing_facts %}<ul>{% for u in v.submitted.pivotal_unknowns %}<li>{{ u }}</li>{% endfor %}</ul>{% endif %}
+{% endif %}
+
+<h3>What changed from the baseline</h3>
+<p class="muted">Each card is a proposed economic effect. <em>Validated</em> means supported by accepted, verbatim-cited findings and structurally sound; it does not activate a cash flow by itself.</p>
+{% for e in v.effects %}
+<div class="card">
+  <span class="tag finding">Agent effect</span>{% if e.status == "validated" %}<span class="tag engine">Validated</span>{% elif e.status == "disputed" %}<span class="tag warn">Disputed: open for the reviewer, no cash stream</span>{% else %}<span class="tag warn">{{ e.status }}</span>{% endif %}
+  <h5 style="margin:.3rem 0">{{ e.mechanism }} · {{ e.target }}</h5>
+  <p class="consequence">Model consequence: {{ e.consequence or "—" }}</p>
+  <p class="muted">Cash direction: {{ e.cash_direction }} · Baseline treatment: {{ e.baseline_treatment }}{% if e.guard %} · Double-count guard: {{ e.guard }}{% endif %}</p>
+  {% if e.parameters %}
+  <table><thead><tr><th>Parameter</th><th>Value</th><th>Status</th></tr></thead><tbody>
+    {% for p in e.parameters %}<tr><td>{{ p.name }}<br><span class="muted">{{ p.description }}</span></td><td>{{ p.value }}{% if p.basis %}<br><span class="muted">{{ p.basis }}</span>{% endif %}</td><td>{{ p.status }}</td></tr>{% endfor %}
+  </tbody></table>{% endif %}
+  {% if e.problems %}<p><span class="tag warn">{{ "Failed check" if e.status == "disputed" else "Rejected" }}</span> {{ e.problems | join("; ") }}</p>{% endif %}
+  {% if e.dispute %}<p><span class="tag warn">Agent disagrees</span> {{ e.dispute }}</p>{% endif %}
+  {% if e.checks %}<details><summary>Host checks ({{ e.checks | length }})</summary>
+    {% for o in e.checks %}<p style="margin:.2rem 0"><span class="tag jev">Jev</span><strong>{{ o.meaning }}</strong>{% if o.ambiguous %} <span class="tag warn">Ambiguous</span>{% endif %}
+  and give a reason whenever you disagree with one.
+- propose_effect for each supported economic mechanism, stating its baseline treatment, parameters (unknown stays unknown) and the
+  plain-language model consequence. Existing liabilities are scheduled once, never added again.
+- When a matter has no future cash effect, record that as a cited finding and an effect with cash_direction none, so the
+  reviewer can see why it does not change cash.
+- If you connect a name, label or table row to an obligation by matching amounts or dates, mark that finding is_inference and
+  describe the link as an inference in your conclusion.
+- When a dispute is still live on the review date, model each pending decision (for example a ruling on an amount, an
+  appeal and its bond, whether a judgment debtor pays) with propose_dispute_node: mutually exclusive branches, each with its
+  dated cash consequences drawn from the findings. Then run_scenarios to see how each financing structure performs
+  bank-only and with the dispute's branches, and which branch changes the choice.
+- run_sensitivity on validated settlement effects to see which unknown changes the cash requirement.
+- request_missing_fact for each pivotal fact the evidence cannot supply, then submit_packet.
+- Use only the evidence returned by the tools; do not rely on remembered facts about this company or later events.
+- Work efficiently: the run stops at {turn_budget} turns; submit before then."""
+
+JEV_METHOD = """- read_inventory early: the host screened the admissible evidence paragraph by paragraph and table row by table
+  row, and lists the atomic units that describe a specific matter. It is a reading list, not a checklist to fill in: read
+        "allowed_tools": [
+          "mcp__credit__get_mission",
+          "mcp__credit__read_baseline_profile",
+          "mcp__credit__read_loan_terms",
+          "mcp__credit__record_dependency",
+          "mcp__credit__search_evidence",
+          "mcp__credit__read_evidence",
+          "mcp__credit__judge",
+          "mcp__credit__propose_finding",
+          "mcp__credit__resolve_finding",
+          "mcp__credit__propose_effect",
+          "mcp__credit__run_sensitivity",
+          "mcp__credit__propose_dispute_node",
+          "mcp__credit__run_scenarios",
+          "mcp__credit__request_missing_fact",
+          "mcp__credit__read_inventory",
+          "mcp__credit__escalate_effect",
+          "mcp__credit__resolve_reconciliation",
+          "mcp__credit__submit_packet"
+        ],
+        "permission_mode": "dontAsk",
+            "baseline_overlap"
+          ]
+        },
+        "snapshot_sweep": {
+          "trigger": "host, once per snapshot before investigation; cached; own budget",
+          "questions": [
+            "matter_inventory",
+            "matter_kind"
+          ]
+        },
+        "dispute_branching": {
+          "trigger": "host, when the agent proposes a decision node of a live dispute",
+          "questions": [
+            "dispute_branch"
+          ]
+        },
+        "statement_support": {
+          "trigger": "host, on every propose_effect consequence and on submit_packet conclusion",
+          "questions": [
+            "claims_supported"
+          ]

@@ -1,0 +1,1 @@
+{"command": "S=~/.hermes/profiles/connor/cache/scratch/fix1; ls $S/dumpA.pkl $S/dumpB.pkl 2>&1; grep \"^DIFFER\\|^SAME\\|wave\" $S/expA.log $S/expB.log | cut -c1-120; cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && uv run python $S/cmp_dump.py $S/dumpA.pkl $S/dumpB.pkl 2>&1 | cut -c1-240", "timeout": 120}

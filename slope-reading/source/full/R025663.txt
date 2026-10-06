@@ -1,0 +1,18 @@
+   inv_001 covered legal_matter_o  | ['fnd_001', 'fnd_005'] | 
+   inv_006 covered accounting_ite Results of Operations for the Years Ended December | ['fnd_001'] | 
+   inv_008 covered legal_matter_o Legal Proceedings | ['fnd_001', 'fnd_018'] | 
+   inv_014 not_decision_relevant accounting_ite Note 2 — Summary of Significant Accounting Policie | [] | Deferred tax accounting policy; no dated cash obligation relevant to the advance.
+   inv_015 not_decision_relevant accounting_ite Note 3 — Income Taxes | [] | Deferred tax note; non-cash accounting item.
+   inv_016 not_decision_relevant accounting_ite Note 4 — Accounts Receivable | [] | Trade receivables table; ordinary working capital already reflected in baseline, no matter-specific cash restr
+   inv_017 not_decision_relevant accounting_ite Note 7 — Inventory | [] | Inventory valuation policy; no matter-specific cash obligation.
+   inv_018 not_decision_relevant accounting_ite Note 8 — Intangible Assets | [] | Knight license fee intangible ($450,000) was consolidated into the Knight loan, whose 2024 principal schedule 
+   inv_020 not_decision_relevant accounting_ite Note 10 — Accounts Payable and Accrued Liabilities | [] | Ordinary accrued liabilities; no separately identified settlement or dated obligation beyond the baseline.
+   inv_022 covered legal_matter_o Note 13 — Commitments & Contingencies | ['fnd_001', 'fnd_017'] | 
+   inv_023 not_decision_relevant accounting_ite Note 14 — Stock Options | [] | Stock-based compensation is non-cash.
+   inv_026 not_decision_relevant accounting_ite Note 3 — Income Taxes | [] | NOL Section 382 evaluation; non-cash tax attribute.
+   inv_027 not_decision_relevant accounting_ite Note 4 — Accounts Receivable | [] | Year-end 2023 receivables; superseded by June 30, 2024 interim data; no matter-specific cash effect.
+   inv_028 not_decision_relevant accounting_ite Note 7 — Inventory | [] | Year-end 2023 inventory valuation; non-cash.
+   inv_029 not_decision_relevant accounting_ite Note 8 — Fixed Assets and Intangible Assets | [] | Fixed and intangible asset balances; non-cash.
+   inv_031 not_decision_relevant accounting_ite Note 10 — Accounts Payable and Accrued Liabilities | [] | Year-end 2023 accrued liabilities breakdown; superseded by interim balances, no matter-specific cash obligatio
+   inv_033 covered legal_matter_o Note 13 — Commitments and Contingencies | ['fnd_001', 'fnd_017'] | 
+   inv_034 not_decision_relevant accounting_ite Note 14 — Stock Options | [] | Stock options table; non-cash.

@@ -1,0 +1,11 @@
+-rw-r--r--  1 owenwassmer  staff  92 Sep 24 18:39 .env
+.env
+OPENROUTER_API_KEY=<set>(self, *, api_key: str | None = None, model: str | None = None, retry: typesafe_sdk._core.retry.RetryPolicy | None = None, timeout: float | httpx2.Timeout | None = None, headers: collections.abc.Mapping[str, str] | None = None, transport: httpx2.BaseTransport | None = None, http_client: httpx2.Client | None = None, base_url: str | None = None) -> None
+['close', 'models', 'system_one']
+system_one (self, state: JSONContent, questions: collections.abc.Mapping[str, typesafe_sdk._core.question_types.Noul | typesafe_sdk._core.question_types.Choice | typesafe_sdk._core.question_types.Score | typesafe_sdk._core.question_types.NoulModel | typesafe_sdk._core.question_types.ChoiceModel | typesafe_sdk._core.question_types.ScoreModel], *, model: str | None = None, retry: typesafe_sdk._core.retry.RetryPolicy | None = None, timeout: float | httpx2.Timeout | None = None, extra_headers: collections.abc.Mapping[str, str] | None = None, extra_body: collections.abc.Mapping[str, typing.Optional[JSONValue]] | None = None, response_model: type[~ResponseT] | None = None) -> Union[typesafe_sdk._core.response_types.SystemOneResponse, ~ResponseT]
+Choice (*, type: Literal['choice'] = 'choice', instructions: Optional[JSONContent] = None, criteria: collections.abc.Mapping[str, typing.Optional[JSONContent]]) -> None
+dict_keys(['type', 'instructions', 'criteria'])
+SystemOneResponse dict_keys(['model', 'usage', 'answers'])
+ChoiceAnswer dict_keys(['type', 'choice', 'confidence', 'probabilities'])
+Usage dict_keys(['input_tokens', 'output_tokens'])
+RetryPolicy (max_retries: int = 2, backoff_initial: float = 0.5, backoff_max: float = 5.0, backoff_jitter: float = 0.25, http_statuses: set[int] = <factory>, respect_retry_after: bool = True, api_connection_error: bool = True, api_timeout_error: bool = True, exceptions: set[type[BaseException]] = <factory>, predicate: collections.abc.Callable[[BaseException], bool] | None = None, timeout: float | None = 30.0) -> None

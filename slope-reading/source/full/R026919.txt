@@ -1,0 +1,33 @@
+bank_only       -> inst_90_2000000 (limit 3,624,901, order limit 2,718,676)
+event_adjusted  -> inst_90_1430000 (limit 1,909,118, order limit 1,431,839)
+  condition: Confirm how ChromaDex Corporation would secure a stay pending appeal of the $9,800,000.00 owed to Elysium Health, Inc. (cash collateral or a letter of credit), and for how much.
+  condition: Ask the borrower whether settlement talks are under way on this matter.
+  condition: Count the $2,500,000.00 owed by Elysium Health, Inc. only once it is received.
+  condition: Confirm Western Alliance Bank's covenants permit this financing after the disputes' cash effects.
+wrote scenarios.json and collections.csv
+== dispute_001 Elysium Health v. ChromaDex — D. Del. attorneys' fee and cost award (liability granted, amount pending) | debtor Elysium Health, Inc. | stage amount_pending {'amount_pending': 9600, 'judgment_entered': 0, 'appeal_pending': 300, 'enforcement': 0, 'none_fits': 100} | status evaluated | judgment None
+   amount {'status': 'exact', 'unit': 'USD_cents', 'value': 980000000, 'provenance': {'basis': 'documented_evidence', 'source_fact_ids': [], 'note': "Aggregate amount sought by Elysium, approximately $9.8 million inclusive of ChromaDex's estimate of post-judgment interest (Q2 2024 10-Q); court may award less; ChromaDex intends to appeal."}}
+   finding fnd_002 On March 25, 2024 the D. Del. court granted Elysium's motion for attorneys' fees and costs against ChromaDex and directed the parties to meet and confer on a sc
+   finding fnd_003 As of the Q2 2024 10-Q (filed August 7, 2024), the amount of the Delaware fee award was fully briefed and awaiting a ruling; ChromaDex intends to appeal and ass
+   T amount_pending () {'amount_fixed': 6200, 'settle': 200, 'no_ruling': 3600} unc True rel True ref True
+   T judgment_entered ('amount_fixed',) {'pay': 200, 'appeal_bonded': 8100, 'settle': 100, 'resist': 1600} unc False rel True ref False
+   T appeal_pending ('amount_fixed', 'appeal_bonded') {'appeal_continues': 10000, 'settle': 0} unc False rel True ref False
+   T enforcement ('amount_fixed', 'resist') {'collected': 400, 'settle': 400, 'uncollected': 9200} unc False rel True ref False
+   F amount_finality 2 The amount has been fully briefed or submitted to the court for decision ('fnd_002', 'fnd_003')
+   F settlement_signals None unknown ()
+   P 126 amount_fixed -> pay [('outflow', 980000000, None, '2024-09-19', '2025-02-15')]
+   P 5094 amount_fixed -> appeal_bonded -> appeal_continues [('lock', 612500000, 1225000000, '2024-08-20', '2025-01-16')]
+   P 926 amount_fixed -> resist -> uncollected []
+   P 203 settle [('outflow', 588000000, 980000000, '2024-08-20', '2024-11-17')]
+   P 3651 no_ruling []
+   pruned 141 requests ['Ask the borrower whether settlement talks are under way on this matter.'] ext 
+== dispute_002 ChromaDex v. Elysium Health — C.D. Cal. final judgment, $2.5M payable to ChromaDex | creditor Elysium Health, Inc. | stage judgment_entered {'amount_pending': 0, 'judgment_entered': 9300, 'appeal_pending': 0, 'enforcement': 700, 'none_fits': 0} | status evaluated | judgment 2024-08-13
+   amount {'status': 'exact', 'unit': 'USD_cents', 'value': 250000000, 'provenance': {'basis': 'documented_evidence', 'source_fact_ids': []}}
+   finding fnd_001 The C.D. Cal. final judgment (Dkt. 618), dated August 13, 2024, orders Elysium to pay ChromaDex $2,500,000 to resolve outstanding issues on the Jury Claims (inc
+   T judgment_entered () {'pay': 7100, 'appeal_bonded': 0, 'settle': 0, 'resist': 2900} unc False rel True ref False
+   T enforcement ('resist',) {'collected': 900, 'settle': 200, 'uncollected': 8900} unc False rel True ref False
+   P 7141 pay [('inflow', 250821918, 252054795, '2024-09-12', '2024-10-12')]
+   P 263 resist -> collected [('inflow', 250000000, 253082192, '2024-09-12', '2024-12-11')]
+   P 2596 resist -> uncollected []
+   pruned 58 requests [] ext 
+"Do not approve the requested $2.0M 90-day installment structure on the automated path. It passes on bank data alone but fails event-adjusted: under the model's appeal-bond stress path for the D. Del. fee award, the order limit falls to about $1.43M. The largest structure that passes event-adjusted is 3 monthly installments over 90 days at $1.43M. Because of the material litigation, the application meets Slope's exception-review trigger. The $2.0M could be reconsidered if ChromaDex shows it will secure a stay pending appeal without locking cash (or the award comes in well below $9.8M), or confirms receipt of the $2.5M from Elysium. Conditions: confirm Western Alliance does not restrict this unsecured obligation while the line is undrawn, and count the $2.5M judgment receivable only once received. Branch weights are the model's judgment, not default probabilities."

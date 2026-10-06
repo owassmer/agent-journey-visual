@@ -1,0 +1,91 @@
+{
+ "scope": "One local investigation of a real borrower and a proposed new discretionary advance, followed by loan cash-flow scenario comparison and independent review. The case is reconstructed as if the borrower applied to Slope on the decision date, using Slope's product, a reconstructed price card and policy, and synthetic connected-bank data, each labelled once at its source.",
+ "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, and propose atomic findings that quote the evidence exactly. Jev screens retrieved evidence and checks narrow semantic claims; you reconcile its judgments with the evidence and may disagree with a failed check by replying to it with a stated reason, or escalate it for the reviewer where the host requires escalation. Translate accepted findings into economic effect proposals and use the sensitivity tool to see which unknowns change the result. Code computes dates, money, schedules and cash flows. Finish with the pivotal unresolved inputs and the supported effects, or the exact missing fact that prevents a conclusion. Do not claim to send an offer or change an account. Use the Slope terms and policy in the run inputs as given."
+}
+{
+ "execution_states": [
+  "CREATED",
+  "RUNNING",
+  "CANDIDATE_READY",
+  "REVIEWING",
+  "COMPLETE_REVIEWED",
+  "INCOMPLETE_REVIEW",
+  "FAILED_CONFIGURATION"
+ ],
+ "lending_recommendation_values": [
+  "APPROVE_REQUESTED_STRUCTURE",
+  "OFFER_ALTERNATIVE_STRUCTURE",
+  "CONDITIONAL_OFFER",
+  "DECLINE_REQUEST",
+  "UNDETERMINED"
+ ],
+ "review_dispositions": [
+  "PASS",
+  "REPAIR_REQUIRED",
+  "UNRESOLVED_MATERIAL_ERROR"
+ ],
+ "failure_mapping": {
+  "missing_subscription_auth_or_unintended_api_provider": "FAILED_CONFIGURATION",
+  "missing_required_jev_credential_before_agent_plus_jev_run": "FAILED_CONFIGURATION",
+  "quota_or_deadline_exhaustion": "INCOMPLETE_REVIEW",
+  "unrecoverable_source_or_model_service_failure": "INCOMPLETE_REVIEW",
+  "unresolved_material_review_error_after_one_repair": "INCOMPLETE_REVIEW",
+  "escalated_cash_moving_effect_dispute": "INCOMPLETE_REVIEW",
+  "escalated_cited_unit_coverage_gap": "reviewer_checklist (INCOMPLETE_REVIEW only if the reviewer finds a material gap that one repair pass does not close)"
+ },
+ "failure_recommendation_policy": "Keep any prior provisional recommendation in the trace, but do not publish it as a completed result. Set final lending recommendation UNDETERMINED unless an independently completed supported decision packet exists. Execution failure itself is never a reason for DECLINE_REQUEST.",
+ "complete_with_pivotal_gap": "A reviewed packet may finish with UNDETERMINED and a precise borrower question plus action map. It must not claim that the financing decision has been resolved.",
+ "conditional_offer_requirement": "Specify the exact condition, acceptable resolving evidence, deadline if supported, and the amount/term/schedule offered when the condition is satisfied. Generic monitoring is not a condition.",
+ "submission_requirement": "Every final action must reference the source-supported mechanisms, explicit assumptions, considered offers and financial results that justify it."
+}
+['configuration_id', 'configuration_version', 'status', 'scope', 'default_mission', 'transfer_mission', 'runtime', 'role_instruction', 'invariants', 'tools', 'budgets', 'completion_and_decisions', 'state_and_replay', 'cache', 'validation_before_live_use', 'configuration_sources', 'case_source_references', 'mission_projection', 'comparison_mode_overrides', 'lead_mission']
+null
+      "initial_integration_alternative": "A fresh separately scoped Claude subscription session with model claude-sonnet-5 may review the first milestone. Configure this choice explicitly before the run; it is not a silent failure fallback.",
+      "max_repair_cycles": 1
+    }
+  },
+  "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, and propose atomic findings that quote the evidence exactly. Jev screens retrieved evidence and checks narrow semantic claims; you reconcile its judgments with the evidence and may disagree with a failed check by replying to it with a stated reason, or escalate it for the reviewer where the host requires escalation. Translate accepted findings into economic effect proposals and use the sensitivity tool to see which unknowns change the result. Code computes dates, money, schedules and cash flows. Finish with the pivotal unresolved inputs and the supported effects, or the exact missing fact that prevents a conclusion. Do not claim to send an offer or change an account. Use the Slope terms and policy in the run inputs as given.",
+  "invariants": [
+    "Start with the same baseline profile, existing obligations, decision date and candidate financing request for the before/after comparison.",
+    "Keep borrower cash flows, contractual loan payments, scenario collections and funding-facility cash flows distinct.",
+    "Use only evidence admitted by the host's snapshot rules. Do not use remembered future outcomes.",
+    "All amounts, dates and parameter values have reported, derived or operator-assumption basis; unknown remains unknown.",
+    "Use source-supported ranges or named scenario parameters where exact values are unavailable. Never silently interpolate financial statements into daily historical facts.",
+    "Do not turn Jev confidence or lawsuit severity into default probabilities or dollar adjustments. Default probability comes from the labelled risk tier; the host weights the branches of a live dispute from Jev's branch judgments, labelled model judgment.",
+    "Track legal-entity, asset, product, channel and period scope for every adjustment.",
+    "Reconcile every patch with baseline entries to prevent double counting; preserve associated avoided costs, recoveries and delayed receipts.",
+    "Do not automatically rewrite existing contractual payments, assume new creditor seniority, or freeze committed credit.",
+    "Do not label loan principal collections or all interest as Slope corporate revenue; use the selected stakeholder accounting scope.",
+    "Do not assume lower principal is always safer; financed inventory and resulting receipts must respond to the action chosen.",
+    "A missing incidental fact need not block the decision. A pivotal missing fact requires its exact question and the action consequences of alternative answers.",
+    "Runtime or quota failure means incomplete investigation, not an adverse borrower recommendation."
+  ],
+  "tools": {
+    "host_scope": [
+      "run_id",
+        "mcp__credit__read_inventory",
+        "mcp__credit__escalate_effect",
+        "mcp__credit__resolve_reconciliation"
+      ],
+      "expose_jev_registry": false,
+      "require_typesafe_credential": false,
+      "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, make focused evidence judgments yourself, reconcile contradictions, and propose atomic findings that quote the evidence exactly. Translate accepted findings into economic effect proposals and use the sensitivity tool to see which unknowns change the result. Code computes dates, money, schedules and cash flows. Finish with the pivotal unresolved inputs and the supported effects, or the exact missing fact that prevents a conclusion. Do not claim to send an offer or change an account. Use the Slope terms and policy in the run inputs as given.",
+      "evaluation_metadata_visibility": "Host scorer only; do not reveal arm labels or expected findings to the blind reviewer.",
+      "remove_host_semantic_checks": [
+        "snapshot_sweep inventory",
+        "candidate_screen on search_evidence",
+        "finding_check on propose_finding",
+        "automatic statement_relation on accepted findings",
+        "effect category guard (posture/status)",
+        "statement_support on effect consequences and the conclusion"
+      ]
+    },
+    "agent_plus_jev": {
+      "expose_jev_registry": true,
+      "require_typesafe_credential": true,
+      "use_configured_role_instruction": true
+    }
+  },
+  "lead_mission": {
+    "case_id": "chromadex_elysium_2024",
+    "mission_id": "chromadex_2024_supplier_bill_financing",

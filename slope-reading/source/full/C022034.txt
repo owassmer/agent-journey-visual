@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'stay_status|stay_denied|stay_pending' app/disputes/forecast.py app/analysis/events.py | head -45; sed -n '1,120p' /tmp/review-native-stay-family.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3000}));

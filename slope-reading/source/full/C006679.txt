@@ -1,0 +1,1 @@
+{"command": "sleep 420; cd ~/dev/Slope_Sparse_Events && date -u +%H:%M; gh run view 36649640784 --json jobs --jq '[.jobs[] | .status + \":\" + (.conclusion // \"\")] | group_by(.) | map({(.[0]): length})'; gh run view 36649640784 --json jobs --jq '[.jobs[] | select(.status==\"in_progress\")][0:3][] | \"\\(.name) \\(.databaseId) \\(.startedAt)\"'", "timeout": 500}

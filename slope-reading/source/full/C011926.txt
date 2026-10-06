@@ -1,0 +1,6 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfrom datetime import datetime\nroot=Path('/Users/owenwassmer/.hermes/profiles/connor')\nfor name in ['sessions','memories','state','logs']:\n p=root/name\n print('\\nDIRECTORY',p)\n for q in sorted(p.iterdir(),key=lambda x:x.stat().st_mtime,reverse=True)[:16]:\n  s=q.stat()\n  print(datetime.fromtimestamp(s.st_mtime).isoformat(timespec='seconds'),s.st_size,q.name, '/' if q.is_dir() else '')\nPY",max_output_tokens:5000}),
+  tools.exec_command({cmd:"cat /Users/owenwassmer/.hermes/profiles/connor/SOUL.md /Users/owenwassmer/.hermes/profiles/connor/memories/MEMORY.md /Users/owenwassmer/.hermes/profiles/connor/memories/USER.md",max_output_tokens:11000}),
+  tools.exec_command({cmd:"rg -n -i --glob '*.md' --glob '*.yaml' --glob '!*.bak*' --glob '!config.yaml*' 'benchmark|profil(e|ing)|timing|reference|comparison|redundant|verif|validation|check' /Users/owenwassmer/.hermes/profiles/connor/skills /Users/owenwassmer/.hermes/profiles/connor/memories /Users/owenwassmer/.hermes/profiles/connor/SOUL.md",max_output_tokens:7000})
+]);
+results.forEach((r,i)=>text({i,...(r.status==="fulfilled"?{result:r.value}:{error:String(r.reason)})}));

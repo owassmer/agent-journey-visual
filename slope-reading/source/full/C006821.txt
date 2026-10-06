@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/hermes-agent && grep -rn \"TERMINAL_CWD\\|terminal.cwd\\|\\\"cwd\\\"\" --include=*.py hermes_cli/config.py cli.py agent/prompt_builder.py run_agent.py 2>/dev/null | head -30; grep -rn \"def build_context_files_prompt\\|def _load_project_context\\|context_files\" --include=*.py agent/ | head -8"}

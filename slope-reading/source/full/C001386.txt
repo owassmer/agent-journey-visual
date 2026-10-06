@@ -1,0 +1,1 @@
+{"command": "D=~/.hermes/profiles/connor/cache/scratch/6c; grep -v \"npmrc\\|nvm\" $D/pooling_before.txt | sed -n 420,800p | grep -v \"^$\" | awk '/^forecast_petition_cash_floor/{skip=1} /^forecast_[a-oq-z]|^forecast_petition_on|^forecast_panel|^forecast_split|^forecast_stay|^forecast_settle|^forecast_rever|^forecast_ts|^forecast_trebl|^forecast_remit/{skip=0} !skip'"}

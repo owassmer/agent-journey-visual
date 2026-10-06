@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat /tmp/slope-grounding-1ebb1026/dialogue-11.txt",max_output_tokens:8200}),
+tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport json\np=Path('/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events--claude-worktrees-step-5b-decision-model/1ebb1026-a1f0-4809-9321-bc3d6f875530.jsonl')\nseen=set()\nfor l in p.open():\n x=json.loads(l);a=x.get('attachment',{})\n if a.get('type')=='queued_command' and a.get('humanTurn'):\n  s=a.get('prompt','')\n  if s not in seen:print(x.get('timestamp'),s);seen.add(s)\n if x.get('type')=='queue-operation' and x.get('content'):\n  s=x['content']\n  if isinstance(s,str) and not s.lstrip().startswith('<task-notification>') and s not in seen:print('QUEUE',x.get('timestamp'),s);seen.add(s)\nPY",max_output_tokens:1000})
+]);for(let i=0;i<results.length;i++)text({i,...results[i]});

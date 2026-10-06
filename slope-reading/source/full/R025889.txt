@@ -1,0 +1,134 @@
+"""Step 4b tool handlers over the real snapshot with a stubbed Jev: isolation, acceptance rules,
+effect validation, sensitivity arithmetic and the agent-only arm. No network."""
+
+import asyncio
+import json
+
+import pytest
+
+import app.agent.jev as jev_module
+from app.agent import tools as T
+from app.agent.jev import JevAdapter
+from app.agent.jev_profiles import Semantics
+from app.agent.run_store import RunStore
+from app.config import CASES_DIR, CONTRACTS
+from app.evidence import snapshot
+from app.evidence.store import EvidenceStore
+
+SNAP = "synergy_20240813"
+INPUTS = json.loads((CASES_DIR / SNAP / "run_inputs.json").read_text())
+
+
+DEFAULT_ANSWERS = {"claim_posture": "agreed_contractually", "obligation_status": "required", "entity_scope": "target",
+                   "claims_supported": "all_supported", "finding_support": "supports", "finding_atomicity": "one_claim",
+                   "context_sufficiency": "enough", "economic_role": "existing_cash_obligation", "statement_relation": "agree",
+                   "coverage_supported": "covered"}
+
+
+class FakeJev:
+    """Realistic default answers (others: first criterion) with 0.8, unless `flat` names a question to answer
+    ambiguously; `answers` overrides specific questions."""
+    call(T.resolve_finding, ctx, {"finding_id": prop["finding_id"], "decision": "accept", "dispositions": disp})
+    return dep, prop["finding_id"]
+
+
+SETTLEMENT = {"mechanism": "settlement_payment_timing", "target": "the December 28, 2023 supplier settlement loan",
+              "cash_direction": "outflow", "baseline_treatment": "already_in_baseline_reclassify_timing",
+              "model_consequence": "Up to $2,000,000 of 2024 settlement payments."}
+
+
+def test_category_guard_blocks_a_disputed_amount_from_becoming_a_payment(make_ctx):
+    ctx = make_ctx(answers={"obligation_status": "claimed_or_disputed"}, name="disputed")
+    _, fid = _accepted_settlement_finding(ctx)
+    eff = call(T.propose_effect, ctx, {"finding_ids": [fid], **SETTLEMENT})
+    assert eff["status"] == "rejected" and any("Claimed or disputed" in p for p in eff["problems"])
+    short = call(T.propose_effect, ctx, {"finding_ids": [fid], **SETTLEMENT, "override_reasons": {"category_guard": "no"}})
+    assert short["status"] == "rejected"  # an override needs a stated reason
+    ok = call(T.propose_effect, ctx, {"finding_ids": [fid], **SETTLEMENT, "override_reasons": {
+        "category_guard": "The schedule is an agreed settlement loan; the disputed reading concerns the original claim."}})
+    assert ok["status"] == "validated" and ctx.run.get("effects", ok["effect_id"]).override_reasons
+
+
+def test_unsupported_consequence_is_rejected(make_ctx):
+    ctx = make_ctx(answers={"claims_supported": "some_unsupported"}, name="unsupported")
+    _, fid = _accepted_settlement_finding(ctx)
+    eff = call(T.propose_effect, ctx, {"finding_ids": [fid], **SETTLEMENT})
+    assert eff["status"] == "rejected" and any("Consequence support" in p for p in eff["problems"])
+
+
+def test_near_even_unsupported_passes_but_is_not_counted_as_used(make_ctx):
+    ctx = make_ctx(flat=("claims_supported",), answers={"claims_supported": "some_unsupported"}, name="neareven")
+    _, fid = _accepted_settlement_finding(ctx)
+    eff = call(T.propose_effect, ctx, {"finding_ids": [fid], **SETTLEMENT})
+    support = [o for o in ctx.run.graph["observations"].values() if o.question_id == "claims_supported"]
+    assert eff["status"] == "validated" and support and all(o.downstream_disposition == "unused" for o in support)
+
+
+def test_inventory_and_reconciliations_gate_submission(make_ctx):
+    from app.domain.investigation import InventoryItem
+    ctx = make_ctx(answers={"statement_relation": "conflict"}, name="gates")
+    note11 = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")["id"]
+    ctx.run.put("inventory_loaded", InventoryItem(item_id="inv_001", section_ids=(note11,), source_id="synergy_s1a_20240813",
+                                                 heading_path=("Note 11",), kind="debt_or_financing_agreement", signal=0.9))
+    dep, fid = _accepted_settlement_finding(ctx)
+    hvl = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")
+    second = call(T.propose_finding, ctx, {"dependency_id": dep, "proposition": "The settlement loan balance was $4,802,445.",
+                                           "target": "Synergy CHC Corp. — the December 28, 2023 supplier settlement loan",
+                                           "citations": [{"item_id": hvl["id"], "quote": "The outstanding loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445"}]})
+    disp = [{"observation_id": o["observation_id"], "disposition": "used_in_finding"} for o in second["observations"]]
+    res = call(T.resolve_finding, ctx, {"finding_id": second["finding_id"], "decision": "accept", "dispositions": disp})
+    task = res["relation_checks"][0]["reconciliation_task"]
+    submit = {"summary": "s", "conclusion": "The settlement loan requires future payments."}
+    with pytest.raises(T.ToolError, match="inventory items are still open"):
+        call(T.submit_packet, ctx, submit)
+    bad = call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": ["fnd_999"]}]})
+    assert bad["accounted"] == [] and "needs accepted" in bad["rejected"][0]["reason"]
+    call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": [fid]}]})
+    with pytest.raises(T.ToolError, match="Open reconciliation"):
+        call(T.submit_packet, ctx, submit)
+    call(T.resolve_reconciliation, ctx, {"task_id": task, "note": "Different measures of the same loan: balance vs schedule."})
+    assert call(T.submit_packet, ctx, submit)["locked"]
+
+
+def test_cited_screened_passages_are_recorded_as_used(make_ctx):
+    ctx = make_ctx(name="attrib")
+    _settlement_flow(ctx)
+    cited = {s.section_id for f in ctx.run.graph["findings"].values() if f.status == "accepted" for s in f.spans}
+    screened = [c for c in ctx.run.graph["candidates"].values() if c.screen and c.item_id in cited]
+    if screened:
+        assert all(ctx.run.get("observations", o).downstream_disposition == "used_in_finding"
+                   for c in screened for o in c.screen.observation_ids)
+
+
+def test_submit_refuses_unvalidated_supported_effects(make_ctx):
+    ctx = make_ctx(name="supported")
+    with pytest.raises(T.ToolError, match="eff_999 is unknown"):
+        asyncio.run(T.submit_packet(ctx, {"conclusion": "x", "supported_effect_ids": ["eff_999"]}))
+
+
+def test_sweep_chunks_and_groups():
+    from app.agent.sweep import chunks, inventory_groups
+    parts = chunks("a" * 9000 + "\n\n" + "b" * 10)
+    assert all(len(x) <= 8000 for x in parts) and "".join(parts).replace("\n", "").count("a") == 9000
+    sweep = {"records": [
+        {"flagged": True, "source_id": "court", "heading_path": ["Page 1"], "kind": "legal_matter_or_settlement", "section_id": "c#1", "signal": 0.9, "excerpt": "x"},
+        {"flagged": True, "source_id": "court", "heading_path": ["Page 2"], "kind": "legal_matter_or_settlement", "section_id": "c#2", "signal": 0.95, "excerpt": "y"},
+        {"flagged": True, "source_id": "s1a", "heading_path": ["NOTES", "Note 11"], "kind": "debt_or_financing_agreement", "section_id": "s#1", "signal": 0.9, "excerpt": "z"},
+        {"flagged": False, "source_id": "s1a", "heading_path": ["RISK"], "kind": "none_or_generic", "section_id": "s#2", "signal": 0.2, "excerpt": ""}]}
+    groups = inventory_groups(sweep)
+    assert len(groups) == 2 and groups[0]["section_ids"] == ["c#1", "c#2"] and groups[0]["excerpt"] == "y"
+
+
+def test_covered_claims_are_checked(make_ctx):
+    from app.domain.investigation import InventoryItem
+    ctx = make_ctx(answers={"coverage_supported": "not_covered"}, name="coverage")
+    note11 = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")["id"]
+    ctx.run.put("inventory_loaded", InventoryItem(item_id="inv_001", section_ids=(note11,), source_id="synergy_s1a_20240813",
+                                                 heading_path=("Note 11",), kind="accounting_item_from_a_matter", signal=0.9))
+    _, fid = _accepted_settlement_finding(ctx)
+    entry = {"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": [fid]}
+    out = call(T.account_for_items, ctx, {"items": [entry]})
+    assert out["accounted"] == [] and "different matter" in out["rejected"][0]["reason"]
+    assert ctx.run.get("inventory", "inv_001").status == "open"
+    ok = call(T.account_for_items, ctx, {"items": [{**entry, "override_reason": "The schedule is the matter; the gain is covered elsewhere."}]})
+    assert ok["open"] == 0

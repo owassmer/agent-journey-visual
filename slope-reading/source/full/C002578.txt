@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && for b in step-8-case step-8-model; do git worktree add -q -b $b .claude/worktrees/$b step-8-may14 && rsync -a --exclude analysis --exclude dev .claude/worktrees/step-7-page/var/ .claude/worktrees/$b/var/ && echo \"$b ok $(du -sh .claude/worktrees/$b/var | cut -f1)\"; done; ls .claude/worktrees/step-7-page/var/; df -h / | tail -1"}

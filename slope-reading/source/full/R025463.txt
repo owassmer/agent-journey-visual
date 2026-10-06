@@ -1,0 +1,40 @@
+55	@dataclass
+56	class RunContext:
+57	    run: RunStore
+58	    evidence: EvidenceStore
+59	    inputs: dict[str, Any]
+60	    arm: str  # "agent_plus_jev" | "agent_only"
+61	    semantics: Semantics | None = None
+62	    incomplete_reasons: list[str] = field(default_factory=list)
+63	    submitted: bool = False
+64	
+65	    @property
+66	    def case_id(self) -> str:
+67	        return self.inputs["case_id"]
+68	
+69	
+70	def _obs_view(o: SemanticObservation) -> dict[str, Any]:
+71	    view = {"observation_id": o.observation_id, "question": registry_question(o.question_id)["question"],
+72	            "question_id": o.question_id, "answer": o.answer, "meaning": meaning(o.question_id, o.answer),
+73	            "ambiguous": is_ambiguous(o)}
+74	    if o.probabilities:
+75	        view["judgment_distribution"] = {k: round(v, 2) for k, v in o.probabilities.items()}
+76	    if o.noul_value is not None:
+77	        view["judgment_value"] = round(o.noul_value, 2)
+78	    return view
+79	
+80	
+81	def _unsettled(o: SemanticObservation) -> bool:
+82	    return is_ambiguous(o) or o.answer in NOT_SETTLED.get(o.question_id, set())
+83	
+84	
+85	def _record_jev_failure(ctx: RunContext, e: Exception) -> None:
+86	    if isinstance(e, JevBudgetExceeded):
+87	        ctx.incomplete_reasons.append(f"Jev budget exhausted: {e}")
+88	
+89	
+90	# --- handlers (plain async functions; testable without the SDK) ------------------------------------
+91	
+92	async def get_mission(ctx: RunContext, _args: dict) -> dict:
+93	    mission = project_mission(ctx.case_id, ctx.inputs["run_inputs"])
+94	    sources = [{"source_id": s["source_id"], "title": s["title"], "document_kind": s["document_kind"],

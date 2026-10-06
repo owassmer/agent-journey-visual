@@ -1,0 +1,93 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_2c79bfe2]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 13:47:53 (42m52s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2572.23s
+
+--- ✓ TASK 1/1: Step 6c build for the Slope demo on branch step-6c-record: the recall check (forecast questions re-asked under role names, deltas stored and shown), the sourced actual-outcome file with the page's reveal, and a readiness check that `slope investigate --snapshot akoustis_20240620` is wired end to end. Open a PR. Do NOT record the run.  (status=completed, api_calls=131, 2572.0s) ---
+I've opened PR #16 with the recall check, the outcome file and the reveal, and CI passes. The readiness check found a blocker: `slope investigate --snapshot akoustis_20240620` will stop before the agent starts, because the Akoustis snapshot sweep won't fit its own Jev budget. No caps were changed, and nothing called Claude or Jev.
+
+**PR:** https://github.com/owassmer/Slope_Sparse_Events/pull/16 (not labelled or merged). Tests: 142 passed, ruff clean.
+
+**Commits:**
+- `a664da7` recall check
+- `b3e8531` outcome file and the isolation test
+- `5bf919e` run page and reveal
+- `637b4b6` chart labels no longer overlap
+
+**What's built:**
+- **Recall check:** `slope analyze --run <id> --roles` re-asks all 109 forecast questions with names replaced by roles, on its own Jev adapter. It stores per question the original distribution, the role distribution and the largest change. The summary in `analysis.json` lists questions that move more than 10 points. It never changes the analysis's probabilities. A stub-judge test confirms no alias reaches any re-asked prompt and the deltas are exact.
+- **Run page:** recorded runs had no one-screen page (it was dev-only), so the reveal had nowhere to go. `slope analyze` now writes `page.json` beside the run, a reweight state (~460 MB) in `var/analysis/<run>/`, and `/runs/<id>` serves the page.
+- **Reveal:** the button is enabled only when `outcomes/<case>.json` exists, and is off by default.
+  - It pins the events on the Exposure chart (seven labelled, the rest shown on hover).
+  - It marks the actual class, "Filed: Qorvo enforcement", on the outcomes bar and gives the model's probability of a filing by 16 Dec.
+  - The recall check shows in the drill-down and as one line in the Probabilities header.
+  - The dev page shows neither, and its old placeholder button is gone. I checked all of this in headless Chrome with no JS errors.
+
+**Outcome events** (21 in total, every quote checked word for word against the fetched source):
+
+```
+Date                   | Fact                                                                                                   | Source          
+-----------------------+--------------------------------------------------------------------------------------------------------+-----------------
+26 Jun 2024            | $8.0M secured customer note                                                                            | FY2024 10-K     
+19 Aug 2024            | Nasdaq staff decides to delist                                                                         | 8-K 23 Aug      
+9 Sep 2024             | Fees awarded $11,743,745.54                                                                            | D.I. 690 (RECAP)
+10 Sep 2024            | Interest awarded, $7,257,436.97 in total                                                               | D.I. 699        
+8 Oct 2024             | 10-K: $24.4M cash; substantial doubt about going concern                                               | 10-K            
+11 Oct 2024            | Injunction granted in part                                                                             | D.I. 709        
+14 Oct 2024            | Nasdaq panel: listed only if the price complies by 17 Dec                                              | 8-K 15 Oct      
+15 Oct 2024            | Trebling denied                                                                                        | D.I. 711        
+31 Oct 2024            | Akoustis's post-trial motions denied                                                                   | D.I. 715        
+14 Nov 2024            | $12.1M cash at 30 Sep                                                                                  | 10-Q            
+21 Nov 2024            | Amended final judgment, $57.0M plus post-judgment interest                                             | D.I. 717        
+21 Nov and 12 Dec 2024 | Reverse-split vote adjourned twice (no quorum)                                                         | 8-Ks            
+29 Nov 2024            | Appeal to the Federal Circuit                                                                          | D.I. 719        
+15 Dec 2024            | Gordon Brothers asset-purchase deal at $10.0M                                                          | 8-K 16 Dec      
+16 Dec 2024            | Chapter 11 petition; stated cause is the Qorvo judgment (~$58M); the $44M notes become due immediately | 8-K and Ex. 99.1
+17 Dec 2024            | Nasdaq delisting                                                                                       | 8-K 17 Dec      
+15 May 2025            | Assets sold to Tune Holdings (a SpaceX subsidiary) for $30.2M                                          | 8-K             
+```
+
+The petition fits the model's Qorvo-enforcement cause. Akoustis filed facing the final judgment it had appealed, and names that judgment as the cause. The notes were accelerated by the petition itself, and cash was expected to last into Jan–Mar 2025.
+
+**Left out because I couldn't find them free:**
+- Any levy or writ before the petition. None appears in the fetched filings, and D.I. 721, 722, 724 and 725 aren't on RECAP.
+- Whether the $1.32M December interest was paid.
+- The bankruptcy first-day declaration (not fetched).
+
+**Readiness:**
+- **Everything else resolves:** the mission, bank feed ($17,163,095.24), run inputs, 18 tools including `instantiate_dispute` and `instantiate_financing`, registry 4.0.1, and the budgets (120 turns, 900 s, 1,200 attempts, $0.10). The Jev credential is present.
+- **Blocker, the sweep:** no Akoustis sweep is cached in any checkout, so it runs first under its own 1,500-attempt, $0.10 budget.
+  - It needs about 3,050 requests: 1,000 in the first pass (918 sections), plus about 2,050 more at ChromaDex's flag rate. That would cost about $0.15.
+  - The investigation will stop with "snapshot sweep failed". Decision for Owen: raise the sweep budget for this snapshot, or build the sweep once beforehand with a larger budget.
+- **Investigation Jev:** an estimated 300–600 requests, about $0.03–0.07 of its $0.10 cap. This is extrapolated from the Synergy runs.
+- **Forecast pass:** 109 requests of about 17k characters. Jev sets aside the worst case for all 109 at once, $0.078 of the $0.10 cap, so headroom is only about 22%. Expected spend is about $0.026.
+- **Recall pass:** its own adapter, $0.080 set aside, about $0.027 spend.
+- **The $0.10 cap:** each pass fits under its own cap, but together they'd spend about $0.08–0.12. So one shared $0.10 cap would not reliably cover the run and the recall pass. The forecast and recall passes could never share one cap ($0.158 set aside).
+- **End to end:** I ran `analyze --roles` on a copy of the dev data shaped as a run, with a neutral stub instead of Jev. It took 354 s over 5,258 paths, with 109 forecast and 109 recall asks and no alias leaks. The page, reweight and outcome routes all served.
+  - `analysis.json` came out at 37.7 MB, which is heavy if committed with the recorded run.
+- **Not tested:** real Jev answers, real evidence passages in the forecast questions (the stub run had none; the unit test covers alias removal from passages), the agent's live instantiate calls, and the sweep itself.
+
+**Not built:** the Settings tab stays dev-only, so a run's page hides it.
+
+I also added these lessons to the `slope-sparse-events-build` skill: per-adapter budgets, the sweep risk, the run page, and the free outcome sources.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_2c79bfe2/task-0.log
+Child's process proc_4ffff5bc96d6 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-record && env -u CLAUDE_CODE` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_c2315895d551 `pkill -f "slope viewer --port 8771"; sleep 1; pgrep -f "port 8771" || echo server-stopped; rm -rf /U` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+server-stopped
+........................................................................ [ 50%]
+......................................................................   [100%]
+142 passed in 71.36s (0:01:11)
+All checks passed!
+
+Child's process proc_469d1b17406b `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-record && env -u CLAUDE_CODE` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

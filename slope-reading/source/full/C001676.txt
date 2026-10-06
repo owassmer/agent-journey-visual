@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && gh pr edit 17 --title \"Recorded Akoustis run at 20 Jun 2024, with each Jev question asked in its situation on its record items\" --body-file ~/.hermes/profiles/connor/cache/scratch/6c/pr17_body.md | tail -1 && gh pr view 17 --json title --jq .title"}

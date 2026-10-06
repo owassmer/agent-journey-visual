@@ -1,0 +1,5 @@
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"gh api repos/WebGrga/btc-jev-signal/contents/README.md -H 'Accept: application/vnd.github.raw+json'",max_output_tokens:4500}),
+ tools.exec_command({cmd:"gh api repos/WebGrga/btc-jev-signal/git/trees/main?recursive=1 --jq '.tree[] | select(.type == \"blob\") | .path'",shell:"/bin/bash",login:false,max_output_tokens:2200}),
+ tools.exec_command({cmd:"gh api repos/scienthoon/jev-ood-calibration/contents/README.md -H 'Accept: application/vnd.github.raw+json'",max_output_tokens:4300})
+]);results.forEach((r,i)=>text({i,...r}));

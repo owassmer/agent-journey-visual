@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p5b_viewer.py && grep -n \"^from app.domain.values import\\|usd\" app/web/viewmodel.py | head -5; uv run ruff check app && uv run pytest -q -p no:warnings tests/test_viewer.py 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^FAILED|^E  \" | head", "timeout": 300000}

@@ -1,0 +1,23 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_8573d7c0]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 13:26:19 (2m47s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 167.51s
+
+--- ✓ TASK 1/1: Independent focused review of PR #15 in owassmer/Slope_Sparse_Events (branch fix-a4-milestone, stacked on #14): whether Akoustis's pre-ruling response is now asked only when a levy can reach its cash, with correct same-day ordering, no lost feasible paths, and composition intact. Post one PR comment with demonstrated defects only.  (status=completed, api_calls=16, 167.25s) ---
+I found no defects in PR #15 and posted one comment saying so: https://github.com/owassmer/Slope_Sparse_Events/pull/15#issuecomment-5848323349
+
+- **Tests and lint:** pytest gave 137 passed in 72 s. `ruff check .` passed with no findings. The one full Akoustis tree build in this review was the one pytest ran.
+- **How I checked:** small scripts that run the events chain on the pre-ruling Akoustis steps, and on the $2M fixture, without building the tree. I ran each one on this branch and on `step-6b-page`, with `levy_lag_days` at its base value and at its sensitivity value.
+- **(a) When A4 is asked:** only after J9 yes, on the levy day. Every trajectory where it isn't asked has its levy on or after stay approval, on or after the ruling, or past the horizon. J9 no and Q1 no leave no pre-ruling A4.
+- **(b) Same day:** a petition on the levy day stops the levy, which takes 0 there. The existing $2M test shows the same for a payment. At A4, the cash and amount owed are the figures before the levy, for both the full Akoustis judgment and the $2M one. Where A4 isn't asked, the levy and the cash match a run without A4 exactly. The levy totals are also the same as on `step-6b-page`.
+- **(c) Composition:** the merged-class, sum-to-one and neutral-map (attribution step 2) tests pass. The only paths removed are A4 on the first legal day and A4 after J9 no. Nothing can reach cash on those paths before the ruling (L9), so they go because they are impossible, not because of a low probability.
+- **(d) Contract and manifest:** the `debtor_response` contract text matches the code. All 113 kit manifest entries match their size and hash.
+- **(e) Filing dates:** on `step-6b-page`, the petitions landed on 2024-06-21, the first legal day, before the J9 order. Now each pre-ruling petition falls on the order date plus `levy_lag_days`, on every trajectory where A4 is asked: 2024-07-29 at base, 2024-08-28 at sensitivity. These dates are before stay approval and the ruling. No petition appears on trajectories where A4 isn't asked.
+
+I didn't edit the checkout, commit, label, approve or merge. My scripts, the pytest log, the comment text and an extracted copy of `step-6b-page` are in `~/.hermes/profiles/connor/cache/scratch/pr15/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_8573d7c0/task-0.log
+Child's process proc_6cce3fb28cc6 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/fix-a4-milestone && mkdir -p /Users/` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

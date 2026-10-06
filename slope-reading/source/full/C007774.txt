@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sleep 2 && uv run ruff check app/ tests/ && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 timeout 500 uv run pytest tests/test_equity_20240514.py tests/test_chains.py tests/test_cash_processing.py tests/test_share_price.py -x -p no:warnings 2>&1 | tail -4", "timeout": 560}

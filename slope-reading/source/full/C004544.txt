@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; grep -n \"min_cash\\b\\|\\.min_cash\\|min_headroom\\|\\.collected\\b\\|floor_day\\|r\\.mask\\|\\.per_day\\|counts\\[\" app/analysis/core.py app/analysis/page.py app/analysis/build.py | grep -v \"^app/analysis/core.py:2[4-9][0-9]:\\|^app/analysis/core.py:30[0-9]:\" | cut -c1-170"}

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n 2876,2890p app/analysis/events.py; sed -n 2960,2974p app/analysis/events.py; grep -n \"_price_v\\b\\|_atm_v\\b\\|_offer_memo\\|_price_key\\b\\|_stay_owed\\b\" app/analysis/events.py | head -40", "timeout": 30}

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -rn \"available_cash_at_decision\\|share_of_trajectories\\|bond_collateral_required\\|judgment_after_ruling\\|remittitur_scenario\\|\\\"arises\\\"\" app tests --include=*.py --include=*.js | grep -v \"forecast.py:4[0-2][0-9]\" | cut -c1-170"}

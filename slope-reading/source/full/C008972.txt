@@ -1,0 +1,7 @@
+const results=await Promise.allSettled([
+  tools.exec_command({cmd:"sed -n '241,500p' tests/test_investigation_tools.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:6000}),
+  tools.exec_command({cmd:"sed -n '191,380p' tests/test_finance.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3700}),
+  tools.exec_command({cmd:"gh pr view 8 --json state,headRefOid,labels,updatedAt,statusCheckRollup,url",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:1800}),
+  tools.exec_command({cmd:"git log -5 --oneline",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:1000}),
+  tools.exec_command({cmd:"rg --files -g '!uv.lock' -g '!*.jsonl' -g '!*.csv' -g '!*.html' -g '!*.xml' -g '!*.pdf' -g '!*.ipynb' -g '!*.sqlite' -g '!*.json' -g '!*.txt' -g '!*.md' -g '!*.docx' -g '!*.png' -g '!*.jpg' -g '!*.jpeg' -g '!*.css'",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:2500})
+]);results.forEach((r,i)=>text({i,...r}));

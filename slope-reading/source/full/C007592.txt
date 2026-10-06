@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/analysis/tables_page.py", "old_string": "        named,\n        parties,\n        path_scalars,\n        source_links,\n    )", "new_string": "        named,\n        offering_terms,\n        parties,\n        path_scalars,\n        source_links,\n    )"}

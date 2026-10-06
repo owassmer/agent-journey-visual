@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"osascript <<'APPLESCRIPT'\nset the clipboard to \"https://github.com/owassmer/Slope_Sparse_Events/actions/runs/36909118504/job/110527065122\"\ntell application \"System Events\"\nkeystroke \"l\" using command down\nkeystroke \"v\" using command down\nkey code 36\nend tell\nAPPLESCRIPT",max_output_tokens:500}));
+text(await tools.write_stdin({session_id:28880,chars:"",yield_time_ms:1000,max_output_tokens:500}));

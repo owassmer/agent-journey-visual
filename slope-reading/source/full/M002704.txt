@@ -1,0 +1,105 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_4e7e8f22]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 03:47:12 (3h21m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 12090.59s
+
+--- ⚠ TASK 1/1: Worker G2: continue worker G's fix round for PR #18 in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD 6718bf2 plus G's uncommitted edits to app/analysis/events.py, app/disputes/forecast.py, tests/test_pending_claim.py). Finish every fix in G's plan, re-run the lead analysis and the variants, and report. Each fix ends in targeted tests, a commit of named files and a push. Report SHAs, each fix's effect on the headline, the new lead figures (due by the horizon, collected and rate, past due, due frozen by a filing, not yet due, filing probability, preference exposure), the new no-lawsuit attribution, the variant table, and the Jev re-asks and spend. Do not open a PR, re-run the investigation, or touch the page (app/web, page.js, page.html, words.json).  (status=completed, api_calls=250, 12090.26s, TRUNCATED: hit max_iterations — work may be incomplete) ---
+[TRUNCATED — subagent hit its iteration cap; the summary below may be incomplete. Verify before relying on it, or re-dispatch the unfinished part.]
+Five of the six fixes are committed and pushed, but the round is not finished. The re-run is incomplete and uncommitted: only central and `cost_plan` of the 10 settings had finished when I stopped, and the batch of assumption runs is probably killed now that I've stopped. The commit P3 is waiting for ('lead run and variants re-run after the review fixes') does not exist yet.
+
+## Commits on step-8-model (pushed)
+
+```
+SHA     | Fix                                                                                                             |          
+--------+-----------------------------------------------------------------------------------------------------------------+----------
+e57c04c | 1: questions see cash in date order (G's work plus the rest of the `settle                                      | I3` case)
+863edaf | 2: every ⚑ cash fact equals the engine                                                                          |          
+2e9dbe6 | 4: one dispute-end rule                                                                                         |          
+967b453 | 5: cutoff hygiene in the docket view and probes; snapshot rebuilt                                               |          
+a43fbde | 3: listing chain in the no-lawsuit view; legal spend stops at the review date; spec §16.1 wording; design §7.12 |          
+88f3eb1 | 3 follow-up: the no-lawsuit view emits plain node edges, which the page needs                                   |          
+338a5ab | 6: `due_horizon_cents`, past due, frozen due and collection rate in metrics and assumptions.json                |          
+```
+
+- **What each fix does:**
+  - **Fix 1:** the cash floor, cash running out, the response on the post-ruling levy day and the notes' judgment default each book on their own day on every trajectory. The raise option is offered wherever a later set-aside or payment makes equity available.
+  - **Fix 2:** bond collateral now includes §1961 interest at the pending rate, and the amount owed counts only levies and payments dated before the decision.
+  - **Fix 4:** a levy that satisfies the judgment ends the dispute, and ended legal spend never comes back after a filing. The notes' delisting default no longer switches off after a settlement.
+  - **Fix 5:** the post-cutoff "Modified on 7/5/2024" stamp is gone, and 8 probes were added.
+- **Tests:** each new test (7, 7b–7h, the due-by-horizon test in test_views, the probe test) fails at 6718bf2 and passes now.
+- **Checks:**
+  - The 20 Jun tree is identical after every fix (13,821 paths, 337 keys, all state hashes).
+  - The full-tree date-order check is clean (about 19.8M trajectory-steps).
+  - The owed facts equal the engine on 4.07M trajectory-steps.
+- **G's edits had broken 20 Jun:** they changed one 20 Jun question state (`petition_cash_floor`). I fixed that by gating every new behaviour to the 14 May dispute model (4.1.0).
+- **Doc corrections:**
+  - Fix 5's commit message names the stamped entry as D.I. 544; it is D.I. 528, and a43fbde's message corrects it.
+  - The spec §16.1 wording change is on this branch only, not on step-8-may14.
+- **Variant list:** the page branch does carry the two split raise-capacity variants, so I copied its `assumption_variants` block verbatim in place of `raise_capacity_low`.
+
+## The tree-shrink check
+
+The 14 May fixture tree went from 3,698 paths and 216 questions to 2,923 and 192 after fix 1, and 3,008 and 196 after fix 2.
+
+- **No feasible branch was lost.** I replayed every old path with its floor steps booked on their own day. On all 3,698 × 512 trajectories, each old outcome (cash, lock, capacity, petition day and cause) is produced by some new path, with 0 uncovered.
+- **Nothing depends on walk position.** Moving the floor steps to the front of any new path changes no trajectory's cash.
+- **G's version did lose feasible branches, and I restored them:**
+  - the raise option where a set-aside or payment walked later makes equity available at the floor;
+  - branches wrongly ordered around stays and settlements, now fixed by using the day a step reads cash, not only its decision day.
+- **Where the drop comes from:**
+  - The floor's "file" and "cash out, yes" branches used to be copied across every later decision that falls after the petition on every trajectory (1,054 + 1,054 old leaves).
+  - `financing_at_floor` went 28 → 11 and `petition_cash_out` 26 → 10 (14 after fix 2). The floor is now asked before the stay or ruling it precedes, so its question no longer names situations dated after it.
+  - `judgment_response` went 21 → 29 and `holders_involuntary` 8 → 9: these are new situations reached in date order.
+- **Probabilities sum to 1:**
+  - In the lead run, Jev's answers sum to 1.0 in both views.
+  - Over 200 random Dirichlet overrides of every question, the largest error is 4.4e-16 (no-lawsuit view 3.3e-16).
+  - Fixture test_1 passes.
+
+## Lead analysis (analysis files rewritten in the worktree, not committed)
+
+The run has 2,962 joint paths and 201 + 6 questions, took 280 s and peaked at 2.5 GB. The first attempt failed at the page step and was then fixed (88f3eb1); it made 156 new Jev asks costing USD 0.0297. The second pass was all cached.
+
+```
+                        | Before (6718bf2) |  After the fixes
+------------------------+------------------+-----------------
+Funded                  |         $747,345 |         $752,549
+Due by 10 Nov           |         $912,879 |         $915,682
+Collected (rate)        | $822,654 (90.1%) | $827,885 (90.4%)
+Past due                |           $9,041 |          $11,384
+Due, frozen by a filing |          $81,183 |          $76,413
+Not yet due             |         $251,040 |         $247,031
+Stayed claim            |          $96,355 |          $98,188
+Filing by 10 Nov        |            26.6% |            27.1%
+Preference exposure     |         $105,807 |         $108,934
+```
+
+**No-lawsuit view:** due $966,369, collected $958,626 (99.2%, was 98.3%), filing 9.4% (was 5.35%), preference exposure $50,020. The lawsuit's attributed effect is now:
+- collections −$130,741 (was −$125,203);
+- collection rate −8.8 points (was −8.2);
+- filing +17.7 points (was +21.3). The drop comes mostly from the listing chain and the notes' delisting route now also being in the no-lawsuit view.
+
+## Not done
+
+1. **Variant table:** only central (identical to the lead, 0 re-asks) and `cost_plan` (470 s) finished. Their Jev spend was not tallied. `equity_injection` was running and the rest are pending. Re-run with `bash scratch/8g2/run_variants.sh` (skip the finished ones), then `python -m app.analysis.assumptions <run> assemble`. Spend per variant can be counted with `scratch/8g2/jev_spend.py`, using the start/end times in `variants.log`.
+2. **Per-fix headline effects:** not measured. Worktree copies of e57c04c, 863edaf, 2e9dbe6 and 967b453 are set up in `scratch/8g2/steps/` but no analysis was run on them.
+3. **Final checks:** `f2_order.py` has not been run (the full-tree date-order check has passed), and the full suite has not been run once.
+4. **The run commit:** the lead run's files (analysis.json.gz, page.json, CSVs, jev_log) are rewritten in the worktree but not committed, and page.json has no assumptions section until assemble runs. After items 1–3 they need committing (named files only) and pushing with the message 'lead run and variants re-run after the review fixes', which P3 is watching for.
+
+The pre-fix run files are saved in `scratch/8g2/old_run/`. The skill notes are updated with the date-order rules, the no-lost-branch check and the no-lawsuit-view design.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_4e7e8f22/task-0.log
+Child left 1 background process(es) running that were TERMINATED with it (subagent process notices never reach you): proc_eb399e4d198a `bash ~/.hermes/profiles/connor/cache/scratch/8g2/run_variants.sh > ~/.hermes/profiles/connor/cache/s` (1393s). Re-launch in this session anything you still need.
+Child's process proc_832067c14a94 `bash ~/.hermes/profiles/connor/cache/scratch/8g2/run8.sh > ~/.hermes/profiles/connor/cache/scratch/8` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_594f3be81b81 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && /usr/bin/time -l env` finished (exit code 1) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_ffa67efd3ac1 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && rm -rf var/analysis/` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

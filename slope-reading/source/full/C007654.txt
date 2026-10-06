@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/analysis/tables_page.py", "old_string": "        \"event\": event, \"collected_range\": collected_range(tab, FULL_JEV, a.months),", "new_string": "        \"event\": event, \"collected_range\": collected_range(tab, FULL_JEV, tmonths),"}

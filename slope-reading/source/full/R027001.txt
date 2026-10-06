@@ -1,0 +1,162 @@
+1	"""Step 5b financial correctness: Slope products, the connected-bank baseline, the scenario engine and the
+2	post-judgment dispute model (rule-derived dates and amounts, path weights, refinement). No network."""
+3	
+4	import asyncio
+5	from datetime import date, timedelta
+6	
+7	from app.agent.tools import _date_in_text
+8	from app.decisions.scenarios import AMOUNT_STEP_CENTS, Request, compare, simulate, summarize
+9	from app.disputes.evaluate import Evaluator
+10	from app.domain.investigation import (
+11	    AtomicFinding,
+12	    BranchCash,
+13	    DisputeInstance,
+14	    DisputePath,
+15	    SemanticObservation,
+16	    SourceSpan,
+17	)
+18	from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit
+19	from app.finance.bank import load_feed, risk_features
+20	from app.finance.slope_products import load_terms, menu, offer, tier_for
+21	
+22	SNAP = "chromadex_20240819"
+23	REVIEW = date(2024, 8, 19)
+24	FUNDING = date(2024, 8, 20)
+25	HORIZON = REVIEW + timedelta(days=180)
+26	REQ = Request(amount_cents=200_000_000, invoice_due=date(2024, 9, 19), funding=FUNDING, requested_term_id="inst_90")
+27	
+28	# Real record text: the C.D. Cal. judgment (Dkt. 618) and ChromaDex's Q2 2024 10-Q on the Delaware fee award.
+29	CA_QUOTE = "Elysium shall pay to ChromaDex the sum total of $2,500,000 ... Dated: August 13, 2024"
+30	DE_QUOTE = ("inclusive of ChromaDex's estimates for post-judgment interest, is approximately $9.8 million")
+31	
+32	
+33	def ev(cents: int) -> EvidenceValue:
+34	    return EvidenceValue(status=Status.EXACT, unit=Unit.CENTS, value=cents, provenance=Provenance(basis=Basis.DOCUMENTED))
+35	
+36	
+37	def finding(fid: str, quote: str, source: str) -> AtomicFinding:
+38	    return AtomicFinding(finding_id=fid, dependency_id="dep_001", proposition=quote, target="ChromaDex, Inc.",
+39	                         spans=(SourceSpan(source_id=source, section_id=f"{source}#s0", item_id=f"{source}#s0", start=0,
+40	                                           end=len(quote), quote=quote),))
+41	
+42	
+43	def instance(role: str, amount: int, judgment: date | None, fid: str) -> DisputeInstance:
+44	    return DisputeInstance(instance_id="dispute_001", dependency_id="dep_001", model_id="m", model_version="0",
+45	                           title="t", borrower_role=role, counterparty="Elysium Health, Inc.", finding_ids=(fid,),
+46	                           amount=ev(amount), judgment_date=judgment)
+47	
+48	
+49	class StubJudge:
+50	    """Answers each atomic question from fixed preferences; `top` is the transition answer's share."""
+51	
+52	    def __init__(self, stage: str, prefer: dict[str, str], top: float = 0.8):
+53	        self.stage_id, self.prefer, self.top, self.calls = stage, prefer, top, []
+54	
+55	    def _obs(self, qid, options, pick, top, primitive="choice"):
+56	        keys = list(options)
+57	        rest = (1 - top) / (len(keys) - 1)
+58	        probs = {k: (top if k == pick else rest) for k in keys}
+59	        self.calls.append(qid)
+60	        return SemanticObservation(observation_id=f"obs_{len(self.calls)}", call_id="c", profile="dispute_model",
+61	                                   question_id=qid, question_version="3.10.0", primitive=primitive, answer=pick,
+62	                                   probabilities=probs)
+63	
+64	    async def stage(self, dispute, record, options, subject_ids):
+65	        return self._obs("dispute_stage", options, self.stage_id, 0.9)
+66	
+67	    async def route(self, dispute, finding, options, subject_ids):
+68	        return self._obs("factor_routing", options, "appeal_intent", 0.9)
+69	
+70	    async def level(self, dispute, finding, factor, rubric, subject_ids):
+71	        return self._obs("factor_level", {str(i): r for i, r in enumerate(rubric)}, "3", 0.9, "score")
+72	
+73	    async def present(self, dispute, finding, factor, subject_ids):
+74	        return self._obs("factor_present", {"true": 1, "false": 0}, "false", 0.9)
+75	
+76	    async def transition(self, dispute, record, stage, premise, factor_results, options, subject_ids):
+77	        top = 0.85 if factor_results else self.top
+78	        return self._obs("dispute_transition", options, self.prefer.get(stage["stage"], next(iter(options))), top)
+79	
+80	
+81	def evaluate(role, amount, judgment, quote, source, judge, request=200_000_000):
+82	    f = finding("fnd_001", quote, source)
+83	    ev_ = Evaluator(instance(role, amount, judgment, f.finding_id), [f], judge=judge, borrower="ChromaDex, Inc.",
+84	                    source_dates={source: "2024-08-13"}, review=REVIEW, horizon=HORIZON, request_cents=request)
+85	    return asyncio.run(ev_.run())
+86	
+87	
+88	# --- Slope products and the bank baseline -------------------------------------------------------------
+89	
+90	def test_offers_conserve_totals_and_prorate_fees():
+91	    terms = load_terms()
+92	    for o in menu(terms, 200_000_000, "B"):
+93	        sched = o.schedule(FUNDING)
+94	        assert sum(p.amount_cents for p in sched) == o.total_cents
+95	        assert sum(p.principal_cents for p in sched) == o.amount_cents
+96	        assert all(p.due > FUNDING for p in sched)
+97	        assert o.prorated_fee_cents(0) == 0 and o.prorated_fee_cents(o.days) == o.fee_cents
+98	    assert offer(terms, "net_30", 200_000_000, "A").fee_cents == 3_200_000  # 1.60% on Net 30, the published rate
+99	
+100	
+101	def test_bank_feed_matches_public_anchors_and_stops_at_the_review_date():
+102	    feed = load_feed(SNAP)
+103	    assert feed.balances[date(2024, 3, 31)] == 2_756_500_000  # Q1 10-Q cash including restricted
+104	    assert feed.balances[date(2024, 6, 30)] == 2_788_500_000  # Q2 10-Q cash including restricted
+105	    assert feed.balances[REVIEW] < feed.balances[date(2024, 6, 30)]  # Q2's operating drain continues, no later information
+106	    assert feed.period_end == REVIEW and all(t["date"] <= "2024-08-19" for t in feed.transactions)
+107	    tier, _ = tier_for(risk_features(feed), load_terms())
+108	    assert tier == "A"
+109	
+110	
+111	# --- the engine -----------------------------------------------------------------------------------------
+112	
+113	def test_the_invoice_is_paid_once_including_a_partly_financed_remainder():
+114	    feed, terms = load_feed(SNAP), load_terms()
+115	    declined, _, _, _ = simulate(feed, REQ, None, [], "central", HORIZON)
+116	    for amount in (200_000_000, 120_000_000):  # the full invoice, and a smaller supported amount
+117	        o = offer(terms, "net_30", amount, "A")
+118	        financed, coll, owed, _ = simulate(feed, REQ, o, [], "central", HORIZON)
+119	        assert declined[HORIZON] - financed[HORIZON] == o.fee_cents  # financing costs exactly the fee
+120	        assert sum(c for _, c in coll) == o.total_cents and not owed
+121	
+122	
+123	def test_a_lock_lowers_cash_by_its_amount_and_zero_cash_paths_reproduce_bank_only():
+124	    feed, terms = load_feed(SNAP), load_terms()
+125	    lock = BranchCash(kind="lock", label="bond", amount=ev(980_000_000), window_start=FUNDING,
+126	                      window_end=date(2024, 12, 31))
+127	    s = offer(terms, "inst_90", 200_000_000, "A")
+128	    base, _, _, _ = simulate(feed, REQ, s, [], "stress", HORIZON)
+129	    locked, coll, _, _ = simulate(feed, REQ, s, [lock], "stress", HORIZON)
+130	    assert all(base[d] - locked[d] == 980_000_000 for d in base if d >= FUNDING)
+131	    assert sum(c for _, c in coll) <= s.total_cents
+132	    empty = evaluate("debtor", 1_000_000, date(2024, 8, 13), CA_QUOTE, "cacd_16cv2277_d618_judgment",
+133	                     StubJudge("judgment_entered", {"judgment_entered": "appeal_bonded", "appeal_pending": "appeal_continues"}))
+134	    no_cash = [p.model_copy(update={"cash": ()}) for p in empty.paths]
+135	    comp = compare(feed, terms, REQ, [no_cash])
+136	    for name in list(comp.structures):
+137	        rows = {(o.min_cash_cents, tuple(o.collections)) for o in comp.outcomes if o.structure == name}
+138	        assert len(rows) == 1
+139	
+140	
+141	def test_the_supported_amount_is_sized_on_its_own_paths_and_names_what_binds():
+142	    feed, terms = load_feed(SNAP), load_terms()
+143	    bond = BranchCash(kind="lock", label="bond", amount=ev(1_225_000_000), window_start=FUNDING,
+144	                      window_end=date(2024, 9, 30))
+145	
+146	    paths = [DisputePath(path_id="p1", transitions=("appeal_bonded",), labels=("bond",), terminal="t", weight_bps=10_000,
+147	                         cash=(bond,))]
+148	    comp = compare(feed, terms, REQ, [paths])
+149	    s = summarize(comp, terms)
+150	    rec = s["recommendation"]["event_adjusted"]
+151	    assert not rec["requested_passes"] and not rec["at_requested"]["passes"] and rec["at_requested"]["lowest_cash_on"]
+152	    assert rec["structure"] != "decline" and rec["at_recommended"]["passes"]
+153	    chosen = comp.structures[rec["structure"]]
+154	    assert chosen.amount_cents <= rec["at_recommended"]["order_limit_cents"]  # the card's own figures are consistent
+155	    up = rec["next_amount_up"]
+156	    assert up["amount_cents"] == chosen.amount_cents + AMOUNT_STEP_CENTS and not up["passes"]
+157	    for sc in s["structures"]["inst_90_2000000"]["views"]["event_adjusted"]["scenarios"]:
+158	        assert "collections" in sc and "economics" in sc  # per-branch collections and economics
+159	
+160	
+161	# --- the dispute model ----------------------------------------------------------------------------------
+162	

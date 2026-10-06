@@ -1,0 +1,65 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_7b36c67b]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 14:51:46 (23m17s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1397.75s
+
+--- ✓ TASK 1/1: Add the verdict-driven share price (Merton structural model, Owen's approval) and the January offering's lock-up to the step-9 model of owassmer/Slope_Sparse_Events, on branch step-9-price off step-9-int ebadc32. Commit and push after each step; open no PR. Build no tree.  (status=completed, api_calls=108, 1397.59s) ---
+All five steps are pushed to `step-9-price` (off ebadc32, no PR). I built no tree and ran no baseline. The checks you listed pass and the 20 Jun dump equals `dump20_final.json`. I didn't run `tests/test_pending_claim.py` or the full suite.
+
+**Commits**
+- abdd7db — (1) the share-price module and parameter, plus the spec edit
+- 75307c8 — (2) the price wired into the chain; `offering_price_half` retired
+- 3900b1b — (3) the January offering's lock-up
+- 551ce00 — (4) the share price in the question state
+
+**Calibration**
+- Rate: the 1-year Treasury par yield on 14 May 2024 is **5.16%**, from treasury.gov's Daily Treasury Par Yield Curve Rates CSV for 2024. It is cited in the parameter.
+- **V = $82.39M**, **asset volatility = 64.9%**. Equity volatility is 112.7% (240 days).
+- These reproduce $0.44 and 112.7% to 1e-9 against an independent Black-Scholes and a volatility computed separately from the case CSV.
+
+**Price by award class** (at 5.16%; the offering price is 0.7096 × this)
+
+```
+Award owed | $0      | $0.28M  | $1.43M  | $7.95M  | $10.65M | $26.8M  | $38.6M  | $67.5M 
+-----------+---------+---------+---------+---------+---------+---------+---------+--------
+Price      | $0.4400 | $0.4379 | $0.4296 | $0.3848 | $0.3675 | $0.2788 | $0.2280 | $0.1409
+```
+
+**How the price is applied**
+- The amount owed is the judgment as entered, or as the post-trial ruling or remittitur leaves it, less amounts paid or levied. It is zero once the dispute is resolved; after a settlement it is the installments not yet due.
+- **Decision for you:** I left §1961 interest out, so the price only moves on those events, not daily. Including it would move the price by at most about 2.5% over the horizon.
+- On a replayed $67.5M path, the offering at the cash floor comes after about $9.3M is levied, so its price is $0.165 and the offering uses all the remaining authorized shares (net about $5.8M).
+- On the no-award path the results are exactly what they were before.
+- `share_price` is a per-trajectory, per-day array, which is the shape the other worker's hook on step-9-int (d248c57) expects. The at-the-market memo key is `(_eq_v, _price_v)`, so the merge should be mechanical.
+
+**Lock-up**
+- It is in the underwriting agreement of 25 Jan 2024 (Exhibit 1.1 to the 8-K of 29 Jan 2024), §4(l): "For a period commencing on the date hereof and ending on the 90th day after the closing of the Offering (the 'Lock-Up Period'), the Company agrees not to … offer for sale, sell … any shares of Common Stock".
+- None of the exceptions (A)–(H) covers at-the-market sales; they do cover interest paid in shares. The 424B5 says the program can resume "subject to any applicable lock-up restrictions in the Underwriting Agreement".
+- Applied on the path: at-the-market sales pause from pricing (one day after launch, as in January) to the close. Where the offering closes, the pause runs through the 90th day after the close, then sales resume.
+- **Source gap:** Exhibit 1.1 is not in the 14 May snapshot. I read it from EDGAR (it was public on 29 Jan 2024) and quoted it in the parameter, but it has no catalog entry.
+
+**Two things to decide**
+- **June coupon:** the 15 Jun coupon (paid 17 Jun) falls inside the horizon, not after it. The 14 May base pays it entirely in shares, and the alternative entirely in cash, so neither reads the price and I left it alone. But below about $0.278 the $1.32M coupon needs more than the 5.0M registered shares, which covers the $26.8M-and-above classes.
+- **Pre-existing test failure:** `test_assumptions::test_each_saved_variant_records_only_its_knob` fails with `KeyError: 'atm_pace_10'`. It fails the same way on step-9-int, so it isn't from this work.
+
+**Files touched**
+- `app/analysis/share_price.py` (new)
+- `app/analysis/events.py`
+- `app/disputes/state14.py`
+- `cases/akoustis_20240514/scenario.json`
+- `…/revision_v2/contracts/dispute_model.json`
+- `…/akoustis/design/QUESTIONS_20240514.md` (§2.6)
+- `…/PACKAGE_MANIFEST.json`
+- `tests/test_share_price.py` (new)
+- `tests/test_equity_20240514.py`
+- `tests/test_page_data_20240514.py`
+- the `slope-sparse-events-build` skill (one new note on the share price)
+
+The scripts are in `scratch/9px/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_7b36c67b/task-0.log
+Child's process proc_2608c971ffce `cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-price && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+exit 143

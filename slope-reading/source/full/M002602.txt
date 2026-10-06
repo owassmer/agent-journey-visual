@@ -1,0 +1,170 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_e240ca6e]
+A background fan-out unit you dispatched earlier — 3 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 22:47:27 (26m43s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1603.52s
+
+--- ✓ TASK 1/3: Worker A (case inputs and the common financial model) for the 14 May 2024 Akoustis rebuild of owassmer/Slope_Sparse_Events. Work in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-case (branch step-8-case, based on 9aa0733). Deliver the kit mission and snapshot for akoustis_20240514, the 14 May bank feed and run inputs, and the common-financial-model scenario controls of spec §16.3. Each step ends in targeted tests, a commit of named files and a push. Report the SHAs, the 14 May feed's key figures (opening cash on 14 May, monthly receipts and outflows, line limit), a bank-only engine run's figures, and every decision you had to make. Do not open a PR or call Jev.  (status=completed, api_calls=114, 1385.45s) ---
+I've finished all four steps plus your added items (1) to (5), and pushed everything to `step-8-case` (no PR opened, Jev not called). The full suite passed (189) before the step-3 commit; the targeted tests passed after each later commit.
+
+**Commits**
+- **ac8a0da – kit mission `akoustis_20240514`:**
+  - Cutoff is 14 May 2024 at 23:59 New York time.
+  - 22 Akoustis sources are eligible, including D.I. 590 filed on 14 May. 30 are `outcome`: the verdict and judgment, the 20 and 22 May 8-Ks, Qorvo's release, the 24 May offering documents, D.I. 602 onward, and the 20 Jun docket capture. 3 are `out_of_case`: the 17 May SEC letter, the 31 May Form SD and the 5 Jun director 8-K.
+  - A new 14 May docket view keeps only entries filed by 14 May (656 kept, 36 dropped) and is its own catalog source.
+  - The snapshot has 26 isolation probes and none appear in the built database. `SNAPSHOTS` and the manifest are updated.
+- **5eeaf37 – 14 May bank feed and run inputs.**
+- **548de9b – the §16.3 controls** (financing, cost plan, reserve), with tests.
+- **148c6e6 – your 13 new pre-cutoff sources:**
+  - D.I. 1, 133, 471, 476, 496, 508, 535, 543 and 543-1; the 13 May S-3; the 424B5s of 2 May 2022 and 29 Jan 2024; the 13 May call transcript.
+  - All are eligible for 14 May and `out_of_case` for 20 Jun. The 20 Jun snapshot is unchanged (51 sources, 918 sections); the 14 May snapshot now holds 35 sources and 1,176 sections.
+  - The kit already had the 10-Q and the 27 Oct 2023 8-K.
+- **7c845fa – remaining ordinary items:** the CHIPS tax-credit sensitivity, the notes coupon and the GDSI note as case inputs, and the runway statement.
+
+**The 14 May feed**
+- January–March match the 20 Jun feed exactly (same seed and totals from the 13 May 10-Q; 31 Mar = $15.20M).
+- 1 April–14 May run at the March quarter's monthly rate: receipts $2.64M, operating outflows $5.23M, capital $0.10M a month. May is prorated at 10 of its 22 business days. There is no 24 May raise and no June coupon.
+- **Cash on 14 May: $11,281,454.55.** At the run rate that lasts to about 19 Sep 2024. The 10-Q's "into the third quarter of fiscal 2025" works out to about $1.7M a month of burn, 37% below the run rate. That needs both the 30% cut and the tax-credit refund, and the central case assumes neither.
+- **Line limit: $393,373.65** (15% of mean Feb–Apr receipts of $2.62M, no debt service).
+
+**Scenario controls** (generic inputs in `setup.py`, `operating.py`, minimal wiring in `build.py`, `core.py`, `engine.py`)
+- **Central:** no financing, no cost plan, a 30-day reserve. It reproduces the base commit (9aa0733) bit for bit on both Akoustis feeds.
+- **Equity:** $5.0M on 14 Jun 2024, a declared scenario. The basis is ATM capacity ($48.0M remaining, agents not obliged to sell) under the likely baby-shelf cap of about $9.7M, which is an inference.
+- **Cost plan:** the CFO said on the 13 May call that the measures "will reduce our operating cash flow burn rate by an additional 30% sequentially in the June quarter". I took 30% of the March-quarter burn ($7.79M) off every operating outflow except the legal proxy and debt service. That is a 16.59% cut from 15 May to the horizon, with receipts unchanged.
+- **Tax credit (CHIPS):** the low end ($2.8M over 12 months) prorated over the horizon gives $1,380,822. It is booked monthly as one-off receipts, outside the reserve calculation.
+- **Reserve:** `need_days` is now the one setting; the alternative is 60 days. Financing proceeds don't count toward the reserve need.
+- **Legal spend:** the legal category is labelled a professional-fee proxy. It stops through the existing rule when the dispute is resolved; I didn't edit `events.py`.
+
+**Bank-only engine run to 10 Nov** (512 draws; dollar figures are means; my direct engine read matched `payload` exactly)
+
+```
+Setting             | Cash p5 / p50 / p95 on 10 Nov | Funded  | Due in horizon | Collected | Draws crossing the reserve (median date)
+--------------------+-------------------------------+---------+----------------+-----------+-----------------------------------------
+Central             | −$4.85M / −$3.63M / −$3.18M   | $753k   | $740k          | $438k     | 100% (25 Aug)                           
+Equity $5M          | $0.15M / $1.38M / $1.81M      | $1,054k | $849k          | $745k     | 100% (26 Oct)                           
+Cost plan           | −$0.21M / $0.81M / $1.12M     | $1,017k | $843k          | $702k     | 100% (13 Oct)                           
+Tax credit, low end | −$3.44M / −$2.30M / −$1.80M   | $825k   | $787k          | $497k     | 100% (7 Sep)                            
+60-day reserve      | −$4.83M / −$3.64M / −$3.16M   | $593k   | $614k          | $262k     | 100% of its 60-day reserve (26 Jul)     
+```
+
+The central cash median is $7.26M on 30 Jun and $1.88M on 31 Aug. With no event model there is no filing mechanism, so cash goes below zero on every central draw with no filing. That reflects the model's structure: it is the operating picture before any event.
+
+**Decisions I made**
+- The 24 May offering documents are `outcome` for 14 May (§16.2 lists the offering among the excluded later events).
+- Two probes were tightened because the bare strings appear legitimately before the cutoff. "May 17, 2024" is in a 26 Apr juror-lunch order, so the probes are "verdict on May 17, 2024" and similar. "D.I. 601" is cited from another case in D.I. 543-1, so the probe is "(D.I. 601)".
+- The transcript is Earnings Whispers' machine transcript, with only the speaker blocks kept. The page's own header names the ticker's later owner, which is a post-cutoff fact.
+- The whole 30% burn cut is read as lower outflows, because the call doesn't split the tax-credit refund from the cost cuts. The $10–11M opex guidance is an accounting figure, not cash, and isn't used.
+- The feed's labelled constants (payroll, legal proxy, supplier and receipt mixes) are kept, all sourced by 13 May. The 10-Q's stale "at least the next twelve months" sentence is set aside.
+- The $1.32M coupon (15 Jun, cash or shares) and the GDSI step-down (1 Jan 2025) are recorded as case inputs only, not booked, so the design worker's model decides how the coupon is paid.
+
+**Issues**
+- Free disk briefly fell from 2.5 GB to 1.5 GB during the source step, from something outside this worktree. It recovered to 3.3 GB. No full-tree run was needed.
+- I added two lessons to the skill notes: probe strings must not appear in pre-cutoff sources, and `EventModel` is imported from `app.analysis.core`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_e240ca6e/task-0.log
+
+--- ✓ TASK 2/3: Worker B1 (design only) for the 14 May 2024 Akoustis rebuild of owassmer/Slope_Sparse_Events. In worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, based on 9aa0733), write the kit design document `Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/DECOMPOSITION_20240514.md` for the generic pending-money-claim event model, plus an implementation plan for it. Commit and push, then report a summary of the legal map, the chains, the Jev questions and the implementation plan, with any open decisions. Stop there: another worker implements it after the orchestrator reviews the design. Do not change code or contracts.  (status=completed, api_calls=90, 1603.23s) ---
+I've written the design document, **`Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/DECOMPOSITION_20240514.md`** (§1–§8 plus an isolation log), and pushed it to `step-8-model`. No code or contracts changed. The document went in section by section, each commit with a manifest refresh; the last commit is 456cf1f. I merged `origin/step-8-may14` (23c06f8) first, and all seven of your instructions are applied. Nothing was run: the path and question counts are estimates, and the cash-above-reserve figures depend on the feed that hasn't been built yet.
+
+**New file.** The research worker's findings are copied verbatim (checked with `cmp`) to `design/acquisition_akoustis_20240514.md` and added to `PACKAGE_MANIFEST.json`. The manifest now lists 115 files; `primary_catalog_records` is unchanged at 71.
+
+**Legal map (§2)**
+- **New template `pending_money_claim`:** verdict, judgment entry, the Rule 62(a) 30-day stay, post-trial motions (compacted), execution, stay by bond or reduced security, early registration, appeal, post-judgment interest.
+- **A missing judgment never activates enforcement.** Enforcement, stay, registration and judgment-default nodes only exist after an entered money judgment.
+- **Indenture:** the §7.01(i) judgment default with both readings of "final judgment" kept, as the recorded model has them; §7.01(b) delisting; §7.02 acceleration; the §7.06 holders' route. Cross-default and the repurchase fall after 10 Nov, so they are removed.
+- **Nasdaq:** inside the horizon the stock can only be delisted by suspension around 1 Nov, and only if no hearing is requested. Panel decisions and Form 25 fall after 10 Nov.
+- **Legal slots:** the 20 Jun slots L1–L13 are marked as reused or changed. New ones: L14 judgment entry, L15 no UDTPA damages (D.I. 590), L16 stay as of right on a full bond, L17 post-trial motion deadlines, L18 no money by 10 Nov after a defense verdict.
+
+**Clocks and amounts (§3, §5)**
+- **Verdict timing:** the verdict date is drawn per trajectory from 16–22 May. The basis is the 13 May call, D.I. 550 (filed 26 Apr; jurors provided for through 17 May) and the parties' proposed 25 hours per side. Every later clock is a range running from the modeled verdict.
+- **Branch amounts:** no award; the defense's theory, a bounded amount below $10.0M; or the claimant's theory at $68,336,184, with exemplary damages, interest and fees as one bounded term. No trebling.
+- **June coupon:** paid in shares by default, based on the 13 May S-3 (5.0M note-interest shares); all cash ($1.32M) is the sensitivity.
+- **Financing** completion is worker A's shared input under §16.3; the debtor's "continue" branch books no cash of its own.
+
+**Chains (§4):**
+- **T1, the verdict and its enforcement:** settlement before the verdict, then the verdict (J1), then the debtor's response at entry (D2), then post-trial motions (D1). In I1: execution, a stay, early registration and the response on the levy day. Then the ruling (J2: stands or set aside). In I2: an appeal, a stay pending appeal and enforcement.
+- **T2, the notes:** only on the claimant's-theory branch, the only one above $10.0M.
+- **T3, the listing:** one company decision.
+- **T4, operating cash:** the cash floor, then zero cash.
+- **T5, settlement:** on stated terms in each interval.
+
+§4.6 lists every distinction I collapsed and the reason for each.
+
+**Jev questions (§6): 18.**
+
+```
+Actor         | Questions                                                                                                                                                                                               
+--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Jury or court | J1 damages theory; J2 the ruling; J3 stay on reduced security; J4 early registration                                                                                                                    
+Claimant      | C1 enforces; C2 accepts the settlement terms                                                                                                                                                            
+Debtor        | D1 post-trial motions; D2 pay, file or continue; D3 offers settlement; D4 moves for a stay; D5 appeals; D6 keeps the listing; D7 and D8 file at the cash floor or at zero cash; D9 files on acceleration
+Holders       | H1 act on the judgment default; H2 act on delisting; H3 file an involuntary petition                                                                                                                    
+```
+
+Questions marked ⚑ get cash facts, which must match the engine on the decision date. For D2, D7 and D8 (⚑⚑) the line's own flows can move a threshold: whether paying is feasible, and the cash-floor date.
+
+**Implementation plan (§7)**
+- Contract and registry go to 4.1.0, additively: the template with its routing as data, a `liability_pending` stage, five new registry entries, and label templates filled only from case inputs.
+- Changes to the domain objects, interpretation and agent tool; new walker methods and Chain steps that reuse the 4.0.0 flow.
+- Cash facts come from a forward run of the loan up to each decision date, with no feedback solver.
+- Akoustis figures live only in `cases/akoustis_20240514/scenario.json`.
+- 4.0.0 is untouched. The contract gains `compatible_versions` so the recorded 20 Jun run still builds and its Jev cache still hits.
+- Nine tests, covering composition and cash only.
+- Estimates: about 3,000–7,000 paths and 100–150 Jev asks per variant.
+
+**Open decisions**
+- **O1:** which defense-theory amount is the base. I recommend $9,999,999, the record's upper bound under the approved D4(a) rule; the sensitivity is $2,236,184, the claimant's non-head-start items.
+- **O2:** whether to add a declared class for an award between $10.0M and cash above the reserve. This is needed only if the built feed has trajectories where that cash exceeds $10.0M.
+- **O3:** the level of legal spend after trial, since neither verdict ends the dispute inside the horizon. This is for the §16.3 worker.
+- **O4:** judgment entry the next business day after the verdict by default, with entry at the post-trial ruling as the sensitivity.
+
+**Isolation issues**
+- I removed two post-14-May mentions I had written into the document: the defense's $305k figure and the 20 Jun coupon values. A final scan found no others.
+- One early search of the 20 Jun docket capture printed entries dated 15 May–7 Jun, including the verdict entry. I didn't use them and say so in the isolation log.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_e240ca6e/task-1.log
+
+--- ✓ TASK 3/3: Worker C (research only, no repository edits) for the 14 May 2024 Akoustis review in owassmer/Slope_Sparse_Events. Establish, with sources and exact dates, what was publicly knowable on or before 14 May 2024 about: (1) the amounts at stake in Qorvo v. Akoustis (D. Del. 1:21-cv-01417); (2) the trial schedule and the expected verdict date; (3) the Nasdaq bid-price deficiency notice and its deadline; (4) Akoustis's financing capacity and plans as disclosed by 14 May. Write the findings to /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/8/c_findings.md and report a summary.  (status=completed, api_calls=69, 559.15s) ---
+Qorvo's damages figures were public before the cutoff, which is the main correction to the kit. Qorvo itemised its claim in a public court filing on 22 Apr 2024, so the kit's reading that nothing was quantified until after the verdict is wrong. Everything is written to `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/8/c_findings.md`, with verbatim quotes, sources, dates and URLs. Each fact is tagged as public on or before 14 May or later, and my own reasoning is labelled as inference.
+
+**1. Amounts at stake**
+- **The itemised claim:** it is Exhibit A.2 to the proposed pretrial order (D.I. 543-1, public, filed 22 Apr 2024).
+  - Trade-secret unjust enrichment "at least $66.1 million", based on a 55-month head start.
+  - Patent damages $279,808.
+  - Corrective advertising $1,146,604.
+  - Employee poaching $809,772.
+  - The same $66.1M is claimed again under the North Carolina unfair-trade-practices statute and again under civil conspiracy. These are alternative theories, not additional money.
+  - Enhanced, exemplary, punitive and treble damages, fees and interest are all asked for, but with no amounts.
+- **Earlier appearance:** the $66.1M also appears unredacted in Akoustis's public expert-exclusion brief (D.I. 476, 23 Feb 2024).
+- **Exemplary damages:** Qorvo's proposed verdict form (D.I. 535, 12 Apr) asked the jury to cap them at 3× the trade-secret damages.
+- **Trebling:** on 14 May the court ruled that the jury had "no reasonable basis to find compensable damages" under the unfair-trade-practices statute (D.I. 590). That took trebling off the table at trial. The order is public, but it was docketed on the cutoff day itself.
+- **Akoustis's side:**
+  - The 10-Q calls the damages "unspecified" and records no accrual.
+  - On the 13 May call, general counsel said: "if the jury adopts the theories of Qorvo's experts, it is possible the jury will issue an eight-figure verdict."
+  - Akoustis's own $305k figure was not public until after the verdict.
+- **Press:** I found no report of a demanded amount before 15 May. Law360's only story is the verdict on 17 May. Law360 is paywalled, so this is not proof that nothing ran.
+- **My scenario bounds (inference):** about $68.3M of non-overlapping compensatory claims. With exemplary damages at the 2× legal cap, the total reaches about $200M. The theoretical ceiling is about $266M before interest and fees.
+
+**2. Trial and verdict timing**
+- The trial was reset to 6 May 2024 by the scheduling order of 10 May 2023. At the 19 Apr pretrial conference the court said jury selection would begin 6 May, with openings by 7 May.
+- No length in days was stated. The parties proposed "no more than 25 hours per side"; the final pretrial order as entered (D.I. 549) is sealed.
+- On the 13 May call, counsel said Qorvo would rest that morning and the case would "go to the jury before the end of the week", with a verdict "in the next several days". That puts the expected verdict at about 17–22 May. The actual verdict came 17 May.
+
+**3. Nasdaq**
+- The deficiency notice arrived 24 Oct 2023 (8-K filed 27 Oct 2023). The first compliance deadline was 22 Apr 2024.
+- The 10-Q says a second 180-day period was granted, expiring **21 Oct 2024**, and a reverse split is being considered. No separate 8-K announced the second period.
+
+**4. Financing as of 14 May**
+- **The S-3 dates and purpose in your brief are wrong.** That S-3 was filed **13 May**, not 16 May, so it predates the cutoff. It is a **resale** registration of 5.03M shares, mostly for paying interest on the notes in stock, and raises no money for Akoustis. Only its effectiveness on 21 May is after the cutoff.
+- **The shelf that could raise money** is S-3 333-262540, effective 15 Feb 2022. Both the May 2022 ATM and the January 2024 offering were sold off it.
+- **The ATM:** a $50M program with $48.0M remaining was **re-activated with the 10-Q on 13 May**. The sales agents are under no obligation to sell. How much the small-company shelf limit allows was not stated before the cutoff.
+- **Cash and runway:** $15.2M at 31 Mar. Cash lasts "into the third quarter of fiscal 2025", and the 10-Q carries a going-concern warning that ties an adverse judgment to possible bankruptcy. The same filing also says "at least the next twelve months", which contradicts this; I flagged it as probably stale text.
+- **Cost plan (13 May call):** a further 30% burn cut in the June quarter, operating expenses of $10–11M a quarter, and cash-flow breakeven within 9 months at $11–15M of quarterly revenue.
+- **CHIPS tax credits:** $2.8–4.0M expected "over the next nine to 12 months". No source dates the receipt.
+- **Debt service to 10 Nov:**
+  - The 6% convertible notes owe a $1.32M coupon on 15 Jun 2024, payable in cash or shares.
+  - The $4.0M GDSI seller note is interest-free and secured. The deal closed 1 Jan 2023, so the step-down to $1.3M falls on **1 Jan 2025** and the balance on 1 Jan 2026. Nothing on it is due inside the horizon unless it is accelerated by a bankruptcy default.
+
+**Issues**
+- The call quotes come from a machine transcript (Earnings Whispers, which renders Qorvo as "Corvo"). A second transcript on Insider Monkey, published 14 May, matches the timing wording, but its full text was blocked, so the "eight-figure" quote rests on one transcript.
+- The public version of the Second Amended Complaint is D.I. 133, since D.I. 125 is sealed.
+- No repository files were changed. The downloaded filings and court PDFs are in the same scratch folder as the findings file.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_e240ca6e/task-2.log

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/cthr && grep -n -i -E \"alternative (source|supplier)|other supplier|third.party supplier|raw material.{0,80}(sufficient|years|on hand)|long-term inventory|non-current|consign|Wolfspeed\" 10q_0506.txt | cut -c1-300 | head -25"}

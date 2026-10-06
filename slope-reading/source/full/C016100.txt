@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:86894,chars:"","yield_time_ms":1000,"max_output_tokens":1000}));
+text(await tools.exec_command({cmd:"gh run view 36960210984 --json jobs --jq '[.jobs[]|{id:.databaseId,name,status,conclusion}]'; sed -n '1,150p' /tmp/read_decision_live.py","max_output_tokens":2000}));

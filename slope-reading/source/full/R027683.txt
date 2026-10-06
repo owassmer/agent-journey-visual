@@ -1,0 +1,96 @@
+        questions = {qid: build_question(e) for qid, e in entries.items()}
+        # Key on the exact built question text and criteria, so an edit without a version bump cannot hit.
+        cache_key = canonical_sha256({"model": self.provider.model, "state": state,
+                                      "questions": {q: v.model_dump(mode="json") for q, v in questions.items()}})
+        cache_file = CACHE_DIR / f"{cache_key}.json"
+        attempts_used, cache_hit = 0, False
+        if self.use_cache and cache_file.exists():
+            cached = json.loads(cache_file.read_text())
+            raw, now = cached["raw"], cached["created_at"]
+            cache_hit = True
+            self.cache_hits += 1
+        else:
+            reserved, estimate = self._reserve(
+                len(json.dumps(state)) + sum(len(q.model_dump_json()) for q in questions.values()))
+            before = self.physical_attempts
+            try:
+                self.requests += 1
+                raw = (await self.client.system_one(state=state, questions=questions, model=self.provider.model,
+                                                    response_model=_Raw)).model_dump(mode="json")
+            finally:
+                self.inflight_attempts -= reserved
+                self.inflight_usd -= estimate
+                attempts_used = self.physical_attempts - before  # approximate under concurrency; totals are exact
+            cost = (raw.get("usage") or {}).get("cost")
+            self.spent_usd += Decimal(str(cost)) if cost is not None else estimate
+            now = datetime.now(UTC).isoformat()
+            returned = raw.get("model")
+            if not returned or EXPECTED_BUILD_MARKER not in str(returned):
+                raise ConfigurationError(f"Unexpected Jev model {returned!r}; pinned {self.provider.pinned_build}")
+            if self.use_cache:
+                CACHE_DIR.mkdir(parents=True, exist_ok=True)
+                cache_file.write_text(json.dumps({"raw": raw, "created_at": now}))
+
+        call = JevCallRecord(
+            call_id=self.new_id("jev"), run_id=self.run_id, profile=profile, subject_ids=subject_ids,
+            question_ids=tuple(question_ids), registry_version=registry_version, requested_model=self.provider.model,
+            returned_model=raw.get("model"), state_sha256=canonical_sha256(state),
+            source_content_hashes=source_content_hashes, attempts_used=attempts_used, usage=raw.get("usage"),
+            raw_response=raw, created_at=now, cache_hit=cache_hit)
+        answers = raw.get("answers") or {}
+        observations = []
+        for qid in question_ids:
+            ans, entry = answers.get(qid) or {}, entries[qid]
+            if entry["primitive"] == "noul":
+                value = ans.get("noul")
+                observations.append(SemanticObservation(
+                    observation_id=self.new_id("obs"), call_id=call.call_id, profile=profile, question_id=qid,
+                    question_version=entry["version"], primitive="noul",
+                    answer=None if value is None else value >= NOUL_THRESHOLD, noul_value=value, subject_ids=subject_ids))
+            elif entry["primitive"] == "score":
+                probs = ans.get("probabilities")
+                observations.append(SemanticObservation(
+                    observation_id=self.new_id("obs"), call_id=call.call_id, profile=profile, question_id=qid,
+                    question_version=entry["version"], primitive="score",
+                    answer=None if not probs else str(max(probs, key=lambda k: probs[k])), score_value=ans.get("score"),
+                    probabilities={str(k): v for k, v in probs.items()} if probs else None,
+                    confidence=ans.get("confidence"), subject_ids=subject_ids))
+            else:
+                observations.append(SemanticObservation(
+                    observation_id=self.new_id("obs"), call_id=call.call_id, profile=profile, question_id=qid,
+                    question_version=entry["version"], primitive="choice", answer=ans.get("choice"),
+                    probabilities=ans.get("probabilities"), confidence=ans.get("confidence"), subject_ids=subject_ids))
+        return call, observations
+
+    def usage_summary(self) -> dict[str, Any]:
+        return {"provider": self.provider.name, "requests": self.requests, "cache_hits": self.cache_hits,
+                "physical_attempts": self.physical_attempts, "attempt_ceiling": self.max_attempts,
+                "spent_usd": str(self.spent_usd), "spend_cap_usd": str(self.spend_cap)}
+69:def jev_provider() -> JevProvider:
+70-    """Select the Jev provider. OpenRouter is the default while TypeSafe sign-up is restricted.
+71-
+72-    Both routes serve the same Jev build; only the transport and model identifier differ.
+73-    """
+74-    pinned = agent_config()["runtime"]["jev"]["model_pin"]  # "jev-1.13.0"
+75-    name = (os.environ.get("JEV_PROVIDER") or _dotenv().get("JEV_PROVIDER") or "openrouter").lower()
+76-    if name == "openrouter":
+77-        return JevProvider("openrouter", "OPENROUTER_API_KEY", "https://openrouter.ai/api",
+78-                           "typesafe/jev-1.13", pinned)
+79-    if name == "typesafe":
+80-        return JevProvider("typesafe", "TYPESAFE_API_KEY", None, pinned, pinned)
+81-    raise ConfigurationError(f"Unknown JEV_PROVIDER {name!r}; expected 'openrouter' or 'typesafe'")
+82-
+83-
+84-def jev_credential(provider: JevProvider) -> str:
+85-    key = secret(provider.credential_env)
+86-    if not key:
+87-        raise ConfigurationError(
+88-            f"Jev provider {provider.name!r} requires {provider.credential_env} (env or .env)")
+89-    return key
+90-
+91-
+92-# --- Claude subscription preflight --------------------------------------------------------
+93-
+94-# Any of these would route Claude or the reviewer to metered/alternate inference.
+['Answer only from the supplied state. Do not use remembered facts about this company, these parties, this dispute or later events; if you recognise the case, ignore what you remember about what happened later.', 'Each question concerns one statement, one target and the supplied passage. If the input combines claims, choose the unknown or unclear option rather than an arbitrary category.', 'Source authority and claim posture are separate: a regulatory filing can report an allegation or an expectation.', 'Do not compute or compare amounts or dates; code does that separately.', 'No confidence value turns a judgment into an accepted fact, a probability or a financial input.', 'The question identifier is metadata; the complete question is in the instructions.']
+state.question.event is one future development in state.case. Take every item in state.assumptions as true. Using state.evidence and state.readings, judge whether that event happens within state.question.window. A stated intention or a reading is evidence, not certainty. Judge only from the supplied state; if you recognise these parties or this dispute, ignore anything you remember about what happened. Do not judge amounts or dates.

@@ -1,0 +1,17 @@
+patched
+[1;32mAll checks passed![0m
+built = (PosixPath('/private/var/folders/t1/05nck9rj6w7_jqgkkycxjcxw0000gn/T/pytest-of-owenwassmer/pytest-7/evidence0'), {'syn...e.EvidenceStore object at 0x109b13500>, 'barfresh_20241025': <app.evidence.store.EvidenceStore object at 0x10955dd60>})
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mtest_future_document_content_is_not_searchable[39;49;00m(built):[90m[39;49;00m
+        _, _, stores = built[90m[39;49;00m
+        [90m# "Delayed Draw" appears only in the May 2025 credit agreement, an outcome source for 13 Aug 2024.[39;49;00m[90m[39;49;00m
+>       [94massert[39;49;00m stores[[33m"[39;49;00m[33msynergy_20240813[39;49;00m[33m"[39;49;00m].search([33m'[39;49;00m[33m"[39;49;00m[33mDelayed Draw[39;49;00m[33m"[39;49;00m[33m'[39;49;00m) == [][90m[39;49;00m
+[1m[31mE       AssertionError: assert [{'kind': 'se...)', ...}, ...] == [][0m
+[1m[31mE         [0m
+[1m[31mE         Left contains 8 more items, first extra item: [0m{[33m'[39;49;00m[33mkind[39;49;00m[33m'[39;49;00m: [33m'[39;49;00m[33msection[39;49;00m[33m'[39;49;00m, [33m'[39;49;00m[33mid[39;49;00m[33m'[39;49;00m: [33m'[39;49;00m[33msynergy_court_20230227#s0004[39;49;00m[33m'[39;49;00m, [33m'[39;49;00m[33msource_id[39;49;00m[33m'[39;49;00m: [33m'[39;49;00m[33msynergy_court_20230227[39;49;00m[33m'[39;49;00m, [33m'[39;49;00m[33msource_title[39;49;00m[33m'[39;49;00m: [33m'[39;49;00m[33mSyne... Corp. v. HVL, LLC d/b/a Atrium Innovations, D. Me. No. 2:22-cv-00301: Recom...[0m
+[1m[31mE         [0m
+[1m[31mE         ...Full output truncated (2 lines hidden), use '-vv' to show[0m
+
+[1m[31mtests/test_evidence_snapshots.py[0m:64: AssertionError
+[36m[1m=========================== short test summary info ============================[0m
+[31mFAILED[0m tests/test_evidence_snapshots.py::[1mtest_future_document_content_is_not_searchable[0m - AssertionError: assert [{'kind': 'se...)', ...}, ...] == []

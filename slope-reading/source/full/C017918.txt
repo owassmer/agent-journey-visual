@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-09b42b44a8d35909a --command-id 71c70906-0d5d-48fc-a13a-f16c08447055 --query '{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}'",max_output_tokens:4000}));
+text(await tools.exec_command({cmd:"sed -n '1,260p' tools/pool_fleet.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:7000}));

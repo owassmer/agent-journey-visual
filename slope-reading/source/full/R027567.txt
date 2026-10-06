@@ -1,0 +1,23 @@
+app/agent/jev.py:129:        registry_version = question_registry()["registry_version"]
+app/agent/jev.py:165:            question_ids=tuple(question_ids), registry_version=registry_version, requested_model=self.provider.model,
+app/agent/investigation.py:142:                              "registry_version": question_registry()["registry_version"],
+app/agent/investigation.py:157:                                 "registry_version": record["registry_version"], "model": settings["model"],
+app/agent/investigation.py:180:                payload={"sweep_sha256": sweep["sweep_sha256"], "registry_version": sweep["registry_version"]})
+app/agent/jev_eval.py:45:        "registry_version": question_registry()["registry_version"], "cases_version": data["version"],
+app/agent/sweep.py:161:    registry = question_registry()["registry_version"]
+app/agent/sweep.py:165:        if (cached["registry_version"] == registry and cached["company"] == company
+app/agent/sweep.py:184:    sweep = {"snapshot_id": snapshot_id, "company": company, "registry_version": registry,
+app/domain/investigation.py:105:    registry_version: str
+969:      "id": "factor_level",
+970-      "primitive": "score",
+971-      "question": "Which level of this factor does the cited text establish?",
+972-      "applies_when": "A passage routed to a graded factor.",
+973-      "prompt": {
+974-        "instructions": "state.factor is one factor of the dispute model. Using only state.evidence, choose the rubric level the text establishes for state.obligation. Answer only about state.obligation, from state.evidence (judge the passage in state.evidence.passage; use its surrounding text and the related passages to understand it). This is a reading of the present state: do not predict wh
+975-        "criteria_from_host": true,
+976-        "criteria": []
+977-      },
+978-      "application": "Code aggregates the levels by the factor's own rule (most advanced, or latest by source date, keeping same-date conflicts) and uses them only to close paths an established fact rules out and to mark where the record points."
+979-    },
+980-    {
+981-      "version": "3.12.0",

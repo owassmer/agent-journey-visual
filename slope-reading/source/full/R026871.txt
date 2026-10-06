@@ -1,0 +1,80 @@
+160	    for sc in comp.scenarios:
+161	        daily, collected, shortfall, pays = simulate(comp.feed, comp.request, comp.structures[name], sc.cash,
+162	                                                     sc.placement, comp.horizon)
+163	        low = min(daily, key=daily.get)
+164	        out.append(Outcome(sc, name, daily[low], low, collected, shortfall, pays))
+165	    return out
+166	
+167	
+168	def policy_checks(comp: Comparison, terms: dict, name: str, view: str) -> dict:
+169	    """Reconstructed Slope policy for one structure in one view, on that structure's own cash paths: the limit (lower
+170	    of the share of monthly inflows and the share of the lowest projected cash), the order limit, tenor, and the
+171	    liquidity floor at every payment date in every scenario. Names the binding constraint, scenario and date."""
+172	    s = comp.structures[name]
+173	    pol = terms["credit_policy"]
+174	    outs = [o for o in comp.outcomes if o.structure == name and o.scenario.view == view]
+175	    lowest = min(outs, key=lambda o: o.min_cash_cents)
+176	    cash_limit = cents_round(Decimal(max(lowest.min_cash_cents, 0)) * pol["limit_share_of_min_projected_cash_bps"] / BPS)
+177	    limit = min(comp.base_limits["limit_cents"], cash_limit)
+178	    binding_limit = "lowest projected cash" if cash_limit < comp.base_limits["limit_cents"] else "monthly bank inflows"
+179	    order_limit = cents_round(Decimal(limit) * pol["order_limit_share_of_limit_bps"] / BPS)
+180	    result = {"limit_cents": limit, "order_limit_cents": order_limit, "limit_set_by": binding_limit,
+181	              "lowest_projected_cash_cents": lowest.min_cash_cents, "lowest_cash_on": lowest.min_cash_on.isoformat(),
+182	              "lowest_cash_scenario": list(lowest.scenario.labels), "lowest_cash_placement": lowest.scenario.placement}
+183	    if s is None:
+184	        return {**result, "passes": True, "reasons": []}
+185	    reasons = []
+186	    if s.amount_cents > order_limit:
+187	        reasons.append(f"amount above the order limit of {usd(order_limit)}")
+188	    if s.days > pol["max_tenor_days"]:
+189	        reasons.append("tenor above policy")
+190	    breaches = [(o.scenario, d, after) for o in outs for d, _, after in o.payment_dates if after < comp.liquidity_floor_cents]
+191	    if breaches:
+192	        sc, d, after = min(breaches, key=lambda b: b[2])
+193	        reasons.append(f"cash after the {d.isoformat()} payment falls to {usd(after)}, below one month of outflows "
+194	                       f"({usd(comp.liquidity_floor_cents)}), in {' / '.join(sc.labels) or 'the bank-only view'} "
+195	                       f"({sc.placement})")
+196	    if any(o.shortfall_cents for o in outs):
+197	        reasons.append("a scheduled payment is not fully collected by the horizon in some scenario")
+198	    return {**result, "passes": not reasons, "reasons": reasons}
+199	
+200	
+201	def _supported_amount(comp: Comparison, terms: dict, view: str) -> SlopeOffer | None:
+202	    """Largest amount on the requested term, on a USD 10k grid, that passes policy on its own cash paths. Larger
+203	    amounts carry larger payments and fees, so cash paths and the cash-based limit fall as the amount rises: the pass
+204	    set is a lower interval, found by bisection and verified at the boundary."""
+205	    req = comp.request
+206	
+207	    def passes(cents: int) -> bool:
+208	        o = offer(terms, req.requested_term_id, cents, comp.tier)
+209	        if o.offer_id not in comp.structures:
+210	            comp.structures[o.offer_id] = o
+211	            comp.outcomes += _run(comp, o.offer_id)
+212	        return policy_checks(comp, terms, o.offer_id, view)["passes"]
+213	
+214	    lo, hi = 0, req.amount_cents // AMOUNT_STEP_CENTS
+215	    if hi and passes(hi * AMOUNT_STEP_CENTS):
+216	        return comp.structures[f"{req.requested_term_id}_{hi * AMOUNT_STEP_CENTS // 100}"]
+217	    while hi - lo > 1:
+218	        mid = (lo + hi) // 2
+219	        lo, hi = (mid, hi) if passes(mid * AMOUNT_STEP_CENTS) else (lo, mid)
+220	    if lo == 0 or not passes(lo * AMOUNT_STEP_CENTS):
+221	        return None
+222	    return comp.structures[f"{req.requested_term_id}_{lo * AMOUNT_STEP_CENTS // 100}"]
+223	
+224	
+225	def compare(feed: BankFeed, terms: dict, request: Request, disputes: list[list[DisputePath]],
+226	            horizon_days: int = HORIZON_DAYS) -> Comparison:
+227	    features = risk_features(feed)
+228	    tier, measures = tier_for(features, terms)
+229	    structures: dict[str, SlopeOffer | None] = {"decline": None}
+230	    for o in menu(terms, request.amount_cents, tier):
+231	        structures[o.offer_id] = o
+232	    floor = cents_round(Decimal(features["monthly_outflows_cents"])
+233	                        * terms["credit_policy"]["liquidity_floor_months_of_outflows_bps"] / BPS)
+234	    comp = Comparison(tier=tier, tier_measures=measures, base_limits=limits(features, terms), structures=structures,
+235	                      outcomes=[], request=request, liquidity_floor_cents=floor, scenarios=scenarios(disputes),
+236	                      horizon=feed.period_end + timedelta(days=horizon_days), feed=feed)
+237	    for name in list(structures):
+238	        comp.outcomes += _run(comp, name)
+239	    return comp

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-chains && env -u CLAUDE_CODE_OAUTH_TOKEN uv run python /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6b_ci/where.py 2>&1 | grep -E \"^---|forecast.py|events.py\" | grep -A2 \"^---\" | head -24", "timeout": 600}

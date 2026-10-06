@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n '\\.facts|def live|_FC|SLOPE_POOL_FLEET|manifest\\(' app/disputes/state14.py app/disputes/forecast.py tools/cloud_walk.py; rg -n 'class Rows' -A62 app/disputes/forecast.py; git diff -- tools/cloud_walk.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:6500}));

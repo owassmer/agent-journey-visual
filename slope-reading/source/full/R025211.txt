@@ -1,0 +1,7 @@
+direct_evidence {'gap_relevance': 0.79, 'usable_evidence': 0.92, 'premise_conflict': 0.18, 'instruction_like_text': 0.04} synergy_s1a_20240813#t0048  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+direct_evidence {'gap_relevance': 0.68, 'usable_evidence': 0.87, 'premise_conflict': 0.23, 'instruction_like_text': 0.04} synergy_s1a_20240813#s0208  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+direct_evidence {'gap_relevance': 0.83, 'usable_evidence': 0.93, 'premise_conflict': 0.14, 'instruction_like_text': 0.05} synergy_s1a_20240813#s0207  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+direct_evidence {'gap_relevance': 0.8, 'usable_evidence': 0.88, 'premise_conflict': 0.17, 'instruction_like_text': 0.08} synergy_s1a_20240813#s0084  CONDITION AND RESULTS OF OPERATIONS > Liquidity and Capital Resources
+context_only {'gap_relevance': 0.45, 'usable_evidence': 0.85, 'premise_conflict': 0.23, 'instruction_like_text': 0.04} synergy_s1a_20240813#t0049  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+{"provider": "openrouter", "requests": 5, "cache_hits": 0, "attempts_reserved": 15, "attempt_ceiling": 150, "reserved_usd": "0.001909026", "spend_cap_usd": "0.10"}
+events 32 calls 5 observations 20

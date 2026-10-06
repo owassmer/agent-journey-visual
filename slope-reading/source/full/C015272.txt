@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '1,42p' tests/test_notes_decision.py; rg -n '^def basis|^def setup' tests/akoustis_20240514_fixture.py; cat /tmp/check_exact_context.py | head -12; sed -n '3084,3106p' app/analysis/events.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1600}));

@@ -1,0 +1,5 @@
+await Promise.allSettled([
+tools.exec_command({cmd:"aws s3 cp s3://slope-walk-462947327980-20261001/walk-36781427817/fresh-balanced-coarse/pool/progress.json - --profile slope --region us-east-2",max_output_tokens:2000}),
+tools.exec_command({cmd:"gh run view 37070020554 --repo owassmer/Slope_Sparse_Events --json status,conclusion,jobs > /tmp/question-status.json\npython - <<'PY'\nimport json,collections\nx=json.load(open('/tmp/question-status.json'));print(x['status'],x['conclusion']);print(collections.Counter((j['status'],j['conclusion']) for j in x['jobs']));print([(j['databaseId'],j['name'],j['conclusion']) for j in x['jobs'] if j['conclusion'] not in ('','success','skipped')])\nPY","max_output_tokens":2000}),
+tools.exec_command({cmd:"curl -s --max-time 15 http://127.0.0.1:18766/api/status > /tmp/viewer-status.json\npython - <<'PY'\nimport json\nx=json.load(open('/tmp/viewer-status.json'));s=x.get('state',x);print({k:v for k,v in s.items() if k in ('updated','updated_at','error','pool')});print(list(s))\nPY",max_output_tokens:2000})
+]).then(r=>r.forEach(text));

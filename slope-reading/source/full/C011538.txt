@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json,pathlib\nrs=[json.loads(p.read_text()) for p in pathlib.Path('/tmp/notes-live-logs').glob('*.json')];u=[x for r in rs for x in r['reports']];print({'workers':len(rs),'completed':sum(x['complete'] for x in u),'failed':sum(not x['complete'] for x in u),'paths':sum(x.get('paths',0) for x in u),'failed_units':[x['unit'] for x in u if not x['complete']]})\nPY",max_output_tokens:1000}));
+text(await tools.write_stdin({session_id:67326,chars:"",yield_time_ms:1000,max_output_tokens:2200}));

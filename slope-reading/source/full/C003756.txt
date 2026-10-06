@@ -1,0 +1,1 @@
+{"command": "pgrep -P 50148 | xargs -I{} ps -o pid,etime,%cpu,rss,command -p {} | cut -c1-160; wc -l ~/.hermes/profiles/connor/cache/scratch/9m/I/full14.py; grep -n \"def \\|print\\|json.dump\\|open(\" ~/.hermes/profiles/connor/cache/scratch/9m/I/full14.py | head -30; ls ~/.hermes/profiles/connor/cache/scratch/9m/I/ | head -40"}

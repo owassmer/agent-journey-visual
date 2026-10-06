@@ -1,0 +1,1 @@
+{"url": "https://www.sec.gov/Archives/edgar/data/1487197/000149315222031338/ex99-1.htm", "prompt": "This is an 8-K exhibit from Nov 2022. Extract everything about the Schreiber dispute: dates, claims, amounts, what Barfresh seeks, supply agreement terms, production share, effect on operations, any quoted statements."}

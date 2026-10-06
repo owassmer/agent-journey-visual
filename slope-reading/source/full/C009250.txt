@@ -1,0 +1,6 @@
+// @exec: {"max_output_tokens": 10000}
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"python3 read.py code 1816493 30000",workdir:load("digestDir"),max_output_tokens:8500}),
+  tools.exec_command({cmd:"python3 read.py code 30000 6000",workdir:load("digestDir"),max_output_tokens:2000})
+]);
+for (const r of results) text(r.status === "fulfilled" ? r.value.output : String(r.reason));

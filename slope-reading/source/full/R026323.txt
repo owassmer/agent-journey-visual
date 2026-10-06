@@ -1,0 +1,31 @@
+cacd_16cv2277_d001_complaint.pdf b'%PDF-' pages 55 chars(first3) 5430 | COOLEY LLP ATTORNEYS AT LAW SAN DIEGO COMPLAINT 16-CV-2277 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 COOLEY
+cacd_16cv2277_d065_counterclaim.pdf b'%PDF-' pages 30 chars(first3) 5854 | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 DEFENDANT’S SECOND AMENDED COUNTERCLAIMS PETER B. MORRISON (State
+cacd_16cv2277_d560_verdict_minutes.pdf b'%PDF-' pages 1 chars(first3) 2314 | UNITED STATES DISTRICT COURT CENTRAL DISTRICT OF CALIFORNIA CIVIL MINUTES - TRIAL CV-96 (10/08) CIVIL MINUTES - TRIAL Page 1 of 1 Case No. D
+cacd_16cv2277_d579_bench_order.pdf b'%PDF-' pages 3 chars(first3) 3272 | ORDER REGARDING REMAINING BENCH TRIAL COUNTERCLAIMS AND POST-TRIAL BRIEFING 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 2
+cacd_16cv2277_d594_stay.pdf b'%PDF-' pages 4 chars(first3) 5152 | COOLEY LLP A TTO R N E Y S A T LAW S AN DI E GO JOINT STATUS REPORT [INSERT TITLE] 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 
+cacd_16cv2277_d618_judgment.pdf b'%PDF-' pages 3 chars(first3) 2491 | 1 2 3 4 5 6 7 8 9 10 11 12 ChromaDex, Inc., UNITED STATES DISTRICT COURT CENTRAL DISTRICT OF CALIFORNIA SOUTHERN DIVISION Case No. 8:16-cv-2
+cacd_16cv2277_d671_amended_judgment.pdf b'%PDF-' pages 3 chars(first3) 3360 | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 UNITED STATES DISTRICT COURT CENTRAL DISTRICT OF CALIFORNIA SOUTH
+ded_18cv1434_d001_complaint.pdf b'%PDF-' pages 16 chars(first3) 4841 | IN THE UNITED STATES DISTRICT COURT FOR THE DISTRICT OF DELAWARE CHROMADEX, INC. and TRUSTEES OF DARTMOUTH COLLEGE, Plaintiffs, v. ELYSIUM H
+ded_18cv1434_d369_opinion.pdf b'%PDF-' pages 16 chars(first3) 2640 | IN THE UNITED STATES DISTRICT COURT FOR THE DISTRICT OF DELAWARE CHROMADEX, INC. and TRUSTEES OF DARTMOUTH COLLEGE Plaintiffs, Civil Action 
+ded_18cv1434_d373_judgment.pdf b'%PDF-' pages 2 chars(first3) 176 | Case 1:18-cv-01434-CFC-JLH Document 373 Filed 10/06/21 Page 1 of 2 PageID #: 22739Case 1:18-cv-01434-CFC-JLH Document 373 Filed 10/06/21 Pag
+ded_18cv1434_d379_mandate.pdf b'%PDF-' pages 1 chars(first3) 2517 | /0/1/2/3/4/5/i255/7/3/8/3/4/9/i255/10/11/12/13/3/i255/11/14/i255/15/16/16/4/8/17/9/i255/i255 /14/11/13/i255/3/18/4/i255/19/4/5/4/13/8/17/i25
+ded_18cv1434_d399_fee_order.pdf b'%PDF-' pages 8 chars(first3) 4241 | IN THE UNITED STATES DISTRICT COURT FOR THE DISTRICT OF DELAWARE CHROMADEX, INC., AND TRUSTEES OF DARTMOUTH COLLEGE, Plaintiffs, Civil Actio
+-    "lead": "synergy_chc_2024",
+-    "transfer": "barfresh_schreiber_2024"
+-        "barfresh_20241025": "out_of_case"
+-        "barfresh_20241025": "out_of_case"
+-        "barfresh_20241025": "out_of_case"
+-        "barfresh_20241025": "out_of_case"
+-        "barfresh_20241025": "out_of_case"
+-        "barfresh_20241025": "out_of_case"
+-        "barfresh_20241025": "eligible"
+-        "barfresh_20241025": "metadata_only"
+-        "barfresh_20241025": "eligible"
+-        "barfresh_20241025": "eligible"
+-        "barfresh_20241025": "eligible"
+-        "barfresh_20241025": "eligible"
+-        "barfresh_20241025": "eligible"
+-        "barfresh_20241025": "outcome"
+-        "barfresh_20241025": "outcome"
+-        "barfresh_20241025": "metadata_only"
+-        "barfresh_20241025": "eligible"

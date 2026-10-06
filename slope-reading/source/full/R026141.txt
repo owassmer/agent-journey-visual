@@ -1,0 +1,11 @@
+114:                                         "citations": [{"item_id": item, "quote": quote}],
+125:                                      "citations": [{"item_id": prop["spans"][0]["item_id"], "quote": "text that is not in the filing at all"}]})
+204:                                      "citations": [{"item_id": hvl["id"], "quote": "| 2024 | $2,000,000 |"}]})
+282:                                           "citations": [{"item_id": hvl["id"], "quote": "The outstanding loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445"}]})
+synergy_s1a_20240813#s0207 quote at 3242 'ing loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445, including interest of $352,445.\n\nThe Company is required to make future payments as follows:\n\n[synergy_s1a_20240813#t0048]\n| 2024 | $2,000,000 |\n| 2025 | 2,000,000 |\n| 2026 | 802,445 '
+paragraph 2610 2957 'On December 28, 2023, the Company entered into a confidential settlement agreeme'
+paragraph 2959 3150 'During 2023, the Company made payments of $1,000,000 toward this loan. The outst'
+paragraph 3152 3211 'The Company is required to make future payments as follows:'
+table_row 3264 3284 '| 2024 | $2,000,000 |\n| 2025 | 2,000,000 |'
+table_row 3285 3303 '| 2024 | $2,000,000 |\n| 2026 | 802,445 |'
+paragraph 3338 3667 'On January 21, 2024, the Company entered into a loan agreement of $141,250 with '

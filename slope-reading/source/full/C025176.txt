@@ -1,0 +1,1 @@
+{"command": "sed 's#step-2-evidence-ingestion#step-4a-semantic-layer#' /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_manifest.py > /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_manifest_4a.py && python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_manifest_4a.py && git status --short"}

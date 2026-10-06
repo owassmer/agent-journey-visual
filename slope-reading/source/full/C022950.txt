@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:54751,chars:"","yield_time_ms":1000,"max_output_tokens":300}));
+text(await tools.exec_command({cmd:"tail -n 3 /tmp/review-native-guarded.log; python3 - <<'PY'\nimport json\nr=json.load(open('/tmp/review-82-guarded-gates.json'))\nprint({'roots':len(r),'max_error':max(v['max'] for z in r for v in z['mass']),'bad':[v['bad'] for z in r for v in z['mass'] if v['bad']],'invalid':sum(len(z['invalid']) for z in r),'missing':sum(len(z['missing']) for z in r)})\nPY","max_output_tokens":600}));

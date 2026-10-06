@@ -1,0 +1,21 @@
+---
+name: jev-pivot-decisions
+description: "Owen's decisions on adopting Jev_Pivot.md (2026-09-24): step 4 split 4a/4b, thin viewer in 4b, no provenance work, Jev budget 250 attempts (was 150), step 4c"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 1ebb1026-a1f0-4809-9321-bc3d6f875530
+  modified: 2026-09-25T01:00:09.890Z
+---
+
+Jev_Pivot.md (repo root) makes Jev a host-controlled semantic judgment layer recorded in one investigation graph. Owen approved adopting it with these decisions (2026-09-24):
+- Step 4 split: **4a** semantic layer (docs/contracts, registry v3, domain graph, run store, Jev adapter + profiles, eval set, tests) and **4b** investigation (MCP tools, runner, recorded Synergy run, minimal read-only viewer). Separate PRs.
+- Provider provenance section of the pivot: **not adopted at all** (no eval-mode freeze, no direct TypeSafe). See [[jev-route-settled]].
+- Jev budget: **250 physical attempts per run incl. SDK retries** (raised from 150 by Owen on 2026-09-25 for the 4c host checks), spend cap stays $0.10; the host sweep has its own budget.
+- Screening labels/orders evidence but never hides it; runtime effects cite findings + verbatim spans, never kit fact IDs.
+
+**Why:** deadline tonight; Owen wants Jev maximally but correctly bounded, without provenance distractions.
+**How to apply:** follow the approved plan at ~/.claude/plans/pr-3-merged-digest-shiny-deer.md; see [[delivery-workflow]].
+- 2026-09-25: after 4b, add **step 4c "Jev at scale"** (Owen chose this sequencing): host snapshot-wide sweep inventory the agent must account for (replaces the generic coverage prompt rule), mandatory support check on effect consequences + conclusion, mandatory posture/status on effect-supporting findings + automatic relation checks, screen scaled with reliance attribution.
+- 2026-09-25: agent turn ceiling **80** (host-counted per distinct model response), confirmed by Owen; don't re-raise.
+- For step 5: recorded run 4's eff_008 (WebBank sweep labelled funding_constraint) is existing debt service already scheduled by app/finance/merchant.py; never apply it twice.

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json\nx=json.load(open('/tmp/slope-manual-review-100.json'))\nfor i,v in enumerate(x['sample'][50:60],51):\n print('\\nQUESTION',i,v['key']);s=v['state'];print(json.dumps({k:s[k] for k in ('question','situation','assumed_events')},ensure_ascii=False))\nPY","max_output_tokens":11000}));

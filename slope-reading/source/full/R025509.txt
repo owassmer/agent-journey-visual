@@ -1,0 +1,45 @@
+{
+  "run_id": "synergy_20240813-agent_plus_jev-20260925T021020Z",
+  "status": "CANDIDATE_READY",
+  "failure": null,
+  "incomplete_reasons": [],
+  "returned_models": [
+    "claude-opus-5-5"
+  ],
+  "tool_calls": {
+    "get_mission": 1,
+    "read_baseline_profile": 1,
+    "read_loan_terms": 1,
+    "record_dependency": 3,
+    "search_evidence": 5,
+    "read_evidence": 11,
+    "judge": 4,
+    "propose_finding": 19,
+    "resolve_finding": 19,
+    "propose_effect": 8,
+    "run_sensitivity": 3,
+    "request_missing_fact": 3,
+    "submit_packet": 1,
+    "StructuredOutput": 1
+  },
+  "graph_counts": {
+    "dependencies": 3,
+    "candidates": 29,
+    "jev_calls": 73,
+    "observations": 225,
+    "findings": 19,
+    "reconciliations": 0,
+    "effects": 8
+  },
+  "jev": {
+    "provider": "openrouter",
+    "requests": 71,
+    "cache_hits": 2,
+    "physical_attempts": 71,
+    "attempt_ceiling": 150,
+    "spent_usd": "0.009046758",
+    "spend_cap_usd": "0.10"
+  },
+  "recorded_at": "runs/recorded/synergy_20240813-agent_plus_jev-20260925T021020Z"
+}
+exit 0

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && git log --reverse --format='%h %s' 3b21187..a34761d | cut -c1-330; echo; git status --short | grep -v '^??' | head; ls runs/recorded/akoustis_20240514-agent_plus_jev-20260928T052641Z/; ls ~/.hermes/profiles/connor/cache/scratch/8/ | head -50"}

@@ -1,0 +1,46 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_da6adf67]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 02:43:46 (46m25s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2785.56s
+
+--- ✓ TASK 1/1: Worker P2: continue building the 14 May analysis page in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-page (branch step-8-page, HEAD ac06112) from where worker P stopped. Do the two page.py fixes P planned, then build the page per the approved outline, in checkpointed steps each ending in a commit of named files and a push. Report the SHAs, screenshot paths, the figure check and every judgment call. Do not open a PR or run a full `slope analyze`.  (status=completed, api_calls=132, 2785.37s) ---
+I finished the two page.py fixes and built all six sections of the page. The headless figure check found **0 mismatches** across central and all 9 assumption switches. G has not landed on step-8-model (I fetched just before the final checks), so everything runs on the current lead-run data. No PR opened, no `slope analyze` run, and no Jev spend: every rebuild was 218 of 218 cache hits.
+
+**Commits (branch step-8-page, all pushed)**
+- `6b23481`: page.py fixes.
+  - `not_yet_due` is now a figure on every path, for every view and assumption. Due by 10 Nov and the collection rate use installments due by the horizon; the contractual total is never shown.
+  - The remittitur note only attaches to components the court has actually awarded, so D.I. 616 no longer reaches the page.
+  - New test: the page cites no docket entry above 590, the last one the snapshot admits.
+  - Not yet due is not shown as unavailable. The saved states already held the figure, so I refreshed page.json from them; every earlier figure came out identical.
+- `1587fac`: no party name left in page.py. Texts use `{company}` / `{claimant}`, filled from the run's inputs. It also adds the payload blocks the page reads, and a short situation text in `cases/akoustis_20240514/scenario.json` written only from pre-14 May facts, with figures filled from data.
+- `05120e9`: the page itself (page.js, page.html, new words.json), sections 1–6 of the outline.
+- `2826290`: fixes from one read of the screenshots, plus a test that page.js, page.html, words.json and page.py name no party.
+- `595e8db`: restored the indenture's quoted default clause in the case terms (see judgment calls).
+
+**Figure check and tests**
+- Central tiles on screen: Due by 10 Nov $913k, Collected $823k (90%), Past due $9k, Balance at filing $96k, Not yet due $251k, Filing probability 27%, Preference exposure $106k, Funded $747k.
+- These match page.json and assumptions.json exactly, and each assumption switch shows that variant's figures.
+- `node --check` passes, and the only browser error is a missing favicon.
+- Full suite: 240 passed, 1 failed. The failure was the indenture-quote test; after the fix it and the other page tests pass (28 passed). I didn't re-run the whole suite after that last commit.
+
+**Screenshots** (1440×900, in `~/.hermes/profiles/connor/cache/scratch/8/p2/shots/`): `final_1_situation`, `final_2_forecast`, `final_3_resolve`, `final_3b_resolve`, `final_4_judgment`, `final_4b_paths`, `final_4c_tornado`, `final_4d_drawer`, `final_5_assumption`, `final_5b_switched_forecast`, `final_5c_switched_assumption`, `final_6_actual` (all `.png`).
+
+**Judgment calls**
+- **Section 4's judgment is picked from the data.** The rule is the swing in collections between 0% and 100%, times 2p(1−p) using Jev's own answer. It lands on the damages-measure question on the verdict form (Q1b, Jev 62%: collected $920k at 0%, $763k at 100%; filing probability 12% at 0%, 36% at 100%). The tornado ranks by raw swing and shows Jev's answer beside each row.
+- **The default comparison in section 5** ranks by filing points plus collection-rate points, which picks the $9,999,999 lower award (+7 pts filing, −$31k collected). The equity injection moves collections more (+$40k) but ranks lower on the combined score.
+- **Balance at filing is the whole stayed claim**, including installments not yet due at the filing. The tooltip says so.
+- **The monthly collected range (P5–P95) is shown only on hover**, and only on Jev's answers with central assumptions, because the reweight state drops those counts. P5 is about zero because about 5% of outcomes file in late May.
+- **When an assumption is selected**, the tiles, monthly chart, attribution table and filing chart switch. The verdict table, outcome grid and section 4 stay on the central forecast, because the payload has no path-level data for variants; a note says so.
+- **Path-tree nodes are not clickable.** The old click-to-question mapping was written for this one case. Tornado rows open the drawer instead.
+- **The indenture's default clause is quoted verbatim in the case terms.** A test pins it, and it's the same text forecast.py gives Jev. It's the one case-specific string left in page.py; moving it into the contract is a follow-up.
+- **page.py uses "the exchange" rather than a named exchange.** Nasdaq is still named in the situation text, which comes from the case inputs.
+
+**Issues**
+- Free disk is **2.9 GB**, just under the 3 GB line. Swap on the data volume is using 4.7 GB of 6 GB; my scratch files total 8 MB.
+- The 8012 server is stopped. I didn't touch 8000 or 8011.
+
+**After G lands:** merge origin/step-8-model into step-8-page, then run `env -u CLAUDE_CODE_OAUTH_TOKEN uv run python ~/.hermes/profiles/connor/cache/scratch/8/p2/rebuild_page.py <run>` (about 70 s). It rebuilds page.json and the page state with the merged page.py and refreshes each assumption's figures from its saved state. It prints Jev cache hits and the largest tile difference, and a cache miss means the model changed a question's facts. Then `check.py final` repeats the figure check and screenshots.
+
+I added this rebuild workflow and the page conventions to the slope-sparse-events-build skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_da6adf67/task-0.log

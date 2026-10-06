@@ -1,0 +1,861 @@
+{
+  "hermes": [
+    {
+      "id": "20260925_194036_0dd3e1",
+      "parent_session_id": null,
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": "Digest case selection research session 1ebb1026",
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_195301_320c8d",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_195301_a68cbf",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_195301_2683c2",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_195301_b7c1b8",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_231947_6a7a89",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_231947_d96496",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_231947_24c301",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_231947_372354",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_234951_a37787",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260925_234951_7dac16",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_003535_7297ce",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_003535_f184fa",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_013030_5a6894",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_015237_944d3c",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_015237_60bc19",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_022156_28980f",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_023846_9aaafd",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_031915_de38d7",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_032712_8d8be1",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_110725_cd7599",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_121423_54e9eb",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_121423_05592c",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_122959_3ef4d1",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_132619_eb527c",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_134753_4ca6bd",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_143116_4afb11",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_161829_707139",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_193409_3c0d69",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_232126_5da4e0",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_232126_bf651f",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_232126_29dbb1",
+      "parent_session_id": "20260925_194036_0dd3e1",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260926_234625_5c0cc6",
+      "parent_session_id": null,
+      "cwd": null,
+      "title": "Ground in slope sparse events context",
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_010442_480bde",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_010442_4e8cb5",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_022036_8c70f6",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_032410_da799e",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_032410_58ebe0",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_032410_af3f8f",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_035339_bbf4af",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_035339_0548ee",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_151912_5cd429",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_151912_a00b51",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_154131_b077f8",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_203241_4a4a1d",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_212650_dc0be6",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_224727_8f9b7c",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_224727_a20606",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_224727_dda1d0",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_231610_e2690c",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_233101_803033",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260927_233216_3fc35d",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_000807_cce910",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_001522_ebfe7a",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_005828_7e87d3",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_015014_0d09c2",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_021128_f44be0",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_021128_5f5b5a",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_021128_64745e",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_023421_7675a2",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_024232_997e2a",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_024346_402d8e",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_033053_6fc5a5",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_034421_a5c9ba",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_034712_f70ac5",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_070924_4e2ca6",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_075910_c46ead",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_093821_735bb0",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_105944_5fd776",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_140228_0b901d",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_140228_1d9e6b",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_140228_7c5af9",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_144006_adedc6",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_145034_96ec1a",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_150046_af9547",
+      "parent_session_id": "20260926_234625_5c0cc6",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_172908_0aef31",
+      "parent_session_id": null,
+      "cwd": null,
+      "title": "Ground in Slope session history and repo",
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_173446_f7135a",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_173446_2b1fd7",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_173446_738482",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_173446_303d33",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_181616_288851",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_192632_c9b534",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_200052_4ba88c",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_202813_48242b",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_215228_650d7a",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_215842_646ba6",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_225652_d82aff",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_230341_4cfc8f",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_230341_e736c0",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_231415_b65193",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260928_232903_1afc13",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_000928_e37907",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_000928_0df454",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_002111_e3d8fd",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_011709_3ad41c",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_012414_baf9b4",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_013845_ef5659",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_015107_c12b03",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_020301_63c14b",
+      "parent_session_id": null,
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": "Mirror Connor session grounding instructions",
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_025422_6b3e6c",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_041110_ea522f",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_133732_8b7552",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_134633_67da57",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_135626_cc868c",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_145146_884450",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_151406_1d4610",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_160415_c7a73c",
+      "parent_session_id": "20260928_172908_0aef31",
+      "cwd": null,
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_162231_204954",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_162231_87a46b",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_162231_6c4ef1",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_175426_2e120e",
+      "parent_session_id": null,
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": "Audit Connor sessions for persistent context drift",
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_193140_321c47",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_193140_0cd681",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_200336_37dd12",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_200336_d1d6f3",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260929_200336_ccea6a",
+      "parent_session_id": "20260929_020301_63c14b",
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": null,
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260930_143104_932305",
+      "parent_session_id": null,
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": "Reply with exactly: CONNOR-OK",
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20260930_144102_6fa0b2",
+      "parent_session_id": null,
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": "Take over Slope session ownership and context",
+      "system_prompt_chars": null
+    },
+    {
+      "id": "20261004_150251_ebc057",
+      "parent_session_id": null,
+      "cwd": "/Users/owenwassmer/dev/Slope_Sparse_Events",
+      "title": "Resume Slope work from Codex session",
+      "system_prompt_chars": null
+    }
+  ],
+  "claude_subagents": [
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-ad9e752fcd15f80ec.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-acbf3e9e9af5cdc5c.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a3c0fd085816fa454.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a3d97fc0636e65497.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a87738428f2a9b2f1.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a06bc0bd407eec551.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a59afc6adb261bfee.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a32a684bcf9bf0563.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a61655589d2cf84da.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a82c6af0d563951d5.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a2a222ceba7f33f1c.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a3efced9e50085ac3.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-add1f820eb54021b5.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-abfd9007938ac717f.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-abe0242a231d15557.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a26148ecfe80a61ee.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a6ec9b6ac21f183da.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-aa0b0b9ea588cb279.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a0eb0d3aaf56c241f.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a7e9b2a6895fe57a6.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a19d95bc8e8107653.jsonl",
+    "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/subagents/agent-a790c8a27dc3c6b9f.jsonl"
+  ]
+}

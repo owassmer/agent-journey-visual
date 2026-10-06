@@ -1,0 +1,1 @@
+{"command": "L=/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/analyze3.log; grep -E \"Error|Exceeded\" $L | tail -4 | cut -c1-400; grep -E \"^\u2502 /Users.*app\" -A1 $L | grep -o \"app/[a-z_/]*\\.py:[0-9]* in [a-z_]*\" | tail -6; grep -v \"^\u2502\\|^\u256d\\|^\u2570\" $L | tail -8 | cut -c1-300"}

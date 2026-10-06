@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/\"multi\": r\"Knight.\\*Sanders|Sanders.\\*Knight\",/\"multi\": r\"(Shopify|WebBank).*(Knight|Sanders|VitBest)|(Knight|Sanders|VitBest).*(Shopify|WebBank)\",/' /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/find2.py && uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/find2.py | grep -A 3 \"== multi\""}

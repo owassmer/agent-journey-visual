@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-06d48400bf9fe1e39 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"tail -35 /var/log/cloud-init-output.log\",\"pgrep -af cloud_walk || true\",\"df -h /opt\"]}' --query Command.CommandId --output text",max_output_tokens:500}));

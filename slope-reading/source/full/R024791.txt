@@ -1,0 +1,28 @@
+== 84 ['MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS', 'Liquidity and Capital Resources'] 1 2 19830
+== 201 ['SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS', 'Note 11 — Notes Payable'] 1 1 799
+  TABLE caption: The Company’s notes payable at June 30, 2024 and December 31, 2023 are as follows:
+  units: None header_rows 1
+  ctx_after: 
+|  | June 30, 2024 | December 31, 2023 |
+| Kenek, related party | $1,181,222 | $— |
+--
+== 207 ['SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS', 'Note 11 — Notes Payable'] 1 1 3649
+  TABLE caption: The Company is required to make future payments as follows:
+  units: $ header_rows 0
+  ctx_after: $141,250 January 29, 2024 Loan:
+| 2024 | $2,000,000 |
+| 2025 | 2,000,000 |
+--
+== 223 ['SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS', 'Synergy CHC Corp. Consolidated Statements of Cash Flows — (Continued)'] 1 1 750
+  TABLE caption: Synergy CHC Corp. Consolidated Statements of Cash Flows — (Continued)
+  units: None header_rows 3
+  ctx_after: The accompanying notes are an integral part of these consolidated financial statements
+|  | For the year ended December 31, 2023 | For the year ended December 31, 2022 |
+| Supplemental Disclosure of Cash Flow Information: |  |  |
+--
+== 253 ['SYNERGY CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS', 'Note 11 — Notes Payable'] 1 1 303
+  TABLE caption: The Company is required to make future payments as follows:
+  units: $ header_rows 0
+  ctx_after: The total number of shares of all classes of capital stock which the Company is authorized to issue is 300,000,000 shares of common stock with $0.00001 par value.
+| 2024 | $2,000,000 |
+| 2025 | 2,000,000 |

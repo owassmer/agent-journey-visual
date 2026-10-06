@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"cat /tmp/check_recover_worker.py",max_output_tokens:1500}));
+text(await tools.exec_command({cmd:"osascript <<'APPLESCRIPT'\ntell application \"System Events\"\nset p to first application process whose unix id is 34693\nperform action \"AXRaise\" of front window of p\nset frontmost of p to true\nkeystroke \"l\" using command down\nkeystroke \"https://github.com/owassmer/Slope_Sparse_Events/actions/runs/36909118504/job/110527064779\"\nkey code 36\nend tell\nAPPLESCRIPT",max_output_tokens:500}));

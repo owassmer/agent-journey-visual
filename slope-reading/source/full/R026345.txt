@@ -1,0 +1,74 @@
+== cdxc_2024q2_10q#t0002 (In thousands except par values, unless otherwise indicated)
+|  | June 30, 2024 | June 30, 2024 | December 31, 2023 | December 31, 2023 |
+| Assets | Assets |  |  |  |
+| Current assets | Current assets |  |  |  |
+| Cash and cash equivalents, including restricted cash of $152 for both periods presented |  | $27,885 |  | $27,325 |
+| Trade receivables, net of allowances of $85 and $68, respectively; Including receivables from Related Party of $3.5 million and $2.8 million, respectively | 7,818 |  | 5,234 |  |
+| Inventories | 11,511 |  | 14,525 |  |
+| Prepaid expenses and other assets | 2,088 |  | 2,450 |  |
+| Total current assets | 49,302 |  | 49,534 |  |
+| Leasehold improvements and equipment, net | 1,841 |  | 2,137 |  |
+| Intangible assets, net | 435 |  | 510 |  |
+| Right-of-use assets, net | 2,063 |  | 2,400 |  |
+| Other long-term assets | 394 |  | 383 |  |
+| Total assets |  | $54,035 |  | $54,964 |
+| Liabilities and Stockholders' Equity |  |  |  |  |
+| Current liabilities |  |  |  |  |
+| Accounts payable |  | $8,105 |  | $10,232 |
+| Accrued expenses | 8,621 |  | 9,493 |  |
+| Current maturities of operating lease obligations | 973 |  | 691 |  |
+| Current maturities of finance lease obligations | 12 |  | 11 |  |
+| Customer deposits | 156 |  | 195 |  |
+| Total current liabilities | 17,867 |  | 20,622 |  |
+| Deferred revenue | 3,311 |  | 3,311 |  |
+| Operating lease obligations, less current maturities | 2,133 |  | 2,563 |  |
+| Finance lease obligations, less current maturities | 6 |  | 12 |  |
+| Total liabilities | 23,317 |  | 26,508 |  |
+| Commitments and Contingencies (Note 10) |  |  |  |  |
+| Stockholders' Equity |  |  |  |  |
+| Common stock, $0.001 par value; authorized 150,000 shares; 75,473 shares and 74,981 shares issued and outstanding at June 30, 2024 and December 31, 2023, respectively | 75 |  | 75 |  |
+| Additional paid-in capital | 221,612 |  | 218,845 |  |
+| Accumulated deficit | (190,967) |  | (190,460) |  |
+| Cumulative translation adjustments | (2) |  | (4) |  |
+| Total stockholders' equity | 30,718 |  | 28,456 |  |
+| Total liabilities and stockholders' equity |  | $54,035 |  | $54,964 |
+== cdxc_2024q2_10q#t0008 (In thousands)
+|  | Six Months Ended June 30, | Six Months Ended June 30, | Six Months Ended June 30, | Six Months Ended June 30, |
+|  | 2024 | 2024 | 2023 | 2023 |
+| Cash Flows From Operating Activities | Cash Flows From Operating Activities |  |  |  |
+| Net loss |  | $(507) |  | $(4,093) |
+| Adjustments to reconcile net loss to net cash provided by operating activities: |  |  |  |  |
+| Depreciation of leasehold improvements and equipment | 348 |  | 460 |  |
+| Amortization of intangibles | 75 |  | 80 |  |
+| Amortization of right of use assets | 337 |  | 344 |  |
+| Share-based compensation expense | 2,169 |  | 2,597 |  |
+| (Gain) Loss on disposal of leasehold improvements and equipment | 1 |  | (5) |  |
+| Allowance for credit losses | 47 |  | 751 |  |
+| Non-cash financing costs | 41 |  | 42 |  |
+| Changes in operating assets and liabilities: |  |  |  |  |
+| Trade receivables | (2,631) |  | 1,584 |  |
+| Inventories | 3,014 |  | 2,704 |  |
+| Implementation costs for cloud computing arrangement | — |  | (60) |  |
+| Prepaid expenses and other assets | 321 |  | 1,019 |  |
+| Accounts payable | (2,127) |  | 352 |  |
+| Accrued expenses | (872) |  | 742 |  |
+| Deferred revenue | — |  | (149) |  |
+| Customer deposits and other | (37) |  | 11 |  |
+| Operating lease liabilities | (148) |  | (307) |  |
+| Net cash provided by operating activities | 31 |  | 6,072 |  |
+| Cash Flows From Investing Activities |  |  |  |  |
+| Purchases of leasehold improvements and equipment | (53) |  | (101) |  |
+| Proceeds from the sale of leasehold improvements and equipment, net | — |  | 5 |  |
+| Net cash used in investing activities | (53) |  | (96) |  |
+| Cash Flows From Financing Activities |  |  |  |  |
+| Proceeds from exercise of stock options | 598 |  | — |  |
+| Payment of debt issuance costs | (11) |  | — |  |
+| Principal payments on finance leases | (5) |  | (11) |  |
+| Net cash provided by (used in) financing activities | 582 |  | (11) |  |
+| Net increase in cash and cash equivalents | 560 |  | 5,965 |  |
+| Cash and cash equivalents, including restricted cash of $152 for both periods - beginning of period | 27,325 |  | 20,441 |  |
+| Cash and cash equivalents, including restricted cash of $152 for both periods - end of period |  | $27,885 |  | $26,406 |
+| Supplemental Disclosures of Cash Flow Information |  |  |  |  |
+| Cash payments for principal on operating lease liabilities |  | $223 |  | $342 |
+| Supplemental Schedule of Noncash Operating Activity |  |  |  |  |
+| Adjustment to retained earnings, cumulative effect of initially adopting ASC 326 |  | $— |  | $29 |

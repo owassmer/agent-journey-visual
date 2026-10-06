@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory && printf '%s\\n' '- [Lead case Akoustis](lead-case-akoustis.md) \u2014 Akoustis/Qorvo at D=20 Jun 2024, loan as reusable Slope line; C&C (18 Nov 2024) second; D set by filing, not outcome' >> MEMORY.md && tail -3 MEMORY.md", "description": "Add memory index entry"}

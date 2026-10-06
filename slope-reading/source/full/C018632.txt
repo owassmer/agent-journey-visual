@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'bank_paths|bank_walk|ordinary' app/disputes/pool.py app/disputes/parallel.py | head -35; sed -n '2905,3005p' app/disputes/forecast.py; rg -n 'def _prefix' -A24 app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3000}));

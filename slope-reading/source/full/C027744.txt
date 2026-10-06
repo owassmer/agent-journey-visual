@@ -1,0 +1,1 @@
+{"replace_all": false, "file_path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels/Slope_Model_Extensions_Spec.md", "old_string": "| # | Decision | Recommendation |\n|---|---|---|\n| # | Decision | Recommendation |\n|---|---|---|", "new_string": "| # | Decision | Recommendation |\n|---|---|---|"}

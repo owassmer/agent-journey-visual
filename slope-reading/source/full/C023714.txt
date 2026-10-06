@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"PYTHONPATH=. .venv/bin/python - <<'PY'\nimport pickle\nfor f in ['control.pkl','question-control.pkl']:\n c=pickle.load(open('/tmp/slope-global-mass/'+f,'rb'));print(f,c.keys())\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:1000}));

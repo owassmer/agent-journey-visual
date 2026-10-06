@@ -1,0 +1,1 @@
+{"command": "ls -t ~/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/*.jsonl | head -3; ls -la ~/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory/; sqlite3 ~/.hermes/profiles/connor/state.db \"select id, started_at, title from sessions order by started_at desc limit 5\" 2>/dev/null || ls -t ~/.hermes/profiles/connor/sessions | head -5"}

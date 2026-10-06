@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:".venv/bin/python -c 'import pickle,collections; c=pickle.load(open(\"/tmp/refresh-control.pkl\",\"rb\")); print(list(c)); print([(x.node,x.context) for x in c.get(\"bank_nodes\",{}).values()][:50])'","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2000}));

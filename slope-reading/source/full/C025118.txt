@@ -1,0 +1,1 @@
+{"replace_all": false, "file_path": "/Users/owenwassmer/.claude/plans/pr-3-merged-digest-shiny-deer.md", "old_string": "  - Jev integration: profiles, the Noul primitive, async fan-out, an eval-mode freeze;", "new_string": "  - Jev integration: profiles, the Noul primitive, async fan-out (the provider block is unchanged);"}

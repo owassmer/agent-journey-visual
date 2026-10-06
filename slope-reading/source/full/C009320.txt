@@ -1,0 +1,6 @@
+const d=load("digestDir");
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"python3 read.py contracts_compact 360000 33000",workdir:d,max_output_tokens:13000}),
+ tools.exec_command({cmd:"python3 - <<'PY'\nimport json, pathlib\np=pathlib.Path('.')\nfor name in ['inventory.json','delegation.json','human.json']:\n x=json.loads((p/name).read_text()); print(name, type(x).__name__, list(x)[:3] if isinstance(x,dict) else len(x)); print(str(x[0] if isinstance(x,list) else {k:x[k] for k in list(x)[:1]})[:1200])\nPY",workdir:d,max_output_tokens:2000}),
+ tools.exec_command({cmd:"git ls-files",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:6000})
+]); for(let i=0;i<results.length;i++){text(i);let r=results[i];text(r.status==="fulfilled"?r.value.output:String(r.reason));}

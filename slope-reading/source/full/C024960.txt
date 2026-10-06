@@ -1,0 +1,1 @@
+{"command": "cp Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/case_eval_private.json /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/case_eval_before.json && python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_eval.py && git diff --stat Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/case_eval_private.json"}

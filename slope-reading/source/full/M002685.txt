@@ -1,0 +1,36 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_8093169e]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 02:34:21 (9m9s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 549.54s
+
+--- ✓ TASK 1/1: Worker P: build the analysis page for the 14 May lead run of owassmer/Slope_Sparse_Events, in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-page (branch step-8-page, based on origin/step-8-model 6718bf2; var/ already copied, including the lead run's page state). Replace the page for this run following the approved outline below, reusing the second-pass components from branch step-7-page (ea74855). Deliver in checkpointed steps, each ending in a commit of named files and a push. Report the SHAs, screenshot paths, the figure check, and every judgment call. Do not open a PR, call Jev except where step 1 needs it, or run a full `slope analyze`.  (status=completed, api_calls=69, 549.27s) ---
+All three points are received. I've read the payload but haven't edited any code for them yet.
+
+**(1) Due by 10 Nov.** The page's `due` field is already the amount due by 10 Nov, so the page needs no change to that field. In the payload, the central forecast's `due` is $912,879, and the same forecast with the lawsuit given no cash effect has $964,620. That gives collection rates of 90.1% and 98.3%. The $1,179k total appears only in `assumptions.json` (`contractual_cents`), and the page won't read it.
+- Due by 10 Nov equals Collected + Past due + the stayed part already due, to within 1 cent.
+- **Not yet due has no per-path field in the payload.** It exists only as a headline figure (`not_yet_due_cents`, $251,040), plus a month-end figure for the stayed part in the monthly rows.
+- My plan is to add `not_yet_due` as a per-path figure in `page.py`, taken from the analysis's own per-trajectory `not_yet_due`, so it applies to every forecast and every assumption. The page will read only that field.
+- **A catch:** the per-path figure only appears once `page.json` and the assumption states are rebuilt. Doing that on my branch means rebuilding from the saved run: the central page from `page_state` and the ten assumptions by re-running, with Jev answers cached, so no new Jev spend. Your model fixes will force that rebuild anyway, so the simplest order is: I add the field now, and the post-fix rebuild picks it up.
+- Until that rebuild, the page will show Not yet due as unavailable, not work it out from the contractual total.
+
+**(2) Filings after 14 May.** In the payload, `D.I. 616` is the only docket entry numbered after the pre-cutoff record. It reaches the page two ways:
+- In the case terms, 7 component rows carry a remittitur note: "If remitted and accepted, the model uses $23,100,000.00 (D.I. 616-1)".
+- The review screens (drill-down steps) repeat it through `remittitur_scenario`.
+
+It comes from `component_row`, which applies the shared contract's `remittitur_scenarios` to every compensatory component. My fix, in generic code in `page.py`: attach the remittitur scenario only to components the court has already awarded, and keep only the run's own dispute components. A pending claim's requested components then carry no remittitur note. I'll add a test that the 14 May payload contains no docket entry above the last pre-cutoff one.
+
+**(3)** Understood; no figure will be hard-coded anywhere.
+
+**Step 1 is committed and pushed** (`ac06112` on step-8-page):
+- The bundled raise-capacity variant is now two, each changing one setting:
+  - $5.0M instead of $9.7M can be raised at the cash floor with no adverse judgment: filing by 10 Nov 29.6%.
+  - $5.0M can still be raised after an adverse judgment, where the central case has none: filing by 10 Nov 23.6%.
+  - Central is 26.6%. Jev re-asked 23 questions whose facts changed, costing $0.0043.
+- `outcomes/akoustis_20240514.json` holds 24 events:
+  - the verdict on 17 May, the judgment on 20 May (D.I. 602), the at-the-market program suspended on 22 May, and the $0.20 offering on 24 May;
+  - the later events through the 16 Dec 2024 filing;
+  - every quote is checked word for word against its fetched source.
+
+Next I'll make these two `page.py` fixes, then build the page itself.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_8093169e/task-0.log

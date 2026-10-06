@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"curl -sS --max-time 5 http://127.0.0.1:18766/api/status | python3 -c 'import sys,json; d=json.load(sys.stdin); print(json.dumps(d[\"state\"],indent=2)[:2200]); print(\"task_logs\",len(d[\"tasks\"]))'\ntail -3 /tmp/slope-live-viewer.log","max_output_tokens":2600}));

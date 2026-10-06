@@ -1,0 +1,8 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor p in [Path('/Users/owenwassmer/.hermes/profiles/connor/SOUL.md'),Path('/Users/owenwassmer/.hermes/profiles/connor/memories/MEMORY.md'),Path('/Users/owenwassmer/.hermes/profiles/connor/memories/USER.md')]:\n print('\\nFILE',p)\n print(p.read_text())\nPY",max_output_tokens:7000}),
+  tools.exec_command({cmd:"python3 - <<'PY'\nimport sqlite3\np='/Users/owenwassmer/.hermes/profiles/connor/state.db'\nc=sqlite3.connect('file:'+p+'?mode=ro',uri=True)\nfor n,s in c.execute(\"select name, sql from sqlite_master where type='table'\"):\n print(n,s)\nPY",max_output_tokens:8500}),
+  tools.exec_command({cmd:"rg --files --hidden /Users/owenwassmer/.hermes/profiles/connor/skills -g 'SKILL.md' -g '!\\.curator_backups/**' -g '!\\.hub/**'",max_output_tokens:6500}),
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport json\np=Path('/Users/owenwassmer/.hermes/profiles/connor/sessions/request_dump_20260928_172908_0aef31_20260930_134840_408000.json')\nd=json.loads(p.read_text())\nprint('keys',list(d))\nfor k,v in d.items():\n if isinstance(v,list):\n  print(k,'list',len(v))\n  if v and isinstance(v[0],dict): print(' first keys',list(v[0]))\n elif isinstance(v,dict): print(k,'dict keys',list(v))\n else: print(k,str(v)[:500])\nPY",max_output_tokens:3000}),
+  tools.exec_command({cmd:"git log --all -30 --date=iso-strict --format='%h %ad %d %s'",max_output_tokens:8500})
+]);
+for (let i=0;i<results.length;i++) {store("initial4_"+i,results[i]);text({index:i,...results[i]});}

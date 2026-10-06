@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/analysis/events.py", "old_string": "                        \"hearing_requested\", \"_vfired\", \"_price_v\", \"_price_key\"})", "new_string": "                        \"hearing_requested\", \"_vfired\", \"_price_v\", \"_price_key\", \"_ev_own\"})"}

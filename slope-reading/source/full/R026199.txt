@@ -1,0 +1,15 @@
+335	    submit = {"summary": "s", "conclusion": "The settlement loan requires future payments."}
+336	    with pytest.raises(T.ToolError, match="cited paragraphs or rows") as err:
+337	        call(T.submit_packet, ctx, submit)
+338	    failed = next(o.observation_id for o in ctx.run.graph["observations"].values() if o.question_id == "coverage_supported")
+339	    assert failed in str(err.value)
+340	    with pytest.raises(T.ToolError, match="say what"):
+341	        call(T.submit_packet, ctx, {**submit, "coverage_escalations": [{"observation_id": failed, "missing": "no"}]})
+342	    missing = "The paragraph also reports the accounting gain, which no finding states."
+343	    call(T.submit_packet, ctx, {**submit, "coverage_escalations": [{"observation_id": failed, "missing": missing}]})
+344	    assert not ctx.incomplete_reasons  # an escalation goes to the reviewer's checklist, not straight to INCOMPLETE
+345	    packet = next(e.payload for e in ctx.run.events if e.kind == "packet_submitted")
+346	    checklist = packet["reviewer_checklist"]
+347	    assert [e["kind"] for e in checklist["escalations"]] == ["cited_unit_coverage"]
+348	    assert [x["item_id"] for x in checklist["uncited_flagged_units"]] == ["inv_002"]
+349	    assert ctx.run.get("inventory", "inv_001").status == "cited" and ctx.run.get("inventory", "inv_002").status == "uncited"

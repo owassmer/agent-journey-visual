@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/claude_md.py && uv run python Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/validate_contracts.py >/dev/null; echo \"validate exit $?\"; python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_manifest.py 2>&1 | sed 's#^#manifest: #'"}

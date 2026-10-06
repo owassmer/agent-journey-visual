@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && git diff --stat; wc -l PLAN.md; grep -n '^\\[profile\\|^\\[default' ~/.aws/config 2>/dev/null; ls ~/.aws/ 2>/dev/null; ps aux | grep -iE 'walk_monitor|uv run|python.*tools/' | grep -v grep | cut -c1-200 | head"}

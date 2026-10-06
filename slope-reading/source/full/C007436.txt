@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/memo && ls $S/ref_*.pkl | head -3; env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 SLOPE_SHADOW=1 PYTHONPATH=. N=20 REF=$S/ref_2672665250.pkl timeout 500 .venv/bin/python $S/smoke.py 2>&1 | tail -4", "timeout": 560}

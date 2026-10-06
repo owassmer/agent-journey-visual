@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\ns=Path('/tmp/review-native-domain-catalog.py').read_text().replace('/tmp/review-native-domain','/tmp/review-native-dx-scoped');Path('/tmp/review-native-dx-scoped-catalog.py').write_text(s)\nPY","max_output_tokens":500}));

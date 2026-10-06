@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && for w in step-9-speed step-9-page; do d=.claude/worktrees/$w; b=$(git -C $d branch --show-current); echo \"$w dirty=$(git -C $d status --short | grep -v '^??' | wc -l | tr -d ' ') unpushed=$(git -C $d log --oneline origin/$b..HEAD | wc -l | tr -d ' ')\"; done; df -h / | tail -1"}

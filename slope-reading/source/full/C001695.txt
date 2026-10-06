@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor; ls -la *.db* 2>/dev/null; sqlite3 state.db \".tables\" 2>&1 | head; sqlite3 state.db \"select id, source, model, datetime(started_at,'unixepoch','localtime'), datetime(ended_at,'unixepoch','localtime'), message_count, substr(title,1,60) from sessions order by started_at desc limit 15\" 2>&1"}

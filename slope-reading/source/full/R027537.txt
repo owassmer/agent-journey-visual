@@ -1,0 +1,19 @@
+app/analysis/build.py:83:            "constraints": d.constraints}
+app/disputes/forecast.py:205:            if "appeal" in d.constraints:
+app/web/viewmodel.py:24:    "funding_constraint": "Funding constraint",
+app/agent/tools.py:71:POSTURE_ONLY = {"funding_constraint", "receipt_delay"}  # posture must not be an allegation, plan or unknown
+app/agent/tools.py:666:            "constraints": instance.constraints,
+app/agent/tools.py:1107:     "noncash_normalization, receipt_delay, operating_interruption, restricted_funds, expense_funding, funding_constraint, "
+app/disputes/interpret.py:6:(and so the stage), and the constraints an established fact imposes (a waiver covering this obligation removes the
+app/disputes/interpret.py:192:        constraints = {}
+app/disputes/interpret.py:195:            constraints["appeal"] = (f"An appeal of this obligation is waived or barred ({waiver.decisive.finding_id}: "
+app/disputes/interpret.py:199:                       "stage": stage, "constraints": constraints})
+app/agent/meanings.py:35:    "economic_role": {"existing_cash_obligation": "Existing cash obligation", "cash_access_constraint": "Limit on access to cash",
+app/domain/investigation.py:35:    "funding_constraint",
+app/domain/investigation.py:44:    "funding_constraint": {"modify_available_funding"},
+app/domain/investigation.py:266:    records the constraints an established fact imposes. Forecasts and cash paths are built by the analysis."""
+app/domain/investigation.py:286:    constraints: dict[str, str] = Field(default_factory=dict)  # removed branch -> the established fact that removes it
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json:10:    "host": "Hydrates evidence, asks the questions, applies stage and c
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json:315:  "constraints": "Only an established fact changes the graph: an estab
+Slope_Credit_Scenario_Build_Specification.md:11:The product stops at scenario and sensitivity analysis that a lending or capital-markets model can consume. It does not re
+Slope_Credit_Scenario_Build_Specification.md:145:| Collateral/funding constraint | Apply documented limit or condition to available financing | Nominal commitment, report

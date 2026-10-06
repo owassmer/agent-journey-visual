@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:89090,chars:"","yield_time_ms":1000,"max_output_tokens":900}));
+text(await tools.exec_command({cmd:"gh run list --repo owassmer/Slope_Sparse_Events --branch question-refresh --limit 2 --json databaseId,status,conclusion,url; test ! -f /tmp/question-refresh-dispatched.json || cat /tmp/question-refresh-dispatched.json","max_output_tokens":1000}));

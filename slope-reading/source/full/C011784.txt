@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"ps -axo pid,etime,pcpu,args | rg 'probe_stay|threeway|preapproval'","max_output_tokens":1300}));
+text(await tools.exec_command({cmd:"gh run view 36916420788 --repo owassmer/Slope_Sparse_Events --json status,jobs --jq '{status,failed:[.jobs[]|select(.conclusion==\"failure\")|.name],finished:([.jobs[]|select(.status==\"completed\")]|length)}'","max_output_tokens":500}));

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && python3 -c \"\nimport json\nr=json.load(open('Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/question_registry.json'))\nfor q in r['questions']:\n  if q.get('node'): print(q['id'][9:], '|', q['question'])\""}

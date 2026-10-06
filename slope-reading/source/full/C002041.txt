@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && for b in step-6c-fix-engine step-6c-fix-jev; do git -C .claude/worktrees/$b status --porcelain | grep -v '^??'; git -C .claude/worktrees/$b log origin/$b..$b --oneline; done; git worktree remove --force .claude/worktrees/step-6c-fix-engine && git worktree remove --force .claude/worktrees/step-6c-fix-jev; df -h / | tail -1"}

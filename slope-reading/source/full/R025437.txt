@@ -1,0 +1,14 @@
+Counter({'observation_recorded': 93, 'observation_disposition': 40, 'jev_call': 25, 'finding_proposed': 14, 'candidate_screened': 12, 'evidence_read': 12, 'finding_resolved': 6, 'dependency_recorded': 4, 'search': 3, 'run_started': 1})
+DEP dep_001 | What cash payments remain due from Synergy CHC Corp. under the settlement with HVL, LLC d/b/a Atrium Innovatio | target: Synergy CHC Corp. settlement payment obligation to HVL, LLC d/b/a Atrium Innovat
+  SEARCH Atrium settlement payment
+  SEARCH loan payable 5,450,000 Atrium Note 11 installments
+  SEARCH Notes Payable Knight Therapeutics HVL loan monthly payments
+DEP dep_002 | What cash payments remain due in 2024 under Synergy CHC Corp.'s March 27, 2024 confidential settlement with a  | target: Synergy CHC Corp. settlement loan payable to supplier under March 27, 2024 confi
+DEP dep_003 | Does Synergy CHC Corp.'s amended senior secured loan with Knight Therapeutics prohibit adding new debt (such a | target: Synergy CHC Corp. negative covenant in amended Knight Therapeutics senior secure
+  FIND= fnd_001 rejected The December 2023 settlement of Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovations created a loa
+  FIND= fnd_002 accepted Under the December 28, 2023 settlement loan's future payment schedule, Synergy CHC Corp. must pay $2
+  FIND= fnd_003 accepted The Atrium settlement loan payable is the Note 11 '$5,450,000 December 28, 2023 Loan', which had a $
+  FIND= fnd_004 rejected Synergy recorded the $2,235,986 net gain from the Atrium settlement as a reduction of cost of sales,
+  FIND= fnd_005 accepted Under the March 27, 2024 supplier settlement loan's future payment schedule, Synergy CHC Corp. must 
+  FIND= fnd_006 accepted Synergy reported the $2,235,986 net gain on the Atrium settlement as a reduction of cost of sales.
+DEP dep_004 | Do the Valenti (FOCUSfactor advertising) and L.O.D.C. Group settlements leave any remaining cash payment due f | target: Synergy CHC Corp. settlement payments to Barbara Valenti ($340,000) and L.O.D.C.

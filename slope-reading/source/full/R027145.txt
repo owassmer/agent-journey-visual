@@ -1,0 +1,22 @@
+ok
+13:Owen spoke with Russell at Slope about work involving credit decisions and financial modeling. Three parts of that conversation belong together.
+15:### Sparse external information in credit decisions
+17:Russell described an initiative to improve credit decisions using information beyond what can be obtained from banking transactions. His particular interest was information that
+21:Russell described a secondary research flow using agents to locate this qualitative information and categorize or compute it into a form useful for modeling and lending decision
+63:The financing terms are inputs: the amount, schedule, fee and funding date. The module does not recommend, size, tier or condition the loan. A lending decision brings in risk ap
+93:The baseline and event-adjusted views use the same decision date, common financial assumptions and financing request. The enriched view applies the specific information obtained
+99:Later events belong in a separate outcome view. First establish what the system could conclude from the evidence available at the decision date. Then reveal what happened and ev
+107:The lead decision date is **19 August 2024**. ChromaDex is a consumer supplement brand that buys finished goods from contract manufacturers. On that date its disputes with Elys
+111:The secondary decision date is **13 August 2024**. Synergy is a consumer-products business with an actual merchant-financing agreement and disclosed supplier-settlement obligat
+125:The second decision date was **25 October 2024**. Barfresh is a small beverage business with a supplier dispute, production considerations and a real receivables facility.
+129:The application should reuse the core evidence, economic-effect, scenario and decision interfaces across the two businesses. Case-specific contracts and facts supply the differ
+146:Owen approaches these projects through **domain formalization, operational decision systems and agent evaluation**.
+148:Domain formalization means learning the actual work well enough to define its objects, relationships, rules, uncertainties and choices. Operational decision systems connect tha
+150:This project should demonstrate all three. The domain work is understanding lending and the economic consequences of external events. The operational decision is a financing ch
+152:Owen brings financial-mathematics training, financial-sector experience, credit-model and policy tooling, and experience building agentic applications. Relevant prior work incl
+160:Use research and the supplied evidence to resolve questions you can answer. When information is genuinely unavailable, identify the specific parameter, determine how it affects
+164:Lead progress updates with outcomes and material findings. Explain remaining issues in terms of the behavior they affect. Complete the authorized work and make the result revie
+176:The research and design phase has produced the specification, acquired sources, structured examples, schemas and tested reference arithmetic. The coding phase must implement an
+188:The most compelling moment is when Russell follows a real passage into Jev's probabilistic judgment, sees it move the loan's cash-flow distribution, and changes it himself. The
+202:Use this brief to guide product judgment; use the specification and kit for detailed contracts, case facts and implementation requirements. Preserve the connection from domain 
+206:When a technical choice requires judgment, prioritize the choice that makes the completed decision workflow more useful, financially sound and understandable to Russell and Slo

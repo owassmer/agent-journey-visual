@@ -1,0 +1,14 @@
+Slope_Coding_Agent_Context_and_Alignment.md
+Slope_Credit_Scenario_Build_Specification.md
+CLAUDE.md
+Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/chromadex/acquire.py
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/deliverables/Slope_Credit_Scenario_Build_Specification.md
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json
+app/evidence/__init__.py
+tests/test_evidence_snapshots.py
+cases/chromadex_20240903/snapshot.json
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/data/sources.json
+cases/chromadex_20240903/run_inputs.json
+119:The operator opens a **financing decision**, not a lawsuit dashboard. **Show the right answer, not the machinery.** The front page states one decision with confidence: the recommended offer, one o
+159:The lawsuit itself does not supply a generic default-probability increment. It supplies evidence about an economic mechanism. Jev’s confidence is not the probability of that mechanism occurring an
+304:Screening labels and orders evidence (direct evidence, conflict, context-only); it never hides a candidate, so a Jev false negative cannot bury the passage that answers the question. Routing thres

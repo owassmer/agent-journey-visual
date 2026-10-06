@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ec2 describe-spot-price-history --profile slope --region us-east-2 --instance-types m7a.8xlarge m7i.8xlarge m6a.8xlarge --product-descriptions Linux/UNIX --start-time 2026-10-02T17:00:00Z --query 'SpotPriceHistory[:12].[InstanceType,AvailabilityZone,SpotPrice]'","max_output_tokens":800}));
+text(await tools.exec_command({cmd:"aws ec2 describe-subnets --profile slope --region us-east-2 --query 'Subnets[*].[SubnetId,AvailabilityZone]'","max_output_tokens":500}));

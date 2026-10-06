@@ -1,0 +1,1 @@
+text(await tools.apply_patch("*** Begin Patch\n*** Update File: /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/forecast.py\n@@\n-        return bool((both & (decision < window)).any())\n+        return bool((both & (decision <= window)).any())\n*** End Patch"))

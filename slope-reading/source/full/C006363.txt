@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && gh run view 36641413585 --json jobs --jq '.jobs[] | \"\\(.name)\\t\\(.databaseId)\\t\\(.status)\"' | sort -t'(' -k2 -n > ~/.hermes/profiles/connor/cache/scratch/memo/jobs.tsv; cat ~/.hermes/profiles/connor/cache/scratch/memo/jobs.tsv; date -u +%H:%M:%S", "timeout": 30}

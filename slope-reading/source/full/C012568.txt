@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:".venv/bin/python - <<'PY'\nimport pickle\nv=pickle.load(open('/tmp/notes-23-diagnostic.pkl','rb'));print('PARENT',v['parent'])\nfor ix in [0,259,19,268]:\n p=v['conditional'][ix];print(ix,p.edges)\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2600}));

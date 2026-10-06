@@ -1,0 +1,31 @@
+<persisted-output>
+Output too large (54.4KB). Full output saved to: /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/tool-results/bgkrmr0dy.txt
+
+Preview (first 2KB):
+{
+  "configuration_id": "slope_external_event_cashflow_investigation",
+  "configuration_version": "2.0.1-design",
+  "status": "design_template_not_implemented_or_live_validated",
+  "scope": "One local investigation of a real borrower and a proposed new discretionary advance, followed by loan cash-flow scenario comparison and independent review. Analysis candidates are not claims of actual Slope offers or customers.",
+  "default_mission": {
+    "case_id": "synergy_chc_2024",
+    "borrower": "Synergy CHC Corp.",
+    "decision_date": "2024-08-13",
+    "as_of": "2024-08-13T23:59:59-04:00",
+    "decision_timezone": "America/New_York",
+    "cutoff_precision": "Conservative end of the disclosed filing date; not an asserted intraday SEC acceptance timestamp or actual loan-decision time.",
+    "financial_measurement_date": "2024-06-30",
+    "updated_cash_measurement_date": "2024-08-12",
+    "updated_cash_precision": "Approximately USD 2 million, as disclosed by management; not an exact current bank balance or a reconciliation of every post-June cash movement.",
+    "financial_filing_publication_date": "2024-08-13",
+    "source_ids": [
+      "synergy_s1a_20240813",
+      "synergy_merchant_agreement_20240501",
+      "synergy_court_20230227"
+    ],
+    "mission_type": "new_discretionary_advance",
+    "loan_terms_basis": "analysis_candidate",
+    "relationship_claim": "No claim that Synergy is or was a Slope customer, applied to Slope, received this offer, or qualified for a particular partner program.",
+    "product_selection": "Compare explicitly modeled fixed-installment working-capital offers compatible with Slope's product family. Do not describe current partner marketing terms as an offer available to Synergy in August 2024. Store the actual existing merchant loan under its own sales-linked contract logic.",
+...
+</persisted-output>

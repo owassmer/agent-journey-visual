@@ -1,0 +1,25 @@
+{
+  "id": "initial-08",
+  "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+  "source_lines": [
+    203,
+    271
+  ],
+  "subject": "Repository, runtime, CI and delivery setup through the user-facing status",
+  "context_source_lines": [
+    9,
+    37,
+    202
+  ],
+  "input_tokens_estimate": 65875,
+  "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+  "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+  "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+  "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-08/input.txt",
+  "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-08/context.txt",
+  "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-08",
+  "requested_outputs": [
+    "trace.txt",
+    "reading.json"
+  ]
+}

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-contracts && C=Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts; sed -n 2320,2360p $C/question_registry.json | cut -c1-300; sed -n 95,100p $C/dispute_model.json | cut -c1-500; grep -n \"ability to post security\" $C/dispute_model.json | cut -c1-120"}

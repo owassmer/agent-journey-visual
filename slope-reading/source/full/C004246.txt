@@ -1,0 +1,1 @@
+{"command": "ps -o pid,etime,command -p 97430 | cut -c1-200; lsof -p 97430 2>/dev/null | awk '$5==\"REG\"{print $7, $9}' | sort -n | tail -4; cd ~/.hermes/profiles/connor/cache/scratch && du -sh memo 9m2 9i2 9i3 9i5 9r review-a research-b 2>/dev/null | sort -h | tail -8; du -sh ~/dev/Slope_Sparse_Events/.claude/worktrees/* 2>/dev/null | sort -h | tail -10; df -h / | tail -1"}

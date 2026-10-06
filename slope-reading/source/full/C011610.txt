@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"python3 /tmp/monitor_notes_recovery.py",yield_time_ms:1000,max_output_tokens:1700}));
+text(await tools.exec_command({cmd:"tail -n 3 /tmp/notes-snapshot-probe-corrected.log\npython3 - <<'PY'\nimport json,pathlib\nrs=[json.loads(p.read_text()) for p in pathlib.Path('/tmp/notes-live-logs').glob('*.json')];us=[u for r in rs for u in r['reports']]\nprint({'workers':len(rs),'successes':sum(u['complete'] for u in us),'failed':sum(not u['complete'] for u in us),'paths':sum(u.get('paths',0) for u in us)})\nPY",max_output_tokens:1000}));

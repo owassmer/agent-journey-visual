@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n \"$(grep -n '^def shard' app/disputes/parallel.py | cut -d: -f1),+20p\" app/disputes/parallel.py; grep -n \"def _same_after\\|def mask_of\\|_population\\|class _S\\b\\|class _S(\" app/disputes/forecast.py | head", "timeout": 30}

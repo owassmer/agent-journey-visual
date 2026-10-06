@@ -1,0 +1,24 @@
+499-
+500-
+501:async def request_missing_fact(ctx: RunContext, args: dict) -> dict:
+35:from app.domain.investigation import (
+36-    CASH_FREE_MECHANISMS,
+37-    AtomicFinding,
+38-    DecisionDependency,
+39-    Disposition,
+40-    EconomicEffectProposal,
+41-    EvidenceCandidate,
+42-    ParameterRequirement,
+43-    ReconciliationTask,
+44-    SemanticObservation,
+45-    validate_effect,
+46-)
+47-from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit, assumed, documented, unknown
+48-from app.evidence.spans import SpanError, locate, verify
+49-from app.evidence.store import EvidenceAccessError, EvidenceStore
+50-from app.finance.fixed_installment import FixedInstallmentOffer
+51-from app.finance.thresholds import remaining_period_required_net_cash
+130:def _cents_in_text(cents: int, text: str) -> bool:
+131-    """Whether an amount appears in cited text, as written in filings ($2,000,000 / 2,000,000 / $2.0 million)."""
+132-    flat = " ".join(text.replace("$ ", "$").split())
+133-    dollars, rem = divmod(abs(cents), 100)

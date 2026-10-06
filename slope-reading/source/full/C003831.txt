@@ -1,0 +1,1 @@
+{"command": "tail -4 ~/.hermes/profiles/connor/cache/delegation/live/deleg_409f1f66/task-0.log | cut -c1-300; for p in 46681 64266 64864 70020 73356; do echo \"$p $(ps -o command= -p $p | grep -o 'conv[0-9a-z-]*' | head -1) $(ps -o command= -p $p | grep -o -- '--resume [0-9a-f-]*' | head -1)\"; done"}

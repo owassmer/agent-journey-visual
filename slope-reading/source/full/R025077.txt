@@ -1,0 +1,25 @@
+>       p = project(t, state, flat_credits(AUG13, horizon, [94m0[39;49;00m), horizon=horizon)[90m[39;49;00m
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+
+[1m[31mtests/test_finance.py[0m:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = datetime.date(2024, 8, 13), end = datetime.date(2025, 5, 16)
+daily_cents = 0
+
+    [0m[94mdef[39;49;00m[90m [39;49;00m[92mflat_credits[39;49;00m(start: date, end: date, daily_cents: [96mint[39;49;00m) -> AccountCredits:[90m[39;49;00m
+        d, out = start, {}[90m[39;49;00m
+        [94mwhile[39;49;00m d <= end:[90m[39;49;00m
+            out[d] = daily_cents[90m[39;49;00m
+            d += timedelta(days=[94m1[39;49;00m)[90m[39;49;00m
+>       [94mreturn[39;49;00m AccountCredits(store_scope=[33m"[39;49;00m[33mtest store[39;49;00m[33m"[39;49;00m, daily_gross_cents=out, provenance_note=[33m"[39;49;00m[33mtest[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mE       pydantic_core._pydantic_core.ValidationError: 1 validation error for AccountCredits[0m
+[1m[31mE       covers[0m
+[1m[31mE         Field required [type=missing, input_value={'store_scope': 'test sto...rovenance_note': 'test'}, input_type=dict][0m
+[1m[31mE           For further information visit https://errors.pydantic.dev/2.13/v/missing[0m
+
+[1m[31mtests/test_finance.py[0m:69: ValidationError
+[36m[1m=========================== short test summary info ============================[0m
+[31mFAILED[0m tests/test_finance.py::[1mtest_first_window_excess_does_not_cover_the_second_window[0m - pydantic_core._pydantic_core.ValidationError: 1 validation error for Accoun...
+[31m!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!![0m

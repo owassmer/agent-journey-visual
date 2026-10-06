@@ -1,0 +1,79 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_ba1d04bf]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 20:28:13 (14m17s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 858.04s
+
+--- ✓ TASK 1/1: Second record pass for the 14 May 2024 Akoustis review: make the record each question's re-derived Record field names available in the akoustis_20240514 snapshot, from sources public on or before 14 May 2024, and rebuild DECOMPOSITION_20240514.md §8 from those fields. Branch step-9-record. Commit and push; open no PR.  (status=completed, api_calls=101, 857.82s) ---
+The record for each 14 May question is now in the snapshot wherever a public source existed by 14 May 2024. §8 is rebuilt from the Record fields, and all three commits are pushed to `step-9-record` with no PR opened. Both test files pass (17 passed) after the sources were added and again after the §8 rewrite; I read both logs.
+
+**Commits**
+- `aec1ce4`: merge of origin/step-9-questions (4c49294). §8 keeps this branch's table and takes the other side's sentence that an unfilled slot is left out of Jev's state. Manifest refreshed.
+- `7854c52`: the nine new sources, with catalog, display and snapshot entries. Manifest refreshed (102 catalog records).
+- `150ce72`: §8 rebuilt, plus an isolation-log entry for this pass. Manifest refreshed.
+
+**Snapshot counts**
+
+```
+         | Before | After
+---------+--------+------
+Sources  | 43     | 52   
+Sections | 1,384  | 1,584
+Tables   | 123    | 124  
+```
+
+**Per-question record** (full rows with D.I. and section references are in §8). "Path" means the fact comes from the path's state, not from a document; everything else is kit unless marked added.
+- **J1:** verdict form D.I. 580; instructions D.I. 533 and 537 plus the conspiracy bench memos D.I. 588–589 (added); rulings D.I. 152, 545, 546, 553, 557, 590; limiting instructions D.I. 565; statements of intended proof D.I. 543-1 Ex. A.2/A.4; witnesses D.I. 543-1 Ex. C.1/C.2 and D.I. 539 (added); exhibits D.I. 585 and 582 (added) and D.I. 543 §VII; docket through 14 May; Rule 50(a) papers D.I. 587 and 590; the 13 May call and 10-Q Note 14.
+- **J1b:** D.I. 543-1 Ex. A.2, D.I. 553, D.I. 476; D.I. 471 and D.I. 537 §2.11 (added); instructions D.I. 537 §§2.9–2.12 and 3.5 (added); D.I. 565, 590, 580; the call's "eight-figure verdict"; actual loss from Ex. A.2 ¶¶52–57.
+- **D1, J2, D5:** D.I. 587 and 590; the indenture's judgment-default terms (§§7.01(i), 7.02); the call and Note 14; the rulings above. The judgment and ruling are path.
+- **C3:** the 10-Q (Notes 2, 10, 13, Item 1A); relief sought in D.I. 543-1 ¶¶41, 62, D.I. 543 §6 and D.I. 133; trial length from the docket and D.I. 550. The remitted amount is path.
+- **D3, C2, C1:** the 10-Q; relief sought; competition in the 10-K Item 1 and D.I. 590; the company's own claims against Qorvo (Note 14); Qorvo's statements, which are its court filings (D.I. 588 added); the notes alongside the judgment (Note 10).
+- **J4:** 10-K cover, Item 2, Note 1 and consolidation note; 10-K Ex. 21.1 (added): Akoustis, Inc. is Delaware, Grinding & Dicing Services, Inc. is **California** (not as the brief said), RFM Integrated Device Inc. is Texas; 10-Q Notes 1 and 13.
+- **D4, J3:** the 10-Q. Bond, security and enforcement are path.
+- **D2, D7, D8, N1:** shelf S-3 333-262540; the ATM agreement and 424B5s of 2022, 2023 and 2024; 10-Q Note 2 and Part II Item 5; the January 2024 offering 8-K and 424B5; the price series (added); share capacity (10-Q cover, balance sheet, Note 16); the counsel statement on the 13 May call; §§7.01(j) and 7.02.
+- **D9, H1–H3:** indenture §§7.01, 7.02, 7.06, 7.07, the "Fundamental Change" definition and §10.01; holders of record from the resale S-3 table; interest-payment record from the 2022 8-K, 10-K Note 11, 10-Q Note 10 and the resale S-3.
+- **D6a, D6b:** 8-K of 27 Oct 2023; 10-Q Note 12 and Item 1A; the 2023 proxy excerpt and the 2 Nov 2023 8-K; the price series (added).
+
+**Added, with public dates** (filing dates from the RECAP stamps and EDGAR; each eligible for akoustis_20240514 only, out_of_case for 20 Jun; none hits an isolation probe):
+- D.I. 533, Qorvo's proposed preliminary instructions: 12 Apr 2024.
+- D.I. 537, the parties' proposed final instructions with the disputed alternatives: 12 Apr 2024.
+- D.I. 539, Akoustis's amended trial witnesses: 17 Apr 2024.
+- D.I. 582, request for judicial notice on trial exhibit 18: 10 May 2024.
+- D.I. 585, Akoustis's second amended exhibit list: 12 May 2024.
+- D.I. 588 and 589, bench memoranda on the conspiracy instruction: 14 May 2024.
+- FY2023 10-K Ex. 21.1 (subsidiaries): 6 Sep 2023.
+- `akts_daily_px_20240514`, dated 14 May 2024: the evidence builder only reads PDF and HTML, so I rendered the case CSV as an HTML table, values unchanged. Its catalog entry names stockanalysis.com and the 28 Sep 2026 retrieval, and it is readable as a 240-row table.
+- No kit copy needed trimming.
+
+**Items that differ from the brief**
+- **The witness list is D.I. 539, not D.I. 534.** D.I. 534 is Qorvo's proposed voir dire.
+- **No Rule 50(a) papers besides D.I. 587.** The motions were made orally.
+- **Qorvo made no public statement on the case by 14 May.** Its 10-K of May 2023, 10-Qs of Nov 2023 and Feb 2024, and 8-Ks of 31 Jan and 1 May 2024 don't name it; the Dec-2023 10-Q's legal note is generic, so I didn't add it.
+- **D.I. 569 (the first amended Akoustis exhibit list)** is another case's document on RECAP; D.I. 585 replaces it.
+- **Isolation:** a web search for Qorvo's statements showed Qorvo's later verdict press release among the results. I didn't use it, and it is recorded in the isolation log.
+
+**Not public by 14 May:**
+- the oral Rule 50(a) motions and the trial transcript
+- the instructions as given
+- D.I. 548, 549 and 584, all sealed
+- Qorvo's exhibit list (D.I. 543-1 Ex. E.1 redacted; D.I. 544 sealed)
+- the defense's avoided-cost figure (redacted)
+- Nasdaq's April 2024 letter granting the second period
+- any company statement on settlement
+- Qorvo's statements outside its court filings
+- Qorvo's cost of a new trial
+
+**Law the contracts lack:**
+- Rule 50(a), and the rule that a Rule 50(b) motion is limited to grounds raised under it.
+- A Third Circuit authority for a stay on reduced security; `bond_amount` cites only the Seventh and Fifth Circuits.
+- Everything else named is present: Rules 50(b), 59 and 62(b), remittitur (Third Circuit), §1963, 11 U.S.C. §§303(b), 362 and 547, and Nasdaq Rule 5815.
+
+I also added this pass's findings to the `slope-sparse-events-build` skill. Scripts are in `~/.hermes/profiles/connor/cache/scratch/9i/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_ba1d04bf/task-0.log
+Child's process proc_eebad531a44c `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-record && env -u CLAUDE_CODE_` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+exit 0
+.................                                                        [100%]
+17 passed in 23.92s

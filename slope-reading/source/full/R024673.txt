@@ -1,0 +1,62 @@
+"""Version information for claude-agent-sdk."""
+
+__version__ = "0.2.159"
+"""Bundled Claude Code CLI version."""
+
+__cli_version__ = "2.1.281"
+1:    settings: str | None = None
+9:    add_dirs: list[str | Path] = field(default_factory=list)
+15:    env: dict[str, str] = field(default_factory=dict)
+22:    extra_args: dict[str, str | None] = field(default_factory=dict)
+29:    max_buffer_size: int | None = None
+32:    debug_stderr: Any = sys.stderr
+35:    stderr: Callable[[str], None] | None = None
+41:    can_use_tool: CanUseTool | None = None
+59:    hooks: dict[HookEvent, list[HookMatcher]] | None = None
+63:    https://docs.anthropic.com/en/docs/claude-code/hooks.
+72:    user: str | None = None
+75:    include_partial_messages: bool = False
+81:    include_hook_events: bool = False
+89:    forward_subagent_text: bool = False
+101:    verbatim_prompts: bool = False
+131:    fork_session: bool = False
+135:    resume_session_at: str | None = None
+147:    resume_drops_turn: str | None = None
+25:PermissionMode = Literal[
+26-    "default", "acceptEdits", "plan", "bypassPermissions", "dontAsk", "auto"
+27-]
+28-
+--
+33:SettingSource = Literal["user", "project", "local"]
+34-
+35-# The ClaudeAgentOptions.skills value meaning "every discovered skill".
+36-_SKILLS_ALL: Final = "all"
+37:EffortLevel: TypeAlias = Literal["low", "medium", "high", "xhigh", "max"]
+38-
+39-
+40-class SystemPromptPreset(TypedDict):
+--
+125:    effort: EffortLevel | int | None = None
+126-    permissionMode: PermissionMode | None = None  # noqa: N815
+127-
+128-
+--
+1340:class ResultMessage:
+1341-    """Result message with cost and usage information."""
+1342-
+1343-    subtype: str
+--
+2349:    effort: EffortLevel | None = None
+2350-    """Controls how much effort Claude puts into its response.
+2351-
+2352-    Works with adaptive thinking to guide thinking depth.
+187:class ToolAnnotations(_McpToolAnnotations, extra="allow"):
+241:class SdkMcpTool(Generic[T]):
+251:def tool(
+338:def _python_type_to_json_schema(py_type: Any) -> dict[str, Any]:
+392:def _typeddict_to_json_schema(td_class: type) -> dict[str, Any]:
+410:def _build_input_schema(tool_def: SdkMcpTool[Any]) -> dict[str, Any]:
+433:def _build_meta(tool_def: SdkMcpTool[Any]) -> dict[str, Any] | None:
+445:def _tool_error_result(message: str) -> CallToolResult:
+451:def _convert_tool_content(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+491:def create_sdk_mcp_server(

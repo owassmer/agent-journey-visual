@@ -1,0 +1,280 @@
+1	"""Scenario engine: how each Slope financing structure performs, bank-only and with the dispute's branches.
+2	
+3	Views (matched pair; common inputs identical, only the dispute nodes differ):
+4	  - bank_only: the connected-bank projection (trailing 13 weeks per category) and the financing action.
+5	  - event_adjusted: the same, plus every combination of the dispute nodes' branches. Each branch's cash is placed
+6	    two ways: `stress` (outflows and locks at the window start at the high amount; inflows at the window end at the
+7	    low amount) and `central` (window midpoint, midpoint amount).
+8	
+9	The financing action: Slope pays the supplier invoice on the funding date, so the borrower no longer pays that invoice
+10	itself on its due date, and instead repays Slope on the structure's schedule. Declining leaves the invoice with the
+11	borrower. Collections (declared rule): ACH autopay takes each scheduled payment when available cash covers it;
+12	otherwise it takes the available cash and retries the rest at the next month-end (catch-up).
+13	
+14	Weighted (expected) figures use the nodes' branch weights (Jev's model judgment, labelled once) and treat nodes as
+15	independent. Every conditional result is kept beside them. Money is integer cents; rates are Decimal.
+16	"""
+17	
+18	from __future__ import annotations
+19	
+20	import itertools
+21	from dataclasses import dataclass, field
+22	from datetime import date, timedelta
+23	from decimal import Decimal
+24	
+25	from app.domain.investigation import DisputeNode
+26	from app.domain.values import cents_round, usd
+27	from app.finance.bank import BankFeed, projection, risk_features
+28	from app.finance.slope_products import BPS, SlopeOffer, limits, menu, offer, term_spec, tier_for
+29	from app.finance.valuation import present_value_cents, principal_dollar_days
+30	
+31	HORIZON_DAYS = 180
+32	
+33	
+34	@dataclass(frozen=True)
+35	class Request:
+36	    amount_cents: int
+37	    invoice_due: date  # when the borrower would pay the supplier itself
+38	    funding: date  # when Slope pays the supplier
+39	    requested_term_id: str
+40	
+41	
+42	@dataclass
+43	class Path:
+44	    """One scenario's daily available cash for one structure, and what Slope collects."""
+45	    view: str
+46	    branch_ids: tuple[str, ...]
+47	    placement: str
+48	    weight_bps: int | None
+49	    structure: str
+50	    min_cash_cents: int = 0
+51	    min_cash_on: date | None = None
+52	    collections: list[tuple[date, int]] = field(default_factory=list)
+53	    shortfall_cents: int = 0
+54	    payment_dates: list[tuple[date, int, int]] = field(default_factory=list)  # (due, scheduled, cash after payment)
+55	
+56	
+57	def _place(amount, window_start: date, window_end: date, kind: str, placement: str) -> tuple[date, int]:
+58	    lo = amount.value if amount.value is not None else amount.lower
+59	    hi = amount.value if amount.value is not None else amount.upper
+60	    if placement == "stress":
+61	        return (window_start, hi) if kind in ("outflow", "lock") else (window_end, lo)
+62	    mid = window_start + (window_end - window_start) / 2
+63	    return mid, (lo + hi) // 2
+64	
+65	
+66	def branch_combinations(nodes: list[DisputeNode]) -> list[tuple[tuple[str, ...], int | None, list]]:
+67	    """Cartesian product of branches across nodes: (branch ids, weight bps or None, cash items)."""
+68	    if not nodes:
+69	        return [((), 10_000, [])]
+70	    out = []
+71	    for combo in itertools.product(*[n.branches for n in nodes]):
+72	        ids = tuple(f"{n.node_id}:{b.branch_id}" for n, b in zip(nodes, combo, strict=True))
+73	        weights = [n.weights_bps.get(b.branch_id) for n, b in zip(nodes, combo, strict=True)]
+74	        w = None if any(x is None for x in weights) else _product_bps(weights)
+75	        out.append((ids, w, [c for b in combo for c in b.cash]))
+76	    return out
+77	
+78	
+79	def _product_bps(weights: list[int]) -> int:
+80	    p = Decimal(1)
+81	    for w in weights:
+82	        p *= Decimal(w) / BPS
+83	    return int((p * BPS).to_integral_value())
+84	
+85	
+86	def simulate(feed: BankFeed, request: Request, structure: SlopeOffer | None, cash_items: list, placement: str,
+87	             horizon: date) -> tuple[dict[date, int], list[tuple[date, int]], int, list[tuple[date, int, int]]]:
+88	    """Daily available cash (after restricted cash) and Slope's collections under the declared autopay rule."""
+89	    flows: dict[date, int] = {}
+90	
+91	    def add(d: date, cents: int) -> None:
+92	        flows[d] = flows.get(d, 0) + cents
+93	
+94	    for d, _, cents in projection(feed, horizon):
+95	        add(d, cents)
+96	    if structure is None:
+97	        add(request.invoice_due, -request.amount_cents)  # the borrower pays its own supplier
+98	    for item in cash_items:
+99	        on, amt = _place(item.amount, item.window_start, item.window_end, item.kind, placement)
+100	        add(on, -amt if item.kind in ("outflow", "lock") else amt)
+101	    schedule = structure.schedule(request.funding) if structure else []
+102	    due: dict[date, int] = {}
+103	    for p in schedule:
+104	        due[p.due] = due.get(p.due, 0) + p.amount_cents
+105	    cash, path, collected, owed, pays = feed.available_cents, {}, [], 0, []
+106	    d = feed.period_end + timedelta(days=1)
+107	    while d <= horizon:
+108	        cash += flows.get(d, 0)
+109	        owed += due.get(d, 0)
+110	        month_end = (d + timedelta(days=1)).month != d.month
+111	        if owed and (d in due or month_end):
+112	            take = min(owed, max(cash, 0))
+113	            if take:
+114	                cash -= take
+115	                owed -= take
+116	                collected.append((d, take))
+117	            if d in due:
+118	                pays.append((d, due[d], cash))
+119	        path[d] = cash
+120	        d += timedelta(days=1)
+121	    return path, collected, owed, pays
+122	
+123	
+124	@dataclass
+125	class Comparison:
+126	    tier: str
+127	    tier_measures: dict
+128	    limits: dict
+129	    structures: dict[str, SlopeOffer | None]
+130	    paths: list[Path]
+131	    request: Request
+132	    liquidity_floor_cents: int
+133	    nodes: list[DisputeNode]
+134	
+135	
+136	def compare(feed: BankFeed, terms: dict, request: Request, nodes: list[DisputeNode],
+137	            horizon_days: int = HORIZON_DAYS) -> Comparison:
+138	    features = risk_features(feed)
+139	    tier, measures = tier_for(features, terms)
+140	    horizon = feed.period_end + timedelta(days=horizon_days)
+141	    structures: dict[str, SlopeOffer | None] = {"decline": None}
+142	    for o in menu(terms, request.amount_cents, tier):
+143	        structures[o.offer_id] = o
+144	    floor = cents_round(Decimal(features["monthly_outflows_cents"])
+145	                        * terms["credit_policy"]["liquidity_floor_months_of_outflows_bps"] / BPS)
+146	    views = [("bank_only", [((), 10_000, [])])]
+147	    if nodes:
+148	        views.append(("event_adjusted", branch_combinations(nodes)))
+149	    comp = Comparison(tier=tier, tier_measures=measures, limits=limits(features, terms), structures=structures,
+150	                      paths=[], request=request, liquidity_floor_cents=floor, nodes=nodes)
+151	
+152	    def run(names: list[str]) -> None:
+153	        for view, combos in views:
+154	            for ids, weight, items in combos:
+155	                for placement in (("stress", "central") if items else ("central",)):
+156	                    for name in names:
+157	                        daily, collected, shortfall, pays = simulate(feed, request, structures[name], items, placement,
+158	                                                                     horizon)
+159	                        low_day = min(daily, key=daily.get)
+160	                        comp.paths.append(Path(view=view, branch_ids=ids, placement=placement, weight_bps=weight,
+161	                                               structure=name, min_cash_cents=daily[low_day], min_cash_on=low_day,
+162	                                               collections=collected, shortfall_cents=shortfall, payment_dates=pays))
+163	    run(list(structures))
+164	    # The supported amount in each view: the order limit implied by the borrower's own lowest projected cash (the
+165	    # decline paths), rounded down to USD 10k, on the requested term, whenever it is below the request.
+166	    for view, _ in views:
+167	        order_limit = policy_checks(comp, terms, "decline", view)["order_limit_cents"]
+168	        supported = order_limit // 1_000_000 * 1_000_000
+169	        if 0 < supported < request.amount_cents:
+170	            s = offer(terms, request.requested_term_id, supported, tier)
+171	            if s.offer_id not in structures:
+172	                structures[s.offer_id] = s
+173	                run([s.offer_id])
+174	    return comp
+175	
+176	
+177	def economics(o: SlopeOffer, funding: date, collections: list[tuple[date, int]], terms: dict,
+178	              decision: date) -> dict:
+179	    """Lender economics on this structure's collections: NPV at cost of funds, principal dollar-days, expected loss."""
+180	    cap = terms["capital"]
+181	    cof = Decimal(cap["cost_of_funds_bps_per_year"]) / BPS
+182	    flows = [((funding - decision).days, -o.amount_cents)] + [((d - decision).days, c) for d, c in collections]
+183	    npv = present_value_cents(flows, cof)
+184	    collected = sum(c for _, c in collections)
+185	    principal = [((p.due - decision).days, p.principal_cents) for p in o.schedule(funding)]
+186	    dollar_days = principal_dollar_days([((funding - decision).days, o.amount_cents)], principal) \
+187	        if collected >= o.total_cents else None
+188	    years = Decimal(o.days) / Decimal(365)
+189	    pd = Decimal(cap["probability_of_default_bps_per_year"][o.tier]) / BPS
+190	    el = cents_round(Decimal(o.amount_cents) * pd * years * Decimal(cap["loss_given_default_bps"]) / BPS)
+191	    return {"fee_cents": o.fee_cents, "fee_bps": o.fee_bps, "apr_equivalent_bps": o.apr_equivalent_bps(funding),
+192	            "collected_cents": collected, "npv_at_cost_of_funds_cents": cents_round(npv),
+193	            "principal_dollar_days": dollar_days, "expected_loss_cents": el,
+194	            "fee_net_of_expected_loss_cents": o.fee_cents - el}
+195	
+196	
+197	def policy_checks(comp: Comparison, terms: dict, name: str, view: str) -> dict:
+198	    """Reconstructed Slope policy for one structure in one view: amount limits, tenor, and the liquidity floor at
+199	    every payment date in every branch and placement. The limit also scales with the lowest projected cash."""
+200	    s = comp.structures[name]
+201	    pol = terms["credit_policy"]
+202	    paths = [p for p in comp.paths if p.structure == name and p.view == view]
+203	    low = min(p.min_cash_cents for p in paths)
+204	    cash_limit = cents_round(Decimal(max(low, 0)) * pol["limit_share_of_min_projected_cash_bps"] / BPS)
+205	    limit = min(comp.limits["limit_cents"], cash_limit)
+206	    order_limit = cents_round(Decimal(limit) * pol["order_limit_share_of_limit_bps"] / BPS)
+207	    if s is None:
+208	        return {"limit_cents": limit, "order_limit_cents": order_limit, "passes": True, "reasons": []}
+209	    reasons = []
+210	    if s.amount_cents > order_limit:
+211	        reasons.append(f"amount above the order limit of {usd(order_limit)}")
+212	    if s.days > pol["max_tenor_days"]:
+213	        reasons.append("tenor above policy")
+214	    floor_breaches = [(p.branch_ids, p.placement, d.isoformat()) for p in paths for d, _, after in p.payment_dates
+215	                      if after < comp.liquidity_floor_cents]
+216	    if floor_breaches:
+217	        reasons.append(f"cash after a payment falls below one month of outflows in {len(floor_breaches)} case(s)")
+218	    if any(p.shortfall_cents for p in paths):
+219	        reasons.append("a scheduled payment is not fully collected by the horizon in some branch")
+220	    return {"limit_cents": limit, "order_limit_cents": order_limit, "passes": not reasons, "reasons": reasons,
+221	            "floor_breaches": floor_breaches[:5], "lowest_projected_cash_cents": low}
+222	
+223	
+224	def summarize(comp: Comparison, terms: dict) -> dict:
+225	    """The decision view: per structure, bank-only vs event-adjusted policy, economics, collections and branches."""
+226	    decision = comp.request.funding - timedelta(days=1)
+227	    out = {"tier": comp.tier, "tier_measures": comp.tier_measures, "liquidity_floor_cents": comp.liquidity_floor_cents,
+228	           "structures": {}, "nodes": [
+229	               {"node_id": n.node_id, "decision_point": n.decision_point,
+230	                "branches": [{"branch_id": b.branch_id, "label": b.label, "weight_bps": n.weights_bps.get(b.branch_id)}
+231	                             for b in n.branches]} for n in comp.nodes]}
+232	    views = ["bank_only"] + (["event_adjusted"] if comp.nodes else [])
+233	    for name, s in comp.structures.items():
+234	        entry = {"label": "Decline (borrower pays its supplier)" if s is None else
+235	                 f"{usd(s.amount_cents)}, {term_spec(terms, s.term_id)['label']}", "views": {}}
+236	        for view in views:
+237	            checks = policy_checks(comp, terms, name, view)
+238	            paths = [p for p in comp.paths if p.structure == name and p.view == view]
+239	            central = [p for p in paths if p.placement == "central"]
+240	            weighted = None
+241	            if s is not None and all(p.weight_bps is not None for p in central):
+242	                weighted = cents_round(sum((Decimal(p.weight_bps) / BPS) * sum(c for _, c in p.collections)
+243	                                           for p in central))
+244	            v = {"policy": checks, "lowest_cash_cents": min(p.min_cash_cents for p in paths),
+245	                 "lowest_cash_on": min(paths, key=lambda p: p.min_cash_cents).min_cash_on.isoformat(),
+246	                 "branches": [{"branch_ids": list(p.branch_ids), "placement": p.placement, "weight_bps": p.weight_bps,
+247	                               "lowest_cash_cents": p.min_cash_cents, "lowest_cash_on": p.min_cash_on.isoformat(),
+248	                               "collected_cents": sum(c for _, c in p.collections), "shortfall_cents": p.shortfall_cents}
+249	                              for p in paths]}
+250	            if s is not None:
+251	                worst = min(paths, key=lambda p: sum(c for _, c in p.collections))
+252	                v["economics"] = economics(s, comp.request.funding, worst.collections, terms, decision)
+253	                v["expected_collected_cents"] = weighted
+254	                v["contractual"] = [{"due": p.due.isoformat(), "amount_cents": p.amount_cents,
+255	                                     "principal_cents": p.principal_cents, "fee_cents": p.fee_cents}
+256	                                    for p in s.schedule(comp.request.funding)]
+257	            entry["views"][view] = v
+258	        out["structures"][name] = entry
+259	    out["recommendation"] = {view: recommend(comp, out, view) for view in views}
+260	    return out
+261	
+262	
+263	def recommend(comp: Comparison, summary: dict, view: str) -> dict:
+264	    """Declared objective, applied per view: the requested structure if it passes policy in every branch and
+265	    placement; otherwise the passing structure closest to the request (largest amount, requested term first, then the
+266	    shortest tenor); otherwise decline. The requested structure's failing reasons are kept for the explanation."""
+267	    req = comp.request
+268	    requested = f"{req.requested_term_id}_{req.amount_cents // 100}"
+269	    ranked = sorted((n for n, s in comp.structures.items() if s is not None),
+270	                    key=lambda n: (-comp.structures[n].amount_cents, comp.structures[n].term_id != req.requested_term_id,
+271	                                   comp.structures[n].days))
+272	    ranked.remove(requested)
+273	    ranked.insert(0, requested)
+274	    chosen = next((n for n in ranked if summary["structures"][n]["views"][view]["policy"]["passes"]), "decline")
+275	    pol = summary["structures"]["decline"]["views"][view]["policy"]
+276	    return {"structure": chosen, "requested": requested,
+277	            "limit_cents": pol["limit_cents"], "order_limit_cents": pol["order_limit_cents"],
+278	            "requested_passes": chosen == requested,
+279	            "requested_reasons": summary["structures"][requested]["views"][view]["policy"]["reasons"]}
+280	

@@ -1,0 +1,41 @@
+patched
+[1;32mAll checks passed![0m
+synergy_20240813: cutoff 2024-08-13T23:59:59-04:00  manifest 88ff7fe6f1f2
+  + synergy_s1a_20240813: 269 sections, 88 tables
+  + synergy_merchant_agreement_20240501: 12 sections, 0 tables
+  + synergy_court_20230227: 16 sections, 0 tables
+== synergy_s1a_20240813#t0058 header_rows 2 | Synergy CHC Corp. Consolidated Statements of Stockholders’ Deficit
+   ['', 'Common stock', 'Common stock', 'Additional Paid in Capital', 'Accumulated Other Comprehensive Income (Loss)', 'Accumulated Deficit', 'Total Stockholders’ Deficit']
+   ['', 'Shares', 'Amount', 'Additional Paid in Capital', 'Accumulated Other Comprehensive Income (Loss)', 'Accumulated Deficit', 'Total Stockholders’ Deficit']
+   ['Balance as of December 31, 2021', '89,889,074', '$899', '$19,147,884', '$(176,525)', '$(20,059,751)', '$(1,087,493)']
+   ['Foreign currency translation gain', '', '', '', '198,914', '', '198,914']
+   ['Net loss', '', '', '', '', '(32,631,288)', '(32,631,288)']
+   ['Balance as of December 31, 2022', '89,889,074', '$899', '$19,147,884', '$22,389', '$(52,691,039)', '$(33,519,867)']
+   ['Foreign currency translation loss', '', '', '', '(124,856)', '', '(124,856)']
+== synergy_s1a_20240813#t0030 header_rows 2 | Synergy CHC Corp. Unaudited Condensed Consolidated Statement of Stockholders’ Deficit
+   ['', 'Common stock', 'Common stock', 'Additional Paid in Capital', 'Accumulated Other Comprehensive Income (Loss)', 'Accumulated Deficit', 'Total Stockholders’ Deficit']
+   ['', 'Shares', 'Amount', 'Additional Paid in Capital', 'Accumulated Other Comprehensive Income (Loss)', 'Accumulated Deficit', 'Total Stockholders’ Deficit']
+   ['Balance as of December 31, 2022', '89,889,074', '$899', '$19,147,884', '$22,389', '$(52,691,039)', '$(33,519,867)']
+   ['Foreign currency translation loss', '', '', '', '(109,655)', '—', '(109,655)']
+   ['Net income', '', '', '', '', '2,463,257', '2,463,257']
+   ['Balance as of June 30, 2023', '89,889,074', '$899', '$19,147,884', '$(87,266)', '$(50,227,782)', '$(31,166,264)']
+== synergy_s1a_20240813#t0045 header_rows 1 | SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+   ['', 'June 30, 2024', 'December 31, 2023']
+   ['Kenek, related party', '$1,181,222', '$—']
+   ['Knight', '12,333,053', '12,426,997']
+   ['Sanders', '9,794,165', '10,294,165']
+   ['Atrium', '4,802,445', '4,802,445']
+   ['VitBest', '2,920,824', '—']
+   ['Shopify', '482,725', '94,525']
+== synergy_s1a_20240813#t0048 header_rows 0 | SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+   ['2024', '$2,000,000']
+   ['2025', '2,000,000']
+   ['2026', '802,445']
+== synergy_s1a_20240813#t0029 header_rows 2 | Synergy CHC Corp. Unaudited Condensed Consolidated Statements of Income and Other Comprehensive Income
+   ['', 'For the six months ended', 'For the six months ended']
+   ['', 'June 30, 2024', 'June 30, 2023']
+   ['Revenue', '$17,436,703', '$18,753,705']
+   ['Cost of sales', '5,086,029', '5,323,622']
+   ['Gross profit', '12,350,674', '13,430,083']
+   ['Operating expenses', '', '']
+   ['Selling and marketing', '6,639,863', '6,231,183']

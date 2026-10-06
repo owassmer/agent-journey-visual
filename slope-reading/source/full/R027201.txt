@@ -1,0 +1,36 @@
+52:class Frozen(BaseModel):
+53-    model_config = ConfigDict(frozen=True)
+54-
+55-
+56-class SourceSpan(Frozen):
+33-
+34-GENESIS = "0" * 64
+35:REMOVED_FIELDS = {("inventory", "exclusions")}  # recorded by run 13 under a design later removed
+36-COLLECTIONS: dict[str, type[BaseModel]] = {
+37-    "dependencies": DecisionDependency, "candidates": EvidenceCandidate, "jev_calls": JevCallRecord,
+38-    "observations": SemanticObservation, "findings": AtomicFinding, "reconciliations": ReconciliationTask,
+39-    "effects": EconomicEffectProposal, "inventory": InventoryItem, "disputes": DisputeInstance,
+40-}
+41-# Which collection each event kind writes its object into (None = log-only event).
+42-EVENT_COLLECTION: dict[str, str | None] = {
+43-    "dependency_recorded": "dependencies", "candidate_screened": "candidates", "jev_call": "jev_calls",
+44-    "observation_recorded": "observations", "observation_disposition": "observations",
+45-    "finding_proposed": "findings", "finding_resolved": "findings", "reconciliation_opened": "reconciliations",
+46-    "reconciliation_resolved": "reconciliations", "effect_proposed": "effects", "effect_validated": "effects",
+47-    "inventory_loaded": "inventory", "inventory_accounted": "inventory", "effect_disputed": "effects",
+--
+152-                # any other field the packet holds must equal the replayed value, so a forged field is still caught.
+153-                if any(replayed[key].get(field) != value for field, value in obj.items()
+154:                       if (name, field) not in REMOVED_FIELDS):
+155-                    return False
+156-                # A field absent from the packet is acceptable only when the replayed value is its default
+157-                # (a field added by a later schema version), never when a recorded value was deleted.
+158-                missing = set(replayed[key]) - set(obj)
+159-                if any(f not in defaults or replayed[key][f] != defaults[f] for f in missing):
+160-                    return False
+161-        return True
+162-
+163-    def verify(self) -> None:
+164-        prev = GENESIS
+165-        for e in self.events:
+166-            expected = hashlib.sha256((prev + _canonical({"seq": e.seq, "at": e.at, "kind": e.kind,

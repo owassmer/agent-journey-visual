@@ -1,0 +1,36 @@
+synergy_s1a_20240813#t0048  [table]  SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+    The Company is required to make [future] [payments] as follows: :: | 2024 | $600,000 |
+| 2025 | 1,460,412 |
+| 2026 | 860,412 |
+synergy_s1a_20240813#t0047  [table]  SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+    The Company is required to make [future] [payments] as follows: :: | 2024 | $2,000,000 |
+| 2025 | 2,000,000 |
+| 2026 | 802,445 |
+synergy_s1a_20240813#s0208  [section]  SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+     … On March 27, 2024, the Company entered into a confidential [settlement] agreement and mutual general release with a [supplier].
+
+During 2024, the Company made [payments] of $100,000 toward this loan. The … 
+synergy_s1a_20240813#s0207  [section]  SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+     … confidential [settlement] agreement and mutual general release with a former [supplier]. The loan bears interest at 5% per annum and is payable in full with the last [payment]. This [settlement] resulted in … 
+synergy_s1a_20240813#s0084  [section]  MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS > Liquidity and Capital Resources
+     … On March 27, 2024 we entered into a confidential [settlement] agreement and mutual general release with a [supplier]. During 2024, we made [payments] of $100,000 toward this loan. The outstanding loan … 
+
+synergy_s1a_20240813#s0210  [section]  SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 13 — Commitments & Contingencies
+     … During May 2024, the Company [paid] in full the [settlement] to [L.O.D.C] Group, Ltd.
+synergy_s1a_20240813#s0121  [section]  BUSINESS > Legal Proceedings
+     … During May 2024, the Company [paid] in full the [settlement] to [L.O.D.C] Group, Ltd.
+synergy_s1a_20240813#s0255  [section]  SYNERGY CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 13 — Commitments and Contingencies
+     … The case was settled during April 2024 by way of a confidential [settlement] agreement and mutual release, the [settlement] of the claim has been accounted for and reported as a charge to … 
+
+brfh_2024q1_10q#s0012  [section]  BARFRESH FOOD GROUP INC. > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract [manufacturers]. One of the Company’s contract [manufacturers] (the “[Manufacturer]”) provided approximately 52 % and 42 % of the Company … 
+brfh_2023_10k#s0100  [section]  Report of Independent Registered Public Accounting Firm > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract [manufacturers]. One of the Company’s contract [manufacturers] (the “[Manufacturer]”) provided approximately 52 % and 42 % of the Company … 
+brfh_2024q2_10q#s0011  [section]  BARFRESH FOOD GROUP INC. > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract [manufacturers]. One of the Company’s contract [manufacturers] (the “[Manufacturer]”) provided approximately 52 % and 42 % of the Company …

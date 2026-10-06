@@ -1,0 +1,20 @@
+app/cli.py:108:    """Scenarios, economics and recommendation for a recorded run on Slope's terms; writes scenarios.json and
+app/cli.py:126:    for view, rec in summary["recommendation"].items():
+app/web/templates/run.html:35:  {% for view in d.views %}{% set r = d.recommendation[view] %}
+app/web/viewmodel.py:164:    views = list(s["recommendation"])
+app/web/viewmodel.py:166:    shown = {r["structure"] for r in s["recommendation"].values()}
+app/web/viewmodel.py:192:           for view, r in s["recommendation"].items()}
+app/web/viewmodel.py:193:    return {"views": views, "rows": rows, "recommendation": rec, "conditions": s["conditions"], "tier": s["tier"],
+app/disputes/evaluate.py:215:                              "The event-adjusted recommendation stays incomplete for this dispute.")
+app/disputes/evaluate.py:246:                          "The event-adjusted recommendation stays incomplete for this dispute.")
+app/disputes/evaluate.py:251:                          "The event-adjusted recommendation stays incomplete for this dispute.")
+app/decisions/scenarios.py:258:    """The decision view: recommendation per view, then per structure: policy, and per scenario its dated collections
+app/decisions/scenarios.py:263:           "horizon": comp.horizon.isoformat(), "recommendation": recs, "structures": {}}
+app/decisions/scenarios.py:320:    rises), and names the next grid amount above the recommendation and why it fails."""
+app/decisions/__init__.py:1:"""Decision comparison: bank-only vs event-adjusted scenarios, Slope structures, lender economics, recommendation."""
+app/decisions/case.py:50:def conditions(disputes: list[DisputeInstance], inputs: dict, recommendation: dict | None = None) -> list[dict]:
+app/decisions/case.py:55:    needs = (recommendation or {}).get("requested_needs")
+app/decisions/case.py:101:    last_view = list(summary["recommendation"])[-1]
+app/decisions/case.py:104:        summary["recommendation"][last_view]["incomplete"] = unmodelled
+app/decisions/case.py:122:        "conditions": conditions(disputes, inputs, summary["recommendation"][last_view]),
+app/agent/tools.py:685:    views = list(s["recommendation"])

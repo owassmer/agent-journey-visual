@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"rg -n 'class _DepthCache|def situation\\(|def trace\\(|def _served|SIBLINGS|def uses_appeal_status|def new_node|def texts\\(' app/disputes/forecast.py; rg -n 'context|watch|class|appeal' tests/test*decision* tests/test*context* tests/test*refinement* 2>/dev/null | head -65; rg --files var/decision-state-review | rg '(profile|result|benchmark)' | head -20",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:2300}),
+tools.exec_command({cmd:"aws sts get-caller-identity --profile slope --region us-east-2 --query Account --output text",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",yield_time_ms:1000,max_output_tokens:400})
+]);for(let i=0;i<results.length;i++)text({i,result:results[i]});

@@ -1,0 +1,120 @@
+1	"""Scoped MCP tools for one investigation run (spec §7; agent_config tools section).
+2	
+3	Every handler is bound to one run: its event store, its admissible snapshot, its locked inputs and (in
+4	the agent-plus-Jev arm) its semantic layer. Arguments are object IDs, queries and agent-authored
+5	propositions; no tool accepts a path, database, snapshot, cutoff, raw Jev state or question ID.
+6	
+7	Host rules enforced here:
+8	- search results are always all returned; in the Jev arm each carries its screen label;
+9	- a finding cites verbatim quotes; in the Jev arm every finding gets finding_check before resolution;
+10	- accepting a finding requires a disposition for each linked observation, a reasoned override for
+11	  any unsettled answer, and never accepts an ambiguous entity_scope answer;
+12	- effects are validated against accepted findings and re-verified spans; Jev never activates one;
+13	- sensitivities are deterministic finance-engine calls over explicit inputs.
+14	"""
+15	
+16	from __future__ import annotations
+17	
+18	import json
+19	import re
+20	from dataclasses import dataclass, field
+21	from decimal import Decimal
+22	from typing import Any
+23	
+24	from claude_agent_sdk import create_sdk_mcp_server, tool
+25	
+26	from app.agent.jev import registry_question
+27	from app.agent.jev_profiles import Semantics, is_ambiguous
+28	from app.agent.meanings import NOT_SETTLED, meaning
+29	from app.agent.mission import project_mission
+30	from app.agent.run_store import RunStore
+31	from app.agent.sweep import chunks
+32	from app.config import ConfigurationError
+33	from app.domain.investigation import (
+34	    AtomicFinding,
+35	    DecisionDependency,
+36	    Disposition,
+37	    EconomicEffectProposal,
+38	    EvidenceCandidate,
+39	    InventoryItem,
+40	    ParameterRequirement,
+41	    ReconciliationTask,
+42	    SemanticObservation,
+43	    validate_effect,
+44	)
+45	from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit, assumed, documented, unknown
+46	from app.evidence.spans import SpanError, locate, verify
+47	from app.evidence.store import EvidenceAccessError, EvidenceStore
+48	from app.finance.fixed_installment import FixedInstallmentOffer
+49	from app.finance.thresholds import remaining_period_required_net_cash
+50	
+51	MAX_SEARCH_RESULTS = 12
+52	DEFAULT_SEARCH_RESULTS = 8
+53	RELATION_CHECKS_PER_ACCEPTANCE = 1  # most recent accepted finding under the same dependency
+54	# Category-error guard (code-owned): the semantic status a finding must have to support each mechanism.
+55	CATEGORY_RULES: dict[str, tuple[str, str, set[str], set[str]]] = {
+56	    # mechanism: (subject_kind, status question, allowed statuses, allowed postures)
+57	    "settlement_payment_timing": ("obligation", "obligation_status", {"required"},
+58	                                  {"agreed_contractually", "imposed_by_court_or_authority", "reported_completed"}),
+59	    "resolved_obligation": ("obligation", "obligation_status", {"reported_satisfied"}, {"reported_completed"}),
+60	    "restricted_funds": ("cash_pool", "cash_access", {"access_prohibited", "access_limited"},
+61	                         {"agreed_contractually", "imposed_by_court_or_authority", "reported_completed"}),
+62	    "operating_interruption": ("activity", "activity_status", {"unavailable", "limited"},
+63	                               {"reported_completed", "imposed_by_court_or_authority", "agreed_contractually"}),
+64	    "expense_funding": ("offset", "offset_status", {"committed", "committed_subject_to_condition", "received_or_paid_for_borrower"},
+65	                        {"agreed_contractually", "reported_completed"}),
+66	}
+67	POSTURE_ONLY = {"funding_constraint", "receipt_delay"}  # posture must not be an allegation, plan or unknown
+68	TREATMENT_MEANING = {
+69	    "already_in_baseline_reclassify_timing": "an obligation already in the balance sheet is placed on a dated payment calendar, counted once",
+70	    "new_to_baseline": "a new cash stream is added to the model",
+71	    "remove_from_baseline": "an item is removed from the model's future cash streams",
+72	    "normalization_only": "historical earnings are normalized; no cash stream is created or removed",
+73	    "exclude_already_paid_obligation": "a paid obligation creates no future cash outflow in the model",
+74	    "modify_available_funding": "the amount of cash or financing treated as available is reduced or limited in the model",
+75	}
+76	MAX_TEXT = 20_000
+77	OVERRIDE_NOTE_MIN = 20
+78	
+79	
+80	class ToolError(Exception):
+81	    """A rejected call; the message goes back to the agent."""
+82	
+83	
+84	@dataclass
+85	class RunContext:
+86	    run: RunStore
+87	    evidence: EvidenceStore
+88	    inputs: dict[str, Any]
+89	    arm: str  # "agent_plus_jev" | "agent_only"
+90	    semantics: Semantics | None = None
+91	    incomplete_reasons: list[str] = field(default_factory=list)
+92	    configuration_failure: str | None = None
+93	    submitted: bool = False
+94	    turns_used: int = 0
+95	    max_turns: int | None = None
+96	    accepted_order: list[str] = field(default_factory=list)
+97	
+98	    @property
+99	    def case_id(self) -> str:
+100	        return self.inputs["case_id"]
+101	
+102	
+103	def _obs_view(o: SemanticObservation) -> dict[str, Any]:
+104	    view = {"observation_id": o.observation_id, "question": registry_question(o.question_id)["question"],
+105	            "question_id": o.question_id, "answer": o.answer, "meaning": meaning(o.question_id, o.answer),
+106	            "ambiguous": is_ambiguous(o)}
+107	    if o.probabilities:
+108	        view["judgment_distribution"] = {k: round(v, 2) for k, v in o.probabilities.items()}
+109	    if o.noul_value is not None:
+110	        view["judgment_value"] = round(o.noul_value, 2)
+111	    return view
+112	
+113	
+114	def _unsettled(o: SemanticObservation) -> bool:
+115	    return is_ambiguous(o) or o.answer in NOT_SETTLED.get(o.question_id, set())
+116	
+117	
+118	def _record_jev_failure(ctx: RunContext, e: Exception) -> None:
+119	    """Any semantic-layer failure makes the run incomplete; an unexpected Jev model is a configuration failure."""
+120	    if isinstance(e, ConfigurationError):

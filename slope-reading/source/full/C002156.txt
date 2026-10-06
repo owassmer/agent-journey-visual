@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && git fetch -q && git status -sb | head -2 && sed -n 925,960p app/disputes/forecast.py && echo ---EV && sed -n 600,665p app/analysis/events.py && echo ---PAGE && sed -n 875,900p app/analysis/page.py && echo ---JS && sed -n 295,332p app/web/static/page.js"}

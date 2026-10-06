@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"cat /tmp/check_recovery_date_witness.py; sed -n '1,100p' tests/akoustis_20240514_fixture.py; git rev-parse HEAD HEAD^{tree}; cat .github/workflows/ci.yml 2>/dev/null; ls /tmp/*11* /tmp/*6910*","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3500}));
+text(ALL_TOOLS.filter(x=>/github_(list.*branch|fetch.*run|search|fetch$)/.test(x.name)).map(x=>({name:x.name,description:x.description.slice(0,180)})));

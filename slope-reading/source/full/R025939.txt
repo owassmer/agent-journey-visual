@@ -1,0 +1,46 @@
+The later facility payoff coincided with an equity raise. Do not attribute it solely to lawsuit resolution or operating performance. [B2–B3] This case proves the engine can handle an operating mechanism, rather than only a settlement-payment schedule.
+
+## 4. The demonstration experience
+
+The operator opens a **financing decision**, not a lawsuit dashboard.
+
+1. **Decision header:** real borrower, as-of date, proposed amount/use, term, price and existing exposure. Show whether each input is sourced, operator-supplied or unresolved.
+2. **Baseline:** dated opening cash, operating cash budget, existing debt service and proposed contractual payments. Show existing missing inputs before research begins.
+3. **Investigation:** visible agent activity identifies the material event, connects entities and obligations, has Jev screen retrieved evidence and check narrow semantic claims, and chooses the next source based on its impact on the decision.
+4. **Economic changes:** a short list such as “assign existing settlement debt to H2 payment periods,” “remove noncash historical gain,” and “exclude already-paid legal matter.” Each expands to evidence and calculations.
+5. **Offer comparison:** requested draw and alternative amount/term structures, with cash-buffer breaches, conditional unpaid amounts, timing and economics. A specific condition identifies what must be established before a named offer can be funded.
+6. **Loan cash flows:** contractual payments, baseline modeled collections and event-conditioned collections on the same dates. Conditional curves are not labeled expected unless weights are supplied.
+7. **Capital view:** date-by-date collection changes, additional principal outstanding and extra funding required relative to baseline. With no actual portfolio tape, display this loan’s marginal contribution rather than a fictitious portfolio.
+8. **Outcome reveal:** after locking the analysis, show subsequent payment/refinancing evidence in a separate panel.
+
+The leading result should read like: “The requested schedule breaches the selected cash buffer under the early settlement scenario. This alternative clears the modeled payment constraints if the documented payment calendar and opening cash reconcile.” The completed engine fills the actual amount, dates, binding condition and calculations. Do not hard-code a favorable or adverse result into the UI.
+
+For the public-data demonstration, default to **conditional thresholds and an editable assumptions panel**, not fabricated daily bank transactions. A fuller borrower cash-flow object can later replace assumptions without changing the product.
+
+## 5. From evidence to a modeled adjustment
+Principal collections are return of capital, not revenue. Do not average scenario IRRs; omit IRR where no unique meaningful solution exists. Do not subtract a funding cost twice through both the cash ledger and discount hurdle.
+
+Display unpaid contractual amounts, outstanding principal where allocable, delayed capital return, outstanding principal dollar-days, minimum borrower liquidity, cash shortfall timing, NPV change, and unresolved exposure at the horizon. Recovery needs an explicit supported source, timing, costs and competing claims; unknown recovery is not zero or 100%.
+
+Export date-level loan vectors: scenario, action, borrower, loan, currency, disbursement, principal/interest/fee collections when known, total collections, outstanding exposure, unresolved amounts and assumptions. Portfolio aggregation sums compatible date vectors and shares the borrower’s cash pool across its loans. Do not spend the same dollar twice.
+
+**Capital-markets scope for V1:** show the loan’s marginal change in collections and funding needs. Defer a warehouse engine until actual eligibility, advance rates, reserves, concentration tests, sweeps and paydown rules are supplied. A publicly announced facility size is not drawable availability or a complete capital structure.
+
+## 7. Agent and Jev foundation
+
+### Runtime decision
+
+Use the official Claude Agent SDK with native Claude subscription authentication for the primary investigation. Use Codex with saved ChatGPT sign-in for independent review. There is no required Anthropic/OpenAI API key and no automatic paid-provider fallback. Official documentation was checked for the subscription paths; account limits still apply. Jev is a separate TypeSafe service and can incur its own usage charges. [R1–R4, J1]
+
+This is a local personal demonstration. Public sharing uses recorded runs with credentials removed. A shared live backend is a separate deployment and account decision.
+
+| Configuration | Decision and reason |
+|---|---|
+| Primary model | `claude-opus-5-5`, high effort, subject to local account availability; record actual returned model ID |
+| Claude Agent SDK | Start from source-verified `0.2.159`; lock exact resolved dependencies after local authentication/tool smoke test |
+| Reviewer | Codex subscription session, fresh context, available model recorded; no fictional exact Codex version pin |
+| Alternate reviewer | Fresh Claude context only if selected explicitly; do not silently switch after a reviewer failure |
+| Jev | `jev-1.13.0` via direct `typesafe-sdk==0.7.1`; preserve complete response and model metadata |
+| PydanticAI agent loop | Omit; native subscription runtimes serve this requirement directly |
+| Data/domain validation | Keep Pydantic and JSON Schema independently of agent framework |
+| Tool integration | Small custom MCP server; no general shell/filesystem/browser tools for historical investigation |

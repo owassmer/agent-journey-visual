@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '1,185p' tests/test_pooled_flow.py\nsed -n '1,180p' tests/test_pipeline.py\nrg -n 'snapshot_info' app/evidence/service.py app/evidence/*.py | head -15",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:3700}));

@@ -1,0 +1,85 @@
+228	
+229	class FactorResult(Frozen):
+230	    """One factor of the dispute model, established from the findings routed to it. Unknown stays unknown."""
+231	
+232	    factor_id: str
+233	    label: str
+234	    kind: Literal["graded", "present"]
+235	    level: int | None = None  # graded: the most advanced rubric level a finding establishes; present: 1 or 0
+236	    level_label: str = "unknown"
+237	    finding_ids: tuple[str, ...] = ()
+238	    observation_ids: tuple[str, ...] = ()
+239	
+240	
+241	class TransitionJudgment(Frozen):
+242	    """Jev's conditional judgment of what happens next at one stage, given the path so far (its premise)."""
+243	
+244	    stage: str
+245	    premise: tuple[str, ...] = ()  # transition IDs taken so far on this path
+246	    weights_bps: dict[str, int] = Field(default_factory=dict)  # transition_id -> conditional weight; empty if not judged
+247	    initial_weights_bps: dict[str, int] = Field(default_factory=dict)  # before refinement, when refined
+248	    uncertain: bool = False
+249	    decision_relevant: bool = False
+250	    refined: bool = False  # re-asked with factor results
+251	    factor_ids: tuple[str, ...] = ()
+252	    observation_ids: tuple[str, ...] = ()
+253	
+254	
+255	class DisputePath(Frozen):
+256	    """One root-to-leaf path through the model: its transitions, product weight and rule-derived cash."""
+257	
+258	    path_id: str
+259	    transitions: tuple[str, ...]
+260	    labels: tuple[str, ...]
+261	    terminal: str
+262	    weight_bps: int | None  # product of conditional weights, renormalised after pruning; None when not judged
+263	    cash: tuple[BranchCash, ...] = ()
+264	
+265	
+266	class EvidenceRequest(Frozen):
+267	    """Irreducible uncertainty turned into an action for the reviewer: what to obtain and what changes either way."""
+268	
+269	    factor_id: str
+270	    action: str
+271	    if_satisfied: str
+272	    if_not: str
+273	
+274	
+275	class DisputeInstance(Frozen):
+276	    """A live dispute instantiated onto the host-owned dispute model. The agent supplies the findings, the borrower's
+277	    side, the counterparty and the documented amount; Jev places the stage and weighs transitions; code sets every
+278	    date and amount from the model's rules and composes the paths."""
+279	
+280	    instance_id: str
+281	    dependency_id: str
+282	    model_id: str
+283	    model_version: str
+284	    title: str
+285	    borrower_role: Literal["debtor", "creditor"]
+286	    counterparty: str
+287	    finding_ids: tuple[str, ...] = Field(min_length=1)
+288	    amount: EvidenceValue
+289	    amount_includes_interest: bool = False  # the documented amount already includes post-judgment interest
+290	    judgment_date: date | None = None
+291	    stage: str | None = None
+292	    stage_weights_bps: dict[str, int] = Field(default_factory=dict)
+293	    factors: tuple[FactorResult, ...] = ()
+294	    transitions: tuple[TransitionJudgment, ...] = ()
+295	    paths: tuple[DisputePath, ...] = ()
+296	    pruned_weight_bps: int = 0
+297	    evidence_requests: tuple[EvidenceRequest, ...] = ()
+298	    proposed_extension: str = ""  # flagged for the reviewer; never used by the host
+299	    status: Literal["evaluated", "outside_model", "not_judged", "superseded"] = "evaluated"
+300	    superseded_by: str = ""
+301	    observation_ids: tuple[str, ...] = ()
+302	    validation_messages: tuple[str, ...] = ()
+303	
+304	
+305	EventKind = Literal[
+306	    "run_started", "dependency_recorded", "search", "candidate_screened", "evidence_read", "jev_call",
+307	    "observation_recorded", "observation_disposition", "finding_proposed", "finding_resolved",
+308	    "reconciliation_opened", "reconciliation_resolved", "effect_proposed", "effect_validated",
+309	    "sensitivity_run", "missing_fact_requested", "packet_submitted", "run_failed",
+310	    "inventory_loaded", "inventory_accounted", "conclusion_checked", "effect_disputed", "cited_units_checked",
+311	    "dispute_instantiated", "scenarios_run",
+312	]

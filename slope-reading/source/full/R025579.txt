@@ -1,0 +1,37 @@
+36 groups
+15 legal_matter_o t_20230227 
+1 debt_or_financ t_20240501 
+1 debt_or_financ t_20240501 1. Definitions
+1 debt_or_financ a_20240813 PROSPECTUS SUMMARY > Relationships with Knight Therapeutics
+1 covenant_or_re a_20240813 e of our common stock to drop significantly, even if our business is doing well.
+1 accounting_ite a_20240813 esults of Operations for the Years Ended December 31, 2023 and December 31, 2022
+1 debt_or_financ a_20240813  FINANCIAL CONDITION AND RESULTS OF OPERATIONS > Liquidity and Capital Resources
+1 legal_matter_o a_20240813 BUSINESS > Legal Proceedings
+1 debt_or_financ a_20240813 CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS
+1 covenant_or_re a_20240813 SHARES ELIGIBLE FOR FUTURE SALE > Lock-up Agreements
+1 debt_or_financ a_20240813 UNDERWRITING
+1 covenant_or_re a_20240813 UNDERWRITING > Underwriter Warrants
+1 cash_restricti a_20240813 DATED FINANCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies
+1 accounting_ite a_20240813 DATED FINANCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies
+1 accounting_ite a_20240813 TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 3 — Income Taxes
+1 accounting_ite a_20240813 DITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 4 — Accounts Receivable
+1 accounting_ite a_20240813 ES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 7 — Inventory
+1 accounting_ite a_20240813 AUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 8 — Intangible Assets
+3 debt_or_financ a_20240813 ONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 9 — Related Party Transactions
+1 accounting_ite a_20240813 IDATED FINANCIAL STATEMENTS > Note 10 — Accounts Payable and Accrued Liabilities
+8 debt_or_financ a_20240813  UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+1 legal_matter_o a_20240813 DENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 13 — Commitments & Contingencies
+1 accounting_ite a_20240813  UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 14 — Stock Options
+1 debt_or_financ a_20240813 UDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 16 — Subsequent Events
+1 cash_restricti a_20240813 DATED FINANCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies
+1 accounting_ite a_20240813 RGY CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 3 — Income Taxes
+1 accounting_ite a_20240813  CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 4 — Accounts Receivable
+1 accounting_ite a_20240813 YNERGY CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 7 — Inventory
+1 accounting_ite a_20240813  CONSOLIDATED FINANCIAL STATEMENTS > Note 8 — Fixed Assets and Intangible Assets
+2 debt_or_financ a_20240813 NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 9 — Related Party Transactions
+1 accounting_ite a_20240813 IDATED FINANCIAL STATEMENTS > Note 10 — Accounts Payable and Accrued Liabilities
+8 debt_or_financ a_20240813 Y CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+1 legal_matter_o a_20240813 S TO CONSOLIDATED FINANCIAL STATEMENTS > Note 13 — Commitments and Contingencies
+1 accounting_ite a_20240813 Y CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 14 — Stock Options
+1 debt_or_financ a_20240813 C CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 16 — Subsequent Events
+1 debt_or_financ a_20240813 Item 15. Recent Sales of Unregistered Securities

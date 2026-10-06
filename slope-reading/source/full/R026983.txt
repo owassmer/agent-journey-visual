@@ -1,0 +1,110 @@
+1	"""Scenario engine: how each Slope financing structure performs, bank-only and along the disputes' paths.
+2	
+3	Views (matched pair; common inputs identical, only the dispute paths differ):
+4	  - bank_only: the connected-bank projection and the financing action.
+5	  - event_adjusted: the same, plus one path from each dispute (the generic dispute model gives each dispute its
+6	    root-to-leaf paths with conditional weights; distinct disputes are combined as independent, labelled). Each path's
+7	    cash is placed two ways: `stress` (outflows and locks at the window start at the high amount; inflows at the
+8	    window end at the low amount) and `central` (window midpoint, midpoint amount).
+9	
+10	The financing action: Slope pays the supplier up to the financed amount on the funding date; the borrower pays any
+11	remainder of the invoice itself on its due date (all of it if Slope declines), then repays Slope on the structure's
+12	schedule. Collections (declared rule): ACH autopay takes each scheduled payment when available cash covers it;
+13	otherwise it takes the available cash and retries the rest at the next month-end (catch-up).
+14	
+15	Weighted (expected) figures use path weights (products of Jev's conditional judgments, labelled model judgment).
+16	Every conditional result is kept beside them. Money is integer cents; rates are Decimal.
+17	"""
+18	
+19	from __future__ import annotations
+20	
+21	import itertools
+22	from dataclasses import dataclass, field
+23	from datetime import date, timedelta
+24	from decimal import Decimal
+25	
+26	from app.domain.investigation import DisputePath
+27	from app.domain.values import cents_round, usd
+28	from app.finance.bank import BankFeed, projection, risk_features
+29	from app.finance.slope_products import BPS, SlopeOffer, limits, menu, offer, term_spec, tier_for
+30	from app.finance.valuation import present_value_cents
+31	
+32	HORIZON_DAYS = 180
+33	AMOUNT_STEP_CENTS = 1_000_000  # supported amounts are sized on a USD 10k grid
+34	
+35	
+36	@dataclass(frozen=True)
+37	class Request:
+38	    amount_cents: int  # the invoice
+39	    invoice_due: date  # when the borrower would pay the supplier itself
+40	    funding: date  # when Slope pays the supplier
+41	    requested_term_id: str
+42	
+43	
+44	@dataclass
+45	class Scenario:
+46	    """One combination of dispute paths (empty for bank-only) under one cash placement."""
+47	    view: str
+48	    path_ids: tuple[str, ...]
+49	    labels: tuple[str, ...]
+50	    weight_bps: int | None
+51	    placement: str
+52	    cash: tuple = ()
+53	
+54	
+55	@dataclass
+56	class Outcome:
+57	    """One structure in one scenario: daily-cash low point, payments and what Slope collects."""
+58	    scenario: Scenario
+59	    structure: str
+60	    min_cash_cents: int = 0
+61	    min_cash_on: date | None = None
+62	    collections: list[tuple[date, int]] = field(default_factory=list)
+63	    shortfall_cents: int = 0
+64	    payment_dates: list[tuple[date, int, int]] = field(default_factory=list)  # (due, scheduled, cash after payment)
+65	
+66	
+67	def _place(amount, window_start: date, window_end: date, kind: str, placement: str) -> tuple[date, int]:
+68	    lo = amount.value if amount.value is not None else amount.lower
+69	    hi = amount.value if amount.value is not None else amount.upper
+70	    if placement == "stress":
+71	        return (window_start, hi) if kind in ("outflow", "lock") else (window_end, lo)
+72	    mid = window_start + (window_end - window_start) / 2
+73	    return mid, (lo + hi) // 2
+74	
+75	
+76	def _product(weights: list[int]) -> Decimal:
+77	    p = Decimal(1)
+78	    for w in weights:
+79	        p *= Decimal(w) / BPS
+80	    return p
+81	
+82	
+83	def _combination_weights(combos: list[tuple[DisputePath, ...]]) -> list[int | None]:
+84	    """Products of the disputes' path weights (combined as independent), in basis points summing to exactly 10,000."""
+85	    if any(p.weight_bps is None for combo in combos for p in combo):
+86	        return [None] * len(combos)
+87	    raw = [_product([p.weight_bps for p in combo]) * BPS for combo in combos]
+88	    out = [int(r.to_integral_value()) for r in raw]
+89	    out[out.index(max(out))] += 10_000 - sum(out)
+90	    return out
+91	
+92	
+93	def scenarios(disputes: list[list[DisputePath]]) -> list[Scenario]:
+94	    views = [Scenario("bank_only", (), (), 10_000, "central")]
+95	    if not disputes:
+96	        return views
+97	    combos = list(itertools.product(*disputes))
+98	    for combo, w in zip(combos, _combination_weights(combos), strict=True):
+99	        cash = tuple(c for p in combo for c in p.cash)
+100	        for placement in (("stress", "central") if cash else ("central",)):
+101	            views.append(Scenario("event_adjusted", tuple(p.path_id for p in combo),
+102	                                  tuple(" → ".join(p.labels) for p in combo), w, placement, cash))
+103	    return views
+104	
+105	
+106	def simulate(feed: BankFeed, request: Request, structure: SlopeOffer | None, cash_items, placement: str,
+107	             horizon: date) -> tuple[dict[date, int], list[tuple[date, int]], int, list[tuple[date, int, int]]]:
+108	    """Daily available cash (after restricted cash) and Slope's collections under the declared autopay rule."""
+109	    flows: dict[date, int] = {}
+110	

@@ -1,0 +1,1 @@
+{"file_path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-2-evidence-ingestion/app/evidence/__init__.py", "content": "\"\"\"Evidence ingestion: source catalog admission, parsing, dated snapshot databases and read access.\"\"\"\n\nSNAPSHOTS = (\"synergy_20240813\", \"barfresh_20241025\")\n"}

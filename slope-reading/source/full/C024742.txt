@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory && echo \"- [Jev route settled](jev-route-settled.md) \u2014 don't raise Jev build-pin mismatch or untested direct TypeSafe again\" >> MEMORY.md && cd /Users/owenwassmer/dev/Slope_Sparse_Events && git fetch -q && git log --oneline origin/main -3"}

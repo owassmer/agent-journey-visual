@@ -1,0 +1,69 @@
+{'sections': 297, 'flagged': 67, 'unscreened': 0, 'chunks': 305} {'provider': 'openrouter', 'requests': 305, 'cache_hits': 0, 'physical_attempts': 305, 'attempt_ceiling': 800, 'spent_usd': '0.018632418', 'spend_cap_usd': '0.10'} 5 s
+Counter({'debt_or_financing_agreement': 30, 'legal_matter_or_settlement': 18, 'accounting_item_from_a_matter': 14, 'covenant_or_restriction': 3, 'cash_restriction': 2})
+0.96 legal_matter 20230227#s0000 Page 1
+0.94 legal_matter 20230227#s0001 Page 2
+0.94 legal_matter 20230227#s0002 Page 3
+0.92 legal_matter 20230227#s0003 Page 4
+0.88 legal_matter 20230227#s0004 Page 5
+0.92 legal_matter 20230227#s0006 Page 7
+0.83 legal_matter 20230227#s0007 Page 8
+0.86 legal_matter 20230227#s0008 Page 9
+0.88 legal_matter 20230227#s0009 Page 10
+0.74 legal_matter 20230227#s0010 Page 11
+0.93 legal_matter 20230227#s0011 Page 12
+0.78 legal_matter 20230227#s0012 Page 13
+0.87 legal_matter 20230227#s0013 Page 14
+0.86 legal_matter 20230227#s0014 Page 15
+0.77 legal_matter 20230227#s0015 Page 16
+0.97 debt_or_fina 20240501#s0000 
+0.66 debt_or_fina 20240501#s0001 1. Definitions
+0.98 debt_or_fina 20240813#s0027 PROSPECTUS SUMMARY > Relationships with Knight Therapeutics
+0.68 covenant_or_ 20240813#s0064 ommon stock to drop significantly, even if our business is doing well.
+0.80 accounting_i 20240813#s0083 Operations for the Years Ended December 31, 2023 and December 31, 2022
+0.99 debt_or_fina 20240813#s0084  CONDITION AND RESULTS OF OPERATIONS > Liquidity and Capital Resources
+0.99 legal_matter 20240813#s0121 BUSINESS > Legal Proceedings
+0.98 debt_or_fina 20240813#s0142 CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS
+0.73 covenant_or_ 20240813#s0153 SHARES ELIGIBLE FOR FUTURE SALE > Lock-up Agreements
+0.67 debt_or_fina 20240813#s0160 UNDERWRITING
+0.55 covenant_or_ 20240813#s0164 UNDERWRITING > Underwriter Warrants
+0.79 cash_restric 20240813#s0183 NCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies
+0.62 accounting_i 20240813#s0185 NCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies
+0.85 accounting_i 20240813#s0191 ED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 3 — Income Taxes
+0.55 accounting_i 20240813#s0192 ENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 4 — Accounts Receivable
+0.91 accounting_i 20240813#s0195 DITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 7 — Inventory
+0.80 accounting_i 20240813#s0196 NDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 8 — Intangible Assets
+0.98 debt_or_fina 20240813#s0197 ONSOLIDATED FINANCIAL STATEMENTS > Note 9 — Related Party Transactions
+0.99 debt_or_fina 20240813#s0198 ONSOLIDATED FINANCIAL STATEMENTS > Note 9 — Related Party Transactions
+0.98 debt_or_fina 20240813#s0199 ONSOLIDATED FINANCIAL STATEMENTS > Note 9 — Related Party Transactions
+0.50 accounting_i 20240813#s0200 ANCIAL STATEMENTS > Note 10 — Accounts Payable and Accrued Liabilities
+0.97 debt_or_fina 20240813#s0201  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.98 debt_or_fina 20240813#s0202  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.98 debt_or_fina 20240813#s0203  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 debt_or_fina 20240813#s0204  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.98 debt_or_fina 20240813#s0205  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 debt_or_fina 20240813#s0206  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 debt_or_fina 20240813#s0207  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.98 debt_or_fina 20240813#s0208  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 legal_matter 20240813#s0210 SOLIDATED FINANCIAL STATEMENTS > Note 13 — Commitments & Contingencies
+0.74 accounting_i 20240813#s0212  CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 14 — Stock Options
+0.96 debt_or_fina 20240813#s0214 DENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 16 — Subsequent Events
+0.69 cash_restric 20240813#s0226 NCIAL STATEMENTS > Note 2 — Summary of Significant Accounting Policies
+0.82 accounting_i 20240813#s0234 RP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 3 — Income Taxes
+0.66 accounting_i 20240813#s0235 ES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 4 — Accounts Receivable
+0.94 accounting_i 20240813#s0239  CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 7 — Inventory
+0.74 accounting_i 20240813#s0240 TED FINANCIAL STATEMENTS > Note 8 — Fixed Assets and Intangible Assets
+0.98 debt_or_fina 20240813#s0242 ONSOLIDATED FINANCIAL STATEMENTS > Note 9 — Related Party Transactions
+0.98 debt_or_fina 20240813#s0243 ONSOLIDATED FINANCIAL STATEMENTS > Note 9 — Related Party Transactions
+0.87 accounting_i 20240813#s0245 ANCIAL STATEMENTS > Note 10 — Accounts Payable and Accrued Liabilities
+0.98 debt_or_fina 20240813#s0246 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.98 debt_or_fina 20240813#s0247 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 debt_or_fina 20240813#s0248 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.98 debt_or_fina 20240813#s0249 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 debt_or_fina 20240813#s0250 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 debt_or_fina 20240813#s0251 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.98 debt_or_fina 20240813#s0252 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.94 debt_or_fina 20240813#s0253 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+0.99 legal_matter 20240813#s0255 LIDATED FINANCIAL STATEMENTS > Note 13 — Commitments and Contingencies
+0.61 accounting_i 20240813#s0256 . NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 14 — Stock Options
+0.99 debt_or_fina 20240813#s0259 TES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 16 — Subsequent Events
+0.94 debt_or_fina 20240813#s0265 Item 15. Recent Sales of Unregistered Securities

@@ -1,0 +1,2 @@
+// @exec: {"max_output_tokens": 6000}
+text((await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport re,json\nfor b in ['extra_context','contracts','delegation']:\n s=Path(b+'_bundle.txt').read_text()\n print(b)\n if b=='delegation': print(s[:3500]);continue\n for m in re.finditer(r'^FILE (.*)$',s,re.M): print(m.start(),m.group(1))\ns=json.loads(Path('delegation.json').read_text());print('delegation type',type(s),str(s)[:1000])\nPY",workdir:load("digestDir"),max_output_tokens:6000})).output);

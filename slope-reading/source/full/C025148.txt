@@ -1,0 +1,1 @@
+{"subject": "Semantic eval set, live run, tests, PR", "description": "evals/jev_semantic_cases.json (~15-20 cases both borrowers), slope jev eval command run live once; tests for isolation/spans/no-cash/cache/agent-only; commit, PR, independent review, merge-ready", "activeForm": "Running semantic eval and shipping 4a"}

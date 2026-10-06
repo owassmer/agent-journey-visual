@@ -1,0 +1,6 @@
+// @exec: {"max_output_tokens": 14000}
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"python3 read.py worker_additional 0 30000",workdir:load("digestDir"),max_output_tokens:12000}),
+  tools.exec_command({cmd:"rg --files -g '*manifest*' -g '*inventory*' -g '*read*' -g '*coverage*' -g '*bundle*'",workdir:load("digestDir"),max_output_tokens:1500})
+]);
+for(const r of results) text(r.status === "fulfilled" ? r.value.output : String(r.reason));

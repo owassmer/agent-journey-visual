@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/reground/pr18_fixes_comment.md", "old_string": "removed with the page (see the page PR).", "new_string": "6b23481 on the page branch attaches a remittitur only to a component the court has awarded, so the D.I. 616-1 figure no longer reaches the 14 May case terms (see the page PR)."}

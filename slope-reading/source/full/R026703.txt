@@ -1,0 +1,49 @@
+app/domain/investigation.py:24:Disposition = Literal["used_in_finding", "caused_more_context_read", "caused_research_redirect", "flagged_conflict",
+app/domain/investigation.py-25-                      "challenged_agent_draft", "overridden_by_agent_with_reason", "unused"]
+app/domain/investigation.py-26-SubjectKind = Literal["obligation", "cash_pool", "activity", "offset", "other"]
+app/domain/investigation.py-27-ScreenRoute = Literal["direct_evidence", "conflict", "unscreened", "context_only", "instruction_flagged"]
+app/domain/investigation.py-28-Mechanism = Literal[
+app/domain/investigation.py-29-    "settlement_payment_timing",  # existing liability assigned to dated outflows
+app/domain/investigation.py-30-    "noncash_normalization",  # historical earnings adjustment; never a cash stream
+app/domain/investigation.py-31-    "receipt_delay",
+app/domain/investigation.py-32-    "operating_interruption",
+app/agent/tools.py:110:def _obs_view(o: SemanticObservation) -> dict[str, Any]:
+app/agent/tools.py-111-    view = {"observation_id": o.observation_id, "question": registry_question(o.question_id)["question"],
+app/agent/tools.py-112-            "question_id": o.question_id, "answer": o.answer, "meaning": meaning(o.question_id, o.answer),
+app/agent/tools.py-113-            "ambiguous": is_ambiguous(o)}
+app/agent/tools.py-114-    if o.probabilities:
+app/agent/tools.py-115-        view["judgment_distribution"] = {k: round(v, 2) for k, v in o.probabilities.items()}
+app/agent/tools.py-116-    if o.noul_value is not None:
+app/agent/tools.py-117-        view["judgment_value"] = round(o.noul_value, 2)
+app/agent/tools.py-118-    return view
+--
+app/agent/tools.py:125:def _record_jev_failure(ctx: RunContext, e: Exception) -> None:
+app/agent/tools.py-126-    """Any semantic-layer failure makes the run incomplete; an unexpected Jev model is a configuration failure."""
+app/agent/tools.py-127-    if isinstance(e, ConfigurationError):
+app/agent/tools.py-128-        ctx.configuration_failure = str(e)
+app/agent/tools.py-129-    reason = f"Jev unavailable ({type(e).__name__}): {e}"[:300]
+app/agent/tools.py-130-    if reason not in ctx.incomplete_reasons:
+app/agent/tools.py-131-        ctx.incomplete_reasons.append(reason)
+app/agent/tools.py-132-
+app/agent/tools.py-133-
+--
+app/agent/tools.py:161:def _review_date(ctx: RunContext) -> date:
+app/agent/tools.py-162-    return date.fromisoformat(str(ctx.evidence.snapshot_info()["cutoff"])[:10])
+app/agent/tools.py-163-
+app/agent/tools.py-164-
+app/agent/tools.py-165-async def read_baseline_profile(ctx: RunContext, _args: dict) -> dict:
+app/agent/tools.py-166-    from app.decisions.case import is_slope_case
+app/agent/tools.py-167-
+app/agent/tools.py-168-    if is_slope_case(ctx.inputs):
+app/agent/tools.py-169-        from app.finance.bank import load_feed, summary
+--
+app/agent/tools.py:760:def _dispose(ctx: RunContext, observations: list[SemanticObservation], disposition: str, note: str) -> None:
+app/agent/tools.py-761-    for o in observations:
+app/agent/tools.py-762-        current = ctx.run.get("observations", o.observation_id)
+app/agent/tools.py-763-        ctx.run.put("observation_disposition", current.model_copy(update={"downstream_disposition": disposition,
+app/agent/tools.py-764-                                                                          "disposition_note": note}))
+app/agent/tools.py-765-
+app/agent/tools.py-766-
+app/agent/tools.py-767-def _attribute_screen(ctx: RunContext, finding: AtomicFinding) -> None:
+app/agent/tools.py-768-    """Reliance attribution: screen observations on passages this finding cites are recorded as used."""
+app/decisions/case.py:27:    return Request(amount_cents=inputs["run_inputs"]["requested_amount"]["value"],

@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/view_states.py /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/jev_states.json > /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/jev_view.txt; wc -c /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/jev_view.txt"}

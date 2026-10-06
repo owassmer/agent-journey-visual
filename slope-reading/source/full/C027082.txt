@@ -1,0 +1,1 @@
+{"command": "R=chromadex_20240819-agent_plus_jev-20260925T181022Z && uv run slope compare --run $R && uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/inspect_disputes.py $R && uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/errs.py 2>/dev/null | grep -A2 instantiate", "description": "Compare, inspect disputes and failed calls", "timeout": 600000}

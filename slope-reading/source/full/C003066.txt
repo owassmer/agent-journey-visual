@@ -1,0 +1,1 @@
+{"command": "cd ~/.claude/projects; ls -la -- ./-Users-owenwassmer-dev-Slope-Sparse-Events ./-Users-owenwassmer-dev-Slope-Sparse-Events--claude-worktrees-step-1-runtime-smoke; ls -la ./-Users-owenwassmer--hermes-services-claude-proxy-runtime | wc -l; ls -lat ./-Users-owenwassmer--hermes-services-claude-proxy-runtime | head -30"}

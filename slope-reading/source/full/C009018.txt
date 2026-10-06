@@ -1,0 +1,6 @@
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"sed -n '1,190p' app/cli.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3800}),
+ tools.exec_command({cmd:"cat app/web/app.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:2600}),
+ tools.exec_command({cmd:"python - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('runs/recorded/chromadex_20240819-agent_plus_jev-20260925T181022Z')\nr=json.loads((p/'run.json').read_text())\nprint('run keys',list(r))\nprint('status',r.get('status'))\nprint('record files',[(x.name,x.stat().st_size) for x in p.iterdir() if x.is_file()])\nt=json.loads(Path('cases/slope_terms.json').read_text())\nprint('capital',json.dumps(t.get('capital',t.get('capital_model')),indent=2))\nprint('terms keys',list(t))\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:1800}),
+ tools.exec_command({cmd:"gh pr view 8 --json headRefOid,state,labels",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:900})
+]);results.forEach((r,i)=>text({i,...r}));

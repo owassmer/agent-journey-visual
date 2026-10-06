@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"cat /tmp/slope-grounding-1ebb1026/dialogue-08.txt",max_output_tokens:8000}),
+ tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport json,collections\np=Path('/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events--claude-worktrees-step-5b-decision-model/1ebb1026-a1f0-4809-9321-bc3d6f875530.jsonl')\nrs=[json.loads(l) for l in p.open()]\nats=[x for x in rs if x.get('type')=='attachment']\nprint('attachment types',collections.Counter(x.get('attachment',{}).get('type') for x in ats))\nfor x in ats:\n a=x.get('attachment',{})\n if a.get('type') in ['queued_command','user_message']:\n  print(json.dumps(x))\nPY",max_output_tokens:1600})
+]);for(let i=0;i<results.length;i++)text({i,...results[i]});

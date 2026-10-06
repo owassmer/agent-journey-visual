@@ -1,0 +1,55 @@
+200
+Financing decision Engine result
+Bank data only
+$2,000,000.00, 3 monthly installments (90 days)
+Limit $3,624,901.09 (monthly bank inflows) · order limit $2,718,675.82 · lowest projected cash $24,956,363.55 on 2025-02-15
+With the disputes&#39; paths
+$1,430,000.00, 3 monthly installments (90 days) below the request
+Limit $1,909,118.03 (lowest projected cash) · order limit $1,431,838.52 · lowest projected cash $12,706,363.55 on 2025-02-15 in The debtor neither pays nor bonds → Not collected in the horizon / The court fixes the amount → The debtor appeals and posts a bond → The appeal continues (stress)
+Request: amount above the order limit of $1,429,465.90
+Conditions Count the $2,500,000.00 owed by Elysium Health, Inc. only once it is received. If satisfied: Received cash enters the connected-bank data and the next review. If not: The decision already stands on the paths where it is not received. Confirm how ChromaDex Corporation would secure a stay pending appeal of the $9,800,000.00 owed to Elysium Health, Inc. (cash collateral or a letter of credit), and for how much. If satisfied: The confirmed collateral replaces the modelled lock on the appeal paths. If not: The appeal paths keep 50% to 100% of a bond at 125% of the judgment locked (model rule). Confirm Western Alliance Bank&#39;s covenants permit this financing after the disputes&#39; cash effects. If satisfied: No further condition. If not: Decline until the lender consents.
+C.D. Cal. 8:16-cv-02277 final judgment: Elysium to pay ChromaDex $2.5M
+The borrower is owed Elysium Health, Inc. $2,500,000.00 · stage: Money judgment entered
+91% The debtor pays
+inflow $2,508,219.18 to $2,520,547.95 (Judgment paid), 2024-09-12 to 2024-10-12: The judgment amount plus post-judgment interest (28 U.S.C. § 1961), paid after the automatic stay (Fed. R. Civ. P. 62(a)), within 30 days. 6% The debtor neither pays nor bonds → Not collected in the horizon
+2% The debtor neither pays nor bonds → The creditor collects
+inflow $2,500,000.00 to $2,530,821.92 (Judgment collected), 2024-09-12 to 2024-12-11: The judgment amount plus post-judgment interest (28 U.S.C. § 1961), collected by enforcement (Fed. R. Civ. P. 69(a)), within 90 days. 1% The parties settle
+inflow $1,500,000.00 to $2,500,000.00 (Settlement payment), 2024-08-20 to 2024-11-11: 60% to 100% of the amount (model settlement range), paid within 90 days of the stage&#39;s start.
+Paths below 1% pruned: 0.2% of weight.
+D. Del. 1:18-cv-01434 attorney fee award to Elysium: liability granted, amount pending
+The borrower owes Elysium Health, Inc. $9,800,000.00 · stage: Liability decided, amount open · refined by factors at: amount_pending
+54% The court fixes the amount → The debtor appeals and posts a bond → The appeal continues
+lock $6,125,000.00 to $12,250,000.00 (Appeal bond collateral), 2024-08-20 to 2025-01-16: Supersedeas bond at 125% of the judgment (Fed. R. Civ. P. 62(b), model multiple), with 50% to 100% taken as cash collateral, posted before the automatic stay ends; held while the appeal is pending. 29% No ruling within the horizon
+14% The court fixes the amount → The debtor neither pays nor bonds → Not collected in the horizon
+3% The court fixes the amount → The debtor pays
+outflow $9,800,000.00 to $10,040,301.37 (Judgment paid), 2024-09-19 to 2025-02-15: The judgment amount plus post-judgment interest (28 U.S.C. § 1961), paid after the automatic stay (Fed. R. Civ. P. 62(a)), within 30 days. 1% The parties settle before the ruling
+outflow $5,880,000.00 to $9,800,000.00 (Settlement payment), 2024-08-20 to 2024-11-17: 60% to 100% of the amount (model settlement range), paid within 90 days of the stage&#39;s start.
+Paths below 1% pruned: 1.9% of weight.
+Factors (2) Jev How final the amount is: The amount has been fully briefed or submitted to the court for decision (fnd_002, fnd_003) Jev Settlement signals: unknown
+Transition weights are Jev&#39;s judgment of what the record supports (calibrated by TypeSafe to frontier-model consensus, not to observed litigation outcomes). Path weights are their products. Calibration against historical dockets is the roadmap. Distinct disputes are combined as independent.
+Structure Bank only With disputes
+Decline (borrower pays its supplier)
+passes
+lowest cash $25,030,363.55 passes
+lowest cash $12,780,363.55 $2,000,000.00, Net 30 fee $32,000.00 · 21.3% effective
+passes
+lowest cash $24,998,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,748,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,434,190.90 $2,000,000.00, Net 60 fee $60,000.00 · 19.0% effective
+passes
+lowest cash $24,970,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,720,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,431,040.90 $2,000,000.00, 2 monthly installments (60 days) fee $54,000.00 · 23.3% effective
+passes
+lowest cash $24,976,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,726,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,431,715.90 $2,000,000.00, 3 monthly installments (90 days) fee $74,000.00 · 24.1% effective
+passes
+lowest cash $24,956,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,706,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,429,465.90 $1,000,000.00, 3 monthly installments (90 days) fee $37,000.00 · 24.1% effective
+passes
+lowest cash $24,993,363.55 · repaid in full in 1 of 1 scenarios passes
+lowest cash $12,743,363.55 · repaid in full in 38 of 38 scenarios $1,500,000.00, 3 monthly installments (90 days) fee $55,500.00 · 24.1% effective
+passes
+lowest cash $24,974,863.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,724,863.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,431,547.15 $1,250,000.00, 3 monthly installments (90 days) fee $46,250.00 · 24.1% effective
+passes
+lowest cash $24,984,113.55 · repaid in full in 1 of 1 scenarios passes
+lowest

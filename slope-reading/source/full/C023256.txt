@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:".venv/bin/python -c 'import pickle; c=pickle.load(open(\"/tmp/refresh-control.pkl\",\"rb\")); print(type(c), list(c)[:12] if isinstance(c,dict) else \"\")'","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}));

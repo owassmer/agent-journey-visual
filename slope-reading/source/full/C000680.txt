@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-chains && grep -n \"Analysis(\\|EventModel(\\|def model_from\\|def event_model\\|combos\" tests/*.py app/analysis/build.py app/analysis/core.py | head -20; grep -n \"class Trajectories\" -A 30 app/analysis/engine.py | grep -E \"np.ndarray|:\" | head -30"}

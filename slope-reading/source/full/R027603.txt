@@ -1,0 +1,91 @@
+{
+ "funding": "next business day after the review date (Slope pays the supplier)",
+ "invoice_due_days_after_funding": 30,
+ "basis": "operator_request",
+ "note": "Slope pays the supplier up to the financed amount; ChromaDex pays any remainder of the invoice itself on its due date.",
+ "supplied_terms": {
+  "invoice_cents": 200000000,
+  "amount_cents": 200000000,
+  "installments": 3,
+  "days": 90,
+  "fee_bps": 370,
+  "discount_rate_bps": 800,
+  "product": "Slope bill-pay financing: Slope pays the supplier; the business repays in monthly installments by ACH"
+ }
+}
+dict_keys(['feed_id', 'provenance', 'borrower', 'accounts', 'restricted_cents', 'opening', 'period', 'transactions', 'daily_balances'])
+('marketing', 'Advertising platforms') 26 -2136.803 k/mo
+('payroll', 'Payroll (ADP)') 13 -1495.762 k/mo
+('contract_manufacturing', 'Contract manufacturers') 26 -1353.309 k/mo
+('ingredient_supply', 'W.R. Grace (NR ingredient)') 6 -712.268 k/mo
+('operations_other', 'Fulfilment, freight and other') 28 -498.587 k/mo
+('legal_fees', 'Litigation counsel') 6 -284.907 k/mo
+('research', 'Research and clinical vendors') 6 -284.907 k/mo
+('professional_fees', 'Other professional services') 6 -213.68 k/mo
+('rent', 'Landlord') 6 -142.454 k/mo
+('equity_proceeds', 'Stock option exercises') 1 99.667 k/mo
+('wholesale_receipts', 'Retail and distributor customers') 26 921.301 k/mo
+('ingredient_receipts', 'Ingredient customers (incl. related party)') 26 1346.517 k/mo
+('marketplace_payouts', 'Amazon Payments') 13 1488.256 k/mo
+('ecommerce_payouts', 'Shopify Payments') 130 3330.859 k/mo
+{'date': '2024-01-01', 'amount_cents': 12378620, 'counterparty': 'Shopify Payments', 'category': 'ecommerce_payouts', 'transaction_id': 'txn_00001'}
+"""Generate ChromaDex's connected-bank feed (synthetic reconstruction) from 1 Jan to 19 Aug 2024.
+
+Slope underwrites on connected bank data. ChromaDex's is not public, so this feed reconstructs it: daily,
+counterparty-tagged transactions whose quarterly totals match the public 10-Q anchors (cash including restricted cash
+of USD 27,325k at 31 Dec 2023, 27,565k at 31 Mar 2024, 27,885k at 30 Jun 2024; receipts equal to net sales less the
+increase in receivables; the stock-option proceeds in Q2). July and August continue the second-quarter pattern and
+use no later information. Seeded and deterministic: `uv run python cases/chromadex_20240819/make_bank_feed.py`.
+"""
+
+from __future__ import annotations
+
+import json
+import random
+from datetime import date, timedelta
+from pathlib import Path
+
+OUT = Path(__file__).resolve().parent / "bank_feed.json"
+SEED = 20240819
+START, END = date(2024, 1, 1), date(2024, 8, 19)
+OPENING_CENTS = 2_732_500_000  # 31 Dec 2023, including USD 152k restricted
+RESTRICTED_CENTS = 15_200_000
+
+# Quarterly anchors in cents: receipts = net sales - increase in trade receivables; net = change in cash.
+QUARTERS = {
+    1: {"months": (1, 2, 3), "receipts": 2_215_300_000 - 140_500_000, "net": 24_000_000, "other_inflows": 0},
+    2: {"months": (4, 5, 6), "receipts": 2_273_900_000 - 122_600_000, "net": 32_000_000,
+        "other_inflows": 59_800_000},  # stock option exercise proceeds (Q2 financing)
+    # 1 Jul to 19 Aug (50 days) continues Q2's daily operating pattern (Q2 excluding option proceeds: -USD 278k over 91 days).
+    3: {"months": (7, 8), "receipts": (2_273_900_000 - 122_600_000) * 50 // 91, "net": -(27_800_000 * 50 // 91),
+        "other_inflows": 0},
+}
+RECEIPT_MIX = [  # (counterparty, category, share of receipts, cadence)
+    ("Shopify Payments", "ecommerce_payouts", 0.47, "daily"),
+    ("Amazon Payments", "marketplace_payouts", 0.21, "biweekly"),
+    ("Retail and distributor customers", "wholesale_receipts", 0.13, "weekly"),
+    ("Ingredient customers (incl. related party)", "ingredient_receipts", 0.19, "weekly"),
+]
+OUTFLOW_MIX = [  # (counterparty, category, share of outflows, cadence)
+    ("Contract manufacturers", "contract_manufacturing", 0.19, "weekly"),
+    ("W.R. Grace (NR ingredient)", "ingredient_supply", 0.10, "monthly"),
+    ("Advertising platforms", "marketing", 0.30, "weekly"),
+    ("Payroll (ADP)", "payroll", 0.21, "biweekly"),
+    ("Landlord", "rent", 0.02, "monthly"),
+    ("Litigation counsel", "legal_fees", 0.04, "monthly"),
+    ("Other professional services", "professional_fees", 0.03, "monthly"),
+    ("Research and clinical vendors", "research", 0.04, "monthly"),
+    ("Fulfilment, freight and other", "operations_other", 0.07, "weekly"),
+]
+
+
+def days(month: int, last: date) -> list[date]:
+    d = date(2024, month, 1)
+    out = []
+    while d.month == month and d <= last:
+        out.append(d)
+        d += timedelta(days=1)
+    return out
+
+
+def cadence_days(ds: list[date], cadence: str, rng: random.Random) -> list[date]:

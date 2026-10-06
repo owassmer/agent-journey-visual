@@ -1,0 +1,1 @@
+{"command": "grep -n \"async def \\|limit = max\\|ctx.run.put(\\\"finding_proposed\\\", finding)\\|return {\\\"finding_id\\\": resolved\\|ctx.run.put(\\\"effect_validated\\\"\\|def submit_packet\\|summary\\[\\\"configuration_failure\\\"\\]\\|(\\\"submit_packet\\\"\\|(\\\"request_missing_fact\\\"\" app/agent/tools.py"}

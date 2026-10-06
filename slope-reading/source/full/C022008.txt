@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '420,453p' app/analysis/reduce.py; rg -n 'expand_classes\\(' app tests | head -35; sed -n '1,100p' tests/test_question_mass_check.py; rg -n 'dead' app/analysis/core.py app/analysis/reduce.py | head -35","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

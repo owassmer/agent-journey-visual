@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/research_akts && head -c 200 d590.txt | tr -s ' \\n' ' '; echo; grep -i -n \"head.start\\|cognizable\\|unjust enrichment\\|GRANT\\|DENIE\" d590.txt | sed 's/  */ /g' | head -12 | cut -c1-230; grep -n \"Filed\" d590.txt | head -2 | sed 's/  */ /g'"}

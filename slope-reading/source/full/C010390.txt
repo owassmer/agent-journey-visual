@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-07454d2f7582ce015 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"date -u; tail -6 /var/log/cloud-init-output.log; ps -eo pid,pcpu,rss,etime,args --sort=-pcpu | head -7; ls -l /proc/2534/fd 2>/dev/null | tail -5; du -sh /opt/slope-pool/control\"]}' --query Command.CommandId --output text","max_output_tokens":500}));
+text(await tools.write_stdin({session_id:37872,chars:"",yield_time_ms:1000,max_output_tokens:1000}));

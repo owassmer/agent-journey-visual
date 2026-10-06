@@ -1,0 +1,3 @@
+text(await tools.exec_command({cmd:".venv/bin/python /tmp/isolate_retry_classes.py 23 > /tmp/isolate-retry-23.log","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":500}));
+text(await tools.exec_command({cmd:".venv/bin/python /tmp/diagnose_notes_unit.py 59 > /tmp/notes-59-diagnostic.log","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":500}));
+text(await tools.exec_command({cmd:".venv/bin/python /tmp/probe_offering_canon.py 23 > /tmp/probe-offering-23.log","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":500}));

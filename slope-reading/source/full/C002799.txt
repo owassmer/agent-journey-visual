@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch && grep -iE \"timing|seconds|took| s$|stage\" 8g2/var_central.log 8g2/var_cost_plan.log | head -30 | cut -c1-200; grep -rn \"timing\" ~/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model/app/analysis/assumptions.py | head -5; ls -la 8h3/ | head; grep -iE \"timing|real\" 8h3/*.log 2>/dev/null | head -20 | cut -c1-200"}

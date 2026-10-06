@@ -1,0 +1,71 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_dfed2ed5]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 23:31:01 (13m41s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 821.87s
+
+--- ✓ TASK 1/1: Worker A2: make the 14 May Akoustis case an EXISTING Slope line under review, in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-case (branch step-8-case, HEAD 7c845fa; your predecessor's work). The line opens on a justified date before 14 May and runs on the bank feed's actual flows up to 14 May. The forecast starts from the outstanding balance and installments in flight that day. Each step ends in targeted tests, a commit of named files and a push. Report the SHAs, the opening date and its basis, the balance and installment schedule on 14 May, and the bank-only run figures from that starting state (central and scenarios). Do not open a PR or call Jev.  (status=completed, api_calls=66, 821.79s) ---
+All five steps are done and pushed to `step-8-case`. The full suite passes (197). No PR was opened and Jev was not called.
+
+**Commits**
+- `f5be260`: opening date and its basis.
+- `687746b`: the line's history to 14 May (`app/analysis/history.py`), recorded in `run_inputs.json` as `financing_plan.line.opening_state`.
+- `ff277b7`: the engine starts from that state (`Setup.exposure`, an additive field), with tests.
+- `4bbec3e`: D.I. 580 and D.I. 550 added to the catalog, 14 May snapshot rebuilt, kit manifest refreshed (87 records).
+
+**Opening date: 1 Apr 2024.** It is the earliest day with three complete months of feed history (January to March), so the feed did not need extending.
+- Slope's rule gives a limit of USD 395,500.00. That is above USD 250k, so it is a manually reviewed line.
+- It opens five weeks before the jury trial began on 6 May (the 14 May docket view confirms the date).
+- Eligibility holds: in business since May 2014 (FY2023 10-K), over a year of banking history, no bankruptcy.
+
+**The line on 14 May**
+- The history run made 5 draws totalling USD 520,414.67. The 3 May installments (USD 135,575.32) were collected. Nothing is past due.
+- Principal outstanding is USD 389,676.66, against a limit in force of USD 393,373.65 (Feb–Apr receipts).
+- Still owed: 8 installments totalling USD 404,094.70.
+
+```
+Draw date | Supplier               | Amount     | Remaining installments                             
+----------+------------------------+------------+----------------------------------------------------
+3 Apr     | Wafer and substrate    | 227,937.84 | 78,790.51 on 3 Jun; 78,790.52 on 3 Jul             
+3 Apr     | Process gas and metals | 94,538.42  | 32,678.78 on 3 Jun and 3 Jul                       
+3 Apr     | Other vendors          | 69,737.79  | 24,106.03 on 3 Jun and 3 Jul                       
+8 May     | Other vendors          | 60,989.65  | 21,082.09 on 10 Jun, 8 Jul, 8 Aug                  
+14 May    | Other vendors          | 67,210.97  | 23,232.59 on 14 Jun and 15 Jul; 23,232.60 on 14 Aug
+```
+
+**Engine checks**
+- An empty starting state gives exactly the same trajectories as before the change. I compared it field by field against the old engine on both cases and every scenario, and pinned the results in a test.
+- A draw already in flight and the same draw made on day 0 give identical collections, arrears, stays on a petition, preference exposure and later limit-tested draws.
+
+**Bank-only run from the 14 May state.** Opening cash is USD 11,666,293.90. Means are over the 512 draws. Cash is shown as P5 / P50 / P95 in USD M.
+
+```
+Scenario           | Funded (new) | Due    | Collected | Cash 30 Jun           | Cash 31 Aug        | Cash 10 Nov           | Share crossing the reserve (median date) | Share of draws with cash below zero
+-------------------+--------------+--------+-----------+-----------------------+--------------------+-----------------------+------------------------------------------+------------------------------------
+Central            | 516.8k       | 893.8k | 572.5k    | 7.06 / 7.26 / 7.44    | 1.65 / 1.88 / 2.06 | −4.83 / −3.63 / −3.18 | 100% (25 Aug)                            | 100%                               
+Equity USD 5M      | 857.2k       | 966.8k | 928.7k    | 12.06 / 12.26 / 12.44 | 6.65 / 6.88 / 7.06 | 0.17 / 1.36 / 1.81    | 100% (26 Oct)                            | 0.6%                               
+Cost plan          | 771.7k       | 981.0k | 857.0k    | 8.30 / 8.46 / 8.58    | 4.45 / 4.64 / 4.78 | −0.23 / 0.79 / 1.13   | 100% (13 Oct)                            | 37%                                
+CHIPS credit (low) | 528.2k       | 899.3k | 600.0k    | 7.42 / 7.62 / 7.80    | 2.48 / 2.72 / 2.90 | −3.45 / −2.25 / −1.82 | 100% (7 Sep)                             | 100%                               
+60-day reserve     | 355.2k       | 772.4k | 406.8k    | 7.06 / 7.26 / 7.44    | 1.68 / 1.89 / 2.07 | −4.82 / −3.60 / −3.18 | 100% (26 Jul)                            | 100%                               
+```
+
+Compared with a line opened on 14 May, central collections rise by about USD 134k and new funding falls by about USD 236k, because the existing principal takes up the limit. Cash percentiles barely move. The script is `~/.hermes/profiles/connor/cache/scratch/step8a/bank_run.py`; its figures match the payload's metrics.
+
+**Choices I made**
+- **History run settings:** it uses the central 30-day reserve and is shared by every scenario. Flows after 14 May count as zero when working out the reserve need (the engine's rule past its simulated span).
+- **Invoice and collection order:** invoices are routed in the feed's order within each day. Collections are allocated to installments by due date, then by draw.
+- **Cash on 14 May:** the borrower's cash includes what the line moved (funded minus collected, +USD 384,839.35), because the feed shows supplier payments Slope would have made. This is applied in the engine and in the cash figures `basis_for` computes; the feed itself is unchanged. **B2 needs to know this: Jev's cash facts should read `setup.exposure.cash_cents`.**
+- **Anything past due at the start** would fall due on day 0 and be collected from then. Here there is none.
+- **Metric definitions:**
+  - `drawn` and `fundings` count new draws only.
+  - `contractual` includes the opening installments, so the contract identity still holds.
+  - Fees are contractual minus drawn minus opening principal.
+  - Lender PV is forward-only.
+- **Recording:** the state is stored as case data and a test recomputes it exactly. Recorded setups and the payload carry the starting state only when it is non-empty, so existing recorded analyses are unchanged.
+- **Reserve crossing** means cash below the reserve need on any day, the same definition my predecessor used.
+
+**Issues**
+- Every setting crosses the reserve on 100% of draws; only the date and the share of draws with cash below zero differ.
+- One intermediate commit (`687746b`) already reads the starting state into `Setup` before the engine used it (`ff277b7`). This only matters if someone checks out that one commit.
+- I added the starting-state notes to the build skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_dfed2ed5/task-0.log

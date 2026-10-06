@@ -1,0 +1,21 @@
+<stdin>:5: XMLParsedAsHTMLWarning: It looks like you're using an HTML parser to parse an XML document.
+
+Assuming this really is an XML document, what you're doing might work, but you should know that using an XML parser will be more reliable. To parse this document as XML, make sure you have the Python package 'lxml' installed, and pass the keyword argument `features="xml"` into the BeautifulSoup constructor.
+
+If you want or need to use an HTML parser on this document, you can make this warning go away by filtering it. To do that, run this code before calling the BeautifulSoup constructor:
+
+    from bs4 import XMLParsedAsHTMLWarning
+    import warnings
+
+    warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
+
+recent_cases/synergy_chc/2024_s1a.html [('td', 6919), ('p', 6513), ('font', 3087), ('tr', 935), ('br', 420), ('a', 285), ('div', 165), ('table', 105), ('img', 6), ('document', 1), ('type', 1), ('sequence', 1)]
+ body children 1 [('document', 1)]
+recent_cases/synergy_chc/2024_05_01_webbank_shopify_loan.html [('td', 294), ('p', 287), ('font', 104), ('b', 98), ('tr', 97), ('div', 23), ('table', 17), ('u', 3), ('i', 2), ('document', 1), ('type', 1), ('sequence', 1)]
+ body children 1 [('document', 1)]
+barfresh_case/brfh_2024q3_10q.html [('td', 2562), ('span', 946), ('p', 541), ('ix:nonfraction', 397), ('tr', 299), ('xbrldi:explicitmember', 90), ('xbrli:context', 81), ('xbrli:entity', 81), ('xbrli:identifier', 81), ('xbrli:period', 81), ('b', 76), ('ix:nonnumeric', 70)]
+ body children 337 [('p', 284), ('div', 28), ('table', 16), ('ix:nonnumeric', 8), ('script', 1)]
+barfresh_case/brfh_2024q3_release.html [('td', 336), ('font', 101), ('p', 100), ('tr', 28), ('b', 23), ('i', 9), ('table', 9), ('div', 7), ('u', 5), ('document', 1), ('type', 1), ('sequence', 1)]
+ body children 1 [('document', 1)]
+barfresh_case/brfh_2024_08_13_litigation_funding.html [('div', 52), ('a', 52), ('li', 44), ('span', 20), ('script', 10), ('p', 10), ('ul', 9), ('br', 9), ('meta', 8), ('button', 7), ('svg', 7), ('path', 7)]
+ body children 4 [('noscript', 2), ('div', 2)]

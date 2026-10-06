@@ -1,0 +1,56 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_91b83475]
+A background fan-out unit you dispatched earlier — 2 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 00:09:28 (1h28m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 5319.01s
+
+--- ✓ TASK 1/2: Integrator, part 1, for the step-9 build of owassmer/Slope_Sparse_Events: merge worker A (step-9-a) and worker B (step-9-b) into step-9-core, plug A's equity inflows into B's top line, and run the targeted checks. Commit and push; open no PR.  (status=completed, api_calls=180, 5318.65s) ---
+I merged step-9-docs into step-9-core and pushed it; `step-9-core` is now at 35ba9b1.
+
+- **No conflicts:** the docs branch was cut from my latest commit (26ca485), so git fast-forwarded with no merge commit.
+- **scenario.json:** the only change is the `cash_floor_60_days` note, which now reads "initiate an offering, file, or do neither" instead of "raise equity, keep going or file". Nothing else in the file changed and it still loads.
+- **Full 14 May tree:** the build is still running in the background (1,000 paths and 514 nodes at 464 s). The merge changed only documentation and that one note, so the build's inputs are unaffected. Its log is `scratch/9m/I/full14.log`. I'll report the figures the verdict ruling asked for when it finishes.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_91b83475/task-0.log
+
+--- ✓ TASK 2/2: Page worker for the step-9 build of owassmer/Slope_Sparse_Events: update the analysis page (page.py, page.js, page.html, words.json, outcomes mapping) for the step-9 model, built against the spec, on branch step-9-page off step-9-core. Commit and push; open no PR.  (status=completed, api_calls=81, 794.05s) ---
+I've updated the step-9 page on branch `step-9-page`, pushed to origin with no PR. Two of the new features need small changes to `app/analysis/core.py`, which is outside my region, before they can show real figures. No real step-9 run exists yet, so no page figure has been checked against model output; what I have checked is that the page renders.
+
+**Commits** (on top of step-9-core `376e953`):
+- `6452a79` P1: the data the page is built from (`page.py`) and the new wording (`words.json`)
+- `c34a828` P2: the page itself (`page.js`) and the actual-outcome mapping in `outcomes/`
+- `08063ea` P3: fixes from a headless render
+
+**What changed**
+- **Borrower cash chart:** mean available cash, the P5–P95 range and the 30-day need, with arrears by class drawn as their own stacked series.
+- **Verdict section:** one row per verdict class the paths carry, so it adapts if the walk's composition changes. It shows B's bands (no award, each band, above the top line), the amount each band books, a note on where the band lines sit, and a post-trial ruling column giving each band's reduced and set-aside shares.
+- **Path steps:** the path texts now cover the other new 14 May steps too (C3 election, offering start and close, listing compliance and hearing, general nonpayment).
+- **Equity financing block:** at-the-market proceeds, the share of outcomes with an offering closed by 10 Nov, the median first close, and the offering terms. It is hidden for runs without the equity model.
+- **Reveal:** `outcomes/akoustis_20240514.json` now has a `model_map`. The page maps the $38,595,023 judgment to its band and the 24 May raise to the share of outcomes with an offering closed by that date. Only `app/web` reads it.
+- **Other:**
+  - The judgment shown in detail is still picked by the existing rule, and the offering question can now win it.
+  - Variants come straight from A's `assumption_variants`; no page change was needed.
+  - All new wording is in `words.json` as label headings with standard lender terms. `page.py` now reads its path and situation texts from there too.
+  - A judgment set aside after trial now counts as "Vacated or new trial". Before, it counted as "Unresolved".
+  - `PAGE_FORMAT` is now 9.
+
+**Checks**
+- `node --check` passes, `tests/test_viewer.py` passes (11), and ruff is clean.
+- `test_bank_row`, `test_views` and `test_assumptions` pass (24 passed, 1 skipped). I didn't run the full suite, so I didn't take `heavy.lock`.
+- Headless render with no page errors, on the recorded 14 May page data both unchanged and with made-up verdict bands, rulings, offering closes, arrears and at-the-market figures injected. The script is `scratch/9p/render_check.py`.
+
+**What's needed before the real run**
+- **In `core.py` (my assumption of the fix):**
+  - The per-path summary needs daily arrears totals by class (`per_day['arrears_<class>']`, from the processor's `arrears`) for the arrears series.
+  - It also needs at-the-market and offering proceeds per path (`means['atm_proceeds']` and `means['offering_proceeds']`).
+
+  Today the engine lumps equity proceeds into one inflow, so A or the integrator has to decide how they reach the per-path results. Until then the chart says arrears aren't available and at-the-market proceeds show "–".
+- **After merging A and B:** the verdict rows and offering-close figures only get real data once A and B are merged. Neither is merged into step-9-core yet (`origin/step-9-a` is 3 commits ahead of it, `origin/step-9-b` 5), so I built from their field names without editing them.
+- **On the real run:**
+  - Rebuild the page data.
+  - Run the skill's figure check (path probabilities and expectations against `analysis.json`, plus the override sliders).
+  - Take screenshots.
+  - Check the reveal's band match against B's actual band lines.
+  - Rebuild the dev page, which `PAGE_FORMAT` 9 now forces.
+
+I also added a note on the page structure and the render script to the `slope-sparse-events-build` skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_91b83475/task-1.log

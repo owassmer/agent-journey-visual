@@ -1,0 +1,5 @@
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"aws ec2 describe-snapshots --profile slope --region us-east-2 --owner-ids self --query 'Snapshots[].{Id:SnapshotId,Volume:VolumeId,State:State,Started:StartTime,Size:VolumeSize,Description:Description}' --output json","max_output_tokens":1200}),
+tools.exec_command({cmd:"aws cloudtrail lookup-events --profile slope --region us-east-2 --lookup-attributes AttributeKey=ResourceName,AttributeValue=i-09b42b44a8d35909a --max-results 20 --query 'Events[].{Time:EventTime,Name:EventName,User:Username}' --output json","max_output_tokens":2200}),
+tools.exec_command({cmd:"aws s3api list-objects-v2 --profile slope --region us-east-2 --bucket slope-walk-462947327980-20261001 --prefix walk-36781427817/question-refresh/ --delimiter / --query '{Prefixes:CommonPrefixes[].Prefix,Objects:Contents[].{Key:Key,Size:Size,Modified:LastModified}}' --output json","max_output_tokens":2000})
+]);r.forEach(text);

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -on 'assumptions=([^)]*)' app/disputes/forecast.py | cut -c1-200; grep -n '\"liability survives\"\\|\"the court remits the damages\"\\|trade-secret money survives the ruling' app/disputes/forecast.py | head"}

@@ -1,0 +1,28 @@
+# Slope Product Specifics
+
+## What is Financed
+Supplier bills and vendor payments. The platform enables businesses to "pay your bills over time" through flexible financing options.
+
+## Payment Flow
+Slope facilitates payments to vendors via ACH or wire transfers (domestic and international), though the exact mechanism of whether Slope pays vendors directly isn't explicitly detailed.
+
+## Terms & Structure
+- **Net Terms Option**: Net 30 available
+- **Installment Option**: Multiple installments offered
+- **Repayment Methods**: Card or ACH payments accepted
+
+## Pricing
+- **Fees**: Starting at 1.60% on Net 30 terms
+- Card repayments earn reward points
+- Fees vary based on "risk assessment and loan term"
+
+## Key Features
+- **Early Repayment**: Allowed anytime with fee savings; borrowers can repay partial amounts using different payment methods
+- **Approval**: Described as "instant pre approval"
+- **Flexibility**: "Choose Your Terms, Pay Your Way" with multiple payment options
+
+## Underwriting
+Specific underwriting inputs aren't detailed, but requirements include "minimum revenue and business requirements" and may require "Personal Guaranty."
+
+## Lender
+Business loans are "made by Lead Bank" and "subject to credit approval."

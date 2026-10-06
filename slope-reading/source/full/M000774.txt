@@ -1,0 +1,63 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_2391f467]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 16:18:29 (56m18s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1586.99s
+
+--- ✓ TASK 1/1: Fix the one sustained review finding on PR #16 (branch step-6c-record): the recall check leaves party-identifying names in Jev's prompts. Make the substitution cover the identifiers that actually occur in the Akoustis record, with a test that checks real passages against an independent list. Push, confirm CI, post one PR comment.  (status=completed, api_calls=52, 1586.72s) ---
+The recall check now replaces the party-identifying names, numbers and places that occur in the Akoustis record. It works by pattern rather than an exact list, and the new test checks real snapshot passages against a list written independently of `recall.py`.
+
+**Commit and checks**
+- One commit, 70181b9, pushed to `step-6c-record`. CI `check` passed on it.
+- `pytest -p no:warnings`: 144 passed (142 before, plus 2 new tests). `ruff check .` is clean.
+- PR comment posted: https://github.com/owassmer/Slope_Sparse_Events/pull/16#issuecomment-5849941132. No label, no merge.
+
+**The fix (`app/disputes/recall.py`)**
+- **Alias data (lines 23–98), one block grouped by party:** `PEOPLE` :32, `ENTITIES` :56, `PATENTS` :76, `PATTERNS` :82. It came from the snapshot's `/s/` signature lines, officer mentions, the court signature and service blocks, the docket's appearance entries, "Dr./Mr./Ms." mentions, "Patent No(s)." and the 8-K cover pages. The comment at :23 names these sources.
+- **People (`person_pattern` :116):** first name or nickname, any middle initials with or without a full stop, an optional title (Judge, Mr., Dr., Honorable) and suffix (III), the docket's "Last, First" form, and the last name alone. Common surnames need a first name or a title.
+- **Entities (`literal_pattern` :105):** loose commas and spacing, "&" and "and" interchangeable, acronyms kept.
+- **Patents (`patent_pattern` :135):** every format, replaced as "the first/second/third patent in suit" so the roles text still tells them apart.
+- **Also replaced:** case numbers, the headquarters and fab addresses and towns, e-mail and street addresses, and the SEC file and employer numbers.
+- `recall_check` now calls `roles_for` (:173).
+
+**The test**
+- `tests/fixtures/recall_passages.json` holds 26 real pre-D passages (44 KB), including titles and headings as Jev sees them. It covers the 22 May verdict release, captions, signature and service blocks, the indenture's parties, the 10-Q risk factors, officer signatures, docket windows and a trial-transcript excerpt.
+- `MUST_NOT_SURVIVE` (`tests/test_recall.py:25`) has 73 entries written by hand. The test first confirms the raw passages contain every identifier the review found, then asserts none of the 73 remains after substitution, case-insensitively.
+- On the old code, 48 of the 73 leak through the fixture; on the new code, none do. The stub-judge test now uses the same hand-written list.
+
+**918-section probe, sections where each identifier survives (old → new):**
+
+```
+Identifier                            |               Old | New
+--------------------------------------+-------------------+----
+GDSI                                  |                82 |   0
+Huntersville                          |                30 |   0
+Canandaigua                           |                18 |   0
+Greensboro                            |                 4 |   0
+Boller                                |                14 |   0
+Aichele / Shealy                      |             7 / 7 |   0
+Bruggeworth                           |                 2 |   0
+7,522,018 / 9,735,755 / 10,256,786    |       25 / 24 / 8 |   0
+’755 / ’018 / ’786                    |      44 / 33 / 20 |   0
+"Judge Jon P"                         |                10 |   0
+Tigan / Brauerman / Masters / DeFosse | 34 / 26 / 26 / 30 |   0
+Bayard / Pillsbury / Morris, Nichols  |       15 / 9 / 11 |   0
+Bennis / Shanfield (experts)          |           44 / 44 |   0
+Cornell                               |                10 |   0
+SEC file number / employer number     |           13 / 10 |   0
+```
+
+Every other identifier in the probe list is also at 0. The only two left are not names: "Tigan" is a substring of "litigant", and "Golden" comes from "the golden role" in the D.I. 546 order.
+
+**Left on purpose, with section counts after the fix**
+- **Places shared by thousands of cases and issuers:** Delaware (66), Nasdaq (53), Federal Circuit (9), Wilmington (21, the courthouse and Delaware counsel's city), New York, North Carolina, Taiwan.
+- **Counsel office cities:** Palo Alto, Los Angeles, Dallas, McLean, San Diego. With the firm and attorney names gone, they don't point to a party.
+- **Charlotte (14):** K&L Gates's office, not a party's address. The defendant's own town, Huntersville, is replaced.
+- **Underwriters and the auditor:** Roth (19), Craig-Hallum, Oppenheimer, B. Riley, Ellenoff Grossman and Marcum each serve hundreds of issuers.
+- **Cited precedents:** Sedona Conference (85), Youngstown, Krawiec, Paoli, and the Hashimoto prior-art reference.
+- **Xtal and Trusted Foundry:** an industry abbreviation and a Defense Department programme name.
+- **Court reporters**, who are court staff, not a party.
+- **The $38.6M damages figure:** it is the fact the forecasts reason about, so removing it would change the question.
+
+**Not committed:** the extraction script and probes are in the scratch folder (`pr16_fix/`: `extract.py`, `compare.py`, `names_probe.py`, `make_fixture.py`). I also added a note on the recall roles pass to the `slope-sparse-events-build` skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_2391f467/task-0.log

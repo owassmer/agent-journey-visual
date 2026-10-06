@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"HOMEBREW_NO_AUTO_UPDATE=1 brew info --json=v2 awscli | python3 -c 'import sys,json; x=json.load(sys.stdin)[\"formulae\"][0]; print({\"available\":x[\"versions\"],\"installed\":[i[\"version\"] for i in x[\"installed\"]]})'",max_output_tokens:600,yield_time_ms:1000}));
+text(await tools.web__run({open:[{ref_id:"https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sign-in.html"}],response_length:"short"}));

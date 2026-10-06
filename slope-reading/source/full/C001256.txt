@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -n \"self.bps\\b\\|self.bps =\" app/analysis/events.py | head -4; grep -n \"def rate_bps\\|def post_judgment_bps\\|rate_bps_by_week\" app/analysis/events.py app/disputes/*.py | head; grep -n \"no_cash\" app/disputes/forecast.py | head -3"}

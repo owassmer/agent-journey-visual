@@ -1,0 +1,28 @@
+# Slope Borrowing Limits and Terms
+
+Based on the provided content, here's what Slope discloses about their lending approach:
+
+## Assessment Factors
+Slope evaluates "financial performance and credit history to determine a merchant's borrowing power in seconds."
+
+## Four Key Determinations
+
+1. **Pre-approved Limit**: The maximum amount a business is authorized to borrow
+
+2. **Order Limit**: The largest single transaction amount eligible for financing
+
+3. **Terms**: Repayment options vary by merchant partner and include "a variety of net and installment terms"
+
+4. **Pricing**: The financing fee applicable to each term choice
+
+## Important Limitation
+The provided content does not specify:
+- Actual limit ranges or thresholds
+- Specific term options (e.g., net-30, net-60)
+- Fee percentages or pricing structures
+- Repayment schedules or autopay details
+- Late fees or early repayment terms
+- How limits change after initial approval
+- Specific data sources (bank data, revenue, cash flow metrics)
+
+To obtain comprehensive details on these items, you would need to contact Slope directly or access more detailed loan documentation.

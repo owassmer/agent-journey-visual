@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --command-id f165a896-5ac6-4800-84a4-ce8dc8fccdb6 --instance-id i-07454d2f7582ce015 --profile slope --region us-east-2 --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' --output json","max_output_tokens":1500}));
+text(await tools.exec_command({cmd:"aws s3 cp s3://slope-walk-462947327980-20261001/walk-36781427817/pool/live.log - --profile slope --region us-east-2 | tail -15","max_output_tokens":1500}));

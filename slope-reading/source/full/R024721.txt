@@ -1,0 +1,57 @@
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+  [1m[94m--> [0mapp/agent/smoke.py:7:1
+   [1m[94m|[0m
+[1m[94m 5[0m [1m[94m|[0m   """
+[1m[94m 6[0m [1m[94m|[0m
+[1m[94m 7[0m [1m[94m|[0m [1m[91m/[0m from __future__ import annotations
+[1m[94m 8[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m 9[0m [1m[94m|[0m [1m[91m|[0m import asyncio
+[1m[94m10[0m [1m[94m|[0m [1m[91m|[0m import json
+[1m[94m11[0m [1m[94m|[0m [1m[91m|[0m import platform
+[1m[94m12[0m [1m[94m|[0m [1m[91m|[0m import subprocess
+[1m[94m13[0m [1m[94m|[0m [1m[91m|[0m import tempfile
+[1m[94m14[0m [1m[94m|[0m [1m[91m|[0m from datetime import UTC, datetime
+[1m[94m15[0m [1m[94m|[0m [1m[91m|[0m from importlib.metadata import version
+[1m[94m16[0m [1m[94m|[0m [1m[91m|[0m from pathlib import Path
+[1m[94m17[0m [1m[94m|[0m [1m[91m|[0m from typing import Any
+[1m[94m18[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m19[0m [1m[94m|[0m [1m[91m|[0m from claude_agent_sdk import (
+[1m[94m20[0m [1m[94m|[0m [1m[91m|[0m     AssistantMessage,
+[1m[94m21[0m [1m[94m|[0m [1m[91m|[0m     ClaudeAgentOptions,
+[1m[94m22[0m [1m[94m|[0m [1m[91m|[0m     ClaudeSDKClient,
+[1m[94m23[0m [1m[94m|[0m [1m[91m|[0m     ResultMessage,
+[1m[94m24[0m [1m[94m|[0m [1m[91m|[0m     SystemMessage,
+[1m[94m25[0m [1m[94m|[0m [1m[91m|[0m     create_sdk_mcp_server,
+[1m[94m26[0m [1m[94m|[0m [1m[91m|[0m     tool,
+[1m[94m27[0m [1m[94m|[0m [1m[91m|[0m )
+[1m[94m28[0m [1m[94m|[0m [1m[91m|[0m from claude_agent_sdk._cli_version import __cli_version__
+[1m[94m29[0m [1m[94m|[0m [1m[91m|[0m from pydantic import BaseModel
+[1m[94m30[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m31[0m [1m[94m|[0m [1m[91m|[0m from app.agent.jev import JevAdapter
+[1m[94m32[0m [1m[94m|[0m [1m[91m|[0m from app.agent.mission import project_mission
+[1m[94m33[0m [1m[94m|[0m [1m[91m|[0m from app.config import (
+[1m[94m34[0m [1m[94m|[0m [1m[91m|[0m     AGENT_PROCESS_ENV,
+[1m[94m35[0m [1m[94m|[0m [1m[91m|[0m     SDK_OUTPUT_TOOL,
+[1m[94m36[0m [1m[94m|[0m [1m[91m|[0m     ROOT,
+[1m[94m37[0m [1m[94m|[0m [1m[91m|[0m     ConfigurationError,
+[1m[94m38[0m [1m[94m|[0m [1m[91m|[0m     agent_config,
+[1m[94m39[0m [1m[94m|[0m [1m[91m|[0m     main_agent_settings,
+[1m[94m40[0m [1m[94m|[0m [1m[91m|[0m     metered_overrides_present,
+[1m[94m41[0m [1m[94m|[0m [1m[91m|[0m )
+   [1m[94m|[0m [1m[91m|_^[0m
+[1m[94m42[0m [1m[94m|[0m
+[1m[94m43[0m [1m[94m|[0m   SMOKE_CASE = "synergy_chc_2024"
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m  [0m [1m[94m|[0m
+[1m[94m34[0m [1m[94m|[0m     AGENT_PROCESS_ENV,
+[1m[94m35[0m [1m[32m+[0m [32m    ROOT,
+[0m[1m[94m36[0m [1m[94m|[0m     SDK_OUTPUT_TOOL,
+[1m[94m  [0m [1m[31m-[0m [31m    ROOT,
+[0m[1m[94m37[0m [1m[94m|[0m     ConfigurationError,
+[1m[94m  [0m [1m[94m|[0m
+
+Found 1 error.
+[[36m*[0m] 1 fixable with the `--fix` option.
+FAILED_CONFIGURATION ['claude.only_scoped_tool_exposed', 'claude.requested_model_served'] ['claude-haiku-4-5-20251001', 'claude-opus-5-5'] ['StructuredOutput', 'mcp__credit__get_mission'] agreed_requirement typesafe/jev-1.13-20260917 Logged in using ChatGPT {'python': '3.12.13', 'claude_agent_sdk': '0.2.159', 'bundled_claude_cli': '2.1.281', 'typesafe_sdk': '0.7.1', 'platform': 'macOS-26.2-arm64-arm-64bit'}
+0

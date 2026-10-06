@@ -1,0 +1,1 @@
+{"subject": "5b: synthetic connected-bank feed for ChromaDex", "description": "Seeded generator + bank_feed.json (1 Jan\u201319 Aug 2024), counterparty-tagged, anchored to public 10-Q facts, labelled synthetic once; app/finance/bank.py: load, bank-only projection, risk features.", "activeForm": "Building the synthetic bank feed"}

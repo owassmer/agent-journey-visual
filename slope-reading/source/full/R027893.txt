@@ -1,0 +1,32 @@
+All checks passed!
+A  .github/pull_request_template.md
+A  .github/workflows/ci.yml
+A  .gitignore
+A  .python-version
+A  CLAUDE.md
+A  README.md
+A  Slope_Coding_Agent_Context_and_Alignment.md
+A  Slope_Credit_Scenario_Build_Specification.md
+A  Slope_Credit_Scenario_Research_and_Design_Kit/PACKAGE_MANIFEST.json
+A  Slope_Credit_Scenario_Research_and_Design_Kit/README.md
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/acquired_sources.json
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2023_10k.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2023_10k.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024_08_13_litigation_funding.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024_08_13_litigation_funding.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024_10k.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024_10k.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q1_10q.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q1_10q.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q2_10q.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q2_10q.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q2_index.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q2_index.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q2_release.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q2_release.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q3_10q.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q3_10q.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q3_release.html
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2024q3_release.txt
+A  Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/brfh_2025q1_10q.html
+size-garbage: 0 bytes

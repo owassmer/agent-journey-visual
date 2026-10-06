@@ -1,0 +1,1 @@
+{"command": "sed -n 1,47p Slope_Credit_Scenario_Build_Specification.md; sed -n 254,260p Slope_Credit_Scenario_Build_Specification.md; sed -n 186,204p Slope_Credit_Scenario_Build_Specification.md; sed -n 330,356p Slope_Credit_Scenario_Build_Specification.md; sed -n 376,392p Slope_Credit_Scenario_Build_Specification.md"}

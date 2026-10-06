@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'def build|judge|progress\\(|JEV_BATCH|CONCURRENCY|def analyze_case' app/analysis/pooled.py app/pipeline.py app/disputes/judge.py app/jev* 2>/dev/null | head -75\nsed -n '200,320p' app/analysis/pooled.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:4500}));

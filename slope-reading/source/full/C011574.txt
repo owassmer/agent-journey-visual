@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:71288,chars:"",yield_time_ms:1000,max_output_tokens:1500}));
+text(await tools.exec_command({cmd:"gh run view 36909118504 --repo owassmer/Slope_Sparse_Events --json status,jobs --jq '{status:.status,done:[.jobs[]|select(.status==\"completed\")|{name:.name,conclusion:.conclusion}],running:([.jobs[]|select(.status==\"in_progress\")]|length)}'\npython3 /tmp/monitor_notes_recovery.py",yield_time_ms:1000,max_output_tokens:2000}));

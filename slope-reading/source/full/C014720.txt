@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:".venv/bin/python - <<'PY'\nimport pickle\nfor i in [23,59,63,132,2206,6258]:\n v=pickle.load(open(f'/tmp/notes-{i}-diagnostic.pkl','rb'))\n print(i,[e for e in v['parent'].edges if 'after_failed' in str(e)])\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1800}));

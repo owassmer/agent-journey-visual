@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && python3 ~/.hermes/profiles/connor/cache/scratch/6d_merge/stay_tests.py && sed -n 134,138p tests/test_chains.py && env -u CLAUDE_CODE_OAUTH_TOKEN uv run ruff check . 2>&1 | tail -1 && env -u CLAUDE_CODE_OAUTH_TOKEN timeout 380 uv run pytest -p no:warnings tests/test_views.py 2>&1 | tail -3", "timeout": 400}

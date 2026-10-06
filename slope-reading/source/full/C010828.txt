@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"env -u CLAUDE_CODE_OAUTH_TOKEN uv run python - <<'PY'\nfrom app.disputes.rules import load_model\nm=load_model('akoustis_20240514')\nfor k in ('holder_notice_lag_days','holder_petition_route','petition_lag_days','repurchase_business_days'):\n print(k,m['parameters'].get(k))\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1200}));
+text(await tools.write_stdin({session_id:45419,chars:"","yield_time_ms":1000,"max_output_tokens":700}));

@@ -1,0 +1,24 @@
+<persisted-output>
+Output too large (42.1KB). Full output saved to: /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/tool-results/b1mm2jsrs.txt
+
+Preview (first 2KB):
+# Slope credit-event scenario module — definitive build specification
+
+Prepared 24 September 2026. Revision 2 replaces the Trinity/A10 implementation direction. Status: researched and designed; evidence and design contracts supplied; application and live model evaluation remain to be built.
+
+## 1. The product to build
+
+**Given a proposed working-capital advance and an unusual external event, determine which financing structures remain supportable and how the event changes the loan's projected collections.**
+
+The borrower’s financial profile supplies the repayment capacity. The loan’s dated cash flows are the main output. The agent researches evidence that ordinary transaction-based underwriting may miss; Jev makes focused judgments within that investigation; deterministic financial code translates the resulting economic effects into financing choices.
+
+The demonstration should end with an amount, schedule and explicit funding conditions—or a concrete reason no offered structure works. It should also show the cash the asset holder receives under each modeled scenario. A litigation summary or monitoring recommendation is insufficient.
+
+This is a useful connection between Russell’s two topics: unusual borrower events create scenarios for individual loan collections; those collections feed portfolio liquidity and capital planning. It is one coherent extension of the credit workflow, not a full capital-markets platform.
+
+### Where it fits at Slope
+
+Use **exception review before a new discretionary advance or increase in exposure**. Slope publicly describes higher-risk, larger and unusual applications entering human review, supported by agents and traceable evidence. It also describes a reconstructed cash-flow understanding from bank data. Our module consumes that baseline rather than recreating bank connectivity or ordinary underwriting. [S1–S2]
+
+...
+</persisted-output>

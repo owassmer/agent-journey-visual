@@ -1,0 +1,1 @@
+{"calls": [{"name": "mcp__browser_mcp__browser_execute_script", "arguments": {"code": "const t = document.body.innerText; const m = [...t.matchAll(/(\\d+)s part (\\d+): (?:paths (\\d+)|done, (\\d+) paths)/g)]; const last = {}; for (const x of m) { last[x[2]] = [x[3] ? +x[3] : +x[4], x[4] ? 'done' : 'running', +x[1]]; } return JSON.stringify(last);"}}]}

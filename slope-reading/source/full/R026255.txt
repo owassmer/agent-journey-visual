@@ -1,0 +1,15 @@
+# Slope Financing: Key Details from FAQ
+
+## Credit Limits & Underwriting
+Slope determines borrowing limits by considering "financial performance and credit history — and can determine a Buyer's borrowing power in seconds." The FAQ mentions that buyers should "add every company bank account in the approval process" and "remove bank accounts as you open and close accounts," suggesting bank account connection is part of underwriting, though specific tools like Plaid aren't named.
+
+## Pricing & Fees
+Financing carries a cost presented as a "finance fee before you accept." The company emphasizes that "The total cost of financing is always disclosed upfront, so you know exactly what you'll pay before you commit." The FAQ notes "We do impose interest if you default on the loan" but doesn't specify default rates.
+
+## Repayment Terms
+Slope offers "30 and 60-day terms, or 60 and 90-day installments with repayment via card (credit or debit) or ACH." Maximum terms appear to be 90 days.
+
+## Missed Payments & Reapplication
+The FAQ doesn't address specific late fees, autopay setup, or early repayment penalties. However, it states that initially ineligible buyers "can become eligible in the future" and "should retry their eligibility at a minimum of every 30 days."
+
+**Note:** The FAQ lacks details on many specifics—contact support@slopepay.com or (415) 429-5221 for comprehensive underwriting and repayment policy information.

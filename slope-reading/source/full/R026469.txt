@@ -1,0 +1,20 @@
+== cdxc_2024q1_10q#t0002
+| Cash and cash equivalents, including restricted cash of $152 for both periods presented |  | $27,565 |  | $27,325 |
+| Trade receivables, net of allowances of $87 and $68, respectively; Including receivables from Related Party of $2.7 million and $2.8 million, respectively | 6,604 |  | 5,234 |  |
+| Inventories | 12,495 |  | 14,525 |  |
+| Accounts payable |  | $7,899 |  | $10,232 |
+== cdxc_2024q1_10q#t0006
+| Trade receivables | (1,405) |  | (1,084) |  |
+| Inventories | 2,030 |  | 2,769 |  |
+| Accounts payable | (2,333) |  | (728) |  |
+| Net cash provided by operating activities | 295 |  | 2,792 |  |
+| Net cash used in investing activities | (41) |  | (91) |  |
+| Net cash used in financing activities | (14) |  | (1) |  |
+| Cash and cash equivalents, including restricted cash of $152 for both periods - beginning of period | 27,325 |  | 20,441 |  |
+| Cash and cash equivalents, including restricted cash of $152 for both periods - end of period |  | $27,565 |  | $23,141 |
+== cdxc_2024q1_10q#t0008
+| Net sales |  |  | $17,351 |  |  |  |  | $4,088 |  |  |  |  | $714 | $— | $22,153 |
+| Cost of sales | 6,154 |  |  | 1,837 |  | 706 |  |  | — |  | 8,697 |  |  |  |  |
+== cdxc_2024q1_10q#t0009
+| Net sales |  |  | $17,633 |  |  |  |  | $4,124 |  |  |  |  | $799 | $— | $22,556 |
+| Cost of sales | 6,404 |  |  | 1,881 |  | 753 |  |  | — |  | 9,038 |  |  |  |  |

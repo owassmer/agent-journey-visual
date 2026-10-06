@@ -1,0 +1,53 @@
+[
+ "Event, agreement, measurement and public-availability dates are different fields.",
+ "Outcome is a relationship to a mission cutoff, never a permanent property of a document.",
+ "Other-case records are excluded regardless of chronological eligibility.",
+ "Indexes and metadata must not expose later filing contents to a historical agent.",
+ "Original and package relative paths are relative to the research-kit root; preserve this directory layout."
+]
+{
+ "lead": "synergy_chc_2024",
+ "transfer": "barfresh_schreiber_2024"
+}
+1.0
+[
+ {
+  "source_id": "synergy_court_20230227",
+  "case_id": "synergy_chc_2024",
+  "primary_url": "https://www.govinfo.gov/content/pkg/USCOURTS-med-2_22-cv-00301/pdf/USCOURTS-med-2_22-cv-00301-0.pdf",
+  "original_relative_path": "research/recent_cases/synergy_chc/2023_02_27_court_order.pdf",
+  "package_relative_path": "research/recent_cases/synergy_chc/2023_02_27_court_order.pdf",
+  "sha256": "ccdfc38167a2abf3cb18ae0c7a4c5a041bf37fe36c2057a2be9859a2148a8b21",
+  "bytes": 306804,
+  "availability": {
+   "date": "2023-02-27",
+   "precision": "day",
+   "basis": "Public court document 31 bears Filed 02/27/23 on page 1. This is court filing availability; GovInfo upload date is not established.",
+   "verification_url": "https://www.govinfo.gov/content/pkg/USCOURTS-med-2_22-cv-00301/pdf/USCOURTS-med-2_22-cv-00301-0.pdf",
+   "accepted_at_as_displayed": null,
+   "intraday_runtime_policy": "Conservative end of stated date in America/New_York; do not invent an acceptance time."
+  },
+  "event_dates": [
+   {
+    "type": "court_filing",
+    "date": "2023-02-27"
+   },
+   {
+    "type": "alleged_operational_events",
+    "date_range": [
+     "2020",
+     "2021"
+    ],
+    "precision": "year"
+   }
+  ],
+  "relative_to_lead_cutoff": "eligible",
+  "mission_membership": {
+   "synergy_20240813": "eligible",
+   "barfresh_20241025": "out_of_case"
+  }
+ }
+]
+barfresh_case
+recent_cases
+revision_v2

@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/config_4a.py && grep -rn \"jev_max_requests_including_retries\\|judge_evidence\\|record_gap\\|propose_patch\\|submit_decision_packet\" app tests Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/*.json CLAUDE.md | cut -c1-200"}

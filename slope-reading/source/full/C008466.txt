@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"arrears_runs\\|_stay_owed\\|_finished\\b\\|self\\.proceeds\\|_court_read_before\" app/analysis/events.py | head -30; grep -n \"def _same_state\" -A 25 app/analysis/events.py | head -32", "timeout": 30}

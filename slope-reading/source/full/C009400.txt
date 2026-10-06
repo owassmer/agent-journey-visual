@@ -1,0 +1,6 @@
+// @exec: {"max_output_tokens": 9000}
+const results = await Promise.allSettled([
+ tools.exec_command({cmd:"python3 read.py remaining_alignment 0 16000",workdir:load("digestDir"),max_output_tokens:6000}),
+ tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport subprocess,re,collections\nr=Path('/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo')\nfiles=subprocess.check_output(['git','ls-files'],cwd=r,text=True).splitlines()\nfor name in ('context','code','contracts_compact'):\n p=Path(name+'_bundle.txt')\n print(name,repr(p.read_text()[:1000]))\nprint('Markdown tracked')\nfor f in files:\n if f.endswith('.md'):print(f)\nprint('Profile alignment / configuration keys')\nroot=Path('/Users/owenwassmer/.hermes/profiles/connor')\nfor folder in ('hooks','plugins','runtime','profile_delegate'):\n p=root/folder\n if p.exists():\n  print(folder,[str(x.relative_to(p)) for x in p.rglob('*') if x.is_file()][:60])\nPY",workdir:load("digestDir"),max_output_tokens:2200})
+]);
+for(const r of results) text(r.status === "fulfilled" ? r.value.output : String(r.reason));

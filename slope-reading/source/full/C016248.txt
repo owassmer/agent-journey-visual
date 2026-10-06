@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:61850,chars:"","yield_time_ms":1000,"max_output_tokens":500}));
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json,collections\nx=json.load(open('/tmp/notes-refresh-batch-current.json'))\nprint(x['status'],x['conclusion']); print(dict(collections.Counter((j['status'],j['conclusion']) for j in x['jobs'])))\nPY\ncat /tmp/open-step2-aws-login.py","max_output_tokens":1200}));

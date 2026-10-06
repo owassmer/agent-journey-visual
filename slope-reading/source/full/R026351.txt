@@ -1,0 +1,8 @@
+wrote cases/chromadex_20240903/run_inputs.json 7 observations
+  cash_20240630 cdxc_2024q2_10q#s0003 | | Cash and cash equivalents, including restricted cash of $152 for both periods presented |  | $27,8
+  trade_receivables_20240630 cdxc_2024q2_10q#s0003 | | Trade receivables, net of allowances of $85 and $68, respectively; Including receivables from Rela
+  inventories_20240630 cdxc_2024q2_10q#s0003 | | Inventories | 11,511 |  | 14,525 |  |
+  accounts_payable_20240630 cdxc_2024q2_10q#s0003 | | Accounts payable |  | $8,105 |  | $10,232 |
+  accrued_expenses_20240630 cdxc_2024q2_10q#s0003 | | Accrued expenses | 8,621 |  | 9,493 |  |
+  operating_cash_flow_h1_2024 cdxc_2024q2_10q#s0007 | | Net cash provided by operating activities | 31 |  | 6,072 |  |
+  net_sales_q2_2024 cdxc_2024q2_release#s0002 | • Total net sales were $22.7 million, with $18.6 million from Tru Niagen®, up 12%, and 10%, respecti

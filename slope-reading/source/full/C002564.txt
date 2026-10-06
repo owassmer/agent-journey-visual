@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && df -h / | tail -1; for w in .claude/worktrees/*; do s=$(du -sh $w 2>/dev/null | cut -f1); v=$(du -sh $w/.venv 2>/dev/null | cut -f1); d=$(git -C $w status --short 2>/dev/null | grep -v '^??' | wc -l | tr -d ' '); echo \"$w total=$s venv=$v dirty=$d\"; done"}

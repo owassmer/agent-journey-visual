@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && sed -n 458,478p app/analysis/events.py; sed -n 360,372p Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json; sed -n 290,315p tests/test_chains.py; grep -n \"def p(\" -A4 app/analysis/events.py"}

@@ -1,0 +1,1 @@
+{"command": "date +%H:%M:%S; bash ~/.hermes/profiles/connor/cache/scratch/9f3/mon.sh | tail -14; ps -Ao pid,etime,%cpu,stat,command | grep -E \"slope analyze|retain.py|mem_slice|owed_check|price_check\" | grep -v grep | cut -c1-110; memory_pressure | grep -E \"free percentage|Swapins|Swapouts|Pages paged\"; vm_stat 1 3 2>/dev/null | tail -2", "timeout": 30}

@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/prof2.py && grep -n \"instantiate_dispute\\|Evaluator\\|evaluator\\|borrower_role\\|agent_stage\\|includes_post_judgment_interest\\|source_dates=sources\" app/agent/tools.py | head -40", "description": "Apply profile; locate tool code"}

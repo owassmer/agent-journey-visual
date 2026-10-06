@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && git status --short | grep -v '^??'; sed -n 2508,2560p app/disputes/forecast.py; grep -n \"node_group\\|group_tags\\|step_group\\|\\\"nooffer\\\"\\|'nooffer'\\|nopay\\|def plain\" app/disputes/*.py app/analysis/*.py | grep -v \"^.*#\" | head -40", "timeout": 30}

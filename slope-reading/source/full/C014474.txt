@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"UV_CACHE_DIR=/tmp/slope-uv-cache uv run --no-project --with appscript python - <<'PY'\nfrom appscript import app\nc=app('Google Chrome');t=c.windows[1].active_tab\nprint(t.execute(javascript='document.querySelector(\"#logs\")?.innerText || document.body.innerText'))\nPY","yield_time_ms":1000,"max_output_tokens":2400}));
+text(await tools.write_stdin({session_id:86253,chars:"",yield_time_ms:1000,max_output_tokens:1000}));

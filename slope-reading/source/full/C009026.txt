@@ -1,0 +1,8 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"git status --short --branch",max_output_tokens:2000}),
+  tools.exec_command({cmd:"rg --files --hidden -g 'AGENTS.md' /Users/owenwassmer/dev/Slope_Sparse_Events /Users/owenwassmer/.hermes /Users/owenwassmer/dev 2>/dev/null",max_output_tokens:3000}),
+  tools.exec_command({cmd:"rg --files --hidden /Users/owenwassmer/.hermes -g '!node_modules/**' -g '!venv/**' -g '!\\.venv/**' -g '!\\.git/**' 2>/dev/null",max_output_tokens:9000}),
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor p in [Path('/Users/owenwassmer/AGENTS.md'),Path('/Users/owenwassmer/dev/AGENTS.md'),Path('/Users/owenwassmer/dev/Slope_Sparse_Events/AGENTS.md')]:\n if p.exists():\n  print('\\nFILE',p)\n  print(p.read_text())\nPY",max_output_tokens:8000}),
+  tools.exec_command({cmd:"git log -16 --date=iso-strict --format='%h %ad %s'",max_output_tokens:4000})
+]);
+for (let i=0;i<results.length;i++) {store("initial2_"+i,results[i]);text({index:i,...results[i]});}

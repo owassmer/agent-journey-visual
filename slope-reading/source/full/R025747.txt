@@ -1,0 +1,13 @@
+29 Counter({'used in finding': 12, 'overridden by agent with reason': 12, 'challenged agent draft': 5}) Counter({'partly_covered': 13, 'not_covered': 9, 'covered': 7})
+inv_004 debt or financing agreement partly_covered False | The balance, rate and budget-approval covenant are covered by fnd_018, and the debt restriction by fnd_004. Th
+inv_007 debt or financing agreement not_covered False | The liquidity section repeats the June 30, 2024 cash and restricted cash (fnd_011), the Knight consolidated lo
+inv_007 debt or financing agreement not_covered False | The liquidity section repeats the June 30, 2024 cash and restricted cash (fnd_011), the Knight consolidated lo
+inv_008 legal matter or settlement partly_covered False | Legal Proceedings lists three matters: Valenti (paid in full 2023, fnd_013), Atrium (settled December 2023 int
+inv_009 debt or financing agreement not_covered False | This section reports the Kenek short-term note ($1,181,222 at June 30, 2024); fnd_014 covers the same CEO-affi
+inv_019 debt or financing agreement not_covered False | The related-party note covers the Knight loan (fnd_018/fnd_004) and the CEO-affiliate short-term note (fnd_014
+inv_021 debt or financing agreement partly_covered False | The Knight and Sanders balances and interest-only 2024 terms in this note have no 2024 principal due. They are
+inv_022 legal matter or settlement partly_covered False | Note 13 lists the Atrium settlement (fnd_003) and the LODC settlement paid in full (fnd_012); no other matter 
+inv_025 cash restriction partly_covered False | The December 31, 2023 restricted-cash reconciliation concerns the same $100,000 credit-card collateral pool co
+inv_032 debt or financing agreement not_covered False | The annual Note 11 repeats the Knight covenant text and the Atrium settlement loan terms, both covered by the 
+inv_033 legal matter or settlement not_covered False | The annual Note 13 repeats the Atrium settlement and LODC settlement disclosures covered by the interim-note f
+inv_035 debt or financing agreement partly_covered False | The December 31, 2023 subsequent-events note reports the 2024 Shopify loans, the LODC payoff and a supplier se

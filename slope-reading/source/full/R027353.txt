@@ -1,0 +1,20 @@
+Exit code 1
+[1mapp/analysis/build.py[0m[36m:[0m62[36m:[0m13[36m:[0m [1m[31mF821[0m Undefined name `re`
+Found 2 errors.
+Traceback (most recent call last):
+  File "/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/dev_payload.py", line 17, in <module>
+    data = payload(load_feed("chromadex_20240819"), setup, model, meta_for(model, "ChromaDex Corporation", []))
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-probabilistic-analysis/app/analysis/build.py", line 163, in meta_for
+    "disputes": [_dispute_meta(d, borrower, m) for d in model.disputes.values()],
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-probabilistic-analysis/app/analysis/build.py", line 70, in _dispute_meta
+    return {"id": d.instance_id, "title": d.title, "short": dispute_short(d, borrower), "reference": d.order_reference,
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-probabilistic-analysis/app/analysis/build.py", line 62, in dispute_short
+    court = re.split(r"\s\d", d.order_reference.strip())[0].strip(" ,")
+            ^^
+NameError: name 're' is not defined. Did you forget to import 're'?
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+KeyError: 'short'

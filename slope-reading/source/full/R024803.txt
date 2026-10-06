@@ -1,0 +1,40 @@
+60	        m = re.search(r"font-weight:\s*(\w+)", (parent.get("style") or "").lower())
+61	        if m:
+62	            return m.group(1) in ("bold", "bolder", "700", "800", "900")
+63	        if parent is stop:
+64	            return False
+65	    return False
+66	
+67	
+68	def _paragraph(tag: Tag) -> Block | None:
+69	    strings = [s for s in tag.find_all(string=True) if norm(s)]
+70	    text = norm(" ".join(strings))
+71	    if not text or PAGE_FURNITURE.match(text):
+72	        return None
+73	    if NOTE_HEADING.match(text):  # includes "Note 11 — Notes Payable (cont.)" after a page break
+74	        return Block("heading", text.removesuffix("(cont.)").strip(), level=2)
+75	    if ARTICLE_HEADING.match(text):
+76	        return Block("heading", text, level=2)
+77	    if SUBCLAUSE.match(text):
+78	        return Block("para", text)
+79	    bold = sum(len(norm(s)) for s in strings if _is_bold(s, tag))
+80	    letters = re.sub(r"[^A-Za-z]", "", text)
+81	    if letters and len(text) <= 300 and bold >= 0.9 * sum(len(norm(s)) for s in strings):
+82	        top = (letters.isupper() and len(text) <= 120) or STATEMENT_HEADING.search(text)
+83	        level = 1 if top else 2
+84	        return Block("heading", text, level=level)
+85	    return Block("para", text)
+86	
+87	
+88	def _table(tag: Tag) -> list[Block]:
+89	    grid: list[list[str]] = []
+90	    for tr in tag.find_all("tr"):
+91	        row: list[str] = []
+92	        for cell in tr.find_all(["td", "th"], recursive=False):
+93	            span = str(cell.get("colspan") or "1")
+94	            row.append(norm(cell.get_text(" ")))
+95	            row.extend([""] * (int(span) - 1 if span.isdigit() else 0))
+96	        grid.append(row)
+97	    width = max((len(r) for r in grid), default=0)
+98	    grid = [r + [""] * (width - len(r)) for r in grid]
+99	

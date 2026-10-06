@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && sed -n \"$(grep -n 'def test_no_approved_stay_locks' tests/test_views.py | cut -d: -f1),+22p\" tests/test_views.py; env -u CLAUDE_CODE_OAUTH_TOKEN timeout 200 uv run pytest -p no:warnings tests/test_views.py -k no_approved_stay 2>&1 | grep -E \"assert|Error|where\" | head -12", "timeout": 220}

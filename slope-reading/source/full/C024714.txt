@@ -1,0 +1,1 @@
+{"command": "uv run slope smoke; python3 -c \"\nimport json;r=json.load(open('runs/recorded/runtime_smoke.json'));c=r.get('claude',{})\nprint(r['status'], r.get('error'), r.get('failed_checks'))\nprint(json.dumps({k:c.get(k) for k in ('returned_models','api_key_source','init_tools','tool_calls','structured_output','checks','num_turns','duration_ms')},indent=1))\""}

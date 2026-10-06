@@ -1,0 +1,26 @@
+{
+  "run_id": "chromadex_20240819-agent_plus_jev-20260925T163410Z",
+  "status": "CANDIDATE_READY",
+  "failure": null,
+  "incomplete_reasons": [],
+  "returned_models": [
+    "claude-opus-5-5"
+  ],
+  "tool_calls": {
+    "get_mission": 1,
+    "read_baseline_profile": 1,
+    "read_loan_terms": 1,
+    "read_inventory": 1,
+    "record_dependency": 2,
+    "read_evidence": 11,
+    "search_evidence": 5,
+    "judge": 2,
+    "propose_finding": 5,
+    "resolve_finding": 5,
+    "resolve_reconciliation": 1,
+bank_only       -> inst_90_2000000 (limit 3,624,901, order limit 2,718,676)
+event_adjusted  -> inst_90_1430000 (limit 1,909,118, order limit 1,431,839)
+  condition: Count the $2,500,000.00 owed by Elysium Health, Inc. only once it is received.
+  condition: Confirm how D. Del. 1:18-cv-01434 attorney fee award to Elysium: liability granted, amount pending would be secured pending appeal (cash collateral or a letter of credit) and for how much.
+  condition: Confirm Western Alliance Bank's covenants permit this financing after the disputes' cash effects.
+wrote scenarios.json and collections.csv

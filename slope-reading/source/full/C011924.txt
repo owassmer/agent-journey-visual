@@ -1,0 +1,6 @@
+const results = await Promise.allSettled([
+  tools.mcp__codex_tui__read_thread({threadId:"01a0f371-fa54-7eb1-beb9-e94020156e8f",turnLimit:3,includeOutputs:false,maxOutputCharsPerItem:6000}),
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor d in ['/Users/owenwassmer/.hermes','/Users/owenwassmer/.hermes/profiles','/Users/owenwassmer/.hermes/profiles/connor']:\n p=Path(d)\n print('\\nDIRECTORY',p,'exists',p.exists())\n if p.is_dir():\n  for q in sorted(p.iterdir()):\n   print(q.name, '/' if q.is_dir() else '', q.stat().st_size)\nPY",max_output_tokens:4000}),
+  tools.web__run({open:[{ref_id:"https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra"}],response_length:"short"})
+]);
+results.forEach((r,i)=>text({i,...(r.status==="fulfilled"?{result:r.value}:{error:String(r.reason)})}));

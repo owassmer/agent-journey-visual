@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '1,115p' tools/question_refresh.py; rg -n 'def classify|def live|def _split|def _classified|def group_row|def row_of' app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2700}));

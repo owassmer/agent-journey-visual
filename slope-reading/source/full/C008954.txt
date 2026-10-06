@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 16000}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:7000}),
+tools.exec_command({cmd:"python - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts')\nd=json.loads((p/'agent_config.json').read_text())\nprint(json.dumps(d,indent=2))\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:8500})
+]);results.forEach((r,i)=>text({i,...r}));

@@ -1,0 +1,9 @@
+ok
+  adds_matter              2/2
+  coverage_supported       3/5
+  decision_relevance       2/2
+  disagree: syn_entity_unresolvable: expected 'unknown', got 'different' (noul=None, probs={'unknown': 0.14, 'different': 0.47, 'target': 0.39})
+  disagree: syn_table_without_context: expected 'missing_target_context', got 'missing_condition_or_timing' (noul=None, probs={'missing_condition_or_timing': 0.31, 'unclear': 0.26, 'missing_target_context': 0.3, 'enough': 0.03, 'missing_definition': 0.1})
+  disagree: syn_coverage_full: expected 'covered', got 'partly_covered' (noul=None, probs={'not_covered': 0.0, 'unclear': 0.0, 'partly_covered': 0.5700000000000001, 'covered': 0.43})
+  disagree: syn_coverage_multi_loan_all: expected 'covered', got 'partly_covered' (noul=None, probs={'unclear': 0.0, 'covered': 0.12, 'partly_covered': 0.88, 'not_covered': 0.0})
+38/42 agree; usage {'provider': 'openrouter', 'requests': 42, 'cache_hits': 0, 'physical_attempts': 42, 'attempt_ceiling': 250, 'spent_usd': '0.001569540', 'spend_cap_usd': '0.10'}

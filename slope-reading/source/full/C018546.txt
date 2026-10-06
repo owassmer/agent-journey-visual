@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"git status --short","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}));text(await tools.exec_command({cmd:"sed -n '1,250p' tools/question_refresh.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":6500}));

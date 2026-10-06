@@ -1,0 +1,1 @@
+{"command": "L=/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/recall_debug2.log; grep -E \"Error|Exception\" $L | grep -v \"\u2502\" | tail -3 | cut -c1-500; grep -o \"[a-z_]*\\.py:[0-9]* in [a-z_]*\" $L | grep -v \"asyncio\\|runners\\|base_events\" | tail -6; grep -A3 \"^Traceback\" $L | head; tail -5 $L | cut -c1-400"}

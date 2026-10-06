@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"uv run --no-project --with appscript python - <<'PY'\nfrom appscript import app\nc=app(pid=34693)\nt=c.windows[1].active_tab\nprint(t.execute(javascript='document.body.innerText'))\nPY",yield_time_ms:1000,max_output_tokens:4000}));
+text(await tools.exec_command({cmd:"cat tools/notes_resume.py\nrg -n 'def (expand_classes|path_probability|path_mask|mask_of)|class Dist|def forecaster' app/disputes/{forecast,pool}.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:4500}));

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-core && awk '/^### 16.3/,/^### 16.4/' Slope_Model_Extensions_Spec.md | head -5; grep -n \"^### 16\\|^## 16\\|^### 15\\.[0-9]\" Slope_Model_Extensions_Spec.md; sed -n '/^### 16.6/,$p' Slope_Model_Extensions_Spec.md | cut -c1-400 | head -60"}

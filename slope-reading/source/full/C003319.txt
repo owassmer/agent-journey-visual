@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9h/BRIEF_step1.md", "old_string": "`scratch/8/f/dump_20jun.py`, via `scratch/8/b3`, gives an equal dump.", "new_string": "`~/.hermes/profiles/connor/cache/scratch/8/b3/dump_20jun.py` gives an equal dump (take the baseline dump at HEAD 0e74151, before any change)."}

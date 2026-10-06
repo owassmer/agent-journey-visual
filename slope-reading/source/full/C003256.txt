@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-questions && K=Slope_Credit_Scenario_Research_and_Design_Kit; F=$K/research/recent_cases/akoustis/design/QUESTIONS_20240514.md; python3 ~/.hermes/profiles/connor/cache/scratch/9f/pass3.py $F && grep -n \"D6\\b\\|D6 \\|(D6)\\|listing_kept\\|D6,\" $F | cut -c1-160"}

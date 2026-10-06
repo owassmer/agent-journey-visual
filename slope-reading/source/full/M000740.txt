@@ -1,0 +1,56 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_4b5a52df]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 12:29:59 (51m19s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3080.05s
+
+--- ✓ TASK 1/1: Fix the adjudicated review findings and the layout findings on PR #14 (branch step-6b-page), in small checkpointed commits, verify in headless Chrome, confirm CI, and post one PR comment listing each fix.  (status=completed, api_calls=111, 3079.8s) ---
+All ten findings on PR #14 are fixed and pushed to `step-6b-page` in 12 commits. The full suite passes (135 tests: 132 before plus 3 new), ruff is clean, CI passes on the last commit, and the PR comment is posted: https://github.com/owassmer/Slope_Sparse_Events/pull/14#issuecomment-5848267703
+
+**Commits:**
+- 8d5ee2c: choice slider.
+- 1a5f08f: outcomes classed by draw.
+- 07c6346: collected and headroom bins.
+- 759436c: Collections table reconciles.
+- 1543186: labels.
+- ff2cb88: panel scroll.
+- 9c3269e: short row labels.
+- 0501169: effect bar.
+- f89501c: chart polish.
+- 3249787: tiles.
+- ee0a655: a second layout round after checking the screenshots (effect marker now sits under the slider thumb; chart labels drawn over the lines).
+- d8c20c9: faster slider reweight.
+
+**Slider (fix 1):** the reviewer's case, moving straight to 70% and moving through 100% then to 70%, now gives the same distribution in Chrome ([0.70, 0.208, 0.046, 0.046]; difference 0.0).
+
+**Filed total vs the Bankruptcy probability tile (fix 2):** on the dev page, Filed is 11.0 + 34.3 + 26.6 = 71.9% and the tile reads 71.9%. A test asserts they are equal on the small fixture.
+
+**Bins and quantile errors (fix 3), small $2M fixture:**
+
+```
+                                                       | Before                          | After                 
+-------------------------------------------------------+---------------------------------+-----------------------
+Collected bin width                                    | $260k                           | $15.3k                
+Collected P5 / P50 / P95 at the horizon                | off by $130k / $53k / $117k     | exact                 
+Collected daily band, largest error                    | $130k                           | $7.6k                 
+Headroom bin width                                     | $235k, one range for all months | $8.4k–$13.7k per month
+Headroom P5, all due dates together                    | off by $80k                     | off by $0.2k          
+Monthly headroom P5 (Collections table), largest error | $78k                            | $5.8k                 
+```
+
+On the Akoustis dev record the collected bins went from $260k to $15.3k, and headroom from $276k to $6.4k–$23.3k per month. I didn't measure exact quantile errors on Akoustis: that needs full per-path trajectories, which is too heavy for this Mac.
+
+**Collections table (fix 4):** the "Due − Collected = Past due + Frozen, due" identity holds within 1¢ on the dev page. "Frozen, due" plus "Frozen, not yet due" gives $193.9k against the $194k tile. A test covers both identities on the small fixture.
+
+**Headless Chrome, 1440×900 and 1024×768:**
+- No page scroll at either size, every control works, and there are no console errors.
+- All 108 question rows have a distinct label and context, and the last row is reachable.
+- No chart labels collide or run off the plot, and no tile line wraps.
+- Slider reweight took 73 ms median and 106 ms at most over 30 moves. The server was taking about 380 ms; skipping the collected quantiles the page doesn't show brought it to about 66 ms.
+
+**Not fixed:** the collected band before the horizon, the daily cash band and the monthly headroom P5 are still read from bins, now accurate to within one bin. The cash bins weren't in the findings and are unchanged. The dev server is stopped. I didn't label or merge.
+
+I also added three pitfalls to the `slope-sparse-events-build` skill: headless Chrome hides scrollbars unless told not to, the dev cache must be rebuilt when the saved page data changes shape, and the reweight should not compute quantiles the page doesn't show.
+
+Screenshots are in `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/pr14_fix/shots/` (`p1440_*`, `p1024_*`, `desktop_*`, `tablet*`); the rest of the scratch work is in `pr14_fix/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_4b5a52df/task-0.log

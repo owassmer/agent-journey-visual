@@ -1,0 +1,1 @@
+{"command": "uv run ruff check . && uv run pytest -p no:warnings 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -oE \"[0-9]+ (passed|failed)\" && git add -A && git commit -q -m \"Record run 5; give consequence-support the effect's own modelling treatment so modelling statements are not false alarms\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && git log --oneline -1"}

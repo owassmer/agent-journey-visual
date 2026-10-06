@@ -1,0 +1,23 @@
+[('gap_relevance', 'noul', 'dict'), ('usable_evidence', 'noul', 'dict'), ('premise_conflict', 'noul', 'dict'), ('instruction_like_text', 'noul', 'dict'), ('entity_scope', 'choice', 'dict'), ('claim_posture', 'choice', 'dict'), ('obligation_status', 'choice', 'dict'), ('cash_access', 'choice', 'dict'), ('activity_status', 'choice', 'dict'), ('offset_status', 'choice', 'dict'), ('finding_support', 'choice', 'dict'), ('finding_atomicity', 'choice', 'dict'), ('context_sufficiency', 'choice', 'dict'), ('economic_role', 'choice', 'dict'), ('statement_relation', 'choice', 'dict'), ('baseline_overlap', 'choice', 'dict'), ('matter_inventory', 'noul', 'dict'), ('matter_kind', 'choice', 'dict'), ('claims_supported', 'choice', 'dict'), ('coverage_supported', 'choice', 'dict'), ('dispute_branch', 'choice', 'dict')]
+{
+ "id": "gap_relevance",
+ "version": "3.0.0",
+ "profile": "candidate_screen",
+ "primitive": "noul",
+ "question": "Does this passage contain information that helps answer the selected unanswered question?",
+ "applies_when": "Every retrieved candidate for a recorded decision dependency.",
+ "state_fields": [
+  "unanswered_question",
+  "passage"
+ ],
+ "prompt": {
+  "instructions": "Does this passage contain information that helps answer the selected unanswered question? Judge relevance to state.unanswered_question only, using state.passage as written.",
+  "criteria": {
+   "true": "The passage bears on the unanswered question itself (the same entity, obligation, asset or activity), even if it does not settle it.",
+   "false": "The passage is about something else, or only shares vocabulary with the question."
+  }
+ },
+ "application": "Code orders candidates; a low value never removes a candidate from the agent's view."
+}
+dict_keys(['registry_id', 'registry_version', 'status', 'model_id', 'sdk_requirement', 'sdk_mapping', 'purpose', 'global_rules', 'profiles', 'state_contract', 'observation_record', 'retired_in_3_0_0', 'sources', 'evaluation_mode_policy', 'questions'])
+(eval):6: no matches found: --include=*.py

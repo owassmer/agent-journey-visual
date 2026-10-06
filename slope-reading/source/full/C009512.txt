@@ -1,0 +1,1 @@
+text((await tools.exec_command({cmd:"osascript <<'APPLESCRIPT'\ntell application \"Google Chrome\"\n tell tab id 796873296 of window id 796873190\n  return execute javascript \"JSON.stringify({url:location.href,title:document.title,text:document.body.innerText})\"\n end tell\nend tell\nAPPLESCRIPT","max_output_tokens":1200})).output);

@@ -1,0 +1,33 @@
+512:async def account_for_items(ctx: RunContext, args: dict) -> dict:
+513-    updates = []
+514-    for entry in args.get("items", []):
+515-        item = ctx.run.get("inventory", entry["item_id"])
+516-        disposition = entry.get("disposition")
+517-        if disposition == "covered_by_findings":
+518-            fids = tuple(entry.get("finding_ids") or [])
+519-            bad = [f for f in fids if f not in ctx.run.graph["findings"] or ctx.run.graph["findings"][f].status != "accepted"]
+520-            if not fids or bad:
+521-                raise ToolError(f"{item.item_id}: covered_by_findings needs accepted finding IDs (not accepted: {bad or 'none given'})")
+522-            if ctx.semantics is not None:
+523-                problem = await _check_coverage(ctx, item, fids, entry.get("override_reason", ""))
+524-                if problem:
+525-                    raise ToolError(problem)
+526-            updates.append(item.model_copy(update={"status": "covered", "finding_ids": fids, "note": entry.get("reason", "")}))
+527-        elif disposition == "not_decision_relevant":
+528-            reason = (entry.get("reason") or "").strip()
+529-            if len(reason) < OVERRIDE_NOTE_MIN:
+530-                raise ToolError(f"{item.item_id}: say why it does not bear on the financing decision")
+531-            updates.append(item.model_copy(update={"status": "not_decision_relevant", "note": reason}))
+532-        else:
+533-            raise ToolError(f"{entry.get('item_id')}: disposition must be covered_by_findings or not_decision_relevant")
+534-    for u in updates:  # all validated before any write
+535-        ctx.run.put("inventory_accounted", u)
+536-    return {"accounted": [u.item_id for u in updates],
+537-            "open": sum(i.status == "open" for i in ctx.run.graph["inventory"].values())}
+538-
+539-
+540-async def resolve_reconciliation(ctx: RunContext, args: dict) -> dict:
+541-    task = ctx.run.get("reconciliations", args["task_id"])
+542-    note = (args.get("note") or "").strip()
+543-    if len(note) < OVERRIDE_NOTE_MIN:
+544-        raise ToolError("Explain how the statements relate and which finding stands")

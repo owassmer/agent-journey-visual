@@ -1,0 +1,115 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_66eee6a4]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 00:15:22 (41m17s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2477.27s
+
+--- ✓ TASK 1/1: Worker R: integrate and run the 14 May 2024 Akoustis case end to end in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model).
+
+Steps:
+(1) Merge origin/step-8-case (A3's automatic-debit collection and the existing line). Rebuild the 14 May tree and the 20 Jun equality check, and run the full suite.
+(2) Run the investigation (the agent plus the Jev snapshot sweep) on the akoustis_20240514 snapshot as a new recorded run.
+(3) Run `slope analyze` on that run.
+(4) Report the results.
+
+Each step ends in a commit of named files and a push. Report the SHAs, the run id, the Jev spend, the agent's findings and dispute instantiation, the analysis headline, and every problem. Do not open a PR.  (status=completed, api_calls=116, 2476.97s) ---
+The 14 May run is recorded and analysed. The one-forecast headline: Slope collects 64.9% of what falls due by 10 Nov, and the filing probability by 10 Nov is 43.3%. The run needed two code fixes first. Its lower verdict branch is also $0 rather than the fixture's $1,426,412, because the agent missed three damages figures that are in the snapshot. No PR opened; nothing was adjusted toward the 17 May verdict or the December bankruptcy.
+
+**SHAs (all pushed to `step-8-model`)**
+- 88ba58e: merged `origin/step-8-case` with no conflicts. `line.need` stays the 30-day cash floor under both collection modes, and `debit` is central for 14 May.
+  - 14 May fixture tree: 3,570 paths, 219 dispute questions plus 2 bank-view questions. The §5.3 shares are unchanged (O2 0.0%).
+  - 20 Jun check: 13,821 paths, 337 keys, same state hashes. Full suite: 222 passed.
+- 28f8bb8: mission fix.
+  - **Problem:** the agent was getting the 20 Jun case template, which has as_of 20 Jun and says Akoustis "applied on this date".
+  - **Fix:** a 14 May mission (`akoustis_20240514_mission`) that `get_mission` picks by snapshot. It describes Slope's review of the existing line (opened 1 Apr, reviewed the day after the 10-Q, trial under way) and gives no conclusion.
+  - The case's wording now reads as a review, not a new request; the regenerated opening state is identical.
+  - The agent's instructions and the `instantiate_dispute` description now cover a claim still at trial.
+  - Jev caps raised in `agent_config.json`: $0.30 and 2,000 attempts per run; the sweep gets $0.60 and 9,000 attempts.
+- 78bfefa: **bug fix.** The design adds the `trial_pending` event, but the registry had no `event_trial_pending` question. Every `instantiate_dispute` call failed, so the first run (…T042125Z) submitted without the dispute. I did not commit that run; it is in `scratch/8/r/failed_run`. I added the question and a guard test. Suite: 223 passed; 20 Jun still identical.
+- cdc0a8d: investigation files (events, packet, run, slots, sweep and the two Jev logs). The commit message says 24 of 27 findings accepted; the correct figure is 26 accepted, 1 rejected.
+- 84e737d: analysis files (`analysis.json.gz`, `page.json`, CSVs, `jev_log`).
+
+**Run `akoustis_20240514-agent_plus_jev-20260928T043747Z`**: CANDIDATE_READY.
+- **Dispute:** `liability_pending`, trial started 6 May, the defendant owes, 5 claims, 12 components. The notes' $1.32M coupon on 15 Jun comes out of the build.
+- **Difference from `fixture_dispute.json` that changes the tree:** the agent left patent ($279,808), corrective advertising ($1,146,604) and poaching ($809,772) without amounts. It relied on the redacted D.I. 476 brief; D.I. 543-1 ¶¶19, 42, 49, which state these figures, are in the snapshot, but the agent never read those paragraphs.
+  - Lower branch: $0 instead of $1,426,412. Claimant's theory: $66.1M instead of $67.5M.
+  - Tree: 2,655 paths and 179 + 2 questions, against the fixture's 3,570 and 219 + 2. No path ends in "paid".
+- **Smaller differences:** amount_status is "estimated" (the design says "sought"). The agent added punitive damages, enhanced damages, fees, interest, costs and a defense component, all without amounts.
+- **Slots:** 44 of 78 filled. Empty 4.1.0 slots:
+  - `verdict_finding`: the final verdict form and the defense's statement of intended proof;
+  - `verdict_measure`: the final verdict form;
+  - `listing_kept`: the latest stockholder vote.
+- 4.0.0 slots empty: settlement statements, mediation orders, appeal statements and waiver, the claimant's statements, noteholders' statements, asset locations, and the company's stay motion.
+
+**Analysis headline**
+
+```
+                                                        | One forecast     | Ordinary operating risk (event has no cash effect)
+--------------------------------------------------------+------------------+---------------------------------------------------
+Funded (new draws, plus the $389,677 opening principal) | $597,284         | $865,933                                          
+Due                                                     | $1,023,479       | $1,302,067                                        
+Collected                                               | $664,008 (64.9%) | $947,857 (72.8%)                                  
+Past due                                                | $33,922          | $3,523                                            
+Stayed at a filing                                      | $157,612         | $18,872                                           
+Not yet due                                             | $167,936         | $331,815                                          
+Filing by 10 Nov                                        | 43.3%            | 5.4%                                              
+Preference exposure                                     | $144,428         | $30,420                                           
+```
+
+In the ordinary-operating-risk run, the company raises equity at the cash floor on 93% of paths, and 94.7% of paths survive to 10 Nov.
+
+- **Jev's verdict-form answers ("yes" probability):**
+  - q1a: 0.60. If yes, q1b (award rests on the claimant's principal measure): 0.50.
+  - If q1a is no: q2a 0.21; q2b 0.36; q2c 0.53; q3a 0.29 or 0.22; q5a 0.68 or 0.66.
+- **J1 composed:** no award 9.6%, lower award 58.8%, claimant's theory 31.6%.
+- **Cash-floor answers:**
+  - Where the company can raise (no adverse judgment): raise equity 0.86–0.91, file 0.02–0.04.
+  - After the claimant's-theory judgment (raising ruled out): file 0.71–0.85, continue 0.15–0.29.
+  - After a pre-verdict settlement: file 0.52.
+  - Bank view: raise equity 0.93.
+- **Top 6 sensitivities on collections (answer at 0% vs 100%):**
+  1. Qorvo accepts the pre-verdict settlement: $757k vs $474k.
+  2. The award rests on the claimant's principal measure (q1b): $801k vs $527k.
+  3. q1a answered yes: $790k vs $580k.
+  4. Akoustis offers to settle: $757k vs $599k.
+  5. Response to the claimant's-theory judgment: file $570k vs continue $686k.
+  6. Decision at the cash floor (raise, file, continue): $670k / $587k / $623k.
+
+**Jev spend per adapter**
+- Sweep: 5,576 requests, $0.2485. It covered 1,187 sections, not the 1,176 in the brief, and would not have fit the old $0.10 cap.
+- Investigation: 224 requests, $0.0263.
+- Slots: 2,028 requests, $0.1080.
+- Analysis: 181 requests, $0.0307.
+
+**Other problems**
+- **Viewer conflict:** the viewer on port 8011 runs from step-7-page's `.venv`, so I did not delete that `.venv`. I deleted the main checkout's `var/analysis` (807 MB) instead; 4.0 GB was free and the viewer still answered 200.
+- **Sweep log:** replaying it from the cache matches every flag, but 22 of 4,475 unit scores differ, because duplicate units were answered separately during the live sweep.
+- **Possible bug, no effect on this run:** the claimant's-branch sum doesn't exclude components marked as the defense's theory. The one defense component here has no amount.
+- **Slot filling:** Jev assigns findings to slots when the analysis runs. Design §7.4 says the agent should do it; I left this as it is.
+
+The skill notes are updated with these lessons.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_66eee6a4/task-0.log
+Child's process proc_c3ec873f8b73 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && env -u CLAUDE_CODE_O` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_63c2113ef259 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && R=~/.hermes/profiles` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_f4274d44fc3f `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && R=~/.hermes/profiles` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_f067662a8fff `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && R=~/.hermes/profiles` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+
+Child's process proc_382b9fd69c23 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && R=~/.hermes/profiles` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-docs/cases/akoustis_20240514/scenario.json", "old_string": "\"Changes the cash level at which the company decides whether to raise equity, keep going or file,", "new_string": "\"Changes the cash level at which the company decides whether to initiate an offering, file, or do neither,"}

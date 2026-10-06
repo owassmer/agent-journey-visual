@@ -1,0 +1,23 @@
+427:                _dispose(ctx, [o for o in guard_obs if _guard_name(o) == name], "overridden_by_agent_with_reason", overrides[name])
+430:        _dispose(ctx, [o for o in guard_obs if ctx.run.get("observations", o.observation_id).downstream_disposition == "unused"],
+587:def _dispose(ctx: RunContext, observations: list[SemanticObservation], disposition: str, note: str) -> None:
+606:        _dispose(ctx, unused, "used_in_finding", f"screened passage cited in {finding.finding_id}")
+632:        _dispose(ctx, [obs], "challenged_agent_draft", f"coverage check on {item.item_id}")
+635:    _dispose(ctx, [obs], "overridden_by_agent_with_reason" if clear_gap else "used_in_finding",
+659:            _dispose(ctx, [rel], "flagged_conflict", f"opened {task.task_id}")
+723:        _dispose(ctx, [obs], "unused", "near-even support answer; not blocking")
+746:        _dispose(ctx, [obs], "challenged_agent_draft", "conclusion check")
+750:    _dispose(ctx, [obs], "used_in_finding" if ok else "overridden_by_agent_with_reason",
+587:def _dispose(ctx: RunContext, observations: list[SemanticObservation], disposition: str, note: str) -> None:
+588-    for o in observations:
+589-        current = ctx.run.get("observations", o.observation_id)
+590-        ctx.run.put("observation_disposition", current.model_copy(update={"downstream_disposition": disposition,
+591-                                                                          "disposition_note": note}))
+592-
+593-
+594-def _guard_name(o: SemanticObservation) -> str:
+595-    return "consequence_support" if o.question_id == "claims_supported" else "category_guard"
+596-
+597-
+598-def _attribute_screen(ctx: RunContext, finding: AtomicFinding) -> None:
+599-    """Reliance attribution: screen observations on passages this finding cites are recorded as used."""

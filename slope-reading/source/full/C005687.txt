@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/forecast.py", "old_string": "            return False\n        on = np.ones(len(ta.petition), dtype=bool) if m is None else m\n        if (ta.cause is None) != (tb.cause is None) or (", "new_string": "            return False\n        if (ta.cause is None) != (tb.cause is None) or ("}

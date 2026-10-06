@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:1275,chars:"",yield_time_ms:1000,max_output_tokens:700}));
+text(await tools.exec_command({cmd:"gh run view 36916420788 --repo owassmer/Slope_Sparse_Events --json status,jobs --jq '{status,finished:([.jobs[]|select(.status==\"completed\")]|length),failed:[.jobs[]|select(.conclusion==\"failure\")|.name]}'","max_output_tokens":400}));

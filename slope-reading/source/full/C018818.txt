@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'DRAWS|def basis|draws|n=' tests/akoustis_20240514_fixture.py | head -20; sed -n '1,24p' tools/question_refresh.py; git status --short; df -h .","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}));

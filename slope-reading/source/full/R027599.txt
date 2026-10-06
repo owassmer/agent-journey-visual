@@ -1,0 +1,135 @@
+I've finished checking the Barfresh evidence. What can actually support a litigation tree matters for your choice, so here it is before I build.
+
+**What exists for Barfresh at 25 October 2024:**
+- **The dispute:**
+  - Barfresh sued **Schreiber Foods, Inc.** (its Twist & Go co-manufacturer) for breach of the supply agreement. It filed in federal court on 10 Nov 2022 (C.D. Cal. 2:22-cv-08222), dismissed voluntarily in Jan 2023 to try to settle, then re-filed in California state court in Aug 2023.
+  - The case is funded non-recourse to conclusion (announced 13 Aug 2024; the funder and its share of any recovery are undisclosed).
+  - Barfresh is **withholding $499k** it owes Schreiber, which sits on the balance sheet as a disputed payable. Its damages are unquantified. The anchors are a $1.2M revenue impact and $932k of destroyed inventory (Nov 2022 8-K), plus $493k in refunds.
+  - Schreiber terminated the supply agreement. Barfresh contracted replacement capacity, "expected in Q4 2024".
+- **The finances:** $401k cash, $1.66M receivables, $770k inventory. A **$1.5M receivables facility** (90% advance rate, prime + 1.2%, secured on receivables *and inventory*) had $1.4M undrawn.
+- **What's missing:**
+  - No court filings. The federal docket and the state court records aren't freely accessible: Justia and CourtListener block fetching, and the state case has no public docket.
+  - So there's no demand from Schreiber, no rulings, no hearing or trial dates, and the funder's terms are unknown.
+  - The only view of the dispute is Barfresh's own disclosures.
+
+**What that means for the decision tree:** the tree works, but its nodes are the *credit-relevant* uncertainties, not rich procedure.
+1. **The $499k withheld payable.** It stays withheld, gets netted in a settlement, or becomes due after a loss, which would hit $401k of cash. The timing is a window, because no schedule exists.
+2. **Barfresh's claim.** Recovery, no recovery, or unresolved within the loan's life. The funder takes an unknown share. Following sound credit practice, no recovery counts as a source of repayment. A recovery only shows up as upside.
+3. **Replacement capacity**, the operating mechanism. It ramps on schedule in Q4 2024 or it's delayed, which moves receipts and the cash cycle.
+4. **The existing lender.** The facility's lien covers inventory, so Slope financing inventory needs the facility lender's consent or an intercreditor agreement. Its $1.4M of headroom also depends on eligible receivables.
+
+At each node, Jev judges which branch the record supports. Its distribution becomes the branch weight, labelled once as model judgment calibrated to frontier-model consensus, not to observed litigation outcomes. Code turns the branches into cash and into Slope's collections.
+
+**The honest limit:** with only company disclosures, Jev will often answer "unclear" on the legal nodes. That's a truthful answer, but the legal branches will carry wide, near-even weights. The weights will be sharpest on the operating and financing nodes.
+
+**My recommendation:** proceed with Barfresh on these four nodes. The live-dispute story holds up, and the operating mechanism matters more to cash here than the lawsuit does. Present calibrated legal branching on full dockets as the roadmap.
+
+**The alternative:** keep Synergy as the lead and apply the same decision-node approach there, with nodes for Knight's consent, the equity raise and the settlement cadence. The evidence is much richer, but the dispute itself is already resolved.
+
+Should I proceed with Barfresh on these four nodes?
+=========
+The main checkout needed its generated `var/` folder to search the snapshot, so I copied it from the worktree. It's gitignored.
+
+Here is my assessment, with evidence where it matters and without assuming a fixed answer. There's one idea running through it.
+
+**One idea ties these problems together.** The analysis should follow every channel through which the event reaches the lender's cash within the horizon, using the same three-part pattern for each:
+- Jev reads what is true now;
+- Jev forecasts the decisions other parties make;
+- code applies the contractual and arithmetic rules.
+
+Today only one channel, the court's cash, is modelled, and the loan-level output measures only the last thing that can happen: a missed installment. Most of the problems below come from that narrowness, not from bugs.
+
+## What the snapshot says about "beyond the courtroom"
+I checked your claim against the 19 August evidence.
+- **The revolver.** The December 2023 amendment revised financial covenants on:
+  - the cash kept at Western Alliance;
+  - how the quick-ratio covenant is calculated;
+  - minimum liquidity.
+
+  The thresholds are in Exhibit 10.2, which is **not in our snapshot**; the 8-K only summarises them.
+- **Litigation cost.** The 2023 10-K attributes a $2.5M fall in administrative expense mainly to lower legal expense. That is a material, recurring cash stream tied to these disputes.
+- **Management's statement.** The Q2 10-Q says ChromaDex expects its cash and cash from net sales to be sufficient for at least twelve months, with the fee award described in the same filing.
+- **Commercial and patent effects.** The patents were invalidated in 2021–23 and the filings discuss competition generally. I found no evidence of a *new* change to receipts within 180 days.
+
+**My assessment:** you're right about the mechanism, but only partly right about the magnitude.
+- **Not more cash.** Within 180 days no beyond-courtroom channel moves more cash than the $9.8M fee award itself.
+- **Where they matter more is to the lender.** They decide whether a liquid borrower's second line of defence survives. A quick-ratio covenant can be tripped by the *accounting accrual* when the fee is fixed, before any cash moves. That could cost ChromaDex the $10M undrawn revolver exactly when it might need to post a bond, which a letter of credit would draw on. Bank data can't see this at all, and it's the strongest "beyond the courtroom" story in the case.
+- **Litigation spend** is the second channel: probably $1–3M a year, continuing while appeals run and falling when they resolve.
+- **Commercial and IP effects** are real over years, but modelling them within this horizon would be invention.
+
+## Each problem, and the remedy
+**1. The signal never reaches the loan.**
+- **Diagnosis:** two separate things are going on.
+  - **The truthful result.** A $2M loan to a borrower with $27.7M of cash is safe, and no honest model should make it miss.
+  - **The modelling flaw.** Collections continue until cash hits zero, which no real business does, and the loan-level output measures only the final failure.
+- **Remedy (collection rule):** base payment capacity on each draw's own operating needs, not a fixed $7.3M reserve. Capacity is cash minus what that draw's own operating flows will need before the month's receipts come in. That is simply the lowest point of its cumulative operating flows for the rest of the month. No policy constant is needed, and it's more realistic.
+- **Remedy (lender outputs):** add two quantities that move long before a missed payment:
+  - **payment headroom** at each due date: cash above that operating need after the installment, as a distribution;
+  - **backup liquidity**: available cash plus undrawn facility capacity, which the covenant channel (item 6) and a letter-of-credit bond both reduce.
+
+  For ChromaDex, collections will probably still be full, and headroom and backup liquidity will show the erosion clearly. That is the honest lender story for a liquid borrower.
+- **Recommendation:** add Synergy, a tight-cash case, as the second demonstration, where collections actually move with the same engine.
+
+**2. Jev's own probabilities matter less than the structure.** Partly this is a framing error on my part, and partly it's scope.
+- **The framing error.** The structure isn't "set by code". Jev's readings set it: who pays, "sought, not fixed", the stage, interest included. Flip the payer and the sign of everything flips. My test compared Jev's forecasts against a flat 50% while keeping Jev's readings, which undercounts Jev's contribution.
+- **The honest part.** Jev's forecasts sit near 50/50 (56%, 58%, 24%, 69%) because the evidence genuinely doesn't settle these court events. Output close to "flat" is Jev reporting real uncertainty, not a defect.
+- **The scope part.** One large amount and a loan that nothing can move leaves little leverage for probability detail. The channels in item 6 add third-party *decisions* (will the lender waive the covenant? will the appeal continue to drive legal spend?), where evidence can move probabilities materially.
+- **Remedy:** show the contribution honestly as a three-step breakdown, using the existing override mechanism:
+  1. bank data only;
+  2. plus Jev's readings, with neutral forecasts;
+  3. plus Jev's forecasts.
+
+  That's one line on the page and directly tests your thesis. I would not add nodes just to make Jev "matter more"; add them only because they are real channels.
+
+**3. The California waiver deleted the branch that actually happened.**
+- **Diagnosis:** the rule was wrong. A waiver makes an appeal *improper*, not *impossible*. Elysium appealed anyway.
+- **Remedy:** only facts that make an event impossible change the tree: it has already happened (the stage), or it has been paid. Everything else, including waivers, becomes evidence for the forecasts. This removes the constraint mechanism entirely, a simplification that also closes off the critical error of a reading deleting a feasible path. Jev's appeal forecast for California would then see the waiver and weigh it.
+
+**4. Jev may remember how the case ended.**
+- **Remedy:** one measurement, not machinery. Replay the 17 forecasts once with the parties' names replaced by their roles ("the Company", "the counterparty"), then compare.
+  - **If key forecasts move a lot:** that is evidence of recall; adopt role names for forecasts by default.
+  - **If they don't:** that is a finding worth showing Russell.
+
+  It's a small switch in the forecast state builder.
+
+**5. Jev over-reads some present-state factors.**
+- **Diagnosis:** the rubric mixed two ideas. Its top level, "refused, or contested enforcement of", lets an appeal count as resistance.
+- **Remedy:** give each rubric a single dimension. Contesting the merits is appeal intent; refusing to pay or resisting enforcement is conduct; and the rubric should say explicitly that an appeal is not resistance. Check the other rubrics for the same double meaning. These are wording changes only.
+
+**6. Much of the investigation doesn't feed the product.**
+- **Diagnosis:** the effects step still reflects Synergy's settlement case.
+- **Remedy:** reuse that step instead of adding a new tool. The agent groups evidence for the two consequence channels exactly as it groups a dispute. Each channel then uses the same pattern, conditioned on the dispute paths:
+
+| Channel | Jev reads (present state) | Code rule | Jev forecasts (decisions) |
+|---|---|---|---|
+| Litigation spend | That the bank feed's counsel payments relate to these disputes | Those payments stop when the path resolves the dispute; they continue while an appeal or enforcement is pending | None |
+| Credit facility | Which covenants and default events apply | Threshold and amount figures are quoted by the agent and checked in code; each draw and path is tested (fixing the fee raises current liabilities) | Given a breach, will Western Alliance waive or amend within the window? The result sets whether the facility is available, which feeds backup liquidity (item 1) |
+
+  - **Evidence to add:** this needs Exhibit 10.2 in the snapshot. It was public before the cutoff, so it's a normal evidence step.
+  - **Retire:** the Synergy-only effect mechanisms stay for Synergy; nothing new is added.
+  - **Leave out:** commercial and IP effects stay out of the cash model, for lack of a near-term trigger.
+
+**7. Tests I removed.** I'll restore two focused checks:
+- newer passages outweigh older ones, and same-date disagreements are kept as a conflict;
+- a waiver changes the appeal forecast's evidence, not the tree.
+
+The second becomes the regression test for item 3.
+
+**8. Loose ends:**
+- **Parameter table:** it duplicates the controls, which already let Russell vary those parameters live. I'd drop it instead of fixing its staleness, leaving less machinery.
+- **The agent-only arm:** it currently produces a bank-only analysis. Fix this in step 7 by letting the agent answer the same forecast questions through the same interface. That comparison *is* step 7's point, so it shouldn't be patched earlier.
+- **Mobile and a real-browser check:** I'd leave that to your own pass on the page.
+- **The outcome reveal:** stays in step 6.
+
+## Proposed order (one PR)
+1. **The quick fixes:** items 3, 5 and 7 (the waiver becomes evidence, the rubric wording, the restored tests). They're small, remove machinery and fix a real miss.
+2. **The collection rule and the lender outputs:** operating-need capacity, payment headroom and backup liquidity.
+3. **Both consequence channels:** litigation spend first, since it needs no new evidence; then the credit facility, including adding Exhibit 10.2 to the snapshot.
+4. **Signal attribution and the recall check:** the three-step breakdown, and the one-time role-name replay.
+5. **Re-record once, analyse, one focused review.** Synergy as the second case, if you want it.
+
+**Decisions I need from you:**
+- **Exhibit 10.2:** may I add it to the snapshot? It's public and dated before the cutoff.
+- **Synergy:** should it be the second demonstration here, where the loan actually moves, or later?
+=========
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

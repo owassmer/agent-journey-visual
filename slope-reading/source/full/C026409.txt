@@ -1,0 +1,1 @@
+{"url": "https://slopepay.com/blog/slope-amazon-sellers", "prompt": "Extract all specifics of the Amazon seller line of credit: credit line sizes, draw terms (months), repayment schedule (fixed payments, frequency), pricing (fees, APR ranges), underwriting data used, eligibility, how funds are disbursed, limits increase rules."}

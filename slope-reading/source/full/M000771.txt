@@ -1,0 +1,35 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_b5e2be0a]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 14:31:16 (1h39m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 690.29s
+
+--- ✓ TASK 1/1: Independent focused review of PR #16 in owassmer/Slope_Sparse_Events (branch step-6c-record): the recall check's name removal and deltas, the outcome file's sourcing and isolation, and the reveal's correctness. Post one PR comment with demonstrated defects only.  (status=completed, api_calls=44, 690.08s) ---
+I found one real defect in PR #16: the recall check leaves names in Jev's prompts that identify the parties. The outcome file, the isolation and the reveal all check out. I posted one comment with the details: https://github.com/owassmer/Slope_Sparse_Events/pull/16#issuecomment-5849489069. I did not label, approve or merge.
+
+`pytest` gave 142 passed. `ruff check .` passed.
+
+**(a) Recall check: names survive the role swap.** I ran all 918 sections of the Akoustis snapshot through the substitution. These still appear afterwards:
+- **Executives:** Aichele sits right next to the verdict text in the 22 May release, a passage a post-judgment forecast would use. Shealy, Boller and Qorvo's CEO Bruggeworth also survive.
+- **Subsidiaries:** the name list has "Grinding and Dicing Services", but the filings write "Grinding & Dicing Services" and "GDSI", so neither is replaced (`recall.py:38`). "RFM Integrated Device, Inc." also survives, because only "RFMi" is listed.
+- **Patents:** the numbers of the two patents in suit survive, and they name the case outright.
+- **Judge:** the docket writes "Jon P McCalla" with no full stop, so the text becomes "Judge Jon P the judge" (`recall.py:33`).
+- **Places and lawyers:** the Huntersville, Canandaigua and Greensboro addresses survive, and so do both sides' counsel in the court filings.
+
+The test at `tests/test_recall.py:66` can't catch this. It only checks names that are already in the replacement list, which the code removes by construction. Its sample passage holds only listed names.
+
+The rest of the recall check is correct. The changes are computed right, the summary matches the per-question figures, and the analysis's probabilities are never altered.
+
+**(b) Outcome file: no defect.** I fetched all 17 sources from EDGAR and RECAP and checked all 21 events, not just 8.
+- Every quote matches its source word for word.
+- No event is dated on or before 20 Jun 2024.
+- The court order dates match the filings.
+- The interest award adds up to $7,257,436.97 and the amended judgment to $56,979,614.95.
+- The notes are $44.0M, and the stated cause of the petition matches the 16 Dec release.
+
+**(c) Isolation: no defect.** The agent has no built-in tools, only its MCP tools, and runs in a temporary folder. No code outside the web viewer and the config names `outcomes/`. The isolation test does real checks rather than repeating what the code does.
+
+**(d) Reveal: no defect.** 16 Dec is day 178 of 180, so it falls inside the horizon, which ends 17 Dec. On the small fixture, the model's filing probability matches the path-weighted figure and the Filed shares on the outcomes bar: 0.4993 at $2M and 0.5938 at $40M. The "Filed: Qorvo enforcement" label rests on two quotes: the 16 Dec release's stated cause, and the 10-K's warning that without an appeal bond the company would be forced into Chapter 11.
+
+I didn't commit or edit anything in the repo. My scratch files are in `~/.hermes/profiles/connor/cache/scratch/pr16/`: the probe scripts, the fetched sources and `comment.md`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_b5e2be0a/task-0.log

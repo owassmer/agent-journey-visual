@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:31342,chars:"",yield_time_ms:1000,max_output_tokens:1500}))
+text(await tools.exec_command({cmd:".venv/bin/python - <<'PY'\nimport sys\nsys.path.insert(0,'tests')\nfrom test_decision_snapshots import case\nfrom app.disputes.forecast import _Walk\nf,d=case.__wrapped__();print(_Walk(f,d)._listing_dates())\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}))

@@ -1,0 +1,1 @@
+{"command": "grep -n \"def test_registry_questions_are_generic_and_well_formed\" -A25 tests/test_semantic_layer.py; uv run pytest -q -p no:cacheprovider tests/test_viewer.py -k causal 2>&1 | grep -E \"^E |assert\" | head -10; grep -n \"def test_recorded_run_renders_with_its_causal_chain\" -A15 tests/test_viewer.py", "description": "Inspect two failing tests", "timeout": 300000}

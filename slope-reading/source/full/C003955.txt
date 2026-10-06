@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9r/cmp20.py", "content": "import json\nimport sys\n\na, b = (json.load(open(p)) for p in sys.argv[1:3])\ndiff = [k for k in set(a) | set(b) if k != \"seconds\" and a.get(k) != b.get(k)]\nprint(\"EQUAL except seconds\" if not diff else f\"DIFFER on {sorted(diff)}\")\n"}

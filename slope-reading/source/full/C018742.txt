@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"ps -p 79687 -o command=; aws ssm get-command-invocation --command-id 4949c32e-2ae9-444e-b84d-3c6acb7b964e --instance-id i-09b42b44a8d35909a --profile slope --region us-east-2 --query '{status:Status,output:StandardOutputContent,error:StandardErrorContent}'","max_output_tokens":2000}));

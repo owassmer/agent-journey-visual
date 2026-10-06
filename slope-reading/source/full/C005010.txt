@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; df -h / | tail -1; ls -la var/evidence | head; env -u CLAUDE_CODE_OAUTH_TOKEN .venv/bin/slope evidence build akoustis_20240514 2>&1 | grep -v -E \"npmrc|nvm|globalconfig\" | tail -3; ls -la var/evidence | head; df -h / | tail -1", "timeout": 300}

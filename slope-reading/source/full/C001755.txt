@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && git status -sb | head -20 && git log --oneline -15 origin/main..HEAD && git log -1 --format='%H %cd' && gh pr view 17 --json title,state,labels,headRefOid,mergeable,statusCheckRollup -q '{title,state,labels:[.labels[].name],head:.headRefOid,mergeable,checks:[.statusCheckRollup[]|{name,conclusion}]}'"}

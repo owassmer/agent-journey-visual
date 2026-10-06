@@ -1,0 +1,27 @@
+{
+ "case_id": "syn_entity_unresolvable",
+ "borrower": "synergy",
+ "profile": "claim_interpretation",
+ "question_id": "entity_scope",
+ "state": {
+  "target": "Synergy CHC Corp. \u2014 a settlement loan with an unnamed former supplier",
+  "source": {
+   "source_id": "synergy_s1a_20240813",
+   "title": "Synergy CHC Corp. Form S-1/A registration statement (Amendment No. 2)",
+   "publisher": "SEC EDGAR",
+   "document_kind": "sec_registration_statement",
+   "available_at": "2024-08-13T23:59:59-04:00"
+  },
+  "passage": {
+   "heading_path": "SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 13 \u2014 Commitments & Contingencies",
+   "text": "During May 2024, the Company paid in full the settlement to L.O.D.C Group, Ltd."
+  },
+  "claim": "The Company paid in full the settlement to L.O.D.C. Group in May 2024."
+ },
+ "expected": "unknown",
+ "why": "Nothing in the passage says whether L.O.D.C. is the unnamed former supplier."
+}
+14:    "entity_scope": {"target": "Applies to the named entity and obligation", "different": "Concerns a different entity or obligation",
+59:    "entity_scope": {"different", "unknown"},
+app/agent/jev_profiles.py:33:AMBIGUITY_MARGIN = 0.25
+app/agent/jev_profiles.py-34-ROUTE_ORDER = {"direct_evidence": 0, "conflict": 1, "unscreened": 2, "context_only": 3, "instruction_flagged": 4}

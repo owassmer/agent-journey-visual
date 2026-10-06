@@ -1,0 +1,624 @@
+"""Synchronous API client."""
+
+from collections.abc import Mapping
+from functools import cached_property
+from types import TracebackType
+from typing import overload
+
+import httpx2
+from typing_extensions import Self
+
+from typesafe_sdk._core.client.sync.models import Models
+from typesafe_sdk._core.config import Config
+from typesafe_sdk._core.endpoints import prepare_system_one
+from typesafe_sdk._core.json_types import JSONContent, JSONValue
+from typesafe_sdk._core.question_types import Question
+from typesafe_sdk._core.response_types import SystemOneResponse
+from typesafe_sdk._core.retry import RetryPolicy, build_tenacity
+from typesafe_sdk._core.transport import Request, ResponseT, send
+
+
+class TypeSafeClient:
+    def __init__(
+        self,
+        *,
+        api_key: str | None = None,
+        model: str | None = None,
+        retry: RetryPolicy | None = None,
+        timeout: float | httpx2.Timeout | None = None,
+        headers: Mapping[str, str] | None = None,
+        transport: httpx2.BaseTransport | None = None,
+        http_client: httpx2.Client | None = None,
+        base_url: str | None = None,
+    ) -> None:
+        """Create an HTTP client for [TypeSafe AI API](https://typesafe.ai).
+
+        Explicit options take precedence over environment variables; empty or whitespace-only
+        environment values are ignored.
+
+        !!! tip "Logging setup"
+            The SDK logs to the `typesafe_sdk` logger; configure it through standard logging, or set
+            `TYPESAFE_LOG_LEVEL` (`debug`, `info`, ...) for a quick default. Secret headers are
+            redacted from log output; request and response bodies are not.
+
+        Args:
+            api_key: Required API key; may be set via the `TYPESAFE_API_KEY` environment variable.
+                Leading and trailing whitespace is stripped. Empty keys, internal whitespace,
+                control characters, and non-ASCII characters are rejected.
+            model: Model name; may be set via the `TYPESAFE_DEFAULT_MODEL` environment variable.
+            retry: A `RetryPolicy` controlling retry behavior; see `RetryPolicy` for the available options and their
+                defaults. Pass `RetryPolicy(max_retries=0)` to disable retries.
+            timeout: Timeout for HTTP operations. Inherits `http_client.timeout` when supplied, otherwise the SDK default.
+            headers: Additional request headers to set.
+            transport: Optional custom HTTP transport, closed when this SDK client closes.
+            http_client: Optional `httpx2.Client`; mutually exclusive with `transport`.
+                Closed when this SDK client closes.
+            base_url: API root; may be set via the `TYPESAFE_BASE_URL` environment variable.
+
+        Raises:
+            TypeSafeError: The API key is missing or invalid, or the timeout is invalid.
+            ValueError: Both `transport` and `http_client` are supplied.
+
+        Examples:
+            ```python
+            from typesafe_sdk import Choice, Noul, TypeSafeClient
+
+            with TypeSafeClient() as client:
+                result = client.system_one(
+                    state="I was charged twice. Please help.",
+                    questions={
+                        "billing": Noul(instructions="Is this about billing?"),
+                        "tone": Choice(
+                            instructions="What is the tone?",
+                            criteria={"calm": None, "angry": None},
+                        ),
+                    },
+                )
+                assert 0 <= result.nouls["billing"].noul <= 1
+                assert result.choices["tone"].choice in {"calm", "angry"}
+            ```
+        """
+        if transport is not None and http_client is not None:
+            raise ValueError("transport and http_client are mutually exclusive.")
+        if timeout is None and http_client is not None:
+            timeout = http_client.timeout
+        self._config = Config.resolve(api_key, base_url, model, timeout, headers)
+        self._retry = build_tenacity(retry)
+        self._http_client = httpx2.Client(timeout=self._config.timeout, transport=transport) if http_client is None else http_client
+
+    @cached_property
+    def models(self) -> Models:
+        """An accessor for the Models API resource.
+
+        Examples:
+            ```python
+            with TypeSafeClient() as client:
+                models = client.models.list()
+            ```
+        """
+        return Models(self._config, self._http_client, self._retry)
+
+    @overload
+    def system_one(
+        self,
+        state: JSONContent,
+        questions: Mapping[str, Question],
+        *,
+        model: str | None = None,
+        retry: RetryPolicy | None = None,
+        timeout: float | httpx2.Timeout | None = None,
+        extra_headers: Mapping[str, str] | None = None,
+        extra_body: Mapping[str, JSONValue | None] | None = None,
+        response_model: None = None,
+    ) -> SystemOneResponse: ...
+
+    @overload
+    def system_one(
+        self,
+        state: JSONContent,
+        questions: Mapping[str, Question],
+        *,
+        model: str | None = None,
+        retry: RetryPolicy | None = None,
+        timeout: float | httpx2.Timeout | None = None,
+        extra_headers: Mapping[str, str] | None = None,
+        extra_body: Mapping[str, JSONValue | None] | None = None,
+        response_model: type[ResponseT],
+    ) -> ResponseT: ...
+
+    def system_one(
+        self,
+        state: JSONContent,
+        questions: Mapping[str, Question],
+        *,
+        model: str | None = None,
+        retry: RetryPolicy | None = None,
+        timeout: float | httpx2.Timeout | None = None,
+        extra_headers: Mapping[str, str] | None = None,
+        extra_body: Mapping[str, JSONValue | None] | None = None,
+        response_model: type[ResponseT] | None = None,
+    ) -> SystemOneResponse | ResponseT:
+        """Answer named questions about text or structured state.
+
+        See [System One](https://docs.typesafe.ai/concepts/system-one) for details.
+
+        Args:
+            state: Text, a JSON object, or an array to evaluate.
+                See [state](https://docs.typesafe.ai/concepts/state) for details.
+            questions: Nonempty mapping of names to question objects or raw dictionaries.
+            model: Model override; `None` inherits the client default.
+            retry: An optional retry policy to override the client-level value for this call only.
+            timeout: An optional timeout for http operations to override the client-level value for this call only, in seconds.
+            extra_headers: Additional request headers to set.
+            extra_body: Additional top-level request-body fields, shallow-merged over the body after
+                `state`, `model`, and `questions` are set. Merging is last-write-wins: a key that
+                collides with `state`, `model`, or `questions` overrides it, and object values are
+                replaced rather than deep-merged.
+            response_model: Optional Pydantic `BaseModel` type describing the JSON response body,
+                including any nested answer models.
+
+        Returns:
+            An instance of `response_model`, or `SystemOneResponse` with answers keyed by question
+            name and model and token usage details when no custom model is supplied.
+
+        Raises:
+            TypeSafeError: Questions are empty or a score question's criteria list is empty.
+            TypeSafeAPIError: The server returns an unsuccessful HTTP response after any retries.
+            TypeSafeAPIConnectionError: The request cannot connect or times out after any retries.
+            TypeSafeAPIResponseValidationError: The response body does not match the response model.
+
+        Examples:
+            Create questions with named arguments:
+
+            ```python
+            with TypeSafeClient() as client:
+                result = client.system_one(
+                    state="I was charged twice. Please help.",
+                    questions={
+                        "billing": Noul(instructions="Is this about billing?"),
+                        "tone": Choice(
+                            instructions="What is the tone?",
+                            criteria={"calm": None, "angry": None},
+                        ),
+                    },
+                )
+                assert 0 <= result.nouls["billing"].noul <= 1
+                assert result.choices["tone"].choice in {"calm", "angry"}
+            ```
+
+            Pass questions as dictionaries:
+
+            ```python
+            with TypeSafeClient() as client:
+                result = client.system_one(
+                    state={"message": "I was charged twice. Please help."},
+                    questions={
+                        "billing": {"type": "noul", "instructions": "Is this about billing?"},
+                        "tone": {
+                            "type": "choice",
+                            "instructions": "What is the tone?",
+                            "criteria": {"calm": None, "angry": None},
+                        },
+                    },
+                )
+                assert 0 <= result.nouls["billing"].noul <= 1
+                assert result.choices["tone"].choice in {"calm", "angry"}
+            ```
+        """
+        return self._request(
+            prepare_system_one(
+                self._config,
+                state,
+                questions,
+                model,
+                extra_body,
+                timeout,
+                extra_headers,
+                SystemOneResponse if response_model is None else response_model,
+            ),
+            retry=retry,
+        )
+
+    def _request(self, request: Request[ResponseT], *, retry: RetryPolicy | None = None) -> ResponseT:
+        return send(self._http_client, self._retry, request, retry)
+
+    def close(self) -> None:
+        """Release network resources and close the underlying HTTP client, including a supplied one."""
+        self._http_client.close()
+
+    def __enter__(self) -> Self:
+        """Enter the client context."""
+        return self
+
+    def __exit__(self, exc_type: type[BaseException] | None, exc_value: BaseException | None, traceback: TracebackType | None) -> None:
+        """Close the client context."""
+        self.close()
+"""Ergonomic answer objects and response metadata, built on the generated wire schemas.
+
+The wire models in `typesafe_sdk._schemas.models` mirror the OpenAPI schema. The public answer types
+subclass them, adding immutability and integer-keyed score maps. Because the answer models are tagged,
+the public `Answer` union validates by discriminator; per-answer dispatch is kept only to skip answer
+kinds a future API adds without failing the whole response.
+"""
+
+from functools import cached_property
+from typing import Annotated, Any, Literal, TypeAlias
+
+import httpx2
+from pydantic import ConfigDict, Field, ValidationError
+from typing_extensions import Self, override
+
+from typesafe_sdk._core.json import deserialize, serialize
+from typesafe_sdk._core.logging import logger
+from typesafe_sdk._core.schemas.base import Response, Schema, format_error_path, format_path, validation_error
+from typesafe_sdk._schemas import models as wire
+
+
+class NoulAnswer(wire.NoulAnswer):
+    """A yes/no answer.
+
+    See the [noul primitive](https://docs.typesafe.ai/primitives/noul) for details.
+    """
+
+    model_config = ConfigDict(extra="ignore", frozen=True, strict=True)
+
+    type: Literal["noul"] = "noul"  # pyrefly: ignore[bad-override]
+
+
+class ChoiceAnswer(wire.ChoiceAnswer):
+    """A selected label and its probabilities.
+
+    See the [choice primitive](https://docs.typesafe.ai/primitives/choice) for details.
+    """
+
+    model_config = ConfigDict(extra="ignore", frozen=True, strict=True)
+
+    type: Literal["choice"] = "choice"  # pyrefly: ignore[bad-override]
+
+
+class ScoreAnswer(wire.ScoreAnswer):
+    """An expected score with its rubric and probabilities.
+
+    See the [score primitive](https://docs.typesafe.ai/primitives/score) for details.
+    """
+
+    model_config = ConfigDict(extra="ignore", frozen=True, strict=True)
+
+    type: Literal["score"] = "score"  # pyrefly: ignore[bad-override]
+    # JSON object keys are strings; `dict[int, ...]` tells Pydantic to coerce them to the integer score
+    # levels. `Any` (not the recursive JSON value) keeps the nested values decodable.
+    legend: dict[int, str | dict[str, Any] | list[Any]]  # pyrefly: ignore[bad-override]
+    """Rubric descriptions keyed by integer score."""
+    probabilities: dict[int, float]  # pyrefly: ignore[bad-override]
+    """Probabilities keyed by integer score."""
+
+
+Answer: TypeAlias = Annotated[NoulAnswer | ChoiceAnswer | ScoreAnswer, Field(discriminator="type")]
+"""An answer to a single question, identified by its `type`."""
+
+
+class Usage(wire.Usage):
+    """Token counts for a request, when reported by the API."""
+
+    model_config = ConfigDict(extra="ignore", frozen=True, strict=True)
+
+    input_tokens: int | None = None  # pyrefly: ignore[bad-override]
+    """Number of input tokens used, or `None` when the API did not report it."""
+    output_tokens: int | None = None  # pyrefly: ignore[bad-override]
+    """Number of output tokens used, or `None` when the API did not report it."""
+
+
+_ANSWER_TYPES = {"noul", "choice", "score"}
+
+
+def _prepare_system_one_response(response: httpx2.Response, answer_fields: set[str]) -> dict[str, Any]:
+    """Validate answers, drop future types, and lift declared answer fields into top-level keys."""
+    decoded = deserialize(response.content)
+    if not isinstance(decoded, dict):
+        raise validation_error(response, "")
+    answers = decoded.get("answers")
+    if isinstance(answers, dict):
+        for name, raw in list(answers.items()):
+            if not isinstance(raw, dict) or not isinstance(raw.get("type"), str):
+                raise validation_error(response, f"answers.{name}.type")
+            if raw["type"] not in _ANSWER_TYPES:
+                # Forward-compat: ignore answer types this SDK version does not model. The raw payload
+                # is still available through `response.raw_http_response`.
+                logger.warning("Ignoring answer %r with unrecognized type %r", name, raw["type"])
+                del answers[name]
+        for answer_field in answer_fields & answers.keys():
+            decoded[answer_field] = answers[answer_field]
+    return decoded
+
+
+class SystemOneResponse(Response):
+    """Answers grouped by question type with model and usage metadata.
+
+    See [System One](https://docs.typesafe.ai/concepts/system-one) for details.
+    """
+
+    model: str
+    """The model used to answer the request."""
+    usage: Usage
+    """Token usage for the request."""
+    answers: dict[str, Answer] = Field(default_factory=dict)
+    """All answer objects keyed by question name."""
+
+    @cached_property
+    def nouls(self) -> dict[str, NoulAnswer]:
+        """Yes/no answers keyed by question name."""
+        return {name: answer for name, answer in self.answers.items() if isinstance(answer, NoulAnswer)}
+
+    @cached_property
+    def choices(self) -> dict[str, ChoiceAnswer]:
+        """Choice answers keyed by question name."""
+        return {name: answer for name, answer in self.answers.items() if isinstance(answer, ChoiceAnswer)}
+
+    @cached_property
+    def scores(self) -> dict[str, ScoreAnswer]:
+        """Score answers keyed by question name."""
+        return {name: answer for name, answer in self.answers.items() if isinstance(answer, ScoreAnswer)}
+
+    @classmethod
+    @override
+    def _decode(cls, response: httpx2.Response) -> Self:
+        answer_fields = set(cls.model_fields) - set(SystemOneResponse.model_fields)
+        decoded = _prepare_system_one_response(response, answer_fields)
+        try:
+            return cls.model_validate_json(serialize(decoded))
+        except ValidationError as error:
+            location = list(error.errors(include_url=False)[0]["loc"])
+            match location:
+                case ["answers", _, answer_type, *_] if answer_type in _ANSWER_TYPES:
+                    del location[2]
+            raise validation_error(response, format_path(location)) from error
+
+
+class ModelMetadata(Schema):
+    """Metadata describing a single available model."""
+
+    name: str
+    """Model name or alias accepted by a request's model field."""
+    description: str
+    """Human-readable description of the model and its capabilities."""
+    release_date: str
+    """Model release date, formatted as YYYY-MM-DD."""
+
+
+class ListModelsResponse(Response):
+    """The models available to the account."""
+
+    models: tuple[ModelMetadata, ...]
+    """The available models."""
+
+    @classmethod
+    @override
+    def _decode(cls, response: httpx2.Response) -> Self:
+        try:
+            return cls.model_validate_json(response.content)
+        except ValidationError as error:
+            raise validation_error(response, format_error_path((), error)) from error
+"""Question objects and raw input models."""
+
+from collections.abc import Mapping, Sequence
+from typing import Any, Literal, TypeAlias
+
+from pydantic import BaseModel, ConfigDict, model_serializer
+from pydantic.functional_serializers import SerializerFunctionWrapHandler
+from typing_extensions import NotRequired, TypedDict
+
+from typesafe_sdk._core.json_types import JSONContent
+from typesafe_sdk._schemas import models as wire
+
+
+class NoulCriteria(TypedDict, total=False, closed=True):
+    """Optional descriptions of the yes and no outcomes.
+
+    See the [noul primitive](https://docs.typesafe.ai/primitives/noul) for details.
+    """
+
+    true: JSONContent | None
+    """Description of the yes outcome as text, a JSON object, or an array; `None` leaves it undescribed."""
+    false: JSONContent | None
+    """Description of the no outcome as text, a JSON object, or an array; `None` leaves it undescribed."""
+
+
+class NoulModel(TypedDict, closed=True):
+    """A yes/no question dictionary with `type="noul"`.
+
+    See the [noul primitive](https://docs.typesafe.ai/primitives/noul) for details.
+    """
+
+    type: Literal["noul"]
+    instructions: NotRequired[JSONContent | None]
+    """The question to ask, expressed as text, a JSON object, or an array; optional."""
+    criteria: NotRequired[NoulCriteria | None]
+    """Optional descriptions of the yes and no outcomes."""
+
+
+class ChoiceModel(TypedDict, closed=True):
+    """A choice question dictionary with `type="choice"`.
+
+    See the [choice primitive](https://docs.typesafe.ai/primitives/choice) for details.
+    """
+
+    type: Literal["choice"]
+    instructions: NotRequired[JSONContent | None]
+    """The question to ask, expressed as text, a JSON object, or an array; optional."""
+    criteria: Mapping[str, JSONContent | None]
+    """Labels mapped to text, object, or array descriptions, or `None` for undescribed labels."""
+
+
+class ScoreModel(TypedDict, closed=True):
+    """A score question dictionary with `type="score"`.
+
+    See the [score primitive](https://docs.typesafe.ai/primitives/score) for details.
+    """
+
+    type: Literal["score"]
+    instructions: NotRequired[JSONContent | None]
+    """The question to ask, expressed as text, a JSON object, or an array; optional."""
+    criteria: Sequence[JSONContent]
+    """A nonempty, ordered list of text, object, or array descriptions, one per score from zero."""
+
+
+class _Question(BaseModel):
+    """Reject unknown fields and omit optional fields left at their default from the wire form."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    @model_serializer(mode="wrap")
+    def _omit_none(self, handler: SerializerFunctionWrapHandler) -> dict[str, Any]:
+        # An unset optional field (`None`) is left off the wire, while user-supplied `None` values
+        # nested inside `criteria`/`instructions` are preserved.
+        return {key: value for key, value in handler(self).items() if value is not None}
+
+
+class Noul(_Question, wire.NoulQuestion):
+    """A yes/no question with optional descriptions for either outcome.
+
+    See the [noul primitive](https://docs.typesafe.ai/primitives/noul) for details.
+    """
+
+    type: Literal["noul"] = "noul"
+    instructions: JSONContent | None = None  # pyrefly: ignore[bad-override-mutable-attribute]
+    """The question to ask, expressed as text, a JSON object, or an array; optional."""
+    criteria: NoulCriteria | None = None  # pyrefly: ignore[bad-override-mutable-attribute]
+    """Optional descriptions of the yes and no outcomes."""
+
+
+class Choice(_Question, wire.ChoiceQuestion):
+    """A question that selects between named alternatives.
+
+    See the [choice primitive](https://docs.typesafe.ai/primitives/choice) for details.
+    """
+
+    type: Literal["choice"] = "choice"
+    criteria: Mapping[str, JSONContent | None]  # pyrefly: ignore[bad-override-mutable-attribute]
+    """Labels mapped to text, object, or array descriptions, or `None` for undescribed labels."""
+    instructions: JSONContent | None = None  # pyrefly: ignore[bad-override-mutable-attribute]
+    """The question to ask, expressed as text, a JSON object, or an array; optional."""
+
+
+class Score(_Question, wire.ScoreQuestion):
+    """A question that assigns a score using an ordered rubric.
+
+    See the [score primitive](https://docs.typesafe.ai/primitives/score) for details.
+    """
+
+    type: Literal["score"] = "score"
+    criteria: Sequence[JSONContent]  # pyrefly: ignore[bad-override-mutable-attribute]
+    """A nonempty, ordered list of text, object, or array descriptions, one per score from zero."""
+    instructions: JSONContent | None = None  # pyrefly: ignore[bad-override-mutable-attribute]
+    """The question to ask, expressed as text, a JSON object, or an array; optional."""
+
+
+QuestionModel: TypeAlias = NoulModel | ChoiceModel | ScoreModel
+"""A question dictionary identified by its `type` key."""
+Question: TypeAlias = Noul | Choice | Score | QuestionModel
+"""A question object or question dictionary."""
+Questions: TypeAlias = Mapping[str, Question]
+"""Question inputs keyed by the names used to identify their answers."""
+"""Endpoint-specific request builders, layered over the generic `transport.prepare`."""
+
+from collections.abc import Mapping
+from typing import Any
+
+import httpx2
+
+from typesafe_sdk._core.config import Config
+from typesafe_sdk._core.constants import MODELS_PATH, SYSTEM_ONE_PATH
+from typesafe_sdk._core.json_types import JSONContent, JSONValue
+from typesafe_sdk._core.question_types import Question
+from typesafe_sdk._core.questions import normalize_questions
+from typesafe_sdk._core.response_types import ListModelsResponse
+from typesafe_sdk._core.transport import Request, ResponseT, prepare
+
+
+def prepare_system_one(
+    config: Config,
+    state: JSONContent,
+    questions: Mapping[str, Question],
+    model: str | None,
+    extra_body: Mapping[str, JSONValue | None] | None,
+    timeout: float | httpx2.Timeout | None,
+    headers: Mapping[str, str] | None,
+    response_type: type[ResponseT],
+) -> Request[ResponseT]:
+    body: dict[str, Any] = {
+        "state": state,
+        "model": config.default_model if model is None else model,
+        "questions": normalize_questions(questions),
+    }
+    if extra_body is not None:
+        body.update(extra_body)
+    return prepare(config, "POST", SYSTEM_ONE_PATH, body, timeout, headers, response_type)
+
+
+def prepare_models(config: Config, timeout: float | httpx2.Timeout | None, headers: Mapping[str, str] | None) -> Request[ListModelsResponse]:
+    return prepare(config, "GET", MODELS_PATH, None, timeout, headers, ListModelsResponse)
+"""Configuration resolution."""
+
+import math
+import os
+from collections.abc import Mapping
+from dataclasses import dataclass, field
+
+import httpx2
+
+from typesafe_sdk._core.errors import TypeSafeError
+from typesafe_sdk.constants import (
+    API_KEY_ENV,
+    BASE_URL_ENV,
+    DEFAULT_BASE_URL,
+    DEFAULT_MODEL,
+    DEFAULT_MODEL_ENV,
+    DEFAULT_TIMEOUT,
+)
+
+
+def _resolve_string(value: str | None, env: str, default: str = "") -> str:
+    """Resolve an explicit string or a stripped environment value, falling back to a default."""
+    return value if value is not None else os.environ.get(env, "").strip() or default
+
+
+def resolve_and_validate_api_key(api_key: str | None) -> str:
+    """Resolve an API key from the argument or environment, strip whitespace, and validate it."""
+    key = _resolve_string(api_key, API_KEY_ENV).strip()
+    if not key:
+        raise TypeSafeError(f"No API key was provided. Pass api_key or set the {API_KEY_ENV} environment variable.")
+    if not key.isascii() or not key.isprintable() or " " in key:
+        raise TypeSafeError("API key must contain only printable ASCII characters without whitespace.")
+    return key
+
+
+def resolve_timeout(timeout: float | httpx2.Timeout) -> float | httpx2.Timeout:
+    if not isinstance(timeout, httpx2.Timeout) and (not math.isfinite(timeout) or timeout <= 0):
+        raise TypeSafeError("timeout must be a positive, finite number of seconds.")
+    return timeout
+
+
+@dataclass
+class Config:
+    api_key: str = field(repr=False)
+    base_url: str
+    default_model: str
+    timeout: float | httpx2.Timeout
+    default_headers: httpx2.Headers = field(repr=False)
+
+    @classmethod
+    def resolve(
+        cls,
+        api_key: str | None,
+        base_url: str | None,
+        default_model: str | None,
+        timeout: float | httpx2.Timeout | None,
+        default_headers: Mapping[str, str] | None,
+    ) -> "Config":
+        return cls(
+            resolve_and_validate_api_key(api_key),
+            _resolve_string(base_url, BASE_URL_ENV, DEFAULT_BASE_URL).rstrip("/"),
+            _resolve_string(default_model, DEFAULT_MODEL_ENV, DEFAULT_MODEL),
+            resolve_timeout(DEFAULT_TIMEOUT if timeout is None else timeout),
+            httpx2.Headers(default_headers),
+        )

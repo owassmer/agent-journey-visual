@@ -1,0 +1,38 @@
+[itemprop=articleBody] True 3767
+.article-body True 3767
+#main-body-container True 3767
+article False None
+LOS ANGELES, Aug.  13, 2024  (GLOBE NEWSWIRE) -- Barfresh Food Group Inc. (the “Company” or “Barfresh”) (Nasdaq: BRFH), a provider of frozen, ready-to-blend and ready-to-drink beverages, received multiple offers to fund its lawsuit on a non-recourse non-dilutive basis based on the merits of its legal case. The Company entered into an agreement with a well-known alternative asset investment firm and the Company’s litigation counsel, Boesch Law Group, to provide non-recourse non-dilutive litigatio
+16
+1 
+ 
+UNITED STATES DISTRICT COURT 
+DISTRICT OF MAINE 
+ 
+SYNERGY CHC CORP. ,  ) 
+) 
+  Plaintiff   ) 
+)  
+v.      ) No. 2:22-cv-00301-JAW 
+) 
+HVL, LLC, d/b/a ATRIUM  ) 
+INNOVATIONS,     ) 
+) 
+  Defendant   ) 
+ 
+ 
+RECOMMENDED DECISION ON MOTION TO DISMISS 
+ 
+ Defendant HVL, LLC, doing business as Atrium Innovations, moves pursuant 
+to Federal Rule of Civil Procedure 12(b)(6) to dismiss claims by Plaintiff Synergy CHC 
+Corp. for negligent misrepresentation (Count III) and fraud (Count IV) primarily on 
+the basis of failure to plead both claims with particularity pursuant to Federal Rule 
+of Civil Procedure 9(b) .  See Motion to Dismiss (MTD) (ECF No. 21) at 1-2; First 
+Amended Complaint (FAC) (ECF No. 19) ¶¶ 99-110.1 
+With the benefit of oral argument on February 1, 2023, I conclude that Synergy 
+fails to plead its fraud claim with particularity pursuant to Rule 9(b) but that its  
+negligent misrepresentation claim is not subject to that heightened standard.  I , 
+therefore, recommend that the Court grant the motion to dismiss as to Count IV, deny 
+it as to Count III, dismiss Count IV without prejudice, and direct that Synergy file a 
+ 
+1 Atrium also sought dismissal of a claim by Syne

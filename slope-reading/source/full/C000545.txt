@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-engine && git fetch -q origin; git log --oneline origin/main..origin/step-6b-engine 2>&1 | head; gh pr list --state all --limit 5 --json number,title,headRefName,state,labels --jq '.[] | \"\\(.number) \\(.state) \\(.headRefName) \\(.title)\"'; git status --short | head"}

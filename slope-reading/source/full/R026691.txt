@@ -1,0 +1,55 @@
+20:class Status(StrEnum):
+27:class Basis(StrEnum):
+34:class Unit(StrEnum):
+43:class UnknownInput(ValueError):
+46:    def __init__(self, name: str, reason: str = "") -> None:
+51:class Provenance(BaseModel):
+54:    basis: Basis
+55:    source_fact_ids: tuple[str, ...] = ()
+56:    assumption_id: str | None = None
+57:    derivation: str | None = None
+58:    note: str | None = None
+61:class EvidenceValue(BaseModel):
+64:    status: Status
+65:    unit: Unit
+66:    value: int | Decimal | date | None = None
+67:    lower: int | Decimal | date | None = None
+68:    upper: int | Decimal | date | None = None
+69:    observed_on: date | None = None
+70:    provenance: Provenance = Field(default_factory=lambda: Provenance(basis=Basis.UNKNOWN))
+73:    def _consistent(self) -> EvidenceValue:
+95:    def known(self) -> bool:
+98:    def require(self, name: str) -> Any:
+104:def unknown(unit: Unit, note: str) -> EvidenceValue:
+108:def documented(value: Any, unit: Unit, *, facts: tuple[str, ...] = (), observed_on: date | None = None,
+109:               approximate: bool = False, note: str | None = None) -> EvidenceValue:
+115:def assumed(value: Any, unit: Unit, assumption_id: str, note: str, *, observed_on: date | None = None) -> EvidenceValue:
+120:def derived(value: Any, unit: Unit, derivation: str, *, facts: tuple[str, ...] = ()) -> EvidenceValue:
+125:def dec(value: str | int | Decimal) -> Decimal:
+134:def cents_round(amount: Decimal) -> int:
+139:def usd(cents: int) -> str:
+134:def _cents_in_text(cents: int, text: str) -> bool:
+135-    """Whether an amount appears in cited text, as written in filings ($2,000,000 / 2,000,000 / $2.0 million)."""
+136-    flat = " ".join(text.replace("$ ", "$").split())
+137-    dollars, rem = divmod(abs(cents), 100)
+138-    forms = {f"{dollars:,}.{rem:02d}"} if rem else {f"{dollars:,}", f"{dollars:,}.00"}
+139-    if rem == 0 and dollars >= 1_000_000:
+140-        forms |= {f"{dollars / 1_000_000:.1f} million", f"{dollars / 1_000_000:g} million"}
+141-    # A digit, comma or decimal point may not touch the match: "600,000" must not match "$2,600,000".
+142-    return any(re.search(rf"(?<![\d,.]){re.escape(f)}(?!\d|,\d|\.\d)", flat) for f in forms)
+143-
+144-
+145-def _baseline_item(ctx: RunContext, key: str) -> dict | None:
+146-    """The baseline observation a case names for a role (opening cash, aggregate debt); no case literals in code."""
+147-    wanted = ctx.inputs["baseline_profile"].get(key)
+148-    return next((o for o in ctx.inputs["baseline_profile"]["observations"] if o["observation_id"] == wanted), None)
+149-
+--
+413:        if p.get("finding_ids") and _cents_in_text(cents, quotes):
+414-            value = documented(cents, Unit.CENTS, note=p.get("description"))
+415-        else:
+416-            value = EvidenceValue(status=Status.EXACT, unit=Unit.CENTS, value=cents, provenance=Provenance(
+417-                basis=Basis.DERIVED, derivation="agent-stated",
+418-                note="Agent-stated amount not found verbatim in the cited findings' quotes"))
+419-    elif p.get("lower_cents") is not None and p.get("upper_cents") is not None:
+420-        lo, hi = int(p["lower_cents"]), int(p["upper_cents"])

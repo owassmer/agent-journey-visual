@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"pwd && rg --files -g 'AGENTS.md' -g '*sparse*' -g '*SPARSE*' -g '*release*' -g 'README*' -g 'package.json' -g 'pyproject.toml' -g '*CONTEXT*' -g '*PLAN*'","max_output_tokens":4000}));
+text(ALL_TOOLS.filter(x=>/search/i.test(x.name)&&/tool/i.test(x.description)).map(x=>({name:x.name,description:x.description.slice(0,100)})));

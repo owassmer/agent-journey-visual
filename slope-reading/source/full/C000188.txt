@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq && python3 filings.py 1584754 2023-09-01 2024-06-20 | grep -v \"| 4 |\\|| 3 |\\|| 144 |\\|SC 13G\"; echo; python3 filings.py 1584754 2023-09-01 2024-06-20 '^(4|3|144)$' | wc -l; python3 filings.py 1584754 2024-04-01 2024-06-20 '^(4|144)$'", "timeout": 120}

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '1,315p' tools/question_refresh.py; rg -n 'global|conservation|mass|coverage' tools/*check* tools/*repair* tools/*refresh*; sed -n '215,265p' tools/merge_fleet.py; df -h .","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":10000}));

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Investigation viewer{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <style>
+    :root { --pico-font-size: 97%; }
+    .tag { display:inline-block; font-size:.72rem; font-weight:600; letter-spacing:.02em; padding:.1rem .45rem;
+           border-radius:.3rem; border:1px solid var(--pico-muted-border-color); margin-right:.35rem; white-space:nowrap; }
+    .tag.source { border-color:#6b7280; } .tag.jev { border-color:#7c3aed; } .tag.finding { border-color:#0f766e; }
+    .tag.assumption { border-color:#b45309; } .tag.engine { border-color:#1d4ed8; } .tag.warn { border-color:#b91c1c; }
+    .card { border:1px solid var(--pico-muted-border-color); border-radius:.5rem; padding:1rem 1.1rem; margin-bottom:1rem; }
+    .consequence { font-weight:600; margin:.4rem 0; }
+    blockquote { margin:.4rem 0; padding:.35rem .8rem; font-size:.9rem; }
+    .muted { color:var(--pico-muted-color); font-size:.85rem; }
+    .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(18rem,1fr)); gap:1rem; }
+    table { font-size:.88rem; } details { margin:.4rem 0; } summary { font-size:.92rem; }
+    pre { font-size:.75rem; white-space:pre-wrap; }
+  </style>
+</head>
+<body>
+<main class="container">
+{% block body %}{% endblock %}
+</main>
+</body>
+</html>
+{% extends "base.html" %}
+{% block title %}Recorded investigations{% endblock %}
+{% block body %}
+<h2>Recorded investigations</h2>
+<p class="muted">Read-only. Each run is rebuilt from its hash-chained event log and verified before display.</p>
+{% if runs %}
+<table>
+  <thead><tr><th>Run</th><th>Status</th><th>Arm</th><th>Started</th><th>Findings</th><th>Effects</th></tr></thead>
+  <tbody>
+  {% for r in runs %}
+    <tr><td><a href="/runs/{{ r.run_id }}">{{ r.run_id }}</a></td><td>{{ r.status }}</td><td>{{ r.arm }}</td>
+        <td>{{ r.started_at[:19] if r.started_at else "" }}</td><td>{{ r.counts.findings }}</td><td>{{ r.counts.effects }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p>No recorded runs yet. Run <code>uv run slope investigate</code>.</p>{% endif %}
+{% endblock %}
+20:RECORDED = ROOT / "runs/recorded"
+31:def list_runs(root: Path = RECORDED) -> list[dict[str, Any]]:
+32-    runs = []
+33-    for d in sorted(root.glob("*/run.json"), reverse=True):
+34-        r = json.loads(d.read_text())
+35-        runs.append({"run_id": r.get("run_id"), "status": r.get("status"), "arm": r.get("arm"),
+36-                     "started_at": r.get("started_at"), "snapshot_id": r.get("snapshot_id"), "counts": r.get("graph_counts", {})})
+37-    return runs
+38-
+39-
+40-def _money(ev: dict | None) -> str:
+41-    if not ev:
+42-        return "unknown"
+43-    if ev.get("status") == "range":
+44-        return f"{usd(ev['lower'])} to {usd(ev['upper'])}"
+45-    if ev.get("value") is None:
+46-        return "unknown"
+47-    return ("approx. " if ev.get("status") == "approximate" else "") + usd(int(ev["value"]))
+48-
+49-
+50-def build(run_id: str, root: Path = RECORDED) -> dict[str, Any]:
+51-    run = RunStore(run_id, root=root)  # verifies the hash chain and the locked packet on load

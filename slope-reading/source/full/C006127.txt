@@ -1,0 +1,1 @@
+{"command": "S=~/.hermes/profiles/connor/cache/scratch/memo; for i in $(seq 1 40); do grep -q \"^single\" $S/single_279.log && break; sleep 15; done; grep -v \"npmrc\\|nvm\\|globalconfig\" $S/single_279.log | tail -2; cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && MODE=cmp A=$S/single_279.pkl B=$S/par_279.pkl .venv/bin/python $S/par_check.py", "timeout": 650}

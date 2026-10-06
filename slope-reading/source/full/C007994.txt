@@ -1,0 +1,1 @@
+{"command": "sleep 270; cd ~/.hermes/profiles/connor/cache/scratch/split && python3 ssm.py --wait 30 -- \"tail -8 /var/log/slope-prepare.log; tail -3 /opt/fresh-walk/skeleton/topology.log; ls -la /opt/fresh-walk/skeleton/out | tail -3; ps -eo etime,pcpu,rss,args | grep fresh_walk | grep -v grep | cut -c1-120\"", "timeout": 360}

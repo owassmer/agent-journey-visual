@@ -1,0 +1,1 @@
+{"image_url": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/7_page/shots3/p2_4a_tree.png", "question": "Transcribe all text and numbers in the tree, column by column, including small grey percentages on bands. List concrete defects only: overlaps, clipped/truncated labels, sums that don't add up (children vs parent), confusing placement. Brief."}

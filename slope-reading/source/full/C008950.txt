@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 15000}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat app/evidence/parse.py app/agent/smoke.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:7800}),
+tools.exec_command({cmd:"cat app/web/app.py app/web/viewmodel.py app/cli.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:6800})
+]);results.forEach((r,i)=>text({i,...r}));

@@ -1,0 +1,22 @@
+107:          "mcp__credit__request_missing_fact",
+198:        "statement_support": {
+268:      "request_missing_fact": "Record the exact requested fact/document and the action consequences. This tool sends no communication.",
+
+WORKING_METHOD = """Working method
+- Start with get_mission, read_baseline_profile and read_loan_terms.
+- For each material unknown that could change the financing choice, record_dependency with a precise target: the entity plus
+  the specific obligation, counterparty, asset or activity. Prefer unknowns about dated cash obligations, cash access and receipts.
+- search_evidence for that dependency, read_evidence for the passages you need (including their surrounding context), and cite
+  only text you have read. Quote exactly.
+{jev_method}- propose_finding for one atomic proposition at a time, then resolve_finding. Record how each linked observation was used,
+  and give a reason whenever you disagree with one.
+- propose_effect for each supported economic mechanism, stating its baseline treatment, parameters (unknown stays unknown) and the
+  plain-language model consequence. Existing liabilities are scheduled once, never added again.
+- When a matter has no future cash effect, record that as a cited finding and an effect with cash_direction none, so the
+  reviewer can see why it does not change cash.
+- If you connect a name, label or table row to an obligation by matching amounts or dates, mark that finding is_inference and
+  describe the link as an inference in your conclusion.
+- run_sensitivity on validated settlement effects to see which unknown changes the cash requirement.
+- request_missing_fact for each pivotal fact the evidence cannot supply, then submit_packet.
+- Use only the evidence returned by the tools; do not rely on remembered facts about this company or later events.
+- Work efficiently: the run stops at {turn_budget} turns; submit before then."""

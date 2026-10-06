@@ -1,0 +1,87 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_e080e018]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 07:59:10 (1h38m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 5898.78s
+
+--- ✓ TASK 1/1: Worker H: fix the evidence asymmetry in the no-lawsuit attribution view for the 14 May case, then re-run and land it. Work in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD 22dff0a). Fix, test, re-run the lead analysis and all ten variants, commit, then merge into step-8-page (worktree .claude/worktrees/step-8-page, HEAD 6f7710a), rebuild the page, run the figure check and restart the 8012 viewer. Report SHAs, the new no-lawsuit figures and attribution, the variant table, Jev re-asks and spend, and the page check. Do not open a PR or re-run the investigation.  (status=completed, api_calls=83, 5898.51s) ---
+The no-lawsuit questions are now asked on the same record as the forecast, and everything is re-run, merged and live on 8012 (HTTP 200). The contradiction remains: "settles before the verdict" still files less than the no-lawsuit view, 5.9% vs 9.6%. A diagnostic shows Jev's answers cause all of it, not the cash.
+
+**SHAs (pushed):**
+- `58e0b4d` on step-8-model: the fix, test 7i, design §4.4/§7.12 and the kit manifest.
+- `af47df0` on step-8-model: lead run and ten variants re-run.
+- `e544325` on step-8-page: the merge, page rows and rebuilt page.json.
+
+**The fix:**
+- Each no-lawsuit question is now built by the forecast's own state builder. It gets the company's name, the same record items, evidence, readings, standard and conditions.
+- Only three things differ: the path facts (from the no-lawsuit engine run, as before), a context with no dispute-branch conditions, and one added assumption. Its wording is a new `no_cash_effect` label template in the contract: "the dispute with {claimant}, including its legal costs, is given no cash effect: it ends on the review date at no cost".
+- The six questions now carry 2–4 findings each and about 9–10k characters, against about 1.2k before.
+- On the page, these rows now show the forecast's record items, and their situation reads "Lawsuit given no cash effect".
+- Other old-view state building: the variant runs go through the fixed path; the page rows are rerouted; the engine run stays as the facts source. The 20 Jun two-view state is kept only where the case doesn't set `ordinary_view`, so the 14 May path never reaches it.
+
+**No-lawsuit figures, central, before → after**
+
+```
+                              | Before   | After   
+------------------------------+----------+---------
+Due by 10 Nov                 | $966,369 | $966,503
+Collected                     | $958,626 | $960,537
+Collection rate               | 99.2%    | 99.4%   
+Filing by 10 Nov              | 9.4%     | 9.6%    
+Preference exposure, weighted | $50,020  | $50,858 
+Preference exposure, if filed | ≈$532k   | ≈$530k  
+```
+
+The lead forecast is unchanged: due $915,682, collected $827,885 (90.4%), filing 27.1%.
+
+**Attribution (lawsuit's effect):**
+- Filing: +17.7 points before, +17.5 after.
+- Collections: −$130,741 before, −$132,652 after.
+
+**Settles before the verdict vs no lawsuit:**
+- Settles before the verdict: filing 5.9%, collected $951,167 (98.5%).
+- No lawsuit: filing 9.6%, collected $960,537.
+- Collections are consistent (the settlement costs cash). Filing still contradicts.
+- If the settled branch used the no-lawsuit answers, its filing would be 11.1%, above 9.6%. So the whole gap is Jev answering the settled situation differently on the same evidence:
+
+```
+Question                           | Settled situations | No lawsuit
+-----------------------------------+--------------------+-----------
+Files once cash runs out           | 42% / 48%          | 61%       
+Company files on accelerated notes | 35–47%             | 72%       
+Listing kept                       | 49–54%             | 47%       
+```
+
+- What still differs in Jev's input: the context ("agreed to settle … 12 monthly installments") and the forecast's path facts, which carry the claim components, the notes' principal and judgment-default clause, and the amount owed. The no-lawsuit run doesn't produce those facts.
+- Per the rules I left the questions as they are. Whether those path facts belong in both views is your call.
+
+**Variants (no-lawsuit figures before → after)**
+
+```
+Variant                        | Paths | Re-asks | Filing | Rate  | No-lawsuit filing | No-lawsuit collected
+-------------------------------+-------+---------+--------+-------+-------------------+---------------------
+central                        | 2,962 | 0       | 27.1%  | 90.4% | 9.4 → 9.6%        | $958,626 → $960,537 
+cost_plan                      | 4,300 | 3       | 25.4%  | 92.7% | 3.7 → 4.3%        | $980,118 → $979,962 
+equity_injection               | 4,204 | 3       | 23.0%  | 93.9% | 3.4 → 3.2%        | $965,917 → $965,960 
+raise_capacity_no_judgment_low | 3,293 | 1       | 31.6%  | 89.0% | 9.4 → 10.2%       | $958,626 → $958,390 
+raise_after_judgment_available | 3,701 | 0       | 26.0%  | 91.5% | 9.4 → 9.6%        | same as central     
+settlement_lump_sum            | 2,962 | 0       | 29.7%  | 88.9% | 9.4 → 9.6%        | same as central     
+collection_protect_need        | 2,962 | 5       | 26.8%  | 89.0% | 9.4 → 9.0%        | $943,816 → $952,082 
+cash_floor_60_days             | 2,737 | 5       | 25.5%  | 91.2% | 9.1 → 9.7%        | $951,555 → $960,035 
+lower_award_high               | 3,160 | 0       | 34.9%  | 88.3% | 9.4 → 9.6%        | same as central     
+coupon_cash                    | 2,623 | 5       | 25.9%  | 90.3% | 11.3 → 6.9%       | $946,406 → $958,436 
+```
+
+The Filing and Rate columns are the full forecast, which this fix doesn't touch.
+
+**Jev re-asks and spend:** 6 re-asks in the lead ($0.0007) and 22 across the variants ($0.0029), about $0.004 in all. Both page rebuilds answered all 207 questions from cache at $0, after I synced the Jev cache across.
+
+**Checks:**
+- Test 7i fails at 22dff0a, on the case block ("the company" vs the named company), and passes after the fix.
+- Date-order check (`f2_order.py`) is clean.
+- The 20 Jun tree is unchanged: 13,821 paths, 337 keys and every state hash match. Only the runtime-seconds field in the dump differs.
+- The model suite gave 248 passed and the page suite 250 passed.
+- Page figure check (`p3/check.py final`): 0 mismatches over central and all ten variants. The one 404 console error was also there in earlier runs.
+
+**One issue on the way:** I first kept the page branch's page.json in the merge. The rebuild leaves page.json's `assumptions` as they are, so the old central no-lawsuit series stayed and one test failed. I took step-8-model's copy, rebuilt, and re-ran the check and the suite. The skill notes now record this, along with the fix itself.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_e080e018/task-0.log

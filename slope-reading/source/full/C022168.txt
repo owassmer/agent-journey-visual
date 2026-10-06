@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'def stay_court|def court|canon_get|canon_put' app/disputes/forecast.py; sed -n '1645,1725p' app/disputes/forecast.py; sed -n '2400,2470p' app/disputes/forecast.py; sed -n '2490,2545p' app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3100}));

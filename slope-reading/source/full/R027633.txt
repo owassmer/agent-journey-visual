@@ -1,0 +1,19 @@
+1	---
+2	name: lead-case-chromadex
+3	description: "Owen's 25 Sep 2026 reframing — lead case ChromaDex (live disputes), Jev models dispute decision nodes, Slope reconstructed closely"
+4	metadata:
+5	  node_type: memory
+6	  type: project
+7	  originSessionId: 1ebb1026-a1f0-4809-9321-bc3d6f875530
+8	  modified: 2026-09-25T17:44:57.807Z
+9	---
+10	
+11	On 2026-09-25 Owen re-centred the build:
+12	- **Lead case: ChromaDex at 19 Aug 2024** (live disputes with Elysium Health: D. Del. fee award ~$9.8M pending, ChromaDex intends to appeal → bond; C.D. Cal. $2.5M judgment receivable, no payment date). Synergy is secondary (resolved dispute → hidden obligations). Barfresh deferred (live case in state court, no docket). Chosen after research: live dispute + federal docket with RECAP docs before the date + public financials + Slope-shaped CPG business + public outcome.
+13	- **Why:** a lawsuit's lender signal is strongest while unresolved (bank data can't see it); a resolved case turned the build into document archaeology and Jev into a completeness auditor.
+14	- **Jev's role:** see [[probabilistic-analysis]] — hydrated present-state readings plus conditional forecast probabilities composed by code. Jev never sets amounts or dates.
+15	- **Slope reconstruction:** Slope bill-pay financing with SUPPLIED terms ($2M, 3 monthly installments, 3.7% fee) and synthetic connected-bank data, labelled once, no hedging elsewhere. Price card, tiering and credit policy left the active flow on 2026-09-25 (no lending decision).
+16	- **Delivery:** step 5a (evidence + reframing docs) then 5b (decision model, Slope terms, bank feed, scenarios, recorded run).
+17	
+18	**How to apply:** design for Slope realism and forward-looking dispute paths; see [[analysis-page]], [[jev-pivot-decisions]], [[no-contrived-cases]].
+19	

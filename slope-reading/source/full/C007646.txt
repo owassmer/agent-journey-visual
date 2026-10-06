@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && J=$(gh api \"repos/owassmer/Slope_Sparse_Events/actions/runs/36772776245/jobs?per_page=100\" --jq '.jobs[] | select(.conclusion==\"success\") | .id' | head -1); gh run view --job $J -R owassmer/Slope_Sparse_Events --log 2>/dev/null | grep \"part [0-9]*: done\\|split part\\|parallel walk\\|Traceback\\|Error\" | head -8 | cut -c1-220"}

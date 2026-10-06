@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/recur/stage && for f in SOUL.md MEMORY.md USER.md Slope_Model_Extensions_Spec.md DECOMPOSITION.md SKILL.md; do git diff --no-index --no-color --word-diff=plain -U0 orig/$f new/$f | grep -v '^diff --git\\|^index \\|^--- \\|^+++ ' > $f.wdiff; done; cat SOUL.md.wdiff"}

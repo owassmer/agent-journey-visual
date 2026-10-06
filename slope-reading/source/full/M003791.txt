@@ -1,0 +1,59 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_15b1dfb6]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 01:24:14 (26m56s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1616.88s
+
+--- ✓ TASK 1/1: Apply the restored coverage-escalation line to the 14 May agent text on branch step-9-contracts of owassmer/Slope_Sparse_Events, then re-run the 14 May investigation once and commit the recorded run. Commit and push; open no PR.  (status=completed, api_calls=51, 1616.78s) ---
+I updated the 14 May agent text, re-ran the investigation once, and committed and pushed both steps to `step-9-contracts` (no PR). The run submitted with every record item filled.
+
+**Step 1 — agent text and escalation route (c5f17d9)**
+- **Prompt:** the 14 May mission's `system_prompt` in `agent_config.json` now equals `9n/AGENT_TEXT.md` verbatim. Only the two expected lines differed, and the prompt the agent receives matches the file once `{turn_budget}` is filled in.
+- **Escalation route:** b641ec1 had turned it off for this mission in two places. The submit_packet tool dropped the `coverage_escalations` field, and the failed-check message stopped offering it. The code that accepts an escalation was untouched. I restored those two lines in `app/agent/tools.py` and changed nothing else. An escalation is still accepted only against a failed check's own observation, must say what was missing, and lands non-blocking on the reviewer checklist.
+- `PACKAGE_MANIFEST.json` is refreshed. The three named test files pass (37 tests) and ruff is clean.
+
+**Step 2 — run `akoustis_20240514-agent_plus_jev-20260929T052558Z` (ed4ac05)**
+- **Status:** CANDIDATE_READY; `incomplete_reasons` is empty.
+- **Jev spend:** investigation USD 0.068 (583 requests). The sweep wasn't fully cached: 5,884 cache hits plus 789 new requests, USD 0.039.
+- **Turns:** 142 host turns of 320 (443 SDK turns), 1,369 s.
+- **Tool calls:**
+
+```
+Tool                                                                                         | Calls 
+---------------------------------------------------------------------------------------------+-------
+propose_finding                                                                              | 116   
+resolve_finding                                                                              | 111   
+read_evidence                                                                                | 89    
+attach_record_item                                                                           | 54    
+search_evidence                                                                              | 40    
+resolve_reconciliation                                                                       | 12    
+instantiate_dispute                                                                          | 6     
+instantiate_financing                                                                        | 3     
+submit_packet                                                                                | 3     
+get_record_items                                                                             | 2     
+get_mission, read_baseline_profile, read_inventory, read_loan_terms, judge, StructuredOutput | 1 each
+```
+
+- **Record items:** all 54 filled, so there are no unfilled items to trace to §8 sources. The full item → findings list is in `scratch/9n/report2.txt`.
+- **One item to check:** §8 lists "the company's statements on settlement" as not public by 14 May, but it is filled (fnd_095, fnd_035, fnd_040). fnd_095 quotes the pretrial order's settlement section (D.I. 543 §XIV, 22 Apr 2024), which is in the snapshot, so nothing leaked from after the cutoff. The other two are 10-Q statements.
+- **Coverage check:** the first submission failed 21 of 182 cited paragraphs or rows. The second failed one after the agent added findings and escalated 7; the third passed. The 7 escalations, each non-blocking on the reviewer checklist:
+  - `d580_verdict_form#s0003:463-622` (obs_2458): fnd_087 states Question 1(b) verbatim; "a blank verdict-form question, not a payment or obligation."
+  - `d580#s0005:51-193` (obs_2451): Question 2(a), conspiracy proven; "blank … no payment or obligation term."
+  - `d580#s0005:746-871` (obs_2466): Question 2(c), actual-loss amount; "blank form question, not an award."
+  - `d580#s0006:72-239` (obs_2447): Question 3(a), false-advertising elements; "blank form question."
+  - `d580#s0006:422-566` (obs_2470): Question 3(b), Lanham Act amount; "not an award."
+  - `d580#s0007:96-262` (obs_2457): Question 4(a), UDTPA claim proven; "blank form question."
+  - `d539_witness_list#s0001:150-1273` (obs_2426): "recorded as it lists (fnd_083) … no payment, obligation, covenant or default term."
+- **Findings:** 109 (98 accepted, 11 rejected). 37 accepted findings name a speaker:
+  - **Qorvo (12):** fnd_001–006 and fnd_096 from its statement of intended proof in D.I. 543-1; fnd_021 (D.I. 471); fnd_069 and fnd_070 (D.I. 533); fnd_077 (D.I. 588); fnd_078 (D.I. 587).
+  - **Akoustis (25):**
+    - 10-Q: fnd_025–040, fnd_051, fnd_098, fnd_109. fnd_038 and fnd_039 are attributed to "the Company" and fnd_051 to "The Company", the filing's own wording.
+    - Court filings: fnd_020 (D.I. 476), fnd_076 (D.I. 589), fnd_084–086 (D.I. 543-1), fnd_093 (D.I. 508).
+
+I didn't run `slope analyze`. I amended the step-2 commit message once and force-pushed with lease, to correct the speaker count (34 → 37) and the sweep-spend wording. I also added a note on the escalation route and this run to the `slope-sparse-events-build` skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_15b1dfb6/task-0.log
+Child's process proc_213900ad9f8d `cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-contracts && env -u CLAUDE_CODE_OAUTH_TOKEN en` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+exit 0

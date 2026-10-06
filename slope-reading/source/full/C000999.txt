@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && D=Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design; grep -n \"L11\" $D/DECOMPOSITION.md $D/STAGE3.md | cut -c1-700; sqlite3 var/evidence/akoustis_20240620.sqlite \".tables\" | head -3"}

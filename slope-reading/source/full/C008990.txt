@@ -1,0 +1,7 @@
+text(await tools.web__run({open:[
+{ref_id:"https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery.md"},
+{ref_id:"https://docs.typesafe.ai/cookbooks/hierarchical_classification.md"},
+{ref_id:"https://docs.typesafe.ai/patterns/composite-scoring.md"},
+{ref_id:"https://docs.typesafe.ai/introduction/machine-learning-primer.md"},
+{ref_id:"https://docs.typesafe.ai/model-jaggedness/jev-1.13.md"}
+],response_length:"long"}));

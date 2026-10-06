@@ -1,0 +1,37 @@
+<persisted-output>
+Output too large (30KB). Full output saved to: /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/2e338e7b-b5a4-476b-a810-3f7556007f4a/tool-results/b8h7qzrkk.txt
+
+Preview (first 2KB):
+Prototype external-event loan scenario contracts ['$schema', '$id', 'title', 'description', '$ref', '$defs']
+## Provenance | req: ['basis', 'source_fact_ids', 'assumption_id', 'derivation', 'note'] | enum: None
+    basis : None ['documented_evidence', 'operator_assumption', 'model_derived', 'unknown'] 
+    source_fact_ids : array  
+    assumption_id : ['string', 'null']  
+    derivation : ['string', 'null']  
+    note : string  
+## EvidenceValue | req: ['status', 'unit', 'value', 'lower', 'upper', 'observed_on', 'provenance'] | enum: None
+    status : None ['exact', 'range', 'unknown'] 
+    unit : None ['USD_cents', 'decimal_rate', 'decimal_fraction', 'days', 'date'] 
+    value : ['integer', 'string', 'null']  
+    lower : ['integer', 'string', 'null']  
+    upper : ['integer', 'string', 'null']  
+    observed_on : None  
+    provenance : #/$defs/Provenance  
+## DecisionContext | req: ['decision_id', 'mission_id', 'borrower_id', 'borrower_name', 'as_of', 'decision_timezone', 'decision_type', 'transaction_basis', 'slope_relationship', 'stakeholder_scope', 'currency', 'requested_amount', 'requested_term_months', 'use_of_proceeds', 'baseline_id', 'baseline_status', 'available_actions', 'missing_inputs', 'note'] | enum: None
+    decision_id : string  
+    mission_id : string  
+    borrower_id : string  
+    borrower_name : string  
+    as_of : string  
+    decision_timezone : string  
+    decision_type : None ['new_draw', 'exposure_increase', 'existing_loan_review'] 
+    transaction_basis : None ['documented_transaction', 'analytical_candidate'] 
+    slope_relationship : None ['documented', 'not_established'] 
+    stakeholder_scope : None ['loan_asset_holder', 'platform_net', 'warehouse_equity'] 
+    currency : None  
+    requested_amount : #/$defs/EvidenceValue  
+    requested_term_months : ['integer', 'null']  
+    use_of_proceeds : string  
+    baseline_id : ['string', 'null']  
+...
+</persisted-output>

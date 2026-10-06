@@ -1,0 +1,30 @@
+           ^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mapp/disputes/evaluate.py[0m:249: in run
+    [0m[94mawait[39;49;00m [96mself[39;49;00m.expand(stage, at, [], Decimal([94m1[39;49;00m) [94mif[39;49;00m weighted [94melse[39;49;00m [94mNone[39;49;00m, (), out, pruned)[90m[39;49;00m
+[1m[31mapp/disputes/evaluate.py[0m:229: in expand
+    [0m[94mawait[39;49;00m [96mself[39;49;00m.expand(t[[33m"[39;49;00m[33mto[39;49;00m[33m"[39;49;00m], next_window([96mself[39;49;00m.m, t[[33m"[39;49;00m[33mrule[39;49;00m[33m"[39;49;00m], t[[33m"[39;49;00m[33mto[39;49;00m[33m"[39;49;00m], at, [96mself[39;49;00m.review), path, w,[90m[39;49;00m
+[1m[31mapp/disputes/evaluate.py[0m:216: in expand
+    [0mj = [94mawait[39;49;00m [96mself[39;49;00m.judge_transition(stage, at, premise)[90m[39;49;00m
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mapp/disputes/evaluate.py[0m:184: in judge_transition
+    [0mo = [96mself[39;49;00m._record([94mawait[39;49;00m [96mself[39;49;00m.judge.transition([96mself[39;49;00m.dispute, [96mself[39;49;00m.record, stage_state, premise_text, [], options,[90m[39;49;00m
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_decision_model.StubJudge object at 0x10d8c9100>
+dispute = {'title': 't', 'borrower': 'ChromaDex, Inc.', 'judgment_debtor': 'ChromaDex, Inc.', 'judgment_creditor': 'Elysium Health, Inc.', ...}
+record = [{'finding_id': 'fnd_001', 'proposition': 'Elysium shall pay to ChromaDex the sum total of $2,500,000 ... Dated: Augus...ysium shall pay to ChromaDex the sum total of $2,500,000 ... Dated: August 13, 2024'], 'source_dates': ['2024-08-13']}]
+stage = {'stage': 'enforcement', 'label': 'Enforcement', 'description': 'The judgment is unpaid, unstayed and past the automatic stay; the creditor may enforce it.'}
+premise = ['The debtor neither pays nor bonds'], factor_results = []
+options = {'collected': 'The creditor collects: The creditor collects the judgment through enforcement within the horizon.', 'se...cement.', 'uncollected': 'Not collected in the horizon: Enforcement does not collect the judgment within the horizon.'}
+subject_ids = ('dispute_001', 'fnd_001')
+
+    [0m[94masync[39;49;00m [94mdef[39;49;00m[90m [39;49;00m[92mtransition[39;49;00m([96mself[39;49;00m, dispute, record, stage, premise, factor_results, options, subject_ids):[90m[39;49;00m
+        top = [94m0.85[39;49;00m [94mif[39;49;00m factor_results [94melse[39;49;00m [96mself[39;49;00m.top[90m[39;49;00m
+>       [94mreturn[39;49;00m [96mself[39;49;00m._obs([33m"[39;49;00m[33mdispute_transition[39;49;00m[33m"[39;49;00m, options, [96mself[39;49;00m.prefer[stage[[33m"[39;49;00m[33mstage[39;49;00m[33m"[39;49;00m]], top)[90m[39;49;00m
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^[90m[39;49;00m
+[1m[31mE       KeyError: 'enforcement'[0m
+
+[1m[31mtests/test_decision_model.py[0m:71: KeyError
+[36m[1m=========================== short test summary info ============================[0m
+[31mFAILED[0m tests/test_decision_model.py::[1mtest_a_lock_lowers_cash_by_its_amount_and_zero_cash_paths_reproduce_bank_only[0m - KeyError: 'enforcement'
+[31m!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!![0m

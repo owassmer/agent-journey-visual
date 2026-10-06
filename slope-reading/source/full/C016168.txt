@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"gh run view 36960914315 --log-failed > /tmp/notes-refresh-v3-fail.log\nrg 'Traceback|File |Error|differs|changed_finances|unit.*reports' /tmp/notes-refresh-v3-fail.log | tail -25\n gh run view 36960914315 --json jobs --jq '[.jobs[]|{id:.databaseId,name,status,conclusion}]'","max_output_tokens":2200}));

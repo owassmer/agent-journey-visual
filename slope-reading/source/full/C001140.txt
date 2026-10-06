@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -n \"collateral_required\" app/analysis/events.py | head; sed -n \"$(grep -n 'def stay(self' app/analysis/events.py | cut -d: -f1),+22p\" app/analysis/events.py; sed -n 395,432p app/disputes/forecast.py"}

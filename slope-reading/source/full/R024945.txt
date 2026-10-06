@@ -1,0 +1,15 @@
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/data/build_case_index.py
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/data/facts_synergy.json
+        "manual_payment_credit_rule": "Recognize actual valid manual-payment credit once according to contract/servicing allocation; reverse disputed payments; never collect beyond remaining total. Full payoff ends further obligations.",
+        "minimum_cumulative_repayment": derived("USD_cents", amount, [fid, F["total"]], f"41810000 * {fraction} = {amount}", "Relative deadline from effective funding, not an invented calendar due date."),
+    })
+
+effects = []
+for eid, fid, amount, borrowerlabel, payment_assumption in [
+    ("E_HVL_settlement_calendar", F["hvl"], 200000000, "HVL / Atrium", operator[0]),
+    ("E_unnamed_supplier_calendar", F["supplier"], 60000000, "Supplier unnamed in the August information set", operator[1]),
+]:
+    effects.append({"effect_id": eid, "event_id": "hvl_maine_litigation" if "HVL" in eid else "march_supplier_settlement", "borrower_id": BID,
+                    "mechanism": "existing_liability_payment_timing",
+                    "finding": f"{borrowerlabel}: June 30 remaining 2024 contractual payment bucket. Amount is already part of settlement debt; exact installment dates and payments since June 30 require a bridge.",
+                    "target_stream_ids": [f"{BASELINE}:{eid}:existing_debt_cash"], "source_fact_ids": [fid],

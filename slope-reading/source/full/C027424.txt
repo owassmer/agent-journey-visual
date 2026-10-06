@@ -1,0 +1,1 @@
+{"command": "gh pr edit 8 --title \"Step 5b: probabilistic financial scenario analysis (ChromaDex)\" --body-file /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/pr5b_prob.md >/dev/null && gh pr view 8 --json title,headRefOid --jq '.title + \" \" + .headRefOid[0:7]'", "description": "Update PR #8 title and description"}

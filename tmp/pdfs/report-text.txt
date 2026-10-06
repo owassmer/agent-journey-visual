@@ -1,0 +1,173 @@
+FAITHFUL DELEGATION
+
+Purpose, judgment, and proportionate steering
+
+Faithful delegation
+
+Purpose, judgment, and proportionate steering
+
+An agent should carry a usable understanding of the work through changing circumstances. That understanding gives its decisions continuity and helps it recognize when a correction is needed.
+
+The aim is useful completion with an appropriate level of human involvement. The user contributes decisions, knowledge, and authority where they are needed. The agent manages ordinary navigation and preserves the purpose already entrusted to it.
+
+Stable purpose
+
+Revisable understanding. Adaptable execution.
+
+A provisional destination
+
+Understanding gives adaptation continuity
+
+Instructions, examples, corrections, and approvals provide evidence about the intended outcome. The agent needs to understand why that outcome matters, which commitments apply, and how much discretion it has. People may refine their priorities as the work becomes concrete.
+
+Good judgment responds to changes that affect the decision. It also preserves conclusions whose basis remains sound. Research and broader context can help the agent anticipate consequences and avoid unnecessary detours.
+
+This report develops a conceptual model of that behavior. The trajectories and directional fields illustrate relationships; they are not measurements or claims of demonstrated performance.
+
+FAITHFUL DELEGATION
+
+Purpose, judgment, and proportionate steering
+
+When direction loses its basis
+
+An early pattern or a fixed rule can keep steering after its relevance has faded.
+
+Journey
+
+Hindsight ideal
+
+Agent path
+
+Boundaries
+
+FAITHFUL DELEGATION
+
+Purpose, judgment, and proportionate steering
+
+How adaptation is guided
+
+The quality of a turn depends on the understanding and evidence behind it.
+
+Journey
+
+Hindsight ideal
+
+Agent path
+
+Boundaries
+
+FAITHFUL DELEGATION
+
+Purpose, judgment, and proportionate steering
+
+A field of informed direction
+
+Each point in a state space represents a situation: available evidence, uncertainty, commitments, possible actions, and the current understanding of the desired outcome. The agent moves through this space as it acts and learns.
+
+At a given point, a vector represents a proposed direction. Organizing understanding supplies a coherent field of directions across possible situations. The same purpose can support different actions as conditions change.
+
+Organizing understanding across changing states
+
+Self-steering
+
+A two-dimensional projection of a richer work state.
+
+Read each vector in context
+
+Direction describes the next action. Strength describes how firmly the available reasons support it. Scope and persistence describe where those reasons apply and how long they remain relevant. A firm instruction can govern a single decision; an enduring principle can shape many decisions.
+
+In these illustrations, arrow length shows the size of an adjustment, and a shaded region shows its scope. The background field represents continuing guidance. Authority is expressed separately through the user’s decisions and the limits on delegated action.
+
+The destination remains provisional. Its earlier positions show how the desired outcome can evolve. The straight line in the trajectory diagrams is a hindsight reference to the destination shown. The realistic journey is a useful comparison, and its detours may include opportunities for improvement.
+
+FAITHFUL DELEGATION
+
+Purpose, judgment, and proportionate steering
+
+Give each correction its scope
+
+A correction can change one action, supply a missing fact, establish a continuing constraint, or revise the desired outcome. The agent should identify that effect and update the parts of the work that depend on it.
+
+Taking an instruction seriously means honoring its meaning and authority at the right scope. An explicit decision within the user’s authority governs the work. Context helps determine its application and duration.
+
+A local correction
+
+A changed destination
+
+Bounded effect; purpose carries forward.
+
+A broader revision follows the decision.
+
+Learn the reason for the turn
+
+Before generalizing feedback, identify what changed. The cause may be a missing fact, a misunderstood relationship, an unclear preference, an ineffective method, or a genuine change in purpose. Each cause calls for a different response.
+
+Make the smallest correction that fully addresses the cause. Preserve the context that explains when the lesson applies. Update affected plans, dependencies, and commitments together. Existing guidance can be narrowed, replaced, or removed as understanding improves.
+
+Self-steering usually produces smaller adjustments because it happens before drift becomes large. A major discovery can still justify a substantial turn within the agent’s authority. The size of a correction should follow its consequences and scope, rather than who first noticed the problem.
+
+FAITHFUL DELEGATION
+
+Purpose, judgment, and proportionate steering
+
+Steer when the work calls for it
+
+Self-steering combines lightweight awareness during ordinary work with deeper reassessment at meaningful moments. Useful triggers include new evidence, an unexpected result, a major commitment, changed dependencies, or accumulating signs of drift.
+
+The depth of reassessment should reflect the uncertainty, consequence, and reversibility of the next action. Focused research can resolve uncertainty that matters to that decision. Other uncertainty can remain open while useful, authorized work continues.
+
+Observe
+
+Notice relevant change
+
+Reassess
+
+Apply purpose and context
+
+Act
+
+Take an authorized step
+
+Verify
+
+Check the real effect
+
+Use human involvement where it contributes
+
+The user supplies preferences, consequential choices, and authority that the agent cannot legitimately supply for itself. Questions should make the unresolved decision concrete. The agent should carry forward established purpose so the user can focus on what genuinely needs their involvement.
+
+Autonomy should grow with understanding and remain within the discretion granted. User involvement can be frequent when goals are being discovered. More settled work can support longer periods of independent execution. Repeated reminders of the same basic purpose are evidence that delegation is failing.
+
+Carry decisions into observable outcomes
+
+A sound recommendation must connect to action and a verified result. Preserve ongoing work through interruptions, recover without duplicating commitments, and report uncertain effects accurately. Consequential limits should be enforced in the tools and systems that perform the work.
+
+Reliable operation also needs recovery paths, feasible alternatives, and people able to intervene. Keep the connection between purpose, state, authority, action, and outcome durable as prompts, models, and other implementation choices change.
+
+FAITHFUL DELEGATION
+
+Purpose, judgment, and proportionate steering
+
+Prove the understanding in use
+
+Adaptation happens within the current task as facts and conditions change. Learning improves later decisions through experience. A successful adjustment is a starting point for a lesson whose value must be tested in other situations.
+
+Look for improvement that carries forward
+
+A useful lesson preserves the reason an action was appropriate and the conditions under which that reason applies. Test it on fresh cases, including cases where applying it too broadly would cause harm. Explanations can help diagnose behavior; subsequent decisions show whether it improved.
+
+Evaluate complete work against outcomes that matter. Include consequential errors, rework, unnecessary intervention, recovery, operating cost, and the burden placed on people. Compare approaches with similar information, tools, and resources, and keep the evaluation fixed during each comparison.
+
+Build understanding with the domain
+
+Work with people who understand the decisions and can observe their consequences. Preserve the distinctions between facts, interpretations, preferences, and commitments. Use precise calculations and enforceable controls where the meaning is exact, with informed judgment where context changes the answer.
+
+Methods for evaluation, recovery, and coordination can carry across domains. Domain assumptions and constraints need to be established again in each setting. Useful transfer should reduce the effort required to achieve dependable outcomes.
+
+Start with useful work
+
+Choose a workflow with an accountable partner and observable results. Study a material correction, identify its cause, and test whether the resulting lesson improves fresh cases. Broaden the approach as repeatable value becomes visible.
+
+Faithful delegation makes sound judgment more available. The agent carries purpose through changing conditions, corrects itself proportionately, and remains answerable to the people whose work it serves.
+
+Source: <i>Agent Insights</i>, supplied by Owen Wassmer (agent_insights.md), and the accompanying discussion of trajectories, state space, and proportionate steering. Illustrations express a conceptual model. Prepared October 2026.

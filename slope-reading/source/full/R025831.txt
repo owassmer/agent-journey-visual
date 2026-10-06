@@ -1,0 +1,61 @@
+551:      "id": "matter_kind",
+552-      "version": "3.1.0",
+553-      "profile": "snapshot_sweep",
+554-      "primitive": "choice",
+555-      "question": "What kind of matter does this passage mainly describe?",
+556-      "applies_when": "Asked together with matter_inventory on every section.",
+557-      "state_fields": [
+558-        "company",
+559-        "passage"
+560-      ],
+561-      "prompt": {
+562-        "instructions": "What kind of matter does state.passage mainly describe for state.company? Classify the main specific matter; choose none_or_generic if there is no specific matter.",
+563-        "criteria": {
+564-          "legal_matter_or_settlement": "A lawsuit, claim, dispute, judgment or settlement.",
+565-          "debt_or_financing_agreement": "A loan, note, credit facility, advance or other financing agreement and its terms.",
+566-          "covenant_or_restriction": "A covenant, consent requirement, lien or restriction in an agreement.",
+567-          "cash_restriction": "Restricted, pledged or otherwise limited cash.",
+568-          "accounting_item_from_a_matter": "An accounting entry arising from a specific matter (a gain, loss, accrual or reserve).",
+569-          "none_or_generic": "No specific matter; generic or unrelated text."
+570-        }
+571-      },
+572-      "application": "Groups the inventory for the agent and the reviewer; not a finding."
+573-    },
+574-    {
+575-      "id": "claims_supported",
+576-      "version": "3.1.1",
+577-      "profile": "statement_support",
+578-      "primitive": "choice",
+579-      "question": "Is every factual claim in this statement supported by the cited findings or the stated engine results?",
+580-      "applies_when": "Every effect's model-consequence text and the packet conclusion.",
+581-      "state_fields": [
+          "some_unsupported": "At least one factual claim adds a name, amount, date, status, event or causal link that the cited findings and engine results do not state.",
+          "unclear": "Cannot tell which claims are made or what supports them."
+        }
+      },
+      "application": "Catches fluent claims that no finding supports before they reach the reviewer; revise or override with a reason."
+    },
+    {
+      "id": "coverage_supported",
+      "version": "3.2.0",
+      "profile": "inventory_coverage",
+      "primitive": "choice",
+      "question": "Do these findings account for the specific matter this passage describes?",
+      "applies_when": "The agent marks an inventory item as covered by accepted findings.",
+      "state_fields": [
+        "passage",
+        "cited_findings"
+      ],
+      "prompt": {
+        "instructions": "Do state.cited_findings account for the specific matter that state.passage describes? A finding accounts for the matter when it states what the passage establishes about that matter's cash, obligation, restriction or accounting treatment. Findings about a different matter, or about a different aspect than the one the passage describes, do not account for it.",
+        "criteria": {
+          "covered": "The findings state what the passage establishes about its specific matter.",
+          "partly_covered": "The findings address the matter but miss a distinct item the passage describes (for example an accounting gain, a covenant or a payment status).",
+          "not_covered": "The findings concern a different matter or aspect.",
+          "unclear": "Cannot tell what matter the passage describes or what the findings state."
+        }
+      },
+      "application": "An inventory item marked covered must actually be covered; otherwise add a finding or give a reason."
+    }
+  ]
+}

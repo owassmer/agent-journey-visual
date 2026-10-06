@@ -1,0 +1,78 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_5121ec95]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 23:32:16 (38m52s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2332.69s
+
+--- ✓ TASK 1/1: Worker B3: continue the 14 May pending-claim event model in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD 513f260), from where worker B2 stopped. Do its remaining steps 1–5 in order; each ends in targeted tests, a commit of named files and a push. Report the SHAs, the 14 May tree's path count, the Jev question count by type, per-question state sizes with an estimated Jev cost, the §5.3 threshold shares (including O2), and anything you changed in the design. Do not open a PR, call Jev or run the full analysis.  (status=completed, api_calls=117, 2332.48s) ---
+All five steps are pushed on step-8-model, and the full suite passes (215 tests). The tree was built without calling Jev.
+
+**About your heads-up:** A3's engine commits have not landed. origin/step-8-case holds only the spec change (9f60963, via 65360dc), so I didn't merge again. Everything below was built on A2's existing-line engine (4bbec3e), where collections are still limited by the 30-day need.
+
+- **Floor vs collection:** my code reads the 30-day floor only for D7's trigger, Jev's cash facts and the settlement and stay capacity. It never uses it for collection.
+- **One join to fix when A3 lands:** the floor comes from `Basis.need`, which is filled from the engine's own need (`prepare(setup, ops).need` in `basis_for` and in `core.py`). After A3's split, point that at `need_days` or whatever field A3 names, not the collection rule.
+- **Rebuilding after the merge:** redo the 14 May tree and the §5.3 shares (a few seconds each; scripts `tree14.py` and `shares.py` in `scratch/8/b3/`). The 20 Jun check is `dump_20jun.py` + `cmp20.py`, about 30 s.
+
+**SHAs**
+- `032944d` Step 1, financing at the cash floor: a new node `financing_at_floor` (raise equity / file / continue).
+  - The raise is booked in equal daily amounts over 30 days: $9.7M with no adverse judgment on the path, $0 after the claimant's-theory judgment, each with a $5.0M sensitivity.
+  - "Raise equity" is offered only where the amount is positive, Jev is told the amount, and D8 stays as the zero-cash fallback.
+  - The bank view asks the same question. The 4.0.0 cash-floor question is kept wherever the case sets no raise amount.
+- `6a69459` Step 2, J1 from D.I. 580: one yes/no jury node per money-bearing question, asked in the form's order.
+  - The questions are 1(a), 1(b), 2(a), 2(b), 2(c), 3(a) and 5(a), quoted verbatim (checked against the fetched PDF), plus 1(c)–(d), 4 and 5(b)–(c) collapsed with reasons.
+  - J1's three branches are composite edges over them, tested disjoint and exhaustive. The verdict steps in the cash tree are unchanged.
+- `93f41b4` Merge of A2's existing line. The ⚑ forward runs now start from `setup.exposure`, and the cash Jev sees equals the engine's on every trajectory and day (test 7).
+- `03a783c` Step 3: the walker, the seven new registry questions, and tests 1–9. These include a test that a missing judgment never activates enforcement and one that the verdict composites are disjoint and exhaustive.
+- `493694b` Step 4 fix: the settlement questions before the verdict now get cash facts.
+- `fbce5fc` Step 5, design document: O1–O4 and items 1–3 recorded, and a new §7.12 with the verdict-form table.
+- `9d2a23b` `test_chains` counts now cover only the 4.0.0 questions.
+
+**14 May tree (fixture dispute)**
+- **Paths:** 3,570 central. Sensitivities:
+
+```
+Sensitivity                      | Paths
+---------------------------------+------
+Lower award of $9,999,999        | 3,298
+Both raises at $5.0M             | 5,159
+Coupon paid in cash              | 3,259
+Verdict on the window's last day | 3,550
+```
+
+- **Jev questions:** 221 (219 dispute plus 2 bank view). By type:
+
+```
+Question              | Count | Question             | Count
+----------------------+-------+----------------------+------
+verdict_finding       | 7     | verdict_measure      | 2    
+judgment_response     | 21    | post_trial_motions   | 2    
+post_trial_ruling     | 2     | settlement_offer     | 13   
+settlement_accept     | 13    | execute_pre_ruling   | 2    
+enforce_after_final   | 16    | stay_motion          | 6    
+stay_approved         | 6     | registration_early   | 8    
+appeal                | 2     | holders_act_judgment | 10   
+holders_act_delisting | 8     | petition_on_notes    | 17   
+holders_involuntary   | 8     | listing_kept         | 19   
+financing_at_floor    | 28    | petition_cash_out    | 29   
+```
+
+- **State sizes and cost:** fixture states run 1.9k–4.4k characters. Adding the 20 Jun run's average evidence and question text gives 7.1k–9.1k per question and about 1.78M characters in all. That is about $0.025 a pass, with $0.075 reserved at three attempts.
+- **Question count vs the design estimate:** 221 is above the design's 100–150. Most of the excess is the cash-floor, cash-out and listing questions, which split by situation.
+- **§5.3 shares** (existing-line feed, engine-matched cash):
+  - Cash above the reserve at entry is $8.70M / $8.86M / $8.96M at P5 / P50 / P95.
+  - The lower branch's $1,426,412 base is payable from cash above the reserve on 100% of trajectories; the $9,999,999 sensitivity on 0%, though cash still covers it on 100%.
+  - **O2:** cash above the reserve exceeds $10.0M on 0.0% of trajectories, at entry and on any day. The band is empty and needs no class.
+  - The cash floor falls inside the period on every trajectory, at a median of 25 Aug.
+- **20 Jun tree:** rebuilt after every step and unchanged: 13,821 paths, 337 keys, identical state hashes.
+
+**Design changes you should know about**
+- J1 is made of two node types. `verdict_finding` covers liability questions and `verdict_measure` asks whether an award rests on the head-start measure. No single `forecast_verdict_theory` question exists.
+- Two routing choices are my inferences, labelled as such in §7.12:
+  - A jury that rejects the head-start measure for the trade-secret award is assumed not to adopt it under conspiracy.
+  - Once one lesser claim succeeds, the later questions are not asked. Fewer lesser claims are carried at the O1 amount, which is lender-adverse.
+- The registry version stays 4.2.0, because the sweep cache is keyed on it. The new entries are tagged 4.1.0.
+- The existing line's history cash (+$384,839) is now also in the analysis's cash in `core.py`, so the tree and the analysis read the same cash.
+- Three `holders_involuntary` questions fall after the period on every path and cancel out, as they do in 4.0.0. I left them in because removing them would change the 20 Jun tree.
+
+**Issue:** a `uv cache prune` after the last commit hung and I killed it. The commit was already pushed; free disk is now 4.3 GB. A `slope viewer` from the step-7-page worktree is still running on port 8011; it isn't mine and I left it alone.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_5121ec95/task-0.log

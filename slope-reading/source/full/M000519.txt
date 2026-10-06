@@ -1,0 +1,30 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_ef427a33]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 03:27:12 (23m28s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1408.23s
+
+--- ✓ TASK 1/1: Fix the six review findings on PR #12 (branch step-6b-chains) in small checkpointed steps, verify each with a probe and tests, push, and post one PR comment listing each fix.  (status=completed, api_calls=80, 1408.04s) ---
+All six review findings on PR #12 are fixed and pushed, one commit each, and the comment listing them is posted at https://github.com/owassmer/Slope_Sparse_Events/pull/12#issuecomment-5844388957. Tests: 129 passed (123 before); ruff reports no errors. The Akoustis fixture went from 2,128 to 5,558 paths, and Jev questions from 66 to 108.
+
+I rebased onto `origin/main` first. The engine commits dropped cleanly and I force-pushed with lease. No PR label, no merge, no Jev calls or smoke runs, and `runs/recorded/runtime_smoke.json` and `var/` are not committed.
+
+```
+Commit    | Finding                   | Fix                                                                                                                                                                                                                                                         
+----------+---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+`a2a8f26` | Amended judgment (item 3) | The original amount is enforceable from the ruling date. Only the increase waits the new 30 days, collected by a second levy. `whole_amount` is now read as a mode and runs without the ValueError.                                                         
+`5ae24c5` | `beyond` class (item 2)   | Increased and not-increased outcomes are now separate classes: $42.2M–112.9M (26 outcomes) and $30.1M–38.6M (6). Jev is told the class's min–max range. A new test confirms every merged class has identical cash, locks, petition dates and decision dates.
+`9f48f22` | Stay-yes paths (item 1)   | These paths now ask early registration (before the ruling) and enforcement (after it). A levy is booked only before the drawn approval date. The test confirms some trajectories levy before approval and none after.                                       
+`fa202cf` | Legal fees (item 4)       | Vacatur and new trial are now separate outcomes. Legal spend stops on vacatur ($0.304M per trajectory added back) and continues on a new trial.                                                                                                             
+`48a0a7a` | Citations (item 5)        | The injunction question cites eBay, 18 U.S.C. §1836(b)(3)(A), N.C. Gen. Stat. §66-154(a) and Rule 62(c), per DECOMPOSITION. The settlement questions cite nothing, as in DECOMPOSITION. Registry is 4.0.1 and the kit manifest hashes are refreshed.        
+`6835812` | Grammar (item 6)          | All 26 question texts are fixed, plus the plural "do not" answer texts. I added the simple agreement test.                                                                                                                                                  
+```
+
+**Path count by step:** 2,128 → 3,278 after the class split → 4,358 after the stay-yes levies → 5,558 after the vacatur/new-trial split. Only paths that change cash or a date on some trajectory were added. Because of this I raised the test's path limit from 5,000 to 6,000. The full build now takes about 36 s instead of 13 s.
+
+**Not fixed:**
+- **Debtor's response after a post-ruling stay motion:** it is still not asked on those paths. There, the debtor's response on that day is the stay motion itself, so asking again would pose a second simultaneous decision to the same actor. The reviewer flagged this but the brief didn't list it; it's noted in the PR comment.
+- **`model_version`:** it stays at 4.0.0, because bumping it marks the stored dispute instances as stale. Only the registry version moved.
+
+I also updated the `slope-sparse-events-build` skill with the new path counts and these rules.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_ef427a33/task-0.log

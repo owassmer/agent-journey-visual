@@ -1,0 +1,1 @@
+{"command": "curl -s -o /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/idx.json -w \"%{http_code}\\n\" -A \"Slope sparse-events research owassmer1@gmail.com\" \"https://www.sec.gov/Archives/edgar/data/1386570/000162828023041428/index.json\"; head -c 600 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/idx.json", "description": "Fetch EDGAR filing index"}

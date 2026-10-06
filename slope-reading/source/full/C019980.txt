@@ -1,0 +1,46 @@
+const script = `import json, os, subprocess, time
+from pathlib import Path
+root=Path('/opt/slope-question-refresh/refresh-v1')
+out=Path('/opt/slope-question-refresh/rebound-v1')
+hold=Path('/opt/slope-pool/HOLD_JEV')
+while not (root/'calculated.json').exists():
+    time.sleep(10)
+assert hold.exists(), 'Jev hold missing'
+base=json.loads((root/'calculated.json').read_text())
+assert base['completed_batches']==base['total_batches']==162876, base
+while any(subprocess.run(['systemctl','is-active','--quiet',f'slope-refresh-fast-{j}']).returncode==0 for j in range(80,94)):
+    time.sleep(10)
+subprocess.run(['systemd-run','--unit=slope-refresh-backstop-v3','--on-active=2h','/sbin/shutdown','-h','now'],check=True)
+subprocess.run(['systemctl','stop','slope-refresh-backstop-v2.timer'],check=True)
+assert hold.exists()
+print('All calculation batches collected; starting saved-history question assembly with 8 processes. Jev held.',flush=True)
+env=dict(os.environ,PYTHONPATH='/opt/slope-question-refresh-fast',PYTHONDONTWRITEBYTECODE='1',OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',SLOPE_JEV_CACHE_ONLY='1')
+p=subprocess.Popen(['/opt/slope/.venv/bin/python','-u','-m','tools.question_refresh_assemble','assemble','akoustis_20240514-agent_plus_jev-20260929T052558Z','/opt/slope-pool/ctl/control.pkl','/opt/slope-pool/ctl/walked',str(root),str(out),'8'],cwd='/opt/slope-question-refresh-fast',env=env)
+def publish():
+    stage={'stage':'rebind_saved_questions','jobs_complete':0,'total_jobs':847}
+    if (out/'progress.json').exists():
+        try:
+            stage.update(json.loads((out/'progress.json').read_text()))
+            stage['jobs_complete']=stage.get('sources',0)
+            stage['total_jobs']=stage.get('total_sources',847)
+        except json.JSONDecodeError:
+            pass
+    progress=dict(base,**{k:v for k,v in stage.items() if k not in base})
+    progress.update(stage,time=time.time(),jev_started=False,ready_for_jev=False)
+    if p.poll() is not None:
+        if p.returncode:
+            progress.update(stage='question_assembly_failed',error=f'Assembly exit {p.returncode}; see coordinator log')
+        else:
+            progress.update(json.loads((out/'rebound.json').read_text()))
+    temp=root/'progress-rebind.tmp'
+    temp.write_text(json.dumps(progress))
+    temp.replace(root/'progress.json')
+while p.poll() is None:
+    publish()
+    time.sleep(10)
+publish()
+assert hold.exists(), 'Jev hold missing'
+raise SystemExit(p.returncode)
+`;
+store("assemblyHandoff",script);
+text(await tools.exec_command({cmd:"PYTHONDONTWRITEBYTECODE=1 .venv/bin/python - <<'PY'\nimport boto3\ns=boto3.Session(profile_name='slope',region_name='us-east-2').client('ssm')\nr=s.send_command(InstanceIds=['i-09b42b44a8d35909a'],DocumentName='AWS-RunShellScript',Parameters={'commands':['test -f /opt/slope-question-refresh-fast/tools/question_refresh_assemble.py && echo ASSEMBLER_PRESENT','ls -l /opt/slope-pool/ctl/control.pkl','find /opt/slope-pool/ctl/walked -maxdepth 1 -name \"part*.pkl\" | wc -l','systemctl is-active slope-refresh-collect-v2 slope-refresh-monitor','tail -2 /var/log/question-collect.log']})\nprint(r['Command']['CommandId'])\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":500}));

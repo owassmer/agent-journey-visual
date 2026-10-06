@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat app/finance/bank.py cases/chromadex_20240819/make_bank_feed.py cases/chromadex_20240819/run_inputs.json",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:7500}),
+tools.exec_command({cmd:"git log -3 --format='%h %ad %s' --date=iso",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:1000}),
+]);for(let i=0;i<results.length;i++)text({i,...results[i]});

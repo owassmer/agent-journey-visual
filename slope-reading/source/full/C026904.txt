@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/r2tests.py && uv run ruff check . && uv run pytest -q -p no:cacheprovider --color=no -W ignore --deselect tests/test_viewer.py::test_recorded_run_renders_with_its_causal_chain 2>&1 | tail -3", "description": "Add R2 tests and run suite", "timeout": 600000}

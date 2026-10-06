@@ -1,0 +1,160 @@
+505	                   payload={k: args.get(k) for k in ("fact", "why_pivotal", "acceptable_evidence", "if_resolved", "dependency_id")})
+506	    return {"fact_request_id": fact_id, "note": "Recorded internally; no message is sent."}
+507	
+508	
+509	async def read_inventory(ctx: RunContext, _args: dict) -> dict:
+510	    items = sorted(ctx.run.graph["inventory"].values(), key=lambda i: (i.status != "open", i.item_id))
+511	    titles = {s["source_id"]: s["title"] for s in ctx.evidence.list_sources()}
+512	    return {"note": ("The host screened every admissible section for specific legal matters, settlements, debt agreements, "
+513	                     "covenants, cash restrictions and matter-related accounting items. Account for every open item before "
+514	                     "submitting. A flag is a pointer to read, not a finding. Each claim is checked: covered (the findings must "
+515	                     "account for every section), duplicate_of a covered item (the passage must add nothing), or not decision-"
+516	                     "relevant (it must not be able to change cash, obligations, underwriting earnings or repayment ability). "
+517	                     "A failed check is resolved with a new finding, a duplicate, or by escalating it as disputed."),
+518	            "open": sum(i.status == "open" for i in items),
+519	            "items": [{"item_id": i.item_id, "status": i.status, "kind": i.kind, "source": titles.get(i.source_id, i.source_id),
+520	                       "heading": " > ".join(i.heading_path[-2:]) or "(whole document)", "section_ids": list(i.section_ids),
+521	                       "excerpt": i.excerpt[:200], **({"finding_ids": list(i.finding_ids)} if i.finding_ids else {}),
+522	                       **({"duplicate_of": i.duplicate_of} if i.duplicate_of else {}),
+523	                       **({"note": i.note} if i.note else {})} for i in items]}
+524	
+525	
+526	async def account_for_items(ctx: RunContext, args: dict) -> dict:
+527	    """Each entry is judged on its own: accepted entries are recorded, rejected ones come back with their reason and the
+528	    failed check's observation ID. There is no free-text override: a failed check is closed with a new finding (then the
+529	    entry is re-checked), a verified duplicate of a covered item, or escalation as a disputed item for the reviewer."""
+530	    entries = args.get("items", [])
+531	    # Independent entries are checked in parallel; duplicates run afterwards so they can cite items covered in this batch.
+532	    first = [e for e in entries if e.get("disposition") != "duplicate_of"]
+533	    later = [e for e in entries if e.get("disposition") == "duplicate_of"]
+534	    if len({e.get("item_id") for e in entries}) != len(entries):
+535	        raise ToolError("Each item may appear once per batch")
+536	    results = await asyncio.gather(*(_account_one(ctx, e) for e in first))
+537	    results += [await _account_one(ctx, e) for e in later]
+538	    accepted = [r for r in results if isinstance(r, str)]
+539	    rejected = [r for r in results if isinstance(r, dict)]
+540	    return {"accounted": accepted, "rejected": rejected,
+541	            "open": sum(i.status == "open" for i in ctx.run.graph["inventory"].values())}
+542	
+543	
+544	async def _account_one(ctx: RunContext, entry: dict) -> str | dict:
+545	    """Account for one inventory entry: the item ID when recorded, or {item_id, reason} when rejected."""
+546	    try:
+547	        item = ctx.run.get("inventory", entry["item_id"])
+548	        if item.status != "open":
+549	            raise ToolError(f"{item.item_id} is already {item.status}")
+550	        disposition = entry.get("disposition")
+551	        reason = (entry.get("reason") or "").strip()
+552	        if disposition == "covered_by_findings":
+553	            fids = tuple(entry.get("finding_ids") or [])
+554	            bad = [f for f in fids if f not in ctx.run.graph["findings"] or ctx.run.graph["findings"][f].status != "accepted"]
+555	            if not fids or bad:
+556	                raise ToolError(f"{item.item_id}: covered_by_findings needs accepted finding IDs (not accepted: {bad or 'none given'})")
+557	            checks = await _check_coverage(ctx, item, fids) if ctx.semantics is not None else []
+558	            update = item.model_copy(update={"status": "covered", "finding_ids": fids, "note": reason,
+559	                                             "observation_ids": tuple(o.observation_id for o in checks)})
+560	        elif disposition == "duplicate_of":
+561	            other = ctx.run.get("inventory", entry.get("duplicate_of") or "")
+562	            if other.status != "covered" or other.item_id == item.item_id:
+563	                raise ToolError(f"{item.item_id}: duplicate_of must name another item that is already covered "
+564	                                f"({other.item_id} is {other.status})")
+565	            checks = await _check_duplicate(ctx, item, other) if ctx.semantics is not None else []
+566	            update = item.model_copy(update={"status": "covered", "finding_ids": other.finding_ids, "note": reason,
+567	                                             "duplicate_of": other.item_id,
+568	                                             "observation_ids": tuple(o.observation_id for o in checks)})
+569	        elif disposition == "not_decision_relevant":
+570	            if len(reason) < OVERRIDE_NOTE_MIN:
+571	                raise ToolError(f"{item.item_id}: say why it does not bear on the financing decision")
+572	            checks = await _check_relevance(ctx, item) if ctx.semantics is not None else []
+573	            update = item.model_copy(update={"status": "not_decision_relevant", "note": reason,
+574	                                             "observation_ids": tuple(o.observation_id for o in checks)})
+575	        elif disposition == "escalate" and ctx.semantics is not None:
+576	            update = _escalate_item(ctx, item, entry.get("observation_id") or "", (entry.get("missing") or "").strip())
+577	        else:
+578	            raise ToolError(f"{entry.get('item_id')}: disposition must be covered_by_findings, duplicate_of, "
+579	                            "not_decision_relevant or escalate")
+580	        ctx.run.put("inventory_accounted", update)
+581	        return update.item_id
+582	    except (ToolError, KeyError) as e:
+583	        return {"item_id": entry.get("item_id"), "reason": str(e).strip("'")}
+584	
+585	
+586	async def escalate_effect(ctx: RunContext, args: dict) -> dict:
+587	    """Disagreement with the category guard is escalated, never overridden: the effect becomes disputed, creates no cash
+588	    stream, and is left open for the human reviewer."""
+589	    eff: EconomicEffectProposal = ctx.run.get("effects", args["effect_id"])
+590	    reason = (args.get("reason") or "").strip()
+591	    if eff.status != "rejected" or not eff.validation_messages:
+592	        raise ToolError(f"{eff.effect_id} is {eff.status}; only an effect rejected by the category guard can be escalated")
+593	    other = [m for m in eff.validation_messages if not m.startswith("Category guard")]
+594	    if other:
+595	        raise ToolError(f"{eff.effect_id} has problems other than the category guard; revise it: {other}")
+596	    if len(reason) < OVERRIDE_NOTE_MIN:
+597	        raise ToolError("Say why you disagree with the failed check and what the reviewer must decide")
+598	    failed = [ctx.run.get("observations", o) for o in eff.observation_ids]
+599	    _dispose(ctx, [o for o in failed if o.downstream_disposition == "challenged_agent_draft"], "flagged_conflict",
+600	             f"escalated with {eff.effect_id}: {reason}")
+601	    ctx.run.put("effect_disputed", eff.model_copy(update={"status": "disputed", "dispute": reason}))
+602	    blocking = eff.mechanism not in CASH_FREE_MECHANISMS
+603	    return {"effect_id": eff.effect_id, "status": "disputed",
+604	            "note": ("Recorded for the reviewer. A disputed effect creates no cash stream"
+605	                     + (" and, because its mechanism moves cash, the run will be INCOMPLETE_REVIEW." if blocking else "."))}
+606	
+607	
+608	async def resolve_reconciliation(ctx: RunContext, args: dict) -> dict:
+609	    task = ctx.run.get("reconciliations", args["task_id"])
+610	    note = (args.get("note") or "").strip()
+611	    if len(note) < OVERRIDE_NOTE_MIN:
+612	        raise ToolError("Explain how the statements relate and which finding stands")
+613	    ctx.run.put("reconciliation_resolved", task.model_copy(update={"status": "resolved", "note": f"{task.note} | {note}"}))
+614	    return {"task_id": task.task_id, "status": "resolved"}
+615	
+616	
+617	async def submit_packet(ctx: RunContext, args: dict) -> dict:
+618	    for eid in args.get("supported_effect_ids") or []:
+619	        eff = ctx.run.graph["effects"].get(eid)
+620	        if eff is None or eff.status != "validated":
+621	            raise ToolError(f"{eid} is {'unknown' if eff is None else eff.status}; list only validated effects as supported")
+622	    if ctx.semantics is not None:
+623	        open_items = [i.item_id for i in ctx.run.graph["inventory"].values() if i.status == "open"]
+624	        if open_items:
+625	            raise ToolError(f"{len(open_items)} inventory items are still open: {open_items[:12]}. Use read_inventory and account_for_items.")
+626	        open_tasks = [t.task_id for t in ctx.run.graph["reconciliations"].values() if t.status == "open"]
+627	        if open_tasks:
+628	            raise ToolError(f"Open reconciliation tasks: {open_tasks}. Resolve them with resolve_reconciliation.")
+629	        await _check_conclusion(ctx, args)
+630	    summary = {k: args.get(k) for k in ("summary", "pivotal_unknowns", "supported_effect_ids", "conclusion")}
+631	    disputes = _disputes(ctx)
+632	    ctx.incomplete_reasons += [d["reason"] for d in disputes if d["blocking"]]
+633	    summary["disputes"] = disputes
+634	    summary["incomplete_reasons"] = ctx.incomplete_reasons
+635	    summary["configuration_failure"] = ctx.configuration_failure
+636	    if (args.get("conclusion_reply_to_failed_check") or {}).get("reason"):
+637	        summary["conclusion_reply_to_failed_check"] = args["conclusion_reply_to_failed_check"]
+638	    path = ctx.run.lock(summary)
+639	    ctx.submitted = True
+640	    return {"locked": True, "packet": path.name, "chain_head": ctx.run.head,
+641	            **({"disputes": disputes} if disputes else {})}
+642	
+643	
+644	def _disputes(ctx: RunContext) -> list[dict]:
+645	    """Escalated items and effects, open for the independent reviewer. An escalated inventory item is a reviewer checklist
+646	    item: the reviewer decides whether it is material (one repair pass; a material gap left open makes the run
+647	    INCOMPLETE_REVIEW). A disputed cash-moving effect blocks at once: the category guard protects a critical error."""
+648	    out = []
+649	    for i in ctx.run.graph["inventory"].values():
+650	        if i.status == "disputed":
+651	            out.append({"id": i.item_id, "kind": i.kind, "blocking": False, "for": "reviewer_checklist",
+652	                        "reason": f"disputed inventory item {i.item_id} ({i.kind.replace('_', ' ')}): {i.note}"})
+653	    for e in ctx.run.graph["effects"].values():
+654	        if e.status == "disputed":
+655	            out.append({"id": e.effect_id, "kind": e.mechanism, "blocking": e.mechanism not in CASH_FREE_MECHANISMS,
+656	                        "for": "reviewer_checklist",
+657	                        "reason": f"disputed effect {e.effect_id} ({e.mechanism.replace('_', ' ')}): {e.dispute}"})
+658	    return out
+659	
+660	
+661	# --- 4c host checks --------------------------------------------------------------------------------
+662	
+663	def _dispose(ctx: RunContext, observations: list[SemanticObservation], disposition: str, note: str) -> None:
+664	    for o in observations:

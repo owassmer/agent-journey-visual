@@ -1,0 +1,37 @@
+210:class DisputeProfile:
+class DisputeProfile:
+    """dispute_model (registry 3.11): Jev's atomic readings of one cited finding against one obligation. Per finding:
+    a reading request (who pays, the amount's status, interest, procedural events), a relevance request (one question
+    per factor), and a level request per routed graded factor. Never a forecast. Implements DisputeJudge."""
+
+    def __init__(self, semantics: Semantics, source_hashes: tuple[str, ...]) -> None:
+        self.s, self.hashes = semantics, source_hashes
+
+    async def _ask(self, qids: list[str], state: dict, subject_ids: tuple[str, ...],
+                   criteria: dict | None = None) -> list[SemanticObservation]:
+        call, observations = await self.s.jev.judge(profile="dispute_model", question_ids=qids, state=state,
+                                                    subject_ids=subject_ids, source_content_hashes=self.hashes,
+                                                    criteria=criteria)
+        self.s.run.put("jev_call", call)
+        for o in observations:
+            self.s.run.put("observation_recorded", o)
+        return observations
+
+    async def read(self, obligation, cited, direction, subject_ids):
+        from app.disputes.rules import load_model
+
+        qids = ["obligation_direction", "amount_status", "amount_includes_interest",
+                *(f"event_{ev}" for ev in load_model()["readings"]["events"])]
+        return await self._ask(qids, {"obligation": obligation, "cited_text": cited}, subject_ids,
+                               {"obligation_direction": direction})
+
+    async def relevance(self, obligation, cited, subject_ids):
+        from app.disputes.rules import load_model
+
+        qids = [f"bears_on_{f}" for f in load_model()["factors"]]
+        return await self._ask(qids, {"obligation": obligation, "cited_text": cited}, subject_ids)
+
+    async def level(self, obligation, cited, factor, rubric, subject_ids):
+        [o] = await self._ask(["factor_level"], {"obligation": obligation, "cited_text": cited, "factor": factor},
+                              subject_ids, {"factor_level": list(rubric)})
+        return o

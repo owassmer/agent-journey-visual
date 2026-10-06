@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run/app/analysis/build.py", "old_string": "    data[\"jev\"] = jev.usage_summary()\n    rc = recall_for(fc, judgments, borrower, run_id, refresh, records) if roles and judgments else None\n    if rc:", "new_string": "    data[\"jev\"] = jev.usage_summary()\n    if rc:"}

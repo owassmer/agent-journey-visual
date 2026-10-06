@@ -1,0 +1,17 @@
+research/revision_v2/contracts/build_synergy_example.py
+research/revision_v2/contracts/case_eval_private.json
+research/revision_v2/contracts/economic-effects.json
+research/revision_v2/data/build_case_index.py
+research/revision_v2/data/facts_synergy.json
+research/revision_v2/deliverables/Slope_Credit_Scenario_Build_Specification.md
+ Slope_Credit_Scenario_Build_Specification.md       |  8 +++----
+ .../PACKAGE_MANIFEST.json                          | 24 +++++++++----------
+ .../revision_v2/contracts/build_synergy_example.py |  2 +-
+ .../revision_v2/contracts/case_eval_private.json   |  5 ++--
+ .../revision_v2/contracts/economic-effects.json    |  2 +-
+ .../research/revision_v2/data/build_case_index.py  | 11 +++++++--
+ .../research/revision_v2/data/facts_synergy.json   | 26 ++++++++++++++++++---
+ .../Slope_Credit_Scenario_Build_Specification.md   |  8 +++----
+ tests/test_evidence_snapshots.py                   | 27 ++++++++++++++++++----
+ tests/test_mission_isolation.py                    |  6 +++--
+ 10 files changed, 83 insertions(+), 36 deletions(-)

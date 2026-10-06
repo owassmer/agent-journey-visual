@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && python3 ~/.hermes/profiles/connor/cache/scratch/6f_log/instrument.py && sed -n \"$(grep -n '^def build(' app/analysis/build.py | cut -d: -f1),+22p\" app/analysis/build.py; env -u CLAUDE_CODE_OAUTH_TOKEN uv run ruff check app 2>&1 | tail -8"}

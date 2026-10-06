@@ -1,0 +1,18 @@
+[{'event': 'paid', 'stage': 'paid'}, {'event': 'stay_secured', 'stage': 'appeal_pending'}, {'event': 'judgment_entered', 'stage': 'judgment_entered'}, {'event': 'amount_fixed', 'stage': 'judgment_entered'}, {'event': 'entitlement_decided', 'stage': 'amount_pending'}]
+['entitlement_decided', 'amount_fixed', 'judgment_entered', 'appeal_filed', 'stay_secured', 'paid']
+['sought', 'estimated', 'fixed', 'paid']
+237:class FactorResult(Frozen):
+238-    """One factor, aggregated from the passages routed to it by the factor's own rule, with its full distribution.
+239-    Unknown stays unknown; passages of the same date that disagree are kept as a conflict."""
+240-
+241-    factor_id: str
+242-    label: str
+243-    kind: Literal["graded", "present"]
+244-    aggregate: str
+245-    distribution: dict[str, float] = Field(default_factory=dict)  # rubric level label -> probability (graded)
+246-    probability: float | None = None  # present-or-absent factors: the strongest routed Noul value
+247-    level_label: str = "unknown"  # the most probable level, for display
+248-    conflict: bool = False
+249-    decisive: Decisive | None = None
+250-    finding_ids: tuple[str, ...] = ()
+251-

@@ -1,0 +1,111 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_eb695479]
+A background fan-out unit you dispatched earlier — 3 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 03:24:10 (27m36s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1656.4s
+
+--- ✓ TASK 1/3: Independent review of PR #17 (owassmer/Slope_Sparse_Events) at commit e3534cf, facet 1: law and decision structure. Post one PR comment headed 'Review, facet 1 (final): law and decision structure' and return the same findings, each marked BLOCKING or NOTE.  (status=completed, api_calls=51, 745.02s) ---
+I've posted the facet 1 review on PR #17 at e3534cf: https://github.com/owassmer/Slope_Sparse_Events/pull/17#issuecomment-5853861238. It has two BLOCKING findings and seven NOTES. Nothing in the repo was changed.
+
+**Earlier findings 1–6:** 1, 2, 3, 5 and 6 are closed as the owner's decisions require. Finding 4 is closed in the engine, which now books the holders' petition 60 days after acceleration. It is still open in the question Jev answers (B1).
+
+**BLOCKING**
+- **B1. The holders' petition question doesn't match what it books.** Jev is asked about the holders filing on the acceleration date, under the §303(b) rule alone and with 19 Aug cash (median $11.8M). The engine books that answer as a petition on 18 Oct, after the §7.06 no-action steps (written notice, a 25% request, indemnity, the trustee's 60 days), which the question never mentions. That class carries 4.8% of path probability.
+  - Fix: add §7.06/§7.07 to the question's standard and fix its timing text. Record its facts at acceleration + 60 days, and add an "earliest date the holders may file" date to what Jev sees.
+- **B2. An approved stay locks the company's 30-day operating need, which decision 2 protects.** The offer is fixed on the motion day, but approval comes 38–180 days later. The code then locks all the cash left and still treats the stay as effective. In a replay of the pre-ruling stay-approved branch (512 draws):
+  - the lock was below the approved offer on 86% of draws (median $14.3M offered against $10.0M of cash at approval);
+  - cash fell below the 30-day need on the approval day on 79% of draws, which forces the company's file-at-the-cash-floor decision at once.
+
+  That branch carries 4.2% of path probability. Fix, for Owen to choose:
+  - (a) recompute the offer at approval as cash above need then; or
+  - (b) make the stay effective only where the approved offer can still be posted.
+
+**NOTES**
+1. Before the ruling, the company's stay decision is never asked when Qorvo doesn't execute (74% of mass). The design asks it on "or final judgment", which covers the entered-judgment reading. Its effect on the 19 Aug default is limited to about 1 draw in 10.
+2. The labels Jev reads misstate the clocks: "60 days after the judgment's entry" sits beside 19 Aug, which is 91 days after entry. The dates themselves are right.
+3. The issuer's and holders' petition questions pool trajectories where the holders didn't act. They show a post-ruling default date that can't occur on the 19 Aug acceleration path.
+4. The sensitivities for decisions 1–3 exist only in the engine. They are tested but not on the page or in the analysis. Passing `True` for the reading parameter switches both readings off.
+5. A pre-ruling "file" answer ends the path. On trajectories with no levy before the ruling it books no petition and skips everything after (0.10% of mass).
+6. The $10.0M threshold is tested on the judgment amount, not the undischarged amount after a levy. I did not measure this.
+7. Two earlier NOTES are still open: new-trial classes still get the appeal, stay and enforcement questions, and state-court domestication is still unaddressed.
+
+**Checked and consistent**
+- The coupon split is right: $570,000 in shares, $750,000 in cash.
+- Probabilities compose correctly. The 14,321 paths sum to 1 at Jev's answers, at neutral and under five random answer sets for every question.
+- Each question is one actor's decision, with no timing, amount, affordability or legal meaning put to Jev.
+- The model's inputs hold no case date after 20 Jun 2024.
+- The targeted engine tests (16) pass.
+
+Files are in `~/.hermes/profiles/connor/cache/scratch/review17b/`:
+- facet1_law_comment.md
+- pr17_comments_facet1law.txt
+- f1law/ (dirichlet.py, stay.py, a4i1.py, staymass.py)
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_eb695479/task-0.log
+
+--- ✓ TASK 2/3: Independent review of PR #17 (owassmer/Slope_Sparse_Events) at commit e3534cf, facet 2: probability composition, engine arithmetic and whether the headline measures what the research adds. Post one PR comment headed 'Review, facet 2 (final): probability, cash and the comparison' and return the same findings, each marked BLOCKING or NOTE.  (status=completed, api_calls=54, 1656.0s) ---
+I found no BLOCKING issues in facet 2 at e3534cf: the chain from evidence to Jev to the lender's cash holds. There are four NOTEs; the three booking defects each move the headline by at most 0.2 points of filing chance or $121 of Collected. The review is posted on PR #17 as "Review, facet 2 (final): probability, cash and the comparison": https://github.com/owassmer/Slope_Sparse_Events/pull/17#issuecomment-5853965002
+
+I loaded the recorded model from `analysis.json.gz`, replayed all 14,321 research paths and both bank paths, and never rebuilt the tree. Tests: 167 passed, and ruff is clean.
+
+**What holds**
+- **(a) Probabilities:** both views sum to 1 (to within 1e-15) at Jev's answers, at even odds, under six random Dirichlet overrides of all 371 nodes, and with every node forced to a single branch. No combined edge ever exceeds 1, and the page's own path arithmetic also sums to 1.
+- **(b) The comparison:** both views use identical operating cash, need and legal spend, the same line and the same draws. The coupon books −$750k on 16 Dec in both. Only the dispute chain and Jev's answers on research facts differ, so the headline difference is what the research adds.
+- **(c) Booking:** every changed branch passed step-level checks on 4,731 replayed paths:
+  - settlement cash, its date and its release;
+  - stay locks and the I4 release;
+  - the I3 start;
+  - the second judgment-default date, with no second acceleration;
+  - the holders' petition 60 days after acceleration (§7.06).
+- **(d) Tiles and bridge:** they match the cash ledger to the cent in both views. Payments due = Collected + Due and unpaid: $742,217 = $645,707 + $96,510 on bank data, and $584,623 = $384,230 + $200,392 with research. The bridge's two parts (−$157,595 and −$103,882) sum to the −$261,477 difference.
+- **(e) Unknowns and dates:** no parameter carries a date after 20 Jun 2024, and no unknown becomes zero on the headline path.
+
+**NOTEs**
+1. **Settlements where none exists:** when Jev says the company settles, the whole path follows the "settled" branch. That includes draws where the settlement amount is zero (78% of those draws at I2, 99%+ at I3 and I4; 8.3% of all probability mass), so appeal, levy and the notes default are skipped there.
+   - Cash effect: +0.19 pt filing chance and −$121 Collected, measured by sending those draws down the "no settlement" branch.
+   - The page's Settled share is overstated: of its 12.86%, 3.96 points never settled.
+2. **Stay security not released:** the roughly $7.9M locked by a pre-ruling stay stays locked after a vacatur, a new trial or a settlement after the ruling (0.64% of mass). A post-ruling stay also still locks where the company already paid in full (about $27k). Collected rises $53 with the release booked.
+3. **Coupon on accelerated notes:** the $750k coupon is still paid in cash where the notes were already accelerated and nobody has filed (9.9% of mass). Effect: −0.06 pt filing chance, +$9 Collected.
+4. **Insurance defaults to zero:** in `app/agent/tools.py:804`, `insured_cents` becomes 0 when the agent leaves it out. It changes nothing here, since the $38.6M judgment is far above the $10M threshold.
+
+I did not re-run the judgment-default reading sensitivities (60.7% and 42.8%), because they need a full tree rebuild.
+
+Nothing in the repo was changed. Everything is in `~/.hermes/profiles/connor/cache/scratch/review17b/`: the posted comment is `facet2_cash_comment.md`, the check scripts are `f2_*.py`, and each run left a `.log` or `.jsonl` there.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_eb695479/task-1.log
+
+--- ✓ TASK 3/3: Independent review of PR #17 (owassmer/Slope_Sparse_Events) at commit e3534cf, facet 3: what Jev reads and the demo's evidence-to-judgment-to-cash chain on the page. Post one PR comment headed 'Review, facet 3 (final): Jev inputs and the page' and return the same findings, each marked BLOCKING or NOTE.  (status=completed, api_calls=97, 1029.73s) ---
+I've posted the facet 3 review on PR #17 at e3534cf: 4 BLOCKING findings, and 5 of the 7 previous facet-3 findings are fully closed. Comment: https://github.com/owassmer/Slope_Sparse_Events/pull/17#issuecomment-5853890677
+
+**How I checked**
+- **Jev's inputs:** I rebuilt all 371 states Jev received without calling Jev. Every rebuilt set of path facts matches the recorded run exactly.
+- **Page figures:** I recomputed the tiles the way the page's script does. The research view matches the engine to the cent (funded $675,342, collected $384,230, chance of a filing 59.58%, clawback $137,106), and the bank tiles match too. For 40 two-option questions, moving the slider to 0% and 100% reproduces the engine's effect on Collected within $1.
+- **Wording:** Jev's text has no build codes, finding ids, stamps or contrast phrasing.
+- **Viewer:** I didn't start it. The figures could be checked from the page files alone, which spared memory while the other reviewers were running jobs.
+
+**BLOCKING**
+1. **Settlement: previous finding 4 is still open.** These are the judgments with the largest (−$234k) and fourth-largest (−$146k) effect on Collected. Jev gets a "Settlement signals" reading from a 23 May passage but not the passage itself, and is told the company's settlement statements are "not in the record". The page shows the same reading with no link. This isn't the deferred agent-side matching: the code already holds the reading's source passage (fnd_009) and leaves it out.
+2. **The bank-view and research-view cash-floor questions differ in more than research facts.** Only the research question gets the bankruptcy-stay law (§362(a)), the period end and the coupon date. Both views book the coupon, and it falls due 16 days after the bank question's median decision date. Neither question gives the coupon's amount. The bank view's 53.0% chance of a filing is this one answer, so part of "Research adds +6.6 pts" comes from the questions being different.
+3. **The bank view's only question isn't on the page.** There's no row, drill-down or slider for it, so the viewer can't trace or change the 53.0%.
+4. **The noteholders' involuntary-petition question describes a different event from the one the engine books.** The engine files 60 days after acceleration under the indenture's no-action clause (§7.06). Jev and the page get only the acceleration date and §303(b)(1), with no no-action terms and no filing date. On the one node that matters (decided 19 Aug, filing 18 Oct), moving the answer from 0% to 100% shifts the chance of a filing by 11.8 pts and Collected by −$37k.
+
+**Previous findings:** 1, 3, 5, 6 and 7 are closed. 2 is closed on the law, but the jury-verdict item is still missed (a NOTE, since that matching is deferred). 4 is open.
+
+**NOTEs (none break the chain):**
+- 40 of 42 settlement questions show a $0 median offer; each moves Collected by less than $1k.
+- 10 of the 11 involuntary-petition questions can only file after 17 Dec, so they have no effect.
+- Four "debtor response" questions reach Jev with no date, cash or amount owed.
+- The trebling and appeal questions each state a reading next to "not in the record" for the same item.
+- Jev is told the $23.1M remittitur is "the most the evidence supports", as if settled, rather than labelled as the model's scenario.
+- 23 of 39 cash-floor questions show $0 cash with no stated cause.
+- The page's cash-effect line is the same generic text on 139 questions.
+- The page uses internal phrases like "Date set by code", "trajectories" and "ruling class".
+- Case terms: the $31.3M award is sourced to Akoustis's motion (D.I. 613), the fees label is cut off, and the judgment default reads "unpaid or unstayed" instead of "unpaid, undischarged and unstayed".
+- The merits questions include an instruction aimed at Jev's reasoning ("decides this on the merits or the remedy").
+
+I also added two review lessons to the `slope-sparse-events-build` skill: how to rebuild Jev's states exactly, and how to check the page's figures without the server.
+
+Files are in `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/review17b/`:
+- `facet3_jev_page_comment.md` — the posted comment
+- `states_e3534cf.json` — the rebuilt states
+- `dump_states_f3.py`
+- `f3_page_figs.py` — first figure-check attempt; it didn't produce tile figures, and the working check ran in Python inline
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_eb695479/task-2.log

@@ -1,0 +1,25 @@
+total 384
+drwxr-xr-x@ 22 owenwassmer  staff    704 Sep 25 20:19 .
+drwxr-xr-x@  8 owenwassmer  staff    256 Sep 25 19:51 ..
+-rw-r--r--@  1 owenwassmer  staff   9914 Sep 25 20:16 brief.md
+-rw-r--r--@  1 owenwassmer  staff   4445 Sep 25 20:00 notes_barfresh.md
+-rw-r--r--@  1 owenwassmer  staff  10156 Sep 25 19:57 notes_charles_colvard.md
+-rw-r--r--@  1 owenwassmer  staff   2340 Sep 25 20:13 notes_coffee_holding.md
+-rw-r--r--@  1 owenwassmer  staff   4182 Sep 25 19:58 notes_jones_soda.md
+-rw-r--r--@  1 owenwassmer  staff   5232 Sep 25 19:57 notes_massimo.md
+-rw-r--r--@  1 owenwassmer  staff   6256 Sep 25 20:00 notes_musclepharm.md
+-rw-r--r--@  1 owenwassmer  staff   9328 Sep 25 20:02 notes_nanophase.md
+-rw-r--r--@  1 owenwassmer  staff   8254 Sep 25 19:56 notes_tikk.md
+-rw-r--r--@  1 owenwassmer  staff   5253 Sep 25 20:03 notes_W2_sweep.md
+-rw-r--r--@  1 owenwassmer  staff   2714 Sep 25 20:13 notes_W4_screened.md
+-rw-r--r--@  1 owenwassmer  staff   1788 Sep 25 20:13 notes_yunhong_cti.md
+-rw-r--r--@  1 owenwassmer  staff  17913 Sep 25 20:19 shortlist.md
+-rw-r--r--@  1 owenwassmer  staff   6667 Sep 25 20:15 slope_practices.md
+-rw-r--r--@  1 owenwassmer  staff   3792 Sep 25 20:02 sweep_W3.md
+-rw-r--r--@  1 owenwassmer  staff  44620 Sep 25 20:13 sweep_W4.md
+-rw-r--r--@  1 owenwassmer  staff    742 Sep 25 19:53 toolcheck_W1.md
+-rw-r--r--@  1 owenwassmer  staff   1052 Sep 25 19:53 toolcheck_W2.md
+-rw-r--r--@  1 owenwassmer  staff   1471 Sep 25 20:02 toolcheck_W3.md
+-rw-r--r--@  1 owenwassmer  staff    954 Sep 25 19:53 toolcheck_W4.md
+    1523 total
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

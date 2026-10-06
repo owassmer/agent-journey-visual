@@ -1,0 +1,14 @@
+2026-08-04 2026-08-04T20:04:26.000Z 0001386570-26-000043 cdcx-20260630.htm
+8395848 2018-09-17 1 None recap/gov.uscourts.ded.66360/gov.uscourts.ded.66360.1.0.pdf
+8395848 2021-09-21 369 None recap/gov.uscourts.ded.66360/gov.uscourts.ded.66360.369.0.pdf
+8395848 2021-10-06 373 None recap/gov.uscourts.ded.66360/gov.uscourts.ded.66360.373.0.pdf
+8395848 2023-05-17 379 2 recap/gov.uscourts.ded.66360/gov.uscourts.ded.66360.379.2.pdf
+8395848 2024-03-25 399 None recap/gov.uscourts.ded.66360/gov.uscourts.ded.66360.399.0.pdf
+4564720 2016-12-29 1 None recap/gov.uscourts.cacd.666790.1.0.pdf
+4564720 2017-10-11 65 None recap/gov.uscourts.cacd.666790.65.0.pdf
+4564720 2021-09-27 560 None recap/gov.uscourts.cacd.666790/gov.uscourts.cacd.666790.560.0.pdf
+4564720 2021-12-27 579 None recap/gov.uscourts.cacd.666790/gov.uscourts.cacd.666790.579.0.pdf
+4564720 2022-09-28 594 None recap/gov.uscourts.cacd.666790/gov.uscourts.cacd.666790.594.0.pdf
+4564720 2024-08-13 618 None recap/gov.uscourts.cacd.666790/gov.uscourts.cacd.666790.618.0.pdf
+4564720 2024-12-27 671 None recap/gov.uscourts.cacd.666790/gov.uscourts.cacd.666790.671.0.pdf
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5a-chromadex-evidence

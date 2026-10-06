@@ -1,0 +1,1 @@
+{"delaySeconds": 1200, "noop": false, "prompt": "Check the ChromaDex re-recording (log /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/cdx_run2.log); if done, run slope compare, check viewer, update PR #8 and send to re-review.", "reason": "fallback in case the recording's completion notification doesn't arrive"}

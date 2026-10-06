@@ -1,0 +1,136 @@
+step-2-evidence-ingestion
+{
+ "source_id": "synergy_s1a_20240813",
+ "case_id": "synergy_chc_2024",
+ "primary_url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024068424/ea0208324-04.htm",
+ "original_relative_path": "research/recent_cases/synergy_chc/2024_s1a.html",
+ "package_relative_path": "research/recent_cases/synergy_chc/2024_s1a.html",
+ "sha256": "449f730007a457114f0f91b9570442cf5db0b8be82f9cda760e97b9f99a26816",
+ "bytes": 5986591,
+ "availability": {
+  "date": "2024-08-13",
+  "precision": "day",
+  "basis": "Cover expressly says filed August 13, 2024. Intraday SEC index retrieval failed; date is verified from document.",
+  "verification_url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024068424/ea0208324-04.htm",
+  "accepted_at_as_displayed": null,
+  "intraday_runtime_policy": "Conservative end of stated date in America/New_York; do not invent an acceptance time."
+ },
+ "event_dates": [
+  {
+   "type": "interim_measurement",
+   "date": "2024-06-30"
+  },
+  {
+   "type": "updated_cash_measurement",
+   "date": "2024-08-12"
+  },
+  {
+   "type": "employee_measurement",
+   "date": "2024-08-07"
+  }
+ ],
+ "relative_to_lead_cutoff": "eligible",
+ "mission_membership": {
+  "synergy_20240813": "eligible",
+  "barfresh_20241025": "out_of_case"
+ }
+}
+{
+ "source_id": "brfh_2024q2_10q",
+ "case_id": "barfresh_schreiber_2024",
+ "primary_url": "https://www.sec.gov/Archives/edgar/data/1487197/000149315224032201/form10-q.htm",
+ "original_relative_path": "research/barfresh_case/brfh_2024q2_10q.html",
+ "package_relative_path": "research/barfresh_case/brfh_2024q2_10q.html",
+ "sha256": "9b90c4e187879d31e359ea38679341c6724316a8c59b7cfafd9d739e78d9b192",
+ "bytes": 548779,
+ "availability": {
+  "date": "2024-08-14",
+  "precision": "second",
+  "accepted_at": "2024-08-14T20:10:46.000Z",
+  "basis": "SEC submissions JSON",
+  "verification_metadata": "research/barfresh_case/brfh_sec_submissions.json"
+ },
+ "event_dates": [
+  {
+   "type": "financial_period_end",
+   "date": "2024-06-30"
+  }
+ ],
+ "relative_to_lead_cutoff": "outcome",
+ "mission_membership": {
+  "synergy_20240813": "out_of_case",
+  "barfresh_20240815": "eligible",
+  "barfresh_20241025": "eligible"
+ }
+}
+{
+ "source_id": "brfh_sec_submissions",
+ "case_id": "barfresh_schreiber_2024",
+ "primary_url": "https://data.sec.gov/submissions/CIK0001487197.json",
+ "original_relative_path": "research/barfresh_case/brfh_sec_submissions.json",
+ "package_relative_path": "research/barfresh_case/brfh_sec_submissions.json",
+ "sha256": "05b4922b44ffdaf1717d38599a912bf602ba36eb8cdb37566f50a3194142c51f",
+ "bytes": 81830,
+ "availability": {
+  "date": null,
+  "precision": "unknown",
+  "accepted_at": null,
+  "basis": "title/signature except metadata; verify index before runtime",
+  "verification_metadata": null
+ },
+ "event_dates": [],
+ "relative_to_lead_cutoff": "metadata_only",
+ "mission_membership": {
+  "synergy_20240813": "out_of_case",
+  "barfresh_20240815": "metadata_only",
+  "barfresh_20241025": "metadata_only"
+ }
+}
+ 
+ 
+800 .
+160 ..
+8493 acquired_sources.json
+915929 brfh_2023_10k.html
+165835 brfh_2023_10k.txt
+60086 brfh_2024_08_13_litigation_funding.html
+6028 brfh_2024_08_13_litigation_funding.txt
+869484 brfh_2024_10k.html
+157189 brfh_2024_10k.txt
+477753 brfh_2024q1_10q.html
+63900 brfh_2024q1_10q.txt
+548779 brfh_2024q2_10q.html
+69977 brfh_2024q2_10q.txt
+10956 brfh_2024q2_index.html
+2713 brfh_2024q2_index.txt
+40380 brfh_2024q2_release.html
+14221 brfh_2024q2_release.txt
+532146 brfh_2024q3_10q.html
+72768 brfh_2024q3_10q.txt
+52123 brfh_2024q3_release.html
+18198 brfh_2024q3_release.txt
+444910 brfh_2025q1_10q.html
+58025 brfh_2025q1_10q.txt
+81830 brfh_sec_submissions.json
+3772 case_facts.json
+ 
+ 
+ 
+288 .
+96 ..
+306804 2023_02_27_court_order.pdf
+120450 2024_05_01_webbank_shopify_loan.html
+1222707 2024_annual_report.html
+5986591 2024_s1a.html
+577745 2024_s1a.txt
+882701 2025_05_30_credit_agreement.html
+988860 2025_06_30_quarterly_report.html
+Using CPython [36m3.12.13[39m[36m[39m
+Creating virtual environment at: [36m.venv[39m
+   [36m[1mBuilding[0m[39m slope-sparse-events[2m @ file:///Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-2-evidence-ingestion[0m
+      [32m[1mBuilt[0m[39m slope-sparse-events[2m @ file:///Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-2-evidence-ingestion[0m
+[2mInstalled [1m51 packages[0m [2min 83ms[0m[0m
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'pypdf'
+/opt/homebrew/bin/pdftotext

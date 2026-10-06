@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm send-command --region us-east-1 --instance-ids i-0d0d302690491ed02 i-0941834c3a86dc898 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"free -m; tail -n 12 /var/log/cloud-init-output.log; ps -eo rss,comm --sort=-rss | head -n 5\"]}' --query Command.CommandId --output text","max_output_tokens":1000,"yield_time_ms":1000}));
+text(await tools.write_stdin({session_id:37613,chars:"",max_output_tokens:1500,yield_time_ms:1000}));

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-contracts && git log --oneline -2 | cut -c1-90; D=runs/recorded/akoustis_20240514-agent_plus_jev-20260929T052558Z; ls $D; for f in fnd_048 fnd_049 fnd_059 fnd_060 fnd_053; do grep -h -o \"\\\"$f\\\"[^}]\\{0,40\\}\\\"proposition\\\": \\\"[^\\\"]*\" $D/*.json* 2>/dev/null | head -1 | cut -c1-400; done"}

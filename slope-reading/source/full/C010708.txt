@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm send-command --instance-ids i-0ec1292733be502cc --document-name AWS-RunShellScript --parameters '{\"commands\":[\"tail -12 /var/log/cloud-init-output.log; du -sh /opt/slope-pool/ctl 2>/dev/null\"]}' --profile slope --region us-east-2 --query Command.CommandId --output text","max_output_tokens":500}));
+text(await tools.write_stdin({session_id:10871,chars:"","yield_time_ms":1000,"max_output_tokens":1500}));

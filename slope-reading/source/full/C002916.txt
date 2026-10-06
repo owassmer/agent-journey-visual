@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-8-page && sed -n '/^## Verified correct/,$p' ~/.hermes/profiles/connor/cache/scratch/8/page_review.md | cut -c1-400; git log -1 --format=%B a5cdb5b | head -30 | cut -c1-400; git status --short | grep -v '^??'; git rev-parse HEAD origin/step-8-page"}

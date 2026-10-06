@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && gh api \"repos/owassmer/Slope_Sparse_Events/actions/runs/36749536455/jobs?per_page=100\" --jq '[.jobs[] | .status + \"/\" + (.conclusion // \"\")] | group_by(.) | map(\"\\(.[0]) \\(length)\") | join(\", \")'; date -u +%H:%M; sed -n '60,140p' .claude/worktrees/step-9-memo/.github/workflows/pool.yml"}

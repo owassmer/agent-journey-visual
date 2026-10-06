@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/forecast.py", "old_string": "_ROW_FILL = {\"day\": np.iinfo(np.int64).max // 4, \"groups\": -1}  # events.BIG; elsewhere 0 (a question never reads it)", "new_string": "_ROW_FILL = {\"day\": 10**6, \"groups\": -1}  # day: events.BIG (asserted in pack_row); elsewhere 0 (never read)"}

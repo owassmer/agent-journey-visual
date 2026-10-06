@@ -1,0 +1,28 @@
+---
+name: speed-over-verification
+description: "Slope demo is a same-day POC — skip non-essential tests/checks/verification, but never careless implementation"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 2e338e7b-b5a4-476b-a810-3f7556007f4a
+  modified: 2026-09-24T22:25:40.681Z
+---
+
+Do not spend significant time on non-essential tests, checks, or verification for the Slope Sparse Events demo (deadline: night of 2026-09-24). Tests only where they protect financial correctness (spec §10 invariants, reference thresholds) or evidence isolation.
+
+**Why:** It's a proof-of-concept demo for Russell at Slope that has to be done tonight. Verification overhead is wasted time. The real goal is a convincing, coherent, correct demo.
+**How to apply:** Keep the implementation quality, economics, and provenance high, and keep the UX intuitive. Cut test suites, coverage, and exhaustive edge-case checks. The speed allowance is never an excuse for sloppy logic. Related: [[delivery-workflow]].
+---
+name: delivery-workflow
+description: "Owen's required per-step flow for Slope build — worktree → PR → independent intent-grounded review → merge-ready label → Owen merges"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 2e338e7b-b5a4-476b-a810-3f7556007f4a
+  modified: 2026-09-24T22:25:37.116Z
+---
+
+Each of the 7 spec build steps goes: implement in a worktree (branch `step-N-<slug>`) → commit, push, open PR → independent, fully intent-grounded review (fresh context, judged against alignment doc + spec + kit, posted as PR comment) → fix and re-review until it passes → apply `merge-ready` label → Owen reads the PR on GitHub and decides whether to merge. Never merge or push to main myself.
+
+**Why:** Owen wants to stay the decision-maker on every change while agents do the implementation and review.
+**How to apply:** Repo is private `owassmer/Slope_Sparse_Events`; labels `merge-ready` / `needs-repair` exist; CLAUDE.md in repo encodes this. See [[speed-over-verification]].

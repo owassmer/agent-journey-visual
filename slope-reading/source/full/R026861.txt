@@ -1,0 +1,20 @@
+$2,000,000.00, 3 monthly installments (90 days)
+Limit $3,624,901.09 (monthly bank inflows) · order limit $2,718,675.82 · lowest projected cash $24,956,363.55 on 2025-02-15
+$1,430,000.00, 3 monthly installments (90 days) below the request
+Limit $1,909,118.03 (lowest projected cash) · order limit $1,431,838.52 · lowest projected cash $12,706,363.55 on 2025-02-15 in The debtor neither pays nor bonds → Not collected in the horizon / The court fixes the amount → The debtor appeals and posts a bond → The appeal continues (stress)
+Conditions Count the $2,500,000.00 owed by Elysium Health, Inc. only once it is received. If satisfied: Received cash enters the connected-bank data and the next review. If not: The decision already stands on the paths where it is not received. Confirm how ChromaDex Corporation would secure a stay pending appeal of the $9,800,000.00 owed to Elysium Health, Inc. (cash collateral or a letter of credit), and for how much. If satisfied: The confirmed collateral replaces the modelled lock on the appeal paths. If not: The appeal paths keep 50% to 100% of a bond at 125% of the judgment locked (model rule). Confirm Western Alliance Bank&#39;s covenants permit this financing after the disputes&#39; cash effects. If satisfied: No further condition. If not: Decline until the lender consents.
+Elysium Health, Inc. owes the borrower $2,500,000.00 · stage: Money judgment entered
+The borrower owes Elysium Health, Inc. $9,800,000.00 · stage: Liability decided, amount open · refined by factors at: amount_pending
+Decline (borrower pays its supplier)
+lowest cash $25,030,363.55 passes
+lowest cash $12,780,363.55 $2,000,000.00, Net 30 fee $32,000.00 · 21.3% effective
+lowest cash $24,998,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,748,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,434,190.90 $2,000,000.00, Net 60 fee $60,000.00 · 19.0% effective
+lowest cash $24,970,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,720,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,431,040.90 $2,000,000.00, 2 monthly installments (60 days) fee $54,000.00 · 23.3% effective
+lowest cash $24,976,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,726,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,431,715.90 $2,000,000.00, 3 monthly installments (90 days) fee $74,000.00 · 24.1% effective
+lowest cash $24,956,363.55 · repaid in full in 1 of 1 scenarios fails
+lowest cash $12,706,363.55 · repaid in full in 38 of 38 scenarios amount above the order limit of $1,429,465.90 $1,430,000.00, 3 monthly installments (90 days) fee $52,910.00 · 24.1% effective
+lowest cash $24,977,453.55 · repaid in full in 1 of 1 scenarios passes
+lowest cash $12,727,453.55 · repaid in full in 38 of 38 scenarios

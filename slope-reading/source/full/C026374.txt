@@ -1,0 +1,1 @@
+{"command": "grep -n \"^## \\|^### \\|Invented Slope\\|invented Slope\\|not fabricated daily\\|Illustrative\\|illustrative\\|lead case\\|Lead case\\|Transfer case\\|transfer case\\|^| 5\\.\\|^| 6\\.\\|^| 7\\.\\|APR\\|fee rebate\\|no probabilit\\|weights\" Slope_Credit_Scenario_Build_Specification.md | cut -c1-170"}

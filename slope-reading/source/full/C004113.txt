@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int/app/analysis/share_price.py", "old_string": "    @cache  # noqa: B019 (one calibrated instance per case; the amounts owed accrue daily)", "new_string": "    @lru_cache(maxsize=1 << 16)  # noqa: B019 (bounded: the amounts owed accrue daily, so they rarely repeat far apart)"}

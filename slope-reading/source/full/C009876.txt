@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"head -45 app/analysis/build.py; sed -n '1,42p' tests/akoustis_fixture.py; sed -n '1,55p' tests/test_viewer.py; rg -n 'CANDIDATE_READY|run_started|chain_head' tests/test_viewer.py | head","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1600}));

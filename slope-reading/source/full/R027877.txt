@@ -1,0 +1,45 @@
+288:12, 2024, we have approximately $2.0
+1737:31, 2023 was $4,802,445, including interest of $352,445.
+1743:1, 2024, we entered into a loan agreement with Shopify Capital Inc. for an advancement of working capital from our online processing account. We received $370,000 from Shopify Capital Inc. and $48,100 was an original issue discount. The loan bears a repayment rate of 25% of daily sales. The payment of such amounts is secured by a security interest in certain assets, undertakings and property pursuant to the Security Agreement, which will be released upon receipt of total payments of $418,100. The Company recognized amortization original issue discount of $5,639, which is included in interest expense in the statement of income during the six months ended June
+1748:30, 2024 was $2,920,824.
+1762:12, 2024, we have approximately $2.0
+2627:has served as our President since January 2021 and has agreed to serve on our Board of Directors upon the completion of this offering. From August 2015 to December 2020, Mr. Baumeler served as our Executive Vice President of Sales and Marketing. From September 2012 to August 2015, Mr. Baumeler served as Senior Vice President of Marketing for Healthy Natural Systems/Core Science Medica (CSM)/Lifeagen, a nutritional supplement company. From January 2012 to August 2012, Mr. Baumeler was self
+4903:4,802,445
+4904:4,802,445
+4906:2,920,824
+5090:During 2023, the Company made payments of $1,000,000 toward this loan. The outstanding loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445, including interest of $352,445.
+5109:$3,020,824 March 27, 2024 Loan:
+5110:On March 27, 2024, the Company entered into a confidential settlement agreement and mutual general release with a supplier.
+5111:During 2024, the Company made payments of $100,000 toward this loan. The outstanding loan balance at June 30, 2024 was $2,920,824.
+5120:$418,100 May 1, 2024 Loan:
+5121:On May 1, 2024, the Company entered into a loan agreement of $418,100 with Shopify Capital Inc. for an advancement of working capital from its online processing account. The Company received $370,000 from Shopify Capital Inc. and $48,100 was an original issue discount. The loan bears a repayment rate of 25% of daily sales.
+5122:The payment of such amounts is secured by a security interest in certain assets, undertakings and property pursuant to the Security Agreement, which will be released upon receipt of total payments of $418,100.
+6762:During 2023, the Company made payments of $1,000,000 toward this loan. The outstanding loan balance at December 31, 2023 was $4,802,445, including interest of $352,445.
+6966:1, 2024, the Company entered into a loan agreement with Shopify Capital Inc. for an advancement of working capital from its online processing account. The Company received $370,000 from Shopify Capital Inc. and $48,100 was an original issue discount. The loan bears a repayment rate of 25% of daily sales. The payment of such amounts is secured by a security interest in certain assets, undertakings and property pursuant to the Security Agreement, which will be released upon receipt of total payments of $418,100. As of June
+
+$3,020,824 March 27, 2024 Loan:
+On March 27, 2024, the Company entered into a confidential settlement agreement and mutual general release with a supplier.
+During 2024, the Company made payments of $100,000 toward this loan. The outstanding loan balance at June 30, 2024 was $2,920,824.
+The Company is required to make future payments as follows:
+2024
+$
+600,000
+2025
+1,460,412
+2026
+860,412
+$418,100 May 1, 2024 Loan:
+On May 1, 2024, the Company entered into a loan agreement of $418,100 with Shopify Capital Inc. for an advancement of working capital from its online processing account. The Company received $370,000 from Shopify Capital Inc. and $48,100 was an original issue discount. The loan bears a repayment rate of 25% of daily sales.
+The payment of such amounts is secured by a security interest in certain assets, undertakings and property pursuant to the Security Agreement, which will be released upon receipt of total payments of $418,100.
+The Company recognized amortization of original issue discount of $4,796, which is included in interest expense in the statement of income during the six months ended June 30, 2024. The outstanding loan balance at June 30, 2024 was $333,454.
+$118,650 May 22, 2024 Loan:
+On May 22, 2024, the Company entered into a loan agreement of $118,650 with Shopify Capital Inc. for an advancement of working capital from its online processing account. The Company received $105,000 from Shopify Capital Inc. and $13,650 was an original issue discount. The loan bears a repayment rate of 25% of daily sales.
+The payment of such amounts is secured by a security interest in certain assets, undertakings and property pursuant to the Security Agreement, which will be released upon receipt of total payments of $118,650.
+The Company recognized amortization of original issue discount of $1,464, which is included in interest expense in the statement of income during the six months ended June 30, 2024. The outstanding loan balance at June 30, 2024 was $93,736.
+Note 12 — Stockholders’ Equity
+The total number of shares of all classes of capital stock which the Company is authorized to issue is 300,000,000
+shares of common stock with $0.00001 par value.
+As of both June 30, 2024 and December 31, 2023, there were 89,889,074
+shares of the Company’s common stock issued and outstanding.
+F-25
+Table of Contents

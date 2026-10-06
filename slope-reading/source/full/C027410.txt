@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.claude/jobs/1ebb1026/tmp && sips -g pixelHeight walk2_override.png | tail -1 && cp walk2_override.png w2c.png && sips -c 2000 1400 --cropOffset 0 0 w2c.png >/dev/null; cp walk2_override.png w2d.png && H=$(sips -g pixelHeight walk2_override.png | tail -1 | awk '{print $2}') && echo $H", "description": "Prepare screenshot crops"}

@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"uv cache dir\nuv cache prune\nuv run pytest -q tests/test_reduce_fleet.py tests/test_merge_fleet.py tests/test_pool_fleet.py tests/test_pool_coverage.py tests/test_pooled_flow.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":500}));

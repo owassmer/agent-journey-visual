@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/7_page && SHOTS=shots3 timeout 120 ../6b_page/.pw/bin/python shoot2.py p6 \"wait:2000\" \"shot:3_when@#s-when\" \"js:(()=>{const t=[...document.querySelectorAll('#s-when svg text.pin')][1].getBoundingClientRect();return [t.left|0,t.top|0,t.right|0,t.bottom|0]})()\" 2>&1 | head -2", "timeout": 150}

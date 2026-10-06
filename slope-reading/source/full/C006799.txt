@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/recur && head -c 3000 compaction_last.txt; echo; echo .....; grep -n -i \"baseline\\|reference run\\|essence\\|ruling as\\|authority\\|face value\\|intuit\\|10x\\|heavy lock\\|one actor\\|well-defined\\|Russell\\|role\" compaction_last.txt | cut -c1-260 | head -40"}

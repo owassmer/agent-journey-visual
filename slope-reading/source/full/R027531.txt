@@ -1,0 +1,11 @@
+cdxc_2020_wab_financing_agreement#s0014 | , unemployment insurance, old age pensions or other social security obligations and good faith deposits in connection with tenders, contracts or leases which Borrower or any Subsidiary deposits or pledges to secure, or in lieu of, surety, penalty or appeal bonds, performance bonds or other similar obligations not to exceed One Hundred Thousand Dollars ($100,000) in the aggregate. -19- “ Person ” means any
+88:CHROMADEX_FUTURE_FACTS = ["Niagen Bioscience", "Stipulated Amended Judgment", "9.2 million", "October 28, 2024",
+89-                          "September 11, 2024", "Appeal Bond"]
+90-
+91-
+92-def test_chromadex_outcome_facts_are_absent(built):
+93-    out, _, stores = built
+94-    catalog = [s for s in json.loads(snapshot.SOURCES_JSON.read_text())["sources"]
+--
+99:    for fact in CHROMADEX_FUTURE_FACTS:
+100-        if fact != "Stipulated Amended Judgment":  # that one is a PDF caption; its absence is still checked below

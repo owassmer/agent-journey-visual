@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+  tools.exec_command({cmd:"python - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events--claude-worktrees-step-5b-decision-model/1ebb1026-a1f0-4809-9321-bc3d6f875530.jsonl')\nlines=p.read_text().splitlines()\nprint('Records:',len(lines))\nfor i,line in enumerate(lines[10320:],10321):\n d=json.loads(line)\n if d.get('type') not in ('assistant','user'):continue\n content=d.get('message',{}).get('content',[])\n if isinstance(content,str):content=[{'type':'text','text':content}]\n for c in content:\n  if c.get('type')=='text':print(i,d.get('type'),d.get('timestamp'),c.get('text',''))\nPY",max_output_tokens:3300}),
+  tools.exec_command({cmd:"gh pr view 8 --json headRefOid,labels,state,comments",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:1000})
+]);results.forEach((r,i)=>text({i,...r}));

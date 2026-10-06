@@ -1,0 +1,1 @@
+{"command": "python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_spec.py && cmp Slope_Credit_Scenario_Build_Specification.md Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/deliverables/Slope_Credit_Scenario_Build_Specification.md && echo still-identical && grep -n \"Agent acceptance includes\" Slope_Credit_Scenario_Build_Specification.md | cut -c1-600"}

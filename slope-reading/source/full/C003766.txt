@@ -1,0 +1,1 @@
+{"command": "date +%H:%M; ps -Ao pid,etime,%cpu,rss,command | grep -E \"python|pytest|slope|uv run\" | grep -v -E \"grep|hermes_cli|browser_harness|uvicorn|claude\" | awk '{printf \"%s %s cpu=%s rss=%dMB \", $1,$2,$3,$4/1024; for(i=5;i<=NF&&i<9;i++) printf \"%s \", $i; print \"\"}' | cut -c1-230; memory_pressure | tail -1; sysctl vm.swapusage; uptime; df -h / | tail -1"}

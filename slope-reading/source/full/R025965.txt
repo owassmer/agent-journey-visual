@@ -1,0 +1,50 @@
+548	async def _account_one(ctx: RunContext, entry: dict) -> str | dict:
+549	    """Account for one inventory entry: the item ID when recorded, or {item_id, reason} when rejected."""
+550	    if True:
+551	        try:
+552	            item = ctx.run.get("inventory", entry["item_id"])
+553	            if item.status != "open":
+554	                raise ToolError(f"{item.item_id} is already {item.status}")
+555	            disposition = entry.get("disposition")
+556	            reason = (entry.get("reason") or "").strip()
+557	            if disposition == "covered_by_findings":
+558	                fids = tuple(entry.get("finding_ids") or [])
+559	                bad = [f for f in fids if f not in ctx.run.graph["findings"] or ctx.run.graph["findings"][f].status != "accepted"]
+560	                if not fids or bad:
+561	                    raise ToolError(f"{item.item_id}: covered_by_findings needs accepted finding IDs (not accepted: {bad or 'none given'})")
+562	                checks = await _check_coverage(ctx, item, fids) if ctx.semantics is not None else []
+563	                update = item.model_copy(update={"status": "covered", "finding_ids": fids, "note": reason,
+564	                                                 "observation_ids": tuple(o.observation_id for o in checks)})
+565	            elif disposition == "duplicate_of":
+566	                other = ctx.run.get("inventory", entry.get("duplicate_of") or "")
+567	                if other.status != "covered" or other.item_id == item.item_id:
+568	                    raise ToolError(f"{item.item_id}: duplicate_of must name another item that is already covered "
+569	                                    f"({other.item_id} is {other.status})")
+570	                checks = await _check_duplicate(ctx, item, other) if ctx.semantics is not None else []
+571	                update = item.model_copy(update={"status": "covered", "finding_ids": other.finding_ids, "note": reason,
+572	                                                 "duplicate_of": other.item_id,
+573	                                                 "observation_ids": tuple(o.observation_id for o in checks)})
+574	            elif disposition == "not_decision_relevant":
+575	                if len(reason) < OVERRIDE_NOTE_MIN:
+576	                    raise ToolError(f"{item.item_id}: say why it does not bear on the financing decision")
+577	                checks = await _check_relevance(ctx, item) if ctx.semantics is not None else []
+578	                update = item.model_copy(update={"status": "not_decision_relevant", "note": reason,
+579	                                                 "observation_ids": tuple(o.observation_id for o in checks)})
+580	            elif disposition == "escalate" and ctx.semantics is not None:
+581	                update = _escalate_item(ctx, item, entry.get("observation_id") or "", (entry.get("missing") or "").strip())
+582	            else:
+583	                raise ToolError(f"{entry.get('item_id')}: disposition must be covered_by_findings, duplicate_of, "
+584	                                "not_decision_relevant or escalate")
+585	            ctx.run.put("inventory_accounted", update)
+586	            return update.item_id
+587	        except (ToolError, KeyError) as e:
+588	            return {"item_id": entry.get("item_id"), "reason": str(e).strip("'")}
+589	
+590	
+591	async def escalate_effect(ctx: RunContext, args: dict) -> dict:
+592	    """Disagreement with the category guard is escalated, never overridden: the effect becomes disputed, creates no cash
+593	    stream, and is left open for the human reviewer."""
+594	    eff: EconomicEffectProposal = ctx.run.get("effects", args["effect_id"])
+595	    reason = (args.get("reason") or "").strip()
+596	    if eff.status != "rejected" or not eff.validation_messages:
+597	        raise ToolError(f"{eff.effect_id} is {eff.status}; only an effect rejected by the category guard can be escalated")

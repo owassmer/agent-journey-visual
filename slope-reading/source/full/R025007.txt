@@ -1,0 +1,42 @@
+[{"month_from_effective_funding_date": 6, "cumulative_lender_payment_floor_usd": "125430.00", "cumulative_qualifying_shopify_credits_if_no_manual_top_ups_usd": "501720.00", "check_scope": "cumulative threshold"}, {"month_from_effective_funding_date": 12, "cumulative_lender_payment_floor_usd": "250860.00", "cumulative_qualifying_shopify_credits_if_no_manual_top_ups_usd": "1003440.00", "check_scope": "necessary cumulative threshold only; separate six-month window test also applies"}, {"month_from_effective_funding_date": 18, "cumulative_lender_payment_floor_usd": "418100.00", "cumulative_qualifying_shopify_credits_if_no_manual_top_ups_usd": "1672400.00", "check_scope": "cumulative threshold"}]
+{"evidence_class": "contract arithmetic fixture, not observed payments", "first_window_daily_payments_usd": "209050.00", "second_window_daily_payments_usd": "41810.00", "confirmed_second_window_manual_credit_usd": "0.00", "cumulative_fraction_received": "0.60", "cumulative_shortfall_only_usd": "0.00", "second_window_top_up_required_usd": "83620.00", "explanation": "50% paid in the first six months and 10% in months 7-12 reaches 60% cumulatively, but the second window still needs another 20% ($83,620)."}
+{"evidence_class": "explicit arithmetic fixture, not Synergy or any borrower's payment schedule", "principal_only_usd": "100000.00", "original_receipt_day": 90, "delayed_receipt_day": 120, "effective_annual_discount_rate_assumption": "0.12", "discount_day_count_assumption": "ACT/365", "principal_received_original_usd": "100000.00", "principal_received_delayed_usd": "100000.00", "principal_loss_usd": "0.00", "pv_original_usd": "97244.28", "pv_delayed_usd": "96342.68", "pv_change_usd": "-901.59", "extra_principal_exposure_days": 30, "extra_principal_exposure_dollar_days": "3000000", "note": "A pure delay changes PV and exposure duration without creating a principal loss. No extra interest or late fee is added. PV change is computed before cent rounding, so displayed PV subtraction can differ by one cent."}
+12:    def test_contract_floors_and_credit_thresholds(self):
+14:        self.assertEqual(terms.advance + terms.fixed_cost, terms.total_payment)
+20:            self.assertEqual(terms.cumulative_floor(month), D(floor))
+21:            self.assertEqual(terms.qualifying_credit_threshold(month), D(credits))
+23:    def test_cumulative_floor_counts_previous_manual_payment(self):
+25:        self.assertEqual(terms.cumulative_shortfall_only(12, "200000", "50000"), D("860"))
+26:        self.assertEqual(terms.cumulative_shortfall_only(12, "200000", "50860"), D("0"))
+27:        self.assertEqual(terms.cumulative_shortfall_only(6, "125429.99", "0"), D("0.01"))
+28:        self.assertEqual(terms.cumulative_shortfall_only(6, "130000", "0"), D("0"))
+30:    def test_first_window_excess_does_not_cover_second_window(self):
+33:        self.assertEqual(terms.cumulative_shortfall_only(12, "250860", "0"), D("0"))
+34:        self.assertEqual(terms.window_top_up(12, "41810", "0", "250860"), D("83620"))
+36:    def test_confirmed_manual_credit_and_outstanding_cap(self):
+38:        self.assertEqual(terms.window_top_up(12, "41810", "10000", "260860"), D("73620"))
+39:        self.assertEqual(terms.window_top_up(12, "41810", "83620", "334480"), D("0"))
+41:        self.assertEqual(terms.window_top_up(12, "10000", "0", "410000"), D("8100"))
+42:        self.assertEqual(terms.window_top_up(12, "10000", "0", "418100"), D("0"))
+46:    def test_unknown_is_not_zero(self):
+48:        self.assertIsNone(budget.remaining_settlement_cash())
+49:        self.assertIsNone(budget.horizon_residual_before_new_facility())
+50:        self.assertIn("settlements_paid_july1_through_august12", budget.unknown_fields())
+52:    def test_pre_cutoff_payment_is_not_counted_twice(self):
+64:        self.assertEqual(budget.remaining_settlement_cash(), D("2000000"))
+65:        self.assertEqual(budget.horizon_residual_before_new_facility(), D("0"))
+67:    def test_opening_cash_availability_is_required(self):
+68:        self.assertIn("unavailable_portion_of_opening_cash", ConditionalBudget().unknown_fields())
+69:        with self.assertRaises(ValueError):
+72:    def test_invalid_paid_amount_rejected(self):
+73:        with self.assertRaises(ValueError):
+78:    def test_delay_conserves_principal_reduces_pv_and_extends_exposure(self):
+81:        self.assertEqual(sum(r.amount for r in original), sum(r.amount for r in delayed))
+82:        self.assertLess(present_value(delayed, "0.12"), present_value(original, "0.12"))
+83:        self.assertEqual(
+88:    def test_zero_discount_rate_removes_pv_penalty(self):
+90:        self.assertEqual(present_value(original, "0"), present_value(delay_receipts(original, 30), "0"))
+92:    def test_invalid_numeric_inputs_rejected(self):
+94:            with self.assertRaises(TypeError):
+97:            with self.assertRaises(ValueError):
+99:        with self.assertRaises(ValueError):

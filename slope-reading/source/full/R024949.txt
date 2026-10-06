@@ -1,0 +1,11 @@
+    "Any real model or agent inference"
+  ]
+}
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/build_synergy_example.py
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/economic-effects.json
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/data/build_case_index.py
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/data/facts_synergy.json
+--- a/Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/economic-effects.json
++++ b/Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/economic-effects.json
+-      "finding": "Supplier unnamed in the August information set: June 30 remaining 2024 contractual payment bucket. Amount is already part of settlement debt; exact installment dates and payments since June 30 require a bridge.",
++      "finding": "March 2024 settlement supplier (labelled \"VitBest\" in the June 30 notes-payable table; linking that label to this settlement is a balance-match inference, and the full legal entity is not in the August information set): June 30 r

@@ -1,0 +1,92 @@
+2:    resume_drops_turn: str | None = None
+28:    agents: dict[str, AgentDefinition] | None = None
+34:    setting_sources: list[SettingSource] | None = None
+46:    skills: list[str] | Literal["all"] | None = None
+68:    sandbox: SandboxSettings | None = None
+80:    plugins: list[SdkPluginConfig] = field(default_factory=list)
+87:    max_thinking_tokens: int | None = None
+97:    thinking: ThinkingConfig | None = None
+110:    effort: EffortLevel | None = None
+125:    output_format: dict[str, Any] | None = None
+133:    enable_file_checkpointing: bool = False
+141:    session_store: SessionStore | None = None
+149:    session_store_flush: SessionStoreFlushMode = "batched"
+159:    load_timeout_ms: int = 60_000
+168:    task_budget: TaskBudget | None = None
+180:    subtype: Literal["interrupt"]
+class ResultMessage:
+    """Result message with cost and usage information."""
+
+    subtype: str
+    duration_ms: int
+    duration_api_ms: int
+    is_error: bool
+    num_turns: int
+    session_id: str
+    stop_reason: str | None = None
+    total_cost_usd: float | None = None
+    usage: dict[str, Any] | None = None
+    result: str | None = None
+    structured_output: Any = None
+    model_usage: dict[str, ModelUsage] | None = None
+    permission_denials: list[Any] | None = None
+    deferred_tool_use: DeferredToolUse | None = None
+    errors: list[str] | None = None
+    # HTTP status code (e.g. 429, 500, 529) of the failing API call when
+    # ``is_error`` is True and ``subtype`` is "success"; None otherwise.
+    # Emitted by the CLI since v2.1.110. Safe to log (no message content).
+    api_error_status: int | None = None
+    uuid: str | None = None
+    terminal_reason: str | None = None
+    """Why the query loop terminated (e.g. ``"completed"``, ``"max_turns"``,
+    ``"aborted_streaming"``). A value of ``"aborted_streaming"`` or
+    ``"aborted_tools"`` indicates the turn was cancelled (via
+    :meth:`ClaudeSDKClient.interrupt` or an ``interrupt`` control request).
+    ``None`` when the CLI did not report a terminal reason (older CLI
+    versions, or a result that bypassed the query loop such as a local
+    slash command). Mirrors the TypeScript SDK's
+    ``SDKResultMessage.terminal_reason``."""
+    origin: MessageOrigin | None = None
+    """Origin of the user message that triggered this turn — see
+    :class:`MessageOrigin`. Lets a streaming-input consumer distinguish the
+    result of its own prompt (``None``, or ``{"kind": "human"}`` if it stamped
+    that) from results of injected turns such as background-task
+    notifications (``{"kind": "task-notification"}``)."""
+
+
+@dataclass
+1140:class AssistantMessage:
+1141-    """Assistant message with content blocks."""
+1142-
+1143-    content: list[ContentBlock]
+1144-    model: str
+1145-    parent_tool_use_id: str | None = None
+1146-    error: AssistantMessageError | None = None
+1147-    usage: dict[str, Any] | None = None
+1148-    message_id: str | None = None
+1149-    stop_reason: str | None = None
+1150-    session_id: str | None = None
+1151-    uuid: str | None = None
+1152-
+1153-
+1154-@dataclass
+1155:class SystemMessage:
+1156-    """System message with metadata."""
+1157-
+1158-    subtype: str
+1159-    data: dict[str, Any]
+1160-
+1161-
+1162-class TaskUsage(TypedDict):
+1163-    """Usage statistics reported in task_progress and task_notification messages."""
+1164-
+1165-    total_tokens: int
+1166-    tool_uses: int
+1167-    duration_ms: int
+1168-
+1169-
+.venv/lib/python3.12/site-packages/claude_agent_sdk/_internal/transport/subprocess_cli.py:776:        # Extract schema from output_format structure if provided
+.venv/lib/python3.12/site-packages/claude_agent_sdk/_internal/transport/subprocess_cli.py:779:            self._options.output_format is not None
+.venv/lib/python3.12/site-packages/claude_agent_sdk/_internal/transport/subprocess_cli.py:780:            and isinstance(self._options.output_format, dict)
+.venv/lib/python3.12/site-packages/claude_agent_sdk/_internal/transport/subprocess_cli.py:781:            and self._options.output_format.get("type") == "json_schema"
+.venv/lib/python3.12/site-packages/claude_agent_sdk/_internal/transport/subprocess_cli.py:783:            schema = self._options.output_format.get("schema")

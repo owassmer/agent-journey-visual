@@ -1,0 +1,15 @@
+562:            raise ToolError("The amount is positive; borrower_role says which way it flows")
+587:async def instantiate_dispute(ctx: RunContext, args: dict) -> dict:
+594:    from app.disputes.evaluate import Evaluator
+603:    if args.get("borrower_role") not in ("debtor", "creditor"):
+604:        raise ToolError("borrower_role is debtor (the borrower owes) or creditor (the borrower is owed)")
+631:        model_version=model["model_version"], title=title, borrower_role=args["borrower_role"],
+633:        amount_includes_interest=bool((args.get("amount") or {}).get("includes_post_judgment_interest")),
+640:    evaluator = Evaluator(draft, findings, judge=judge, borrower=ctx.inputs["baseline_profile"]["borrower"],
+641:                          source_dates=sources, review=review, horizon=review + timedelta(days=HORIZON_DAYS),
+643:                          agent_stage=args.get("stage"), model=model)
+645:        instance = await evaluator.run()
+1142:    ("instantiate_dispute", "Place one live dispute (a money judgment, or a liability ruling whose amount is still open) "
+1151:          "borrower_role": {"type": "string", "enum": ["debtor", "creditor"]}, "counterparty": S,
+1154:                         "includes_post_judgment_interest": {"type": "boolean"}}, []),
+1159:         ["dependency_id", "title", "finding_ids", "borrower_role", "counterparty", "amount"]), instantiate_dispute),

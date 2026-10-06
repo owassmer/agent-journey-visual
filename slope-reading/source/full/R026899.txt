@@ -1,0 +1,30 @@
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decisio[0m [31m│[0m
+[31m│[0m [2mn-model/app/[0m[1mcli.py[0m:118 in compare                                            [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m115 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mapp[0m[4;96m.[0m[4;96mdecisions[0m[4;96m.[0m[4;96mcase[0m[90m [0m[94mimport[0m decide, export                      [31m│[0m
+[31m│[0m   [2m116 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m117 [0m[2m│   [0mbase = Path(root) [94mif[0m root [94melse[0m ROOT / [33m"[0m[33mruns[0m[33m"[0m / [33m"[0m[33mrecorded[0m[33m"[0m          [31m│[0m
+[31m│[0m [31m❱ [0m118 [2m│   [0mstore = [1;4mRunStore(run, root=base)[0m                                   [31m│[0m
+[31m│[0m   [2m119 [0m[2m│   [0mmeta = store.events[[94m0[0m].payload                                     [31m│[0m
+[31m│[0m   [2m120 [0m[2m│   [0minputs = meta[[33m"[0m[33mrun_inputs[0m[33m"[0m]                                        [31m│[0m
+[31m│[0m   [2m121 [0m[2m│   [0m[94mfrom[0m[90m [0m[4;96mapp[0m[4;96m.[0m[4;96mevidence[0m[4;96m.[0m[4;96mstore[0m[90m [0m[94mimport[0m EvidenceStore                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decisio[0m [31m│[0m
+[31m│[0m [2mn-model/app/agent/[0m[1mrun_store.py[0m:81 in __init__                                [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 78 [0m[2m│   │   │   │   [0mpacket = json.loads(([96mself[0m.dir /                        [31m│[0m
+[31m│[0m       [33m"[0m[33mpacket.json[0m[33m"[0m).read_text())                                            [31m│[0m
+[31m│[0m   [2m 79 [0m[2m│   │   │   │   [0m[94mif[0m (packet[[33m"[0m[33mchain_head[0m[33m"[0m] != [96mself[0m.head [95mor[0m               [31m│[0m
+[31m│[0m       packet[[33m"[0m[33mevent_count[0m[33m"[0m] != [96mlen[0m([96mself[0m.events)                              [31m│[0m
+[31m│[0m   [2m 80 [0m[2m│   │   │   │   │   │   [0m[95mor[0m [95mnot[0m [96mself[0m._packet_matches(packet)):          [31m│[0m
+[31m│[0m [31m❱ [0m 81 [2m│   │   │   │   │   [0m[1;4;94mraise[0m[1;4m [0m[1;4;96mValueError[0m[1;4m([0m[1;4;33mf[0m[1;4;33m"[0m[1;4;33mLocked run [0m[1;4;33m{[0m[1;4mrun_id[0m[1;4;33m}[0m[1;4;33m: event log [0m [31m│[0m
+[31m│[0m       [1;4;33mdoes not match its packet[0m[1;4;33m"[0m[1;4m)[0m                                            [31m│[0m
+[31m│[0m   [2m 82 [0m[2m│   │   [0m[94melif[0m meta [95mis[0m [95mnot[0m [94mNone[0m:                                         [31m│[0m
+[31m│[0m   [2m 83 [0m[2m│   │   │   [0m[96mself[0m.append([33m"[0m[33mrun_started[0m[33m"[0m, payload={[33m"[0m[33mrun_id[0m[33m"[0m: run_id,      [31m│[0m
+[31m│[0m       **meta})                                                               [31m│[0m
+[31m│[0m   [2m 84 [0m                                                                       [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mValueError: [0mLocked run chromadex_20240819-agent_plus_jev-20260925T163410Z: event
+log does not match its packet
+FAILED tests/test_viewer.py::test_recorded_run_renders_with_its_causal_chain

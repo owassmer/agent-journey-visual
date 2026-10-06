@@ -1,0 +1,1 @@
+{"subject": "4c: snapshot sweep and inventory tools", "description": "app/agent/sweep.py (chunked, cached, own budget) -> InventoryItem objects in the run graph; read_inventory/account_for_items tools; submit refuses open items; remove coverage prompt rule", "activeForm": "Building the snapshot sweep"}

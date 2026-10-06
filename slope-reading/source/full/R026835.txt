@@ -1,0 +1,8 @@
+mcp__credit__read_evidence | {"item_id": "cacd_16cv2277_d618_judgment"} 
+   -> Rejected: 'cacd_16cv2277_d618_judgment' is not available in this snapshot 
+
+mcp__credit__instantiate_dispute | {"dependency_id": "dep_001", "title": "D. Del. 1:18-cv-01434 attorney fee award to Elysium: liability granted, amount pending", "finding_ids": ["fnd_002", "fnd_003"], "borrower_role": "debtor", "counterparty": "Elysium Health, Inc.", "amount": {"lower_cents": 0, "upper_cents": 980000000, "basis": "U 
+   -> Rejected: Give value_cents, or positive lower_cents and upper_cents 
+
+mcp__credit__submit_packet | {"summary": "ChromaDex requests Slope bill-pay financing of a $2.0M contract-manufacturer invoice on 3 monthly installments (inst_90), funded 2024-08-20. Tier A. Bank-only view: limit $3.62M and order limit $2.72M, so the request passes. Two live Elysium matters were placed on the dispute model. (1) 
+   -> Rejected: Conclusion check (obs_239): Some claims are not supported by the cited findings. Revise the conclusion to what accepted findings, validated effects and sensitivity results support. If you disagree, resubmit the same conclusion with conclusion_reply_to_failed_check {observation_id, reason}.

@@ -1,0 +1,1 @@
+{"command": "python3 - <<'EOF'\nEOF\nsed -i '' '/(\"  - run 13: disputes;\\\\n\", \"\"),/d' /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p22_prtext.py && grep -c 'run 13: disputes;\\\\n' /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p22_prtext.py; python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p22_prtext.py"}

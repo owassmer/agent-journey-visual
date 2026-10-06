@@ -1,0 +1,100 @@
+50	def build(run_id: str, root: Path = RECORDED) -> dict[str, Any]:
+51	    run = RunStore(run_id, root=root)  # verifies the hash chain and the locked packet on load
+52	    g = run.graph
+53	    record = json.loads((root / run_id / "run.json").read_text()) if (root / run_id / "run.json").exists() else {}
+54	    meta = run.events[0].payload if run.events else {}
+55	    if "run_inputs" in meta:  # locked in the hash chain
+56	        inputs, inputs_locked = meta["run_inputs"], True
+57	    else:  # runs recorded before inputs were chained: show the current case file, marked as such
+58	        inputs_path = CASES_DIR / meta.get("snapshot_id", "") / "run_inputs.json"
+59	        inputs, inputs_locked = (json.loads(inputs_path.read_text()) if inputs_path.exists() else {}), False
+60	    submitted = next((e.payload for e in reversed(run.events) if e.kind == "packet_submitted"), {})
+61	    # Status is derived from the chained packet, not from the unchained run.json.
+62	    if submitted.get("configuration_failure"):
+63	        status = "FAILED_CONFIGURATION"
+64	    elif submitted.get("summary") and not submitted.get("incomplete_reasons"):
+65	        status = "CANDIDATE_READY"
+66	    else:
+67	        status = "INCOMPLETE_REVIEW"
+68	
+69	    def obs_view(oid: str) -> dict[str, Any]:
+70	        o = g["observations"][oid]
+71	        call = g["jev_calls"].get(o.call_id)
+72	        return {"id": oid, "question_id": o.question_id, "question": registry_question(o.question_id)["question"],
+73	                "meaning": meaning(o.question_id, o.answer), "ambiguous": is_ambiguous(o),
+74	                "disposition": o.downstream_disposition.replace("_", " "), "note": o.disposition_note,
+75	                "details": {"answer": o.answer, "distribution": o.probabilities, "value": o.noul_value,
+76	                            "question_version": o.question_version, "call_id": o.call_id,
+77	                            "model": call.returned_model if call else None, "cache_hit": call.cache_hit if call else None}}
+78	
+79	    findings = {}
+80	    for f in g["findings"].values():
+81	        findings[f.finding_id] = {
+82	            "id": f.finding_id, "proposition": f.proposition, "target": f.target, "status": f.status,
+83	            "is_inference": f.is_inference, "resolution_note": f.resolution_note,
+84	            "quotes": [{"quote": s.quote, "source": run_source_title(inputs, s.source_id), "item_id": s.item_id} for s in f.spans],
+85	            "jev": [obs_view(o) for o in f.observation_ids if o in g["observations"]]}
+86	
+87	    effects = []
+88	    for e in g["effects"].values():
+89	        effects.append({"id": e.effect_id, "mechanism": MECHANISM_LABELS.get(e.mechanism, e.mechanism), "target": e.target,
+90	                        "cash_direction": e.cash_direction, "baseline_treatment": e.baseline_treatment.replace("_", " "),
+91	                        "consequence": e.model_consequence, "status": e.status, "problems": list(e.validation_messages),
+92	                        "guard": e.double_count_guard,
+93	                        "parameters": [{"name": p.name.replace("_", " "), "description": p.description, "status": p.status,
+94	                                        "value": _money(p.value.model_dump(mode="json")) if p.value else "unknown",
+95	                                        "basis": ("in cited quote" if p.value and p.value.provenance.basis == "documented_evidence"
+96	                                                  else "agent-stated, not in cited quote" if p.value else "")}
+97	                                       for p in e.parameters],
+98	                        "findings": [findings[f] for f in e.finding_ids if f in findings],
+99	                        "checks": [obs_view(o) for o in e.observation_ids if o in g["observations"]],
+100	                        "overrides": dict(e.override_reasons)})
+101	
+102	    deps = []
+103	    for d in g["dependencies"].values():
+104	        cands = [c for c in g["candidates"].values() if c.dependency_id == d.dependency_id]
+105	        searches: dict[str, list] = {}
+106	        for c in sorted(cands, key=lambda c: (c.search_id, c.rank)):
+107	            searches.setdefault(f"{c.search_id}: “{c.query}”", []).append({
+108	                "item_id": c.item_id, "heading": " › ".join(c.heading_path[-2:]), "snippet": c.snippet,
+109	                "route": ROUTE_LABELS.get(c.screen.route, c.screen.route) if c.screen else None,
+110	                "signals": c.screen.signals if c.screen else {}})
+111	        deps.append({"id": d.dependency_id, "question": d.question, "target": d.target, "affects": d.affects,
+112	                     "searches": searches, "findings": [v for v in findings.values()
+113	                                                        if g["findings"][v["id"]].dependency_id == d.dependency_id]})
+114	
+115	    ledger = Counter(o.downstream_disposition for o in g["observations"].values())
+116	    titles = {sid: run_source_title(inputs, sid) for sid in {i.source_id for i in g["inventory"].values()}}
+117	    coverage_by_item: dict[str, list] = {}
+118	    for o in g["observations"].values():
+119	        if o.question_id == "coverage_supported" and o.subject_ids:
+120	            coverage_by_item.setdefault(o.subject_ids[0], []).append({
+121	                "meaning": meaning(o.question_id, o.answer), "answer": o.answer, "ambiguous": is_ambiguous(o),
+122	                "disposition": o.downstream_disposition.replace("_", " "), "note": o.disposition_note,
+123	                "findings": list(o.subject_ids[1:])})
+124	    inventory = [{"id": i.item_id, "kind": i.kind.replace("_", " "), "source": titles.get(i.source_id, i.source_id),
+125	                  "heading": " › ".join(i.heading_path[-2:]) or "(whole document)", "sections": len(i.section_ids),
+126	                  "status": i.status.replace("_", " "), "findings": list(i.finding_ids), "note": i.note,
+127	                  "coverage_checks": coverage_by_item.get(i.item_id, [])}
+128	                 for i in sorted(g["inventory"].values(), key=lambda i: i.item_id)]
+129	    conclusion_checks = [e.payload for e in run.events if e.kind == "conclusion_checked"]
+130	    conclusion_check = conclusion_checks[-1] if conclusion_checks else None
+131	    return {
+132	        "late_failure": (record.get("status") not in (None, status)) and (record.get("failure") or record.get("status")),
+133	        "run_id": run_id, "verified_head": run.head[:16], "record": record, "meta": meta, "status": status,
+134	        "inputs_locked": inputs_locked,
+135	        "borrower": inputs.get("baseline_profile", {}).get("borrower", meta.get("case_id")),
+136	        "review_date": (meta.get("snapshot_cutoff") or inputs.get("snapshot_id", ""))[:10],
+137	        "request": inputs.get("run_inputs", {}), "submitted": submitted, "effects": effects, "dependencies": deps,
+138	        "missing_facts": [e.payload for e in run.events if e.kind == "missing_fact_requested"],
+139	        "sensitivities": [e.payload for e in run.events if e.kind == "sensitivity_run"],
+140	        "reconciliations": [t.model_dump() for t in g["reconciliations"].values()],
+141	        "jev_ledger": dict(ledger), "jev_calls": len(g["jev_calls"]), "observations": len(g["observations"]),
+142	        "inventory": inventory, "conclusion_check": conclusion_check, "conclusion_checks": conclusion_checks,
+143	        "sweep": next((e.payload for e in run.events if e.kind == "inventory_loaded"), None),
+144	    }
+145	
+146	
+147	def run_source_title(inputs: dict, source_id: str) -> str:
+148	    cfg = CASES_DIR / (inputs.get("snapshot_id") or "") / "snapshot.json"
+149	    if cfg.exists():

@@ -1,0 +1,87 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_52aad558]
+A background fan-out unit you dispatched earlier — 2 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 03:53:39 (28m16s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1696.52s
+
+--- ✓ TASK 1/2: Worker A2 (engine and walk fixes) for owassmer/Slope_Sparse_Events PR #17: fix the review findings below on branch step-6c-fix-engine in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-fix-engine (based on e3534cf), in the numbered steps, each ending in targeted tests, a commit of named files and a push. Report SHAs, what changed and test counts. Do not open a PR, call Jev, or build the full Akoustis Analysis.  (status=completed, api_calls=72, 1696.22s) ---
+All five fixes are committed and pushed to `step-6c-fix-engine`. The full suite passes (173 tests, ~3 min) and `ruff check .` is clean; the tree is clean, no PR is open and Jev was not called. One consequence to check first: on the Akoustis fixture's own cash, no reduced-security stay takes effect at all now (step 1).
+
+```
+Step                          | SHA       | What changed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1 Stay security               | `dff8f8c` | The company offers its cash above its 30-day need on the motion day, and that figure is what the court is told. On approval the stay takes effect only where the company can still post that amount and keep its 30-day need that day, and exactly that amount is locked. Elsewhere there is no stay, except under the non-cash sensitivity. The bond collateral is locked only where cash covers the collateral plus the need. The lock is released on the day the dispute ends (vacatur, new trial, settlement or payment), which replaces the old I4-only release.
+2 Holders' petition (§7.06)   | `1268ef4` | The holders' petition question (H3) is now dated at acceleration + 60 days, the day the engine books their petition. The company's own petition question (A5) is dated at acceleration. Both take their facts only from trajectories where the holders accelerated, and the holders' decision to act keeps only its own "no" rows. Trigger `holders_petition_earliest` is added to `TRIGGERS` and to `TRIGGER_PHRASES`, with the same phrase as B2's branch.                                                                                                         
+3 Settled share per draw      | `f7b6d57` | In `page.py`, a new `draw_classes` classes each unfiled draw by what the engine booked on it: settled, paid, vacated, stayed, otherwise Unresolved. Settled now counts only draws that paid a positive settlement, and the Filed shares still sum to the chance of a filing.                                                                                                                                                                                                                                                                                         
+4 Coupon on accelerated notes | `03f42a5` | No 16 Dec coupon is booked on trajectories where the notes are accelerated or the repurchase is due on or before the payment day. This covers both the judgment-default and delisting routes.                                                                                                                                                                                                                                                                                                                                                                        
+5 Company-response facts      | `3e23342` | The four response questions that reached Jev with no date, cash or amount were post-ruling ones, not ripe-date ones. On the patent-only amount, $279,808 with or without a new trial, an earlier levy had already taken everything owed. The company's response is now asked only where an amount is still owed that day, so those four nodes are no longer asked.                                                                                                                                                                                                   
+```
+
+Tests added:
+- no approved stay leaves cash below the 30-day need on its approval day;
+- locks release exactly on vacatur, new trial, settlement and payment;
+- the holders' and company's petition questions are dated correctly, with the trigger present;
+- Settled share equals the mass of draws with a positive settlement booked, and the class shares sum to 1;
+- no coupon is booked on accelerated notes;
+- every company-response question carries its date, cash and amount owed.
+
+Things to know:
+- **Stays on the fixture:** the company burns cash between the motion and approval, so it can never post the offered amount and keep its need. Every I1 reduced-security stay is therefore not effective. Two older tests (levy before approval; stay before the ripe date) now run on cash grown by $100k a day so a stay can take effect. This follows the settled decision, but it removes the I1 stay-yes effect in the recorded run.
+- **Changed figures:** tree shape, node set and all figures will change. The recorded `analysis.json` and page are stale until the analysis is rebuilt.
+- **Shared file:** `forecast.py` now carries the `holders_petition_earliest` phrase in both branches (identical line), which may need a trivial merge. My other `forecast.py` edits touch only the walk (`notes_petition`, `delisting_notes`, a new `notes_facts` helper, and `situation` accepting a multi-step probe).
+- **Not done (out of scope):** the facet 1 notes 1 and 5 (A1 on the Q1-no branch, and an I1 "file" answer ending the path).
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_52aad558/task-0.log
+
+--- ✓ TASK 2/2: Worker B2 (Jev-facing text and page) for owassmer/Slope_Sparse_Events PR #17: fix the review findings below on branch step-6c-fix-jev in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-fix-jev (based on e3534cf), in the numbered steps, each ending in targeted tests, a commit of named files and a push. Report SHAs and every changed Jev-facing text as before -> after. Do not open a PR, call Jev, or build the full Akoustis Analysis more than once (for a state dump).  (status=completed, api_calls=118, 1554.99s) ---
+I've made all six fixes on `step-6c-fix-jev` and pushed them, with no PR opened and no Jev calls. The full suite ran once: 174 passed and 1 failed. The failure was a test still expecting two of the old texts ("the payer", and the merits sentence). I fixed it (0d737b7) and reran it on its own, and it passes. I did not rerun the whole suite after that fix.
+
+**Commits (on e3534cf)**
+```
+Step                                                    | SHA             
+--------------------------------------------------------+-----------------
+1 Holders' petition (§7.06/§7.07)                       | 5fd0b9b         
+2 Same facts for bank and research cash-floor questions | dd10deb         
+3 Readings travel with their passages                   | ed39a37         
+4 Clock labels, $23.1M wording, merits sentence         | 1cd0eeb         
+5 Bank question row, slider, reweight                   | 259bbc2, 7e91a1a
+6 Case terms and page wording                           | 033bf0f         
+test_chains fix                                         | 0d737b7         
+```
+
+**Changed text, before → after**
+- **Holders' petition, standard:** §303(b)(1) only → §7.06 quoted verbatim, (a)–(e), plus §7.07, then §303(b)(1).
+- **Holders' petition, timing:** "on the date the notes are accelerated or the repurchase falls due" → "from the end of the 60 days the trustee has to act on the holders' written request (§7.06(d)); the holders make the request when the notes are accelerated or the repurchase falls due".
+- **New contract date:** "the earliest date the holders may file a petition (Indenture §7.06)". It renders once the engine emits `holders_petition_earliest`. The other worker hadn't added it when I dumped the states, so no state shows it yet.
+- **Bank cash-floor/cash-out questions:** no standard, no period end, no coupon → the same §362(a) text, "analysis_period_ends: 17 Dec 2024", and the coupon.
+- **Coupon, both views:** "the notes' interest payment date: 16 Dec 2024" → "…16 Dec 2024: $1,320,000.00 due, $750,000.00 of it paid in cash and $570,000.00 in shares".
+- **Readings:** `{distribution, passage_dated}` → the same plus `source`. The passage it came from is now in the question's evidence, and a reading with no source passage is no longer sent.
+  - Settlement: "the company's statements on reaching a settlement…" was "not in the record"; it is now in the record, supplied by the 424B5.
+  - Labels say "The company…" instead of "The payer…".
+  - `conflicting_readings: true` → `note: "passages of the same date read differently"`.
+- **Instructions (all 27 decision questions):** "…state.readings are readings of the record, evidence about the actor's position." → "…each taken from the passage in state.evidence that it names."
+- **Judgment-default clocks:**
+  - "60 days after the judgment's entry: the indenture's judgment-default period (§7.01(i)) counted from entry" → "the notes' judgment default (§7.01(i)) on the judgment as entered: 60 days after execution became available on 20 Jun 2024" (19 Aug).
+  - "60 days after the post-trial ruling: …counted from the ruling" → "the notes' judgment default (§7.01(i)) if the judgment is final only on the post-trial ruling: 60 days after the court's order on the last pending post-trial motion".
+- **$23.1M remittitur:** "$23,100,000.00: Remitted to $23.1M, the most the evidence supports (basis)" → "$23,100,000.00 (the model's remitted-amount scenario; basis: Bennis's method with Irwin's revenue corrections: … (D.I. 616-1, …))".
+- **Merits questions (7):** removed "The court decides this on the merits or the remedy."
+- **Judgment default (Jev and page):** "unpaid, undischarged and unstayed" (Jev) and "unpaid or unstayed … after notice" (page) → verbatim "remain undischarged, unpaid or unstayed for a period (during which execution shall not be effectively stayed) of 60 days" (§7.01(i)).
+- **Page case terms:** the $31.3M award is sourced to D.I. 602 instead of the D.I. 613 motion, and the fees label now reads to the end, "(DTSA / NCTSPA; alternatively UDTPA)".
+- **Page wording:**
+  - "Date set by code:" → "When it is decided:"
+  - "trajectories" → "simulations"
+  - "ruling class" → "the ruling outcomes shown together here"
+  - "simulated operating flows" → "projected operating flows from the bank data"
+  - The notes' terms are tagged Law instead of Calculation.
+- **Bank row:** sits under "Bank data: asked on bank data alone"; its label is "The company files at its cash floor", and its drill-down says "…+ the notes' coupon" where it said "the dispute's cash".
+
+**How it was checked**
+- **Page:** checked in headless Chrome on a small page. Moving the bank slider changed only the Bank data column (chance of a filing 40% → 100%); the research column didn't move, the Reset button appeared, the drill-down rendered, and there were no JS errors. `PAGE_FORMAT` is now 7.
+- **State dump:** 371 states. None of the 363 path-fact differences from the recorded run is a change in a date or amount; they come from the new coupon amount, the renamed clock labels and the verbatim default. The "mismatch" count in the dump script's output is only that text.
+- **Reading states by type:** they read as intended. The one remaining "the most the evidence supports" is in the damages-ruling question's remit option. It describes the remittitur standard (Hetzel), so I left it.
+
+**Files changed:** `dispute_model.json` (new rules `indenture_limitation_on_suits` and `indenture_right_to_payment`; the petition's standard and timing; the remittitur label), `question_registry.json` (new `evidence_routing.reading_items` and `readings`; the instructions), `PACKAGE_MANIFEST.json` (re-hashed), `app/disputes/forecast.py`, `app/analysis/page.py`, `app/web/static/page.js`, `app/web/static/analysis.js` (one line, the note), `tests/test_jev_states.py` (new), `tests/test_bank_row.py` (new), `tests/test_views.py`, `tests/test_dispute_reading.py`, `tests/test_chains.py`.
+
+**Issues**
+- Disk briefly fell to 1.9 GB during my first suite attempt, so I stopped it and reran once it was back at 2.9 GB. It is now at 2.8 GB.
+- I didn't touch `jev_profiles.py` or the page template; nothing in them needed changing.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_52aad558/task-1.log

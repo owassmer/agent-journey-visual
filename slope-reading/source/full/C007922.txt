@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events && gh secret list; gh variable list; grep -rn 'FRESH_WALK_EXPIRATION\\|gh secret set\\|assume-role\\|AssumeRole\\|DurationSeconds' tools/ /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/tools/*.py 2>/dev/null | head; ls /tmp | grep -i -E 'slope|fresh|launch' | head -30"}

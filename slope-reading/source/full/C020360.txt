@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ec2 modify-volume --profile slope --region us-east-2 --volume-id vol-0d91d7f5b8ee3d383 --size 1024 --iops 6000 --throughput 500 --query 'VolumeModification.{State:ModificationState,Size:TargetSize,IOPS:TargetIops,Throughput:TargetThroughput}'","max_output_tokens":800}));
+text(await tools.write_stdin({session_id:44137,chars:"","yield_time_ms":1000,"max_output_tokens":1000}));

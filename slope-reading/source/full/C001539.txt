@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && wc -l app/agent/mission.py app/agent/investigation.py app/agent/tools.py; grep -n -i \"def \\|SYSTEM\\|prompt\" app/agent/mission.py | head -20; grep -rn -i \"dispute_model\\|load_model\" app/agent/*.py | cut -c1-160 | head"}

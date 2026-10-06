@@ -1,0 +1,76 @@
+{
+ "entitlement_decided": "the court has decided the payer is liable for this obligation",
+ "amount_fixed": "the court has fixed this obligation's amount",
+ "judgment_entered": "a money judgment for this obligation has been entered",
+ "appeal_filed": "the payer has filed a notice of appeal against this obligation",
+ "stay_secured": "the payer has stayed this obligation with a bond or other security",
+ "paid": "this obligation has been paid"
+}
+[
+ {
+  "version": "3.12.0",
+  "profile": "dispute_interpretation",
+  "state_fields": [
+   "obligation",
+   "evidence"
+  ],
+  "id": "event_appeal_filed",
+  "primitive": "noul",
+  "question": "Does the cited text establish that the payer has filed a notice of appeal against this obligation?",
+  "applies_when": "Every accepted finding the agent cites for a live dispute.",
+  "prompt": {
+   "instructions": "Does the cited text establish that the payer has filed a notice of appeal against this obligation? Answer only about state.obligation, from state.evidence (judge the passage in state.evidence.passage; use its surrounding text and the related passages to understand it). This is a reading of the present state: do not predict what will happen. Do not judge amounts or dates; code sets them.",
+   "criteria": {
+    "true": "The text establishes that the payer has filed a notice of appeal against this obligation.",
+    "false": "The text does not establish it (it may be silent, or describe a request, a plan or a different obligation)."
+   }
+  },
+  "application": "Code places the stage from the most advanced established event."
+ },
+ {
+  "version": "3.12.0",
+  "profile": "dispute_interpretation",
+  "state_fields": [
+   "obligation",
+   "evidence"
+  ],
+  "id": "bears_on_debtor_liquidity",
+  "primitive": "noul",
+  "question": "Does the quoted text describe the payer's own cash, finances or ability to pay an amount of this size?",
+  "applies_when": "Every accepted finding the agent cites for a live dispute.",
+  "prompt": {
+   "instructions": "Does the quoted text describe the payer's own cash, finances or ability to pay an amount of this size? Answer only about state.obligation, from state.evidence (judge the passage in state.evidence.passage; use its surrounding text and the related passages to understand it). This is a reading of the present state: do not predict what will happen. Do not judge amounts or dates; code sets them.",
+   "criteria": {
+    "true": "Yes, for this obligation.",
+    "false": "No, or only about a different claim, order or party."
+   }
+  },
+  "application": "Code routes the passage to the factor; for a present-or-absent factor this answer is the reading itself."
+ },
+ {
+  "version": "3.12.0",
+  "profile": "dispute_interpretation",
+  "state_fields": [
+   "obligation",
+   "evidence"
+  ],
+  "id": "bears_on_settlement_signals",
+  "primitive": "noul",
+  "question": "Does the quoted text say anything about the parties settling this obligation?",
+  "applies_when": "Every accepted finding the agent cites for a live dispute.",
+  "prompt": {
+   "instructions": "Does the quoted text say anything about the parties settling this obligation? Answer only about state.obligation, from state.evidence (judge the passage in state.evidence.passage; use its surrounding text and the related passages to understand it). This is a reading of the present state: do not predict what will happen. Do not judge amounts or dates; code sets them.",
+   "criteria": {
+    "true": "Yes, for this obligation.",
+    "false": "No, or only about a different claim, order or party."
+   }
+  },
+  "application": "Code routes the passage to the factor; for a present-or-absent factor this answer is the reading itself."
+ }
+]
+{'primitive': 'choice+noul+score', 'trigger': 'host, per cited finding of an instantiated dispute: a reading request, a relevance request, and a level request per routed graded factor; each state is hydrated from the evidence store', 'questions': ['obligation_direction', 'amount_status', 'amount_includes_interest', 'event_entitlement_decided', 'event_amount_fixed', 'event_judgment_entered', 'event_appeal_filed', 'event_stay_secured', 'event_paid', 'bears_on_amount_finality', 'bears_on_appeal_intent', 'bears_on_appeal_barred', 'bears_on_debtor_resistance', 'bears_on_debtor_liquidity', 'bears_on_settlement_signals', 'factor_level']}
+app/disputes/interpret.py:97:        obs = await self.judge.relevance(obligation, evidence, (f.finding_id, self.d.instance_id))
+app/analysis/build.py:76:            "established": [{"event": model["readings"]["events"][k], "finding": v.finding_id, "date": v.source_date,
+app/disputes/interpret.py:93:            events={ev: (by[f"event_{ev}"].noul_value if f"event_{ev}" in by else None) for ev in self.m["readings"]["events"]},
+app/disputes/interpret.py:186:        for ev in self.m["readings"]["events"]:
+app/agent/jev_profiles.py:234:                *(f"event_{ev}" for ev in load_model()["readings"]["events"])]

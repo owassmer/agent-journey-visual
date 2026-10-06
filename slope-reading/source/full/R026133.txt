@@ -1,0 +1,101 @@
+276	def test_inventory_and_reconciliations_gate_submission(make_ctx):
+277	    from app.domain.investigation import InventoryItem
+278	    ctx = make_ctx(answers={"statement_relation": "conflict"}, name="gates")
+279	    note11 = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")["id"]
+280	    ctx.run.put("inventory_loaded", InventoryItem(item_id="inv_001", section_ids=(note11,), source_id="synergy_s1a_20240813",
+281	                                                 heading_path=("Note 11",), kind="debt_or_financing_agreement", signal=0.9))
+282	    dep, fid = _accepted_settlement_finding(ctx)
+283	    hvl = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")
+284	    second = call(T.propose_finding, ctx, {"dependency_id": dep, "proposition": "The settlement loan balance was $4,802,445.",
+285	                                           "target": "Synergy CHC Corp. — the December 28, 2023 supplier settlement loan",
+286	                                           "citations": [{"item_id": hvl["id"], "quote": "The outstanding loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445"}]})
+287	    disp = [{"observation_id": o["observation_id"], "disposition": "used_in_finding"} for o in second["observations"]]
+288	    res = call(T.resolve_finding, ctx, {"finding_id": second["finding_id"], "decision": "accept", "dispositions": disp})
+289	    task = res["relation_checks"][0]["reconciliation_task"]
+290	    submit = {"summary": "s", "conclusion": "The settlement loan requires future payments."}
+291	    with pytest.raises(T.ToolError, match="inventory items are still open"):
+292	        call(T.submit_packet, ctx, submit)
+293	    bad = call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": ["fnd_999"]}]})
+294	    assert bad["accounted"] == [] and "needs accepted" in bad["rejected"][0]["reason"]
+295	    call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": [fid]}]})
+296	    with pytest.raises(T.ToolError, match="Open reconciliation"):
+297	        call(T.submit_packet, ctx, submit)
+298	    call(T.resolve_reconciliation, ctx, {"task_id": task, "note": "Different measures of the same loan: balance vs schedule."})
+299	    assert call(T.submit_packet, ctx, submit)["locked"]
+300	
+301	
+302	def test_cited_screened_passages_are_recorded_as_used(make_ctx):
+303	    ctx = make_ctx(name="attrib")
+304	    _settlement_flow(ctx)
+305	    cited = {s.section_id for f in ctx.run.graph["findings"].values() if f.status == "accepted" for s in f.spans}
+306	    screened = [c for c in ctx.run.graph["candidates"].values() if c.screen and c.item_id in cited]
+307	    if screened:
+308	        assert all(ctx.run.get("observations", o).downstream_disposition == "used_in_finding"
+309	                   for c in screened for o in c.screen.observation_ids)
+310	
+311	
+312	def test_submit_refuses_unvalidated_supported_effects(make_ctx):
+313	    ctx = make_ctx(name="supported")
+314	    with pytest.raises(T.ToolError, match="eff_999 is unknown"):
+315	        asyncio.run(T.submit_packet(ctx, {"conclusion": "x", "supported_effect_ids": ["eff_999"]}))
+316	
+317	
+318	def test_sweep_chunks_and_groups():
+319	    from app.agent.sweep import chunks, inventory_groups
+320	    parts = chunks("a" * 9000 + "\n\n" + "b" * 10)
+321	    assert all(len(x) <= 8000 for x in parts) and "".join(parts).replace("\n", "").count("a") == 9000
+322	    sweep = {"records": [
+323	        {"flagged": True, "source_id": "court", "heading_path": ["Page 1"], "kind": "legal_matter_or_settlement", "section_id": "c#1", "signal": 0.9, "excerpt": "x"},
+324	        {"flagged": True, "source_id": "court", "heading_path": ["Page 2"], "kind": "legal_matter_or_settlement", "section_id": "c#2", "signal": 0.95, "excerpt": "y"},
+325	        {"flagged": True, "source_id": "s1a", "heading_path": ["NOTES", "Note 11"], "kind": "debt_or_financing_agreement", "section_id": "s#1", "signal": 0.9, "excerpt": "z"},
+326	        {"flagged": False, "source_id": "s1a", "heading_path": ["RISK"], "kind": "none_or_generic", "section_id": "s#2", "signal": 0.2, "excerpt": ""}]}
+327	    groups = inventory_groups(sweep)
+328	    assert len(groups) == 2 and groups[0]["section_ids"] == ["c#1", "c#2"] and groups[0]["excerpt"] == "y"
+329	
+330	
+331	def test_covered_claims_are_checked(make_ctx):
+332	    from app.domain.investigation import InventoryItem
+333	    ctx = make_ctx(answers={"coverage_supported": "not_covered"}, name="coverage")
+334	    note11 = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")["id"]
+335	    ctx.run.put("inventory_loaded", InventoryItem(item_id="inv_001", section_ids=(note11,), source_id="synergy_s1a_20240813",
+336	                                                 heading_path=("Note 11",), kind="accounting_item_from_a_matter", signal=0.9))
+337	    _, fid = _accepted_settlement_finding(ctx)
+338	    entry = {"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": [fid]}
+339	    out = call(T.account_for_items, ctx, {"items": [entry]})
+340	    assert out["accounted"] == [] and "different matter" in out["rejected"][0]["reason"]
+341	    assert ctx.run.get("inventory", "inv_001").status == "open"
+342	    # no free-text override of a coverage gap
+343	    still = call(T.account_for_items, ctx, {"items": [{**entry, "override_reason": "The schedule is the matter; the gain is elsewhere."}]})
+344	    assert still["open"] == 1
+345	    failed = next(o.observation_id for o in ctx.run.graph["observations"].values() if o.question_id == "coverage_supported")
+346	    missing = "The accounting gain on the settlement is not accounted for by any finding."
+347	    bad = call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "escalate", "observation_id": "obs_999",
+348	                                                     "missing": missing}]})
+349	    assert "failed host check" in bad["rejected"][0]["reason"]
+350	    call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "escalate", "observation_id": failed,
+351	                                               "missing": missing}]})
+352	    assert ctx.run.get("inventory", "inv_001").status == "disputed"
+353	    call(T.submit_packet, ctx, {"summary": "s", "conclusion": "The settlement loan requires future payments."})
+354	    assert not ctx.incomplete_reasons  # an escalated item goes to the reviewer's checklist, not straight to INCOMPLETE
+355	    submitted = next(e.payload for e in ctx.run.events if e.kind == "packet_submitted")
+356	    assert [d["id"] for d in submitted["disputes"] if d["for"] == "reviewer_checklist"] == ["inv_001"]
+357	
+358	
+359	def test_duplicate_and_relevance_claims_are_checked(make_ctx):
+360	    from app.domain.investigation import InventoryItem
+361	    ctx = make_ctx(answers={"adds_matter": "adds_item", "decision_relevance": "could_change"}, name="dup")
+362	    note11 = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")["id"]
+363	    for iid in ("inv_001", "inv_002", "inv_003"):
+364	        ctx.run.put("inventory_loaded", InventoryItem(item_id=iid, section_ids=(note11,), source_id="synergy_s1a_20240813",
+365	                                                     heading_path=("Note 11",), kind="debt_or_financing_agreement", signal=0.9))
+366	    _, fid = _accepted_settlement_finding(ctx)
+367	    call(T.account_for_items, ctx, {"items": [{"item_id": "inv_001", "disposition": "covered_by_findings", "finding_ids": [fid]}]})
+368	    out = call(T.account_for_items, ctx, {"items": [
+369	        {"item_id": "inv_002", "disposition": "duplicate_of", "duplicate_of": "inv_003"},  # not covered
+370	        {"item_id": "inv_003", "disposition": "duplicate_of", "duplicate_of": "inv_001"}]})  # Jev: adds an item
+371	    reasons = [r["reason"] for r in out["rejected"]]
+372	    assert out["accounted"] == [] and "already covered" in reasons[0] and "duplicate check" in reasons[1]
+373	    out = call(T.account_for_items, ctx, {"items": [
+374	        {"item_id": "inv_002", "disposition": "not_decision_relevant", "reason": "An old matter with no bearing on the draw."}]})
+375	    assert "decision-relevance check failed" in out["rejected"][0]["reason"]
+376	

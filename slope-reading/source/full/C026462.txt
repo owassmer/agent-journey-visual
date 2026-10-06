@@ -1,0 +1,1 @@
+{"subject": "5b: dispute decision nodes (agent tool + Jev profile)", "description": "DisputeNode domain model; propose_dispute_node tool (branches with documented amounts/windows); Jev dispute_branch profile/question; branch weights recorded as labelled model judgment; registry/config/spec updates.", "activeForm": "Building dispute decision nodes"}

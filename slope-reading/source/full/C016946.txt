@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat Slope_Coding_Agent_Context_and_Alignment.md Slope_Credit_Scenario_Build_Specification.md CLAUDE.md","max_output_tokens":12000}),
+tools.exec_command({cmd:"gh pr list --state all --limit 100 --json number,title,body,url,state,author,headRefName,updatedAt && gh api repos/owassmer/Slope_Sparse_Events/releases --paginate","max_output_tokens":16000})
+]);for(let i=0;i<results.length;i++)text({i,...results[i]});

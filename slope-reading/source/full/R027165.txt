@@ -1,0 +1,49 @@
+---
+name: decision-first-ui
+description: "Owen's rule for what Russell sees — show the right answer, not the machinery; reviewer is a hidden quality gate"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 1ebb1026-a1f0-4809-9321-bc3d6f875530
+  modified: 2026-09-25T03:57:13.801Z
+---
+
+Show the right answer, not the machinery. The front page states one decision with confidence: the recommended offer, one or two conditions phrased as actions (e.g. "fund $150k/6m conditional on Knight's written consent"; "request the July bank statement; if ≥$X of the settlement was paid, $250k is feasible"), and dated cash flows (loan collections beside borrower monthly cash, before/after). Two or three drivers with source click-through. Jev checks, overrides, reconciliations, unknown lists and reviewer objections live only in a collapsed "How we know" drill-down.
+
+The Codex reviewer (step 6) is a quality gate before anything is shown: one repair pass, then the corrected result; unresolved material issue → INCOMPLETE_REVIEW and "not ready", never a hedged decision. The outcome reveal after lock (decision on 13 Aug 2024 vs what happened) is the strongest demo moment.
+
+**Why:** Owen pushed back (2026-09-25) that hedging and disagreement logs make the demo read as AI uncertainty; Russell should see a credit decision.
+**How to apply:** steps 5–7 design and wording (spec §4 and step 6 row updated in PR #6). Unknowns are never hidden or zeroed; they become action-phrased conditions. Internal gates (INCOMPLETE_REVIEW on disputes) stay honest; the demo run must resolve disputes, not display them. See [[jev-pivot-decisions]].
+---
+name: jev-pivot-decisions
+description: "Owen's decisions on adopting Jev_Pivot.md (2026-09-24): step 4 split 4a/4b, thin viewer in 4b, no provenance work, Jev budget 250 attempts (was 150), step 4c"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 1ebb1026-a1f0-4809-9321-bc3d6f875530
+  modified: 2026-09-25T05:15:15.284Z
+---
+
+Jev_Pivot.md (repo root) makes Jev a host-controlled semantic judgment layer recorded in one investigation graph. Owen approved adopting it with these decisions (2026-09-24):
+- Step 4 split: **4a** semantic layer (docs/contracts, registry v3, domain graph, run store, Jev adapter + profiles, eval set, tests) and **4b** investigation (MCP tools, runner, recorded Synergy run, minimal read-only viewer). Separate PRs.
+- Provider provenance section of the pivot: **not adopted at all** (no eval-mode freeze, no direct TypeSafe). See [[jev-route-settled]].
+- Jev budget: **250 physical attempts per run incl. SDK retries** (raised from 150 by Owen on 2026-09-25 for the 4c host checks), spend cap stays $0.10; the host sweep has its own budget.
+- Screening labels/orders evidence but never hides it; runtime effects cite findings + verbatim spans, never kit fact IDs.
+
+**Why:** deadline tonight; Owen wants Jev maximally but correctly bounded, without provenance distractions.
+**How to apply:** follow the approved plan at ~/.claude/plans/pr-3-merged-digest-shiny-deer.md; see [[delivery-workflow]].
+- 2026-09-25: after 4b, add **step 4c "Jev at scale"** (Owen chose this sequencing): host snapshot-wide sweep inventory the agent must account for (replaces the generic coverage prompt rule), mandatory support check on effect consequences + conclusion, mandatory posture/status on effect-supporting findings + automatic relation checks, screen scaled with reliance attribution.
+- 2026-09-25: agent turn ceiling **80** (host-counted per distinct model response), confirmed by Owen; don't re-raise.
+- For step 5: recorded run 4's eff_008 (WebBank sweep labelled funding_constraint) is existing debt service already scheduled by app/finance/merchant.py; never apply it twice.
+- 2026-09-25: **no free-text override of Jev coverage gaps** (folded into PR #6 by Owen after run 8 let the settlement gain through 6 overrides). A gap is cleared by a new finding (re-check), a host+Jev-verified duplicate of a covered item, or escalation as a disputed item. "Not decision-relevant" gets a Jev check. Unresolved disputes on matter kinds → INCOMPLETE_REVIEW. Overrides only reply to a specific failed observation; kept for finding-quality checks only; category-guard disagreement escalates. Exit condition wording: "resolved or escalated".
+- 2026-09-25: coverage must be **evidence-based, never adjudicated**: Owen rejected a "live matters only" filter (Jev silently exempting content, comparing dates). A closed/superseded matter is covered by a cited finding saying so. Coverage checked per ≤2,500-char window over full section text, findings shown with quotes. Budgets raised by Owen for this: **120 turns, 900 s investigation, 400 Jev attempts** ($0.10 cap unchanged); supersedes the 80-turn / 250-attempt entries above.
+- 2026-09-25 (later): Owen approved **simplification** after runs 9–13 over-engineered coverage: the inventory is a reading list, not an audit. Jev judges claims (one claim, short passage holding the answer, code-owned consequence); it never proves completeness. Coverage = one narrow check per flagged section on the flagged matter; dismissals checked; no free-text overrides; completeness backstop = step 6 reviewer. Per-window coverage and named exclusions were removed. Don't re-grow an exhaustive audit.
+- [Delivery workflow](delivery-workflow.md) — worktree → PR → independent intent-grounded review → merge-ready; Owen merges
+- [Speed over verification](speed-over-verification.md) — same-day POC; no non-essential tests, but never careless
+- [Jev route settled](jev-route-settled.md) — don't raise Jev build-pin mismatch or untested direct TypeSafe again
+- [Jev pivot decisions](jev-pivot-decisions.md) — 4a/4b/4c split, viewer in 4b, no provenance work, 250 Jev attempts, 80 turns
+- [Decision-first UI](decision-first-ui.md) — show the right answer, not the machinery; reviewer is a hidden quality gate; unknowns become action conditions
+- [No contrived cases](no-contrived-cases.md) — evals/tests reflect real court/filing evidence (parties named); no synthetic ambiguity
+- [Lead case ChromaDex](lead-case-chromadex.md) — live disputes lead case; Jev judges dispute branches; Slope reconstructed closely (labelled once)
+- [Scenario compiler](scenario-compiler.md) — Jev reads passages atomically; code keeps every feasible cash path; no forecast weights
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-probabilistic-analysis

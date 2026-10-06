@@ -1,0 +1,38 @@
+    try:
+        jev = JevAdapter(run_id=run_id, new_id=run.new_id) if arm == "agent_plus_jev" else None
+    except ConfigurationError as e:
+        run.lock({"summary": None, "configuration_failure": str(e), "incomplete_reasons": [str(e)]})
+        return {**record, "run_id": run_id, "status": "FAILED_CONFIGURATION", "error": str(e)}
+    ctx = RunContext(run=run, evidence=evidence, inputs=inputs, arm=arm,
+                     semantics=Semantics(run, evidence, jev) if jev else None)
+    if jev is not None:  # host sweep inventory (cached per snapshot; its own budget)
+        try:
+            sweep = build_sweep(snapshot_id, inputs["baseline_profile"]["borrower"])
+        except Exception as e:  # noqa: BLE001 - any sweep failure stops before the agent runs
+            status = "FAILED_CONFIGURATION" if isinstance(e, ConfigurationError) else "INCOMPLETE_REVIEW"
+            run.lock({"summary": None, "configuration_failure": str(e) if status == "FAILED_CONFIGURATION" else None,
+                      "incomplete_reasons": [f"snapshot sweep failed: {e}"]})
+            return {**record, "run_id": run_id, "status": status, "error": f"snapshot sweep failed: {e}"}
+        for g in inventory_groups(sweep):
+            run.put("inventory_loaded", InventoryItem(
+                item_id=run.new_id("inv"), section_ids=tuple(g["section_ids"]), source_id=g["source_id"],
+                heading_path=tuple(g["heading_path"]), kind=g["kind"], signal=g["signal"], excerpt=g["excerpt"],
+                section_excerpts=tuple(g.get("section_excerpts", ()))),
+                payload={"sweep_sha256": sweep["sweep_sha256"], "registry_version": sweep["registry_version"]})
+        record["sweep"] = {"sweep_sha256": sweep["sweep_sha256"], **sweep["summary"], "jev_usage": sweep["jev_usage"],
+                           "inventory_items": len(run.graph["inventory"])}
+        shutil.copyfile(sweep_path(snapshot_id), run.dir / "sweep.json")  # recorded with the run for provenance
+    allowed = allowed_tools(arm)
+67:JEV_METHOD = """- read_inventory early: the host screened every admissible section and lists the specific matters it flagged. It is a
+68-  reading list: for each item say what it means for the decision with account_for_items, as you go and in batches, once
+69-  the findings for a matter are accepted. Covered: cite the accepted findings for the matter the section describes. Not
+70-  decision-relevant: give your reason. A duplicate of a covered item: name it. Each claim is checked; if a check fails, add
+71-  the missing finding and account again, or escalate the item with the failed observation_id if you genuinely disagree.
+72-  An escalated item goes to the independent reviewer's checklist with your note; say plainly what it should confirm.
+73-- The host checks each proposed effect: its supporting findings' posture and status must fit the mechanism, and its model
+74-  consequence must be supported by the cited findings. It also checks your conclusion at submission and checks accepted findings
+75-  under the same question against each other. Revise when a check fails. If you disagree with a failed support check, reply to
+65:def meaning(question_id: str, answer: str | bool | None) -> str:
+66-    if answer is None:
+67-        return "No answer returned"
+68-    return MEANINGS.get(question_id, {}).get(answer, str(answer))

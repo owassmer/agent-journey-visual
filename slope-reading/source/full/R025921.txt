@@ -1,0 +1,26 @@
+research/revision_v2/contracts/agent_config.json
+research/revision_v2/contracts/question_registry.json
+research/revision_v2/deliverables/Slope_Credit_Scenario_Build_Specification.md
+[1;32mAll checks passed![0m
+[1m                                                                                [0m
+[1m [0m[1;33mUsage: [0m[1mslope [OPTIONS] COMMAND [ARGS]...[0m[1m                                      [0m[1m [0m
+[1m                                                                                [0m
+ Slope external-event credit scenario module                                    
+                                                                                
+[2m╭─[0m[2m Options [0m[2m───────────────────────────────────────────────────────────────────[0m[2m─╮[0m
+[2m│[0m [1;36m-[0m[1;36m-install[0m[1;36m-completion[0m          Install completion for the current shell.      [2m│[0m
+[2m│[0m [1;36m-[0m[1;36m-show[0m[1;36m-completion[0m             Show completion for the current shell, to copy [2m│[0m
+[2m│[0m                               it or customize the installation.              [2m│[0m
+[2m│[0m [1;36m-[0m[1;36m-help[0m                        Show this message and exit.                    [2m│[0m
+[2m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[2m╭─[0m[2m Commands [0m[2m──────────────────────────────────────────────────────────────────[0m[2m─╮[0m
+[2m│[0m [1;36mversion    [0m[1;36m [0m Print the package version.                                      [2m│[0m
+[2m│[0m [1;36msmoke      [0m[1;36m [0m Step 1 runtime smoke test: subscription auth, scoped tool +     [2m│[0m
+[2m│[0m [1;36m            [0m schema output, Jev, reviewer sign-in.                           [2m│[0m
+[2m│[0m [1;36minvestigate[0m[1;36m [0m Run one recorded investigation (Claude subscription +           [2m│[0m
+[2m│[0m [1;36m            [0m separately billed Jev).                                         [2m│[0m
+[2m│[0m [1;36mviewer     [0m[1;36m [0m Serve the read-only investigation viewer for recorded runs.     [2m│[0m
+[2m│[0m [1;36mevidence   [0m[1;36m [0m Dated evidence snapshots (step 2)                               [2m│[0m
+[2m│[0m [1;36mfinance    [0m[1;36m [0m Deterministic finance core (step 3)                             [2m│[0m
+[2m│[0m [1;36mjev        [0m[1;36m [0m Jev semantic layer (step 4a)                                    [2m│[0m
+[2m╰──────────────────────────────────────────────────────────────────────────────╯[0m

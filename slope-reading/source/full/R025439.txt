@@ -1,0 +1,69 @@
+{
+  "run_id": "synergy_20240813-agent_plus_jev-20260925T014444Z",
+  "status": "CANDIDATE_READY",
+  "failure": null,
+  "incomplete_reasons": [],
+  "returned_models": [
+    "claude-opus-5-5"
+  ],
+  "tool_calls": {
+    "get_mission": 1,
+    "read_baseline_profile": 1,
+    "read_loan_terms": 1,
+    "record_dependency": 4,
+    "search_evidence": 3,
+    "read_evidence": 12,
+    "judge": 8,
+    "propose_finding": 9,
+    "resolve_finding": 9,
+    "propose_effect": 5,
+    "run_sensitivity": 4,
+    "request_missing_fact": 2,
+    "submit_packet": 1,
+    "StructuredOutput": 1
+  },
+  "graph_counts": {
+    "dependencies": 4,
+    "candidates": 12,
+    "jev_calls": 31,
+    "observations": 109,
+    "findings": 9,
+    "reconciliations": 0,
+    "effects": 5
+  },
+  "jev": {
+    "provider": "openrouter",
+    "requests": 30,
+    "cache_hits": 1,
+    "physical_attempts": 30,
+    "attempt_ceiling": 150,
+    "spent_usd": "0.003253866",
+    "spend_cap_usd": "0.10"
+  },
+  "recorded_at": "runs/recorded/synergy_20240813-agent_plus_jev-20260925T014444Z"
+}
+exit 0
+DEP dep_001 | What cash payments remain due from Synergy CHC Corp. under the settlement with HVL, LLC d/b/a Atrium Innovatio | target: Synergy CHC Corp. settlement payment obligation to HVL, LLC d/b/a Atrium Innovat
+DEP dep_002 | What cash payments remain due in 2024 under Synergy CHC Corp.'s March 27, 2024 confidential settlement with a  | target: Synergy CHC Corp. settlement loan payable to supplier under March 27, 2024 confi
+DEP dep_003 | Does Synergy CHC Corp.'s amended senior secured loan with Knight Therapeutics prohibit adding new debt (such a | target: Synergy CHC Corp. negative covenant in amended Knight Therapeutics senior secure
+  FIND= fnd_001 rejected The December 2023 settlement of Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovations created a loa
+  FIND= fnd_002 accepted Under the December 28, 2023 settlement loan's future payment schedule, Synergy CHC Corp. must pay $2
+  FIND= fnd_003 accepted The Atrium settlement loan payable is the Note 11 '$5,450,000 December 28, 2023 Loan', which had a $
+  FIND= fnd_004 rejected Synergy recorded the $2,235,986 net gain from the Atrium settlement as a reduction of cost of sales,
+  FIND= fnd_005 accepted Under the March 27, 2024 supplier settlement loan's future payment schedule, Synergy CHC Corp. must 
+  FIND= fnd_006 accepted Synergy reported the $2,235,986 net gain on the Atrium settlement as a reduction of cost of sales.
+DEP dep_004 | Do the Valenti (FOCUSfactor advertising) and L.O.D.C. Group settlements leave any remaining cash payment due f | target: Synergy CHC Corp. settlement payments to Barbara Valenti ($340,000) and L.O.D.C.
+  FIND= fnd_007 accepted The amended Knight Therapeutics loan terms state that Synergy shall not add any other debt without f
+  FIND= fnd_008 accepted Synergy paid the L.O.D.C. Group settlement in full in May 2024.
+  FIND= fnd_009 accepted Synergy fully paid the $340,000 Valenti settlement during 2023.
+  EFFECT eff_001 validated settlement_payment_timing | Synergy CHC Corp. 2024 installment on Atrium settlement loan | Up to $2.0M of settlement cash is due by Dec 31, 2024, against about $2.0M of reported cas []
+  EFFECT eff_002 validated settlement_payment_timing | Synergy CHC Corp. 2024 installment on March 27, 2024 supplie | Adds up to $600K of 2024 settlement outflow that competes with the advance's payments. []
+  EFFECT eff_003 validated noncash_normalization | Synergy CHC Corp. $2,235,986 Atrium settlement gain in cost  | Normalized FY2023 gross margin and EBITDA are about $2.24M lower than reported (reported F []
+  EFFECT eff_004 validated resolved_obligation | Synergy CHC Corp. Valenti ($340,000, paid 2023) and L.O.D.C. | No future cash effect. These matters do not change cash available for the advance. []
+  EFFECT eff_005 validated funding_constraint | Synergy CHC Corp. Knight Therapeutics senior secured loan ne | Without Knight's consent, any of the permitted offers could breach the Knight covenant. Kn []
+  SENS [('0', None), ('0.25', None), ('0.5', None), ('0.75', None), ('1', None)] unknown
+  SENS [('0', None), ('0.5', None), ('1', None)] unknown
+  SENS [('0', 80000000), ('0.25', 15000000), ('0.5', 0), ('0.75', 0), ('1', 0)] 0
+  SENS [('0', 90000000), ('0.25', 25000000), ('0.5', 0), ('0.75', 0), ('1', 0)] 10000000
+  MISSING How much of the $2,000,000 2024 installment on the Atrium settlement loan, and of the $600,000 2024 installment on the M
+  MISSING Has Knight Therapeutics consented to, or waived its covenant for, a new $100,000–$250,000 unsecured or subordinated work

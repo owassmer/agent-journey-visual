@@ -1,0 +1,1 @@
+{"replace_all": false, "file_path": "/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/patch_pr2.py", "old_string": "    ('''    - **Tables:** layout tables become paragraphs; data tables keep their rows. Split", "new_string": "    ('''  - **Tables:** layout tables become paragraphs; data tables keep their rows. Split"}

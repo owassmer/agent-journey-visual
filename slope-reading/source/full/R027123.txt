@@ -1,0 +1,39 @@
+     219 Slope_Coding_Agent_Context_and_Alignment.md
+     436 Slope_Credit_Scenario_Build_Specification.md
+      44 CLAUDE.md
+     699 total
+1:# Slope credit-event scenario module — definitive build specification
+5:## 1. The product to build
+15:### Where it fits at Slope
+25:## 2. Case selection: ChromaDex first, Synergy second
+51:### Exact lead mission
+57:### Secondary mission (Synergy)
+63:## 3. What the evidence actually establishes
+65:### ChromaDex: two live disputes, money moving both ways (as of 19 August 2024)
+74:### Synergy: three obligations that must remain separate
+89:### Actual merchant contract
+103:### Later outcomes, hidden until the decision is locked
+109:### Barfresh transfer case
+117:## 4. The demonstration experience
+144:## 5. From evidence to a modeled adjustment
+161:### A useful worked threshold without fictional accounts
+177:## 6. Financial engine specification
+179:### Representation and dates
+192:### Cash and collections
+206:### Candidate actions and choice
+214:### Concrete proposal fixtures
+226:### Loan economics and portfolio output
+242:## 7. Agent and Jev foundation
+244:### Runtime decision
+268:### Actual adaptive workflow
+278:### Jev as the semantic judgment layer
+310:### Investigation graph
+314:### Isolation and state
+322:## 8. Evidence acquisition and historical controls
+332:### Gaps with concrete treatment
+347:## 9. Implementation modules and sequence
+383:## 10. Acceptance criteria and evaluation
+408:## 11. What would make this compelling to Russell
+414:## Sources
+diff: Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/deliverables/Slope_Coding_Agent_Context_and_Alignment.md: No such file or directory
+Slope_Credit_Scenario_Build_Specification.md

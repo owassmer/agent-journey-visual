@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo/app/disputes/forecast.py", "old_string": "        ev, h = tr.events, hashlib.blake2b(digest_size=16)\n        named = [", "new_string": "        import xxhash\n\n        ev, h = tr.events, xxhash.xxh3_128()\n        named = ["}

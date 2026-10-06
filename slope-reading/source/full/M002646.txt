@@ -1,0 +1,69 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_8233124f]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 00:08:07 (6m29s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 389.11s
+
+--- ✓ TASK 1/1: Worker A3: split collection from the cash floor in the engine, per spec §16.3 as amended at commit 9f60963 on branch step-8-may14. Work in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-case (branch step-8-case, HEAD 4bbec3e). Merge origin/step-8-may14 first so the spec is current. Deliver in small steps, each ending in targeted tests, a commit of named files and a push. Report the SHAs, the rule as implemented, and the bank-only run under central and sensitivities. Do not open a PR or call Jev.  (status=completed, api_calls=36, 388.83s) ---
+Collection is now a separate setting from the cash floor, with `debit` as the central case for 14 May. Targeted tests passed at each step and the full suite passes (203 passed, 60 s). No PR was opened and Jev was not called.
+
+**Commits on step-8-case (all pushed)**
+- `65360dc`: merge of origin/step-8-may14 (spec §16.3 as amended at 9f60963).
+- `0230907`: the collection split, the tests and the case inputs.
+
+**The rule as implemented** (`Setup.collection`, validated against `COLLECTION_MODES`)
+- **`debit`:** on each due date, and at each month-end while anything is overdue, Slope debits the installments owed oldest first (draw order within a date). Each is collected in full when available cash covers it at that moment. Otherwise the debit fails, with no partial debits, and the installment stays overdue until the next attempt. A later, smaller installment can still succeed after an older one fails.
+- **`protect_need`:** the previous rule, `min(owed, max(0, available − need))`. It reproduces the old engine's arrays exactly on four 14 May settings (central, 60-day floor, equity, cost plan), with and without events, checked against digests pinned before the change.
+- **`need_days` (30):** still sets `line.need`, the cash floor, in both modes. `debit` never reads `line.need`. Headroom still subtracts it.
+- **Default:** `Setup` defaults to `protect_need`, so older recorded setups and the 20 Jun case read unchanged. The 14 May case sets `debit` explicitly.
+- **Case inputs:** central is `collection: "debit"` with `need_days: 30`. The scenarios are `protect_need` and `cash_floor_60_days`, which I renamed from `reserve_60_days`; nothing on step-8-model used the old name.
+- **Opening state:** replaying the line's history under `debit` gives the same opening state as before.
+- **New output:** `Trajectories.failed_debits` counts failed debits per draw under `debit`, and attempts that left money owed under `protect_need`.
+
+**Tests** (new `tests/test_collection_modes.py`)
+- `protect_need` matches the pinned pre-change digests.
+- Under `debit`, an installment is collected exactly when cash covers it; one cent short fails, and the failed debit is collected at the 30 Jun month-end once cash arrives. Installments are tried oldest first.
+- Under `debit`, `need_days` of 0, 30 or 60 changes no collection, on hand-built rows and on the 14 May case.
+- A petition stays everything from its day, including a retry that would have fallen after it, and the contract identity holds.
+
+Two existing tests needed small updates: `test_opening_exposure.py` now leaves `failed_debits` out of its digest and pins its 14 May check to `protect_need`, and `test_common_model.py` uses the new scenario name.
+
+**What B3 must read** (matches the orchestrator's constraint; B3 needs no change)
+- `line.need` still means the cash floor under both modes. It is built from `setup.need_days` in `prepare()` and passed to `Basis.need` through `basis_for` and `core.py`.
+- B3 can read `Setup.need_days` for the floor setting. `Setup.collection` only matters to the engine's collection step.
+- The change only adds fields; `Line` and `Basis` are unchanged.
+
+**Bank-only run from 14 May** (512 draws, no events; means; "funded" is new draws on top of the $390k opening principal)
+
+```
+Scenario                        | Funded | Due   | Collected | Uncollected | Failed debits (mean) | Below floor (median) | Below zero (share of draws, median)
+--------------------------------+--------+-------+-----------+-------------+----------------------+----------------------+------------------------------------
+Central (`debit`, 30-day floor) | $684k  | $960k | $746k     | $213k       | 29.7                 | 25 Aug               | 100%, 24 Sep                       
+`protect_need`                  | $517k  | $894k | $572k     | $321k       | 10.4                 | 25 Aug               | 100%, 24 Sep                       
+60-day floor (`debit`)          | $684k  | $960k | $746k     | $213k       | 29.7                 | 26 Jul               | 100%, 24 Sep                       
+Equity $5M (`debit`)            | $884k  | $967k | $967k     | $0          | 0                    | 26 Oct               | under 0.5%, 7 Nov                  
+Cost plan (`debit`)             | $908k  | $981k | $980k     | $1k         | 0.0                  | 13 Oct               | 37%, 8 Nov                         
+Equity (`protect_need`)         | $857k  | $967k | $929k     | $38k        | 1.5                  | 26 Oct               | 1%                                 
+Cost plan (`protect_need`)      | $772k  | $981k | $857k     | $124k       | 4.4                  | 13 Oct               | 37%                                
+```
+
+Cash p5 / p50 / p95:
+
+```
+Scenario                              | 30 Jun                 | 31 Aug              | 10 Nov                                         
+--------------------------------------+------------------------+---------------------+------------------------------------------------
+Central, `protect_need`, 60-day floor | 7.06 / 7.26 / 7.44M    | 1.65 / 1.88 / 2.06M | −4.82 / −3.61 / −3.18M (`protect_need` ±$0.02M)
+Equity                                | 12.06 / 12.26 / 12.44M | 6.65 / 6.88 / 7.06M | 0.17 / 1.37 / 1.80M                            
+Cost plan                             | 8.30 / 8.46 / 8.58M    | 4.45 / 4.64 / 4.78M | −0.22 / 0.80 / 1.14M                           
+```
+
+What the run shows:
+- **Switching to `debit` cuts uncollected by about $108k** ($321k to $213k), which matches your estimate.
+- **Collecting sooner frees the limit.** Under `debit` more draws follow (+$167k funded), which adds $66k due and $154k not yet due at the horizon.
+- **Central `debit` still leaves $213k uncollected.** Those are installments due after cash turns negative, from about 23 Sep on every draw. Each month-end then retries every pending installment, which is why failed debits average about 30.
+- **The 60-day floor moves only the floor date** (25 Aug to 26 Jul). Every collection figure matches central.
+
+**Files changed:** `app/analysis/engine.py`, `setup.py`, `build.py` (`setup_from_json` passes `collection` through), `history.py` (docstring only), `cases/akoustis_20240514/make_run_inputs.py`, `run_inputs.json`, `tests/test_collection_modes.py` (new), `tests/test_common_model.py`, `tests/test_opening_exposure.py`. I also added a note on the two modes to the `slope-sparse-events-build` skill.
+
+**Issue:** the run script prints 0% for a share under 0.5%, so the equity row's below-zero cell above was relabelled by hand. The run script is `~/.hermes/profiles/connor/cache/scratch/a3/bank_run.py`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_8233124f/task-0.log

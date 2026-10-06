@@ -1,0 +1,10 @@
+0e8b2b5 Step 5b: re-recorded ChromaDex run on the scenario compiler
+/Users/owenwassmer/dev/Slope_Sparse_Events                                               70be161 [main]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-1-runtime-smoke        56c589d [step-1-runtime-smoke]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-2-evidence-ingestion   b05c99f [step-2-evidence-ingestion]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-3-financial-core       0e319d0 [step-3-financial-core]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-4a-semantic-layer      35a9691 [step-4a-semantic-layer]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-4b-investigation       7f03067 [step-4b-investigation]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-4c-jev-at-scale        79c08e9 [step-4c-jev-at-scale]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5a-chromadex-evidence  7c125aa [step-5a-chromadex-evidence]
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model      0e8b2b5 [step-5b-decision-model]

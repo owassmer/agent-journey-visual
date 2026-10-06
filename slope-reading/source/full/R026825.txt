@@ -1,0 +1,27 @@
+== dispute_001 C.D. Cal. 8:16-cv-02277 final judgment: Elysium to pay ChromaDex $2.5M | creditor Elysium Health, Inc. | stage judgment_entered {'amount_pending': 0, 'judgment_entered': 9700, 'appeal_pending': 0, 'enforcement': 300, 'none_fits': 0} | status evaluated | judgment 2024-08-13
+   amount {'status': 'exact', 'unit': 'USD_cents', 'value': 250000000, 'provenance': {'basis': 'documented_evidence', 'source_fact_ids': []}}
+   finding fnd_001 On August 13, 2024 the C.D. Cal. entered final judgment ordering Elysium to pay ChromaDex $2,500,000 to resolve outstanding Jury Claims issues (including prejud
+   T judgment_entered () {'pay': 9100, 'appeal_bonded': 0, 'settle': 100, 'resist': 800} unc False rel True ref False
+   T enforcement ('resist',) {'collected': 2500, 'settle': 300, 'uncollected': 7200} unc False rel True ref False
+   P 9123 pay [('inflow', 250821918, 252054795, '2024-09-12', '2024-10-12')]
+   P 100 settle [('inflow', 150000000, 250000000, '2024-08-20', '2024-11-11')]
+   P 200 resist -> collected [('inflow', 250000000, 253082192, '2024-09-12', '2024-12-11')]
+   P 577 resist -> uncollected []
+   pruned 24 requests [] ext 
+== dispute_003 D. Del. 1:18-cv-01434 attorney fee award to Elysium: liability granted, amount pending | debtor Elysium Health, Inc. | stage amount_pending {'amount_pending': 9900, 'judgment_entered': 0, 'appeal_pending': 100, 'enforcement': 0, 'none_fits': 0} | status evaluated | judgment None
+   amount {'status': 'exact', 'unit': 'USD_cents', 'value': 980000000, 'provenance': {'basis': 'documented_evidence', 'source_fact_ids': [], 'note': "ChromaDex's 10-Q estimate of the aggregate amount sought by Elysium inclusive of ChromaDex's estimate of post-judgment interest (~$9.8M). This is a conservative ceiling: the court has not fixed the amount and could award less, and ChromaDex says no liability would arise if its intended appeal succeeds."}}
+   finding fnd_002 On March 25, 2024 the D. Del. granted Elysium's motion for attorneys' fees and costs against ChromaDex in the patent action and directed the parties to set a sc
+   finding fnd_003 As of the Q2 2024 10-Q (filed Aug 7, 2024), the amount of the Delaware fee award was fully briefed and awaiting a ruling; ChromaDex intends to appeal, has asses
+   T amount_pending () {'amount_fixed': 7100, 'settle': 100, 'no_ruling': 2800} unc False rel True ref True
+   T judgment_entered ('amount_fixed',) {'pay': 400, 'appeal_bonded': 7500, 'settle': 100, 'resist': 2000} unc False rel True ref False
+   T appeal_pending ('amount_fixed', 'appeal_bonded') {'appeal_continues': 9900, 'settle': 100} unc False rel True ref False
+   T enforcement ('amount_fixed', 'resist') {'collected': 300, 'settle': 200, 'uncollected': 9500} unc False rel True ref False
+   F amount_finality 2 The amount has been fully briefed or submitted to the court for decision ('fnd_002', 'fnd_003')
+   F settlement_signals None unknown ()
+   P 290 amount_fixed -> pay [('outflow', 980000000, 1004030137, '2024-09-19', '2025-02-15')]
+   P 5376 amount_fixed -> appeal_bonded -> appeal_continues [('lock', 612500000, 1225000000, '2024-08-20', '2025-01-16')]
+   P 1376 amount_fixed -> resist -> uncollected []
+   P 102 settle [('outflow', 588000000, 980000000, '2024-08-20', '2024-11-17')]
+   P 2856 no_ruling []
+   pruned 195 requests [] ext 
+"On bank data alone, the $2.0M 90-day installment request passes (order limit about $2.72M). Once the Elysium disputes are counted, it does not: the event-adjusted order limit is about $1.43M. That limit is bound by a stress path in which ChromaDex secures the pending Delaware attorney-fee award (up to about $9.8M including interest, per its 10-Q estimate) with cash collateral pending appeal, and the $2.5M California judgment receivable has not yet been collected. Recommendation: route to exception review (material litigation; existing secured lender). Offer at most about $1.43M on inst_90 (inst_90_1430000) unless evidence shows the fee award will not lock or consume that cash within the horizon. Conditions: (a) confirm the fee amount and whether appeal security is cash-collateralised; (b) confirm Western Alliance Bank's covenants permit the financing, or obtain consent; (c) count the $2.5M from Elysium only once received. The fee amount and appeal security are the pivotal unknowns. The path weights are model judgment, not default probabilities."

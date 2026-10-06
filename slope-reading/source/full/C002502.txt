@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/7_page && python3 - 2>/dev/null; sed -i '' 's/rep(\"\"\"const Wd = host.clientWidth, root = 64, colW = 290,\"\"\", \"\"\"const Wd = host.clientWidth, root = 64, colW = 305,\"\"\")/rep(\"\"\"root = 64, colW = 290,\"\"\", \"\"\"root = 64, colW = 305,\"\"\")/' edit9.py && grep -n 'colW = 305' edit9.py"}

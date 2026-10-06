@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/^from app.agent.run_store import RunStore$//; s/from app.web.viewmodel import run_view/from app.web.viewmodel import build/; s/v = run_view(RunStore(R.name, root=R.parent))/v = build(R.name)/' /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/inspect8b.py && uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/inspect8b.py"}

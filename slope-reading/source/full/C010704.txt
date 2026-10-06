@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\np='/tmp/audit_question.py';s=open(p).read().replace(\"(ROOT/'ctl/paths').glob('*.pkl')\", \"(ROOT/'ctl').glob('part*.pkl')\");open(p,'w').write(s)\nPY\naws s3 cp /tmp/audit_question.py s3://slope-walk-462947327980-20261001/walk-36781427817/pool/repair/audit_question.py --profile slope --region us-east-2 --only-show-errors","max_output_tokens":500}));
+text(await tools.write_stdin({session_id:68084,chars:"","yield_time_ms":1000,"max_output_tokens":1500}));

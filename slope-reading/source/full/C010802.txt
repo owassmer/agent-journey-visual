@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ec2 describe-instances --instance-ids i-0ec1292733be502cc --profile slope --region us-east-2 --query 'Reservations[].Instances[].State.Name' --output text; aws s3 ls s3://slope-walk-462947327980-20261001/walk-36781427817/pool/repair/ --profile slope --region us-east-2","max_output_tokens":1000}));

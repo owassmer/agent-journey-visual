@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split && python3 ssm.py --wait 30 -- \"pkill -f 'python - slope-walk'; systemctl stop slope-repro-0-0 2>/dev/null; sleep 2; ps -eo pid,args | grep -E 'python' | grep -v -E 'grep|amazon|ssm' | cut -c1-120\"; sleep 150; python3 ssm.py --wait 30 -- \"cat /var/log/slope-prepare2.log | tail -6 | cut -c1-400\"", "timeout": 260}

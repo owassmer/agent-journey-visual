@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && python3 ~/.hermes/profiles/connor/cache/scratch/indenture_grep.py Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/akts_2022_06_notes_indenture.html \"generally not paying\" \"Acceleration of Maturity|Section 7\\.02\" 2>&1 | cut -c1-1400"}

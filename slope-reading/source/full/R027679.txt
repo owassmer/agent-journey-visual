@@ -1,0 +1,193 @@
+# Massimo Group (MAMO, Nasdaq, CIK 1952853): Taizhou Nebula Power v. Massimo Motor Sports — round 2 (worker W1)
+
+Verified by W1, 25 Sep 2026. Sources: EDGAR (curl), Texas TAMES (browser_mcp + curl of public PDFs).
+
+## New facts that change round 1
+1. **Appeal located and decided.** Fifth Court of Appeals (Dallas) No. **05-24-00935-CV**, filed 8 Aug 2024, from 116th Judicial District Court, Dallas County, DC-20-13300 (Hon. Tonya Parker). Docket: https://search.txcourts.gov/Case.aspx?cn=05-24-00935-CV&coa=coa05 (opened in browser; all documents free PDFs).
+   - Appellant brief 31 Jan 2025; appellee brief 2 May 2025; amended appellant brief 8 May 2025; reply 11 Jun 2025; set for oral argument 4 Dec 2025; submitted 11 Feb 2026.
+   - **10 Aug 2026: memorandum opinion (Justices Miskel, Clinton, Jackson; op. by Jackson) — AFFIRMED** on all four sufficiency issues; judgment issued same day. Opinion PDF: https://search.txcourts.gov/SearchMedia.aspx?MediaVersionID=cc759de9-35ec-4759-8aea-4c31259cdb9e&coa=coa05&DT=Opinion&MediaID=fd26e819-3b4f-4800-9abd-0de3496c534d (downloaded, read).
+   - New appellate counsel retained after the opinion; rehearing/en banc deadline extended to 24 Sep 2026, then (24 Sep 2026 order) to 26 Oct 2026 over Nebula's opposition. Still live today.
+   - Round 1's "undecided in May 2026" was correct at the time; "fails 6" is now only a fail for Ds before ~Aug 2025.
+2. **Supersedeas bond WAS filed, 7 Aug 2024.** Docketing statement (12 Aug 2024), §X "Supersedeas bond filed? … If yes, date filed: 08/07/2024": https://search.txcourts.gov/SearchMedia.aspx?MediaVersionID=0daf13f3-c509-423b-965d-2d91a4e77f06&coa=coa05&DT=Other&MediaID=6a31b42d-3bd9-4502-a25b-acfa9f6cbf24 (downloaded; checkbox state lost in text extraction, but the date field is filled). No SEC filing mentions the bond, its surety or collateral — **collateral unverified** (no restricted cash on the balance sheet).
+   - Judgment components (docketing statement): damages $3,334,541.60; trial fees $1,123,259.20 (+$139,050); conditional appellate fees; other $1,495,549.81 (pre-judgment interest, costs, one year post-judgment interest). Company accrual $5,988,961 (unchanged 31 Dec 2024 → 30 Jun 2026).
+3. **Liquidity alternatives are cheap and available at every candidate D.**
+   - Cathay Bank line $15.0M at prime + 0.75%, from 13 May 2024, secured by AR, inventory, deposits, equipment, guaranteed by David Shan; **$nil drawn at 30 Sep 2024, 31 Dec 2024, 31 Dec 2025**; still referenced in the Q2 2026 10-Q (AR pledged). "All bank loans were repaid in early August 2024." Inventory pledged $24.7M (30 Sep 2024). Borrowing-base formula not disclosed; no evidence it binds. (Q3 2024 10-Q https://www.sec.gov/Archives/edgar/data/1952853/000149315224045987/form10-q.htm ; FY2025 10-K https://www.sec.gov/Archives/edgar/data/1952853/000149315226013862/form10-k.htm)
+   - 23 Jun 2026: new unsecured **$4.0M draw-down facility from David Shan at 4.0%**, undrawn at 30 Jun 2026 (Q2 2026 10-Q https://www.sec.gov/Archives/edgar/data/1952853/000149315226037802/form10-q.htm).
+   - Cash: $1.72M (30 Sep 2024), $2.44M (30 Jun 2025), $4.15M (31 Mar 2026), $4.6M (30 Jun 2026); working capital $17.1M; management "confident" it can meet needs from operations for 12 months; no going-concern language.
+
+## D options tested
+- **D = 14 Nov 2024** (round 1): appeal pending; outcome 21 months later → criterion 6 = 0; 8(a) = 0 (undrawn $15M line at prime+0.75%).
+- **D = 14 Aug 2025** (Q2 2025 10-Q; briefing complete, awaiting setting): affirmance 10 Aug 2026 is inside 12 months → criterion 6 = 2 for the court outcome, but the **cash outcome is still unknown** (bond in place, rehearing pending, possible Texas Supreme Court petition). 8(a) still 0.
+- **D = 15 May 2026** (Q1 2026 10-Q; argued/submitted 11 Feb 2026): opinion 87 days later. 8(a) worse (cash $4.15M, then $4M 4% insider line in June).
+No D makes 8(a) pass. The gate fails.
+
+## Scores (best D = 14 Aug 2025)
+1 fit 2 (UTV/ATV/pontoon importer-distributor, 2024 rev $111.2M, 2 suppliers ~74% of purchases).
+2 live dispute 2 (appeal pending; ~$6M judgment superseded).
+3 record 2 (TAMES: free briefs, docketing statement, orders; trial docket via Re:SearchTX not opened).
+4 reaches lender 1 ($6.0M vs cash $2.4M, but undrawn $15M line).
+5 channels 1 (supplier counterparty — former supplier; supplier concentration; bond; no covenant/judgment-default clause found in filings).
+6 outcome 1 (court outcome known 10 Aug 2026; payment/enforcement not yet known).
+7 acquirable 2.
+8 gate **FAIL** — (a) 0 undrawn $15M Cathay line + (from Jun 2026) $4M 4% insider facility; (b) 1 cash $2.4M vs ~$6M monthly COGS in 2025 but no runway language; (c) 2 (Chinese OEM invoices, COGS $12M/quarter in Q2 2025); (d) 1 ($6M superseded judgment, payable only after mandate).
+Total 13/16 but gate fails.
+
+## Risks
+Low fame. Payment outcome not yet public. Bond collateral undisclosed. Round-1 note "no supersedeas disclosure" is superseded: a bond was filed 7 Aug 2024 per the docketing statement.
+
+## Not opened
+Dallas County district docket (Re:SearchTX requires an account); appellant brief (3.7 MB) and amended brief not read in full; clerk's record not public on TAMES.
+# MusclePharm (MSLP, CIK 1415684): ThermoLife judgment, Bakery Barn suit, instalment settlements — round 2 (worker W1)
+
+Verified by W1, 25 Sep 2026. Round-1 facts in `../notes_musclepharm.md` (Q1-2022 10-Q, Empery note form, RECAP Doc 34/210/351) are relied on and not repeated.
+
+## State record: what I actually reached
+**Maricopa County Superior Court CV2016-000113 — OPENED (free, no login).** Register of actions, party list, judgments table: https://www.superiorcourt.maricopa.gov/docket/CivilCourtCases/caseInfo.asp?caseNumber=CV2016-000113 (browser_mcp). Judge Melissa Julian; filed 15 Jan 2016. Documents themselves are not linked (many are sealed "SDD" entries; unsealed copies would need eAccess/clerk — not attempted, may be paid).
+Key entries (all dated, all public):
+- 4 Dec 2019 judgment: principal $893,675; fees $345,394.50; costs $89,540.11. 30 Dec 2019 supersedeas bond filed; 10 Jan 2020 order permitting bond; 24 Apr 2020 supplemental bond.
+- 18–27 May 2021: ThermoLife motion/OSC "why bond amount should not be increased to the full amount of the judgment"; under-advisement ruling 2 Jun 2021 (content not visible; Doc 351 later shows the bond stayed at $600k).
+- **1 Jun 2022: ThermoLife "Motion to Release Supersedeas Bonds to Plaintiff"** (sureties: Atlantic Specialty Insurance Co. and SureTec Insurance Co., per 21 Jul 2022 order).
+- 9 Jun 2022: ThermoLife's former counsel Kercsmar Feltus & Collins moves to intervene (fee claim against ThermoLife).
+- 17/20 Jun 2022: Court of Appeals mandate (and amended mandate).
+- **21 Jul 2022 order:** intervention granted; "MusclePharm shall not compensate ThermoLife in satisfaction of the Final Judgment … If MusclePharm wishes to fully satisfy ThermoLife claims here, it shall do so by paying the amounts owed to the Clerk of the Court"; any bond payout must be deposited with the Clerk.
+- 28 Jul 2022 notice of writ of attachment; 8 Sep 2022 ruling on reconsideration; Dec 2022 proposed amended judgment + fee applications; **6 Feb 2023 amended judgment** ($893,675 principal + $893,675 interest + fees/costs; matches RECAP Doc 351).
+- This is new versus round 1: the 2022 courtroom path was a bond-release fight plus a third-party fee lien that froze direct payment — a real, dated, public sequence for Jev, but it pushed ThermoLife's cash collection out, not in.
+
+**Arizona Court of Appeals 1 CA-CV 20-0209:** memorandum decision (27 Apr 2021) public: https://www.courtlistener.com/opinion/9530472/thermolife-international-llc-v-musclepharm-corporation/ (round 1). Appellate docket (azcourts) not opened.
+
+**Allegheny County Court of Common Pleas (Bakery Barn, filed 24 Jan 2022) — NOT REACHED.** The Department of Court Records civil site (https://dcr.alleghenycounty.us/Civil/LitigantSearch.aspx) redirects name search to a login page; case-ID search needs the GD number and a BotDetect CAPTCHA. The GD number is **unverified**: not in the 10-Q, not on RECAP (bankruptcy SOFA Doc 176 is not on RECAP), not found by web search. (The 2017 Bakery Barn suit was GD-17-007623, removed to W.D. Pa. 2:17-cv-00873 — a different, earlier case; PacerMonitor only.) Pre-D Bakery Barn facts therefore come only from 
+
+## Decision-date test (cash < 1 month of outflows at every D)
+XBRL companyfacts (https://data.sec.gov/api/xbrl/companyfacts/CIK0001415684.json): cash $1.016M (30 Jun 2021), $0.40M (30 Sep 2021), $1.22M (31 Dec 2021), $0.53M (31 Mar 2022); quarterly COGS $11.6–12.7M (≈$4M/month); AP $15–19M. Q2-2022 10-Q never filed (NT 10-Q 17 Aug 2022).
+
+| D | Dispute state | 3-instalment loan window | Dispute reaches loan? | Too collapsing? |
+|---|---|---|---|---|
+| 16 Aug 2021 (Q2-21 10-Q) | ThermoLife petition for review pending (decided 4 May 2022, day 261); bond-increase OSC resolved; Bakery Barn not yet sued | Sep–Nov 2021 | No: no dispute event in window; Empery $8.2M notes (Oct 2021) refinance liquidity | Yes (cash ≈ 1 week of COGS) |
+| 17 Nov 2021 (Q3-21 10-Q) | petition pending (day 168); Empery notes with $100k/45-day judgment default, due 13 Apr 2022 | Dec 2021–Feb 2022 | Weak: Bakery Barn suit (day 68) and Flavor Producers cross-claim (31 Jan 2022) land in window, but no cash leaves | Yes |
+| 16 May 2022 (round 1) | review denied 4 May; 1 Jun bond-release motion; June mandate; 21 Jul pay-into-court order; Bakery Barn preliminary objections | Jun–Aug 2022 | Weak: ThermoLife collection frozen by intervention; loan repaid before 3 Oct sweep | Yes |
+| 12 Jul 2022 (8-K: CFO resigns) | bond release + intervention pending | Aug–Oct 2022 | Loan impaired (3rd instalment after 3 Oct DACA sweep) — but by lender/restatement, not the disputes | Yes, and D is 6 weeks before declared defaults |
+
+**Verdict:** no D makes the dispute's cash path the thing that reaches the loan while the borrower is still fundable on bank data. MusclePharm is "too collapsing" at every D by the brief's own test (cash < 1 month of outflows), and its realised failure ran through Empery (restatement, CFO departure) — First-day declaration (RECAP Doc 34) does not cite the lawsuits.
+
+## Scores (best D = 16 May 2022)
+1 fit 2; 2 live dispute 2; 3 record 2 (Maricopa register free + AZ opinion + 10-Q; Allegheny not reached) — up from 1; 4 reaches lender 2; 5 channels 2 (Empery judgment default/cross-default, factoring, supplier counterparties, bonds); 6 outcome 2; 7 acquirable 1 (Allegheny docket and sealed Maricopa documents unavailable); 8 gate: passes on the letter (a 2, b 2, c 2, d 2) but "collapsing" → demo-weak.
+Total 15/16 on the letter; practical rating: weak demo (bank data alone declines; dispute not causal).
+
+## After D (summary)
+3 Jun 2022 amended SPA (OID 14%→28%, $3.08M June Notes at 20% OID; 8-K 9/14 Jun 2022); 6/22 Jul 2022 CFO resignation; 22 Aug 2022 non-reliance (credit memos, ~$0.6M revenue overstatement; 8-K 22 Aug 2022 https://www.sec.gov/Archives/edgar/data/1415684/000149315222023755/form8-k.htm); Empery default letters 26 Aug/8 Sep; 3 Oct DACA sweep; 15 Dec 2022 Chapter 11; 6 Feb 2023 amended ThermoLife judgment; June 2023 ThermoLife stay relief (RECAP Doc 613/615).
+
+## Unverified
+Allegheny GD number and docket; Maricopa sealed filings; bond collateral/indemnity arrangements with the sureties.
+# Barfresh Food Group (BRFH, Nasdaq, CIK 1487197): Barfresh v. Schreiber Foods — round 2 (worker W1)
+
+Verified by W1, 25 Sep 2026. Read-only use of the repo evidence at `/Users/owenwassmer/dev/Slope_Sparse_Events/Slope_Credit_Scenario_Research_and_Design_Kit/research/barfresh_case/` (10-K 2023/2024, 10-Qs 2024–Q1 2025, case_facts.json). Later filings fetched from EDGAR by curl.
+
+## Identification
+- Manufacturer: **Schreiber Foods, Inc.** (Wisconsin; plant in Fullerton, CA). Supply Agreement 29 Sep 2020, term to Sep 2025; Schreiber made ~52% (2022) / 42% (2021) of Barfresh's products (every 10-Q/10-K "Schreiber Dispute" note).
+- Federal: C.D. Cal. **2:22-cv-08222** (Judge Percy Anderson), filed 10 Nov 2022; claims breach of contract + fraud. Dismissed for lack of SMJ with leave (15 Nov 2022), FAC filed; fraud claim dismissed with leave 10 Jan 2023; voluntary dismissal 20 Jan 2023. CourtListener docket 65747138: Doc 26 available on RECAP; Docs 11, 19 not. Complaint visible on PacerMonitor (not a free-authoritative source).
+- State: **Orange County Superior Court, Central Justice Center**, *Barfresh Food Group, Inc. v. Schreiber Foods, Inc.*, filed **21 Aug 2023**, Commercial/Contract, Judge Nico Dourbetas, Dept C13 (UniCourt summary https://unicourt.com/case/ca-ora-caseawd1cb0084cd16-1294973 — opened via web_extract). Not LA Superior Court as the brief guessed. **Case number masked on UniCourt; unverified.**
+- **Counterclaim: yes.** UniCourt party list shows "Defendant and Cross-Complainant SCHREIBER FOODS, INC." / "Plaintiff and Cross-Defendant BARFRESH". Amount and filing date of the cross-complaint **unverified**; most likely the $499,000 Barfresh withheld (disclosed as "disputed co-manufacturer accounts payable"). Barfresh filings never mention the cross-complaint.
+- Status: Barfresh motion to seal with complaint (Aug 2023); 2025 ruling letting fraud claims proceed (10-K FY2025); OSC re venue and ex parte Mar 2026; motion to compel set 24 Apr 2026; **court trial set 19 Apr 2027** (UniCourt; 10-K FY2025 and Q2 2026 10-Q say "trial date … April 2027"). Litigation funded non-recourse since May 2024.
+
+## Record route
+Opened: EDGAR (repo copies + FY2025 10-K https://www.sec.gov/Archives/edgar/data/1487197/000149315226016807/form10-k.htm , Q2 2026 10-Q https://www.sec.gov/Archives/edgar/data/1487197/000149315226038426/form10-q.htm); 8-K 10 Nov 2022 (search snippet) https://www.sec.gov/Archives/edgar/data/1487197/000149315222031338/form8-k.htm ; UniCourt summary; CourtListener API.
+Not reached: OC Superior Court civil case access (the URL I tried, civilwebshopping.occourts.org/Search.do, returned an Azure 404; I did not find the current portal entry point in the time box). Documents in OC civil access are typically paid per page — **unverified**.
+
+## Liquidity / criterion 8 (best D ≈ 25 Oct 2024, as in the repo's case_facts.json)
+- Cash $401k (30 Sep 2024); receivables facility $1.5M, prime + 1.2% (~9.2%), $1.4M available at 30 Sep 2024 (Q3 2024 10-Q); going-concern doubt "alleviated" but stated; FY2024 revenue $10.7M, cost of revenue $7.0M.
+- (a) **FAIL/partial**: a ~9% AR facility with $1.4M undrawn is cheaper liquidity; it is small, but larger than a Slope draw. (b) pass (cash $0.2–0.4M). (c) pass-marginal (COGS ≈ $0.6M/month across co-packers). (d) **fail**: Barfresh is plaintiff; litigation costs are funded non-recourse; the only cash exposure is the $499k disputed AP / cross-complaint, with trial in 2027. No dated cash consequence within 180 days of any 2023–2025 D.
+
+## Scores (D = 25 Oct 2024)
+1 fit 2 (F&B, school/military smoothies, contract manufacturers); 2 live dispute 1 (live, but plaintiff; next event months-to-years away); 3 record 1 (SEC + UniCourt summary; state docket not opened; case no. unverified); 4 reaches lender 1 ($499k cross-claim vs $401k cash is material on paper but no timing); 5 channels 2 (supplier counterparty, supply disruption/capacity loss, receivables facility, litigation funding); 6 outcome **0** (no merits outcome; trial Apr 2027); 7 acquirable 1; 8 gate **FAIL** (a partial, d fail).
+Total 8/16, gate fails.
+
+## After D
+Q1 2025: $3.0M equity raised, facility repaid to $0, cash $1.87M; FY2025 10-K: going-concern doubt alleviated; Q4 2025 acquired Arps Dairy (own production). Dispute still pending Sep 2026.
+
+Reject: plaintiff-side dispute with litigation funding, no outcome until 2027, cheaper AR facility available.
+# Jones Soda (JSDA, OTCQB), CIK 1083522 — Core Manufacturing v. Mary Jones Michigan (arbitration, Columbus OH)
+
+Verified by worker W2, 25 Sep 2026, from EDGAR filings (curl) and the CourtListener search API.
+
+## Borrower
+- Craft soda (Jones Soda) plus Mary Jones THC/CBD beverages and edibles. Revenue 2024 $19.16M, COGS $15.08M (FY24 10-K, filed 1 Apr 2025: https://www.sec.gov/Archives/edgar/data/1083522/000164117225001951/form10-k.htm). Uses co-packers; buys bottles, ingredients, co-packing — Slope-shaped (COGS about $1.25M/month).
+
+## Dispute
+- 24 Aug 2023 Core Agreement: Core Manufacturing LLC to manufacture Mary Jones hemp Delta-9 THC craft sodas. 1 Feb 2024: MJM notice of Core's material breaches and audit demand. 25 Mar 2024: Core's Notice of Claims for arbitration (Columbus, Ohio), two breach-of-contract claims, seeks break-up fee **$7,220,357** plus other damages. 16 Apr 2024: MJM answer, affirmative defences, counterclaims (breach, fraud, negligent misrepresentation). Arbitrator selected; "too early … no range of accrual" (Q3 2024 10-Q, filed 14 Nov 2024: https://www.sec.gov/Archives/edgar/data/1083522/000143774924035371/jsd
+- Related: MJM v. P3 Capital Partners (Core affiliate), W.D. Mich. 1:24-cv-00606, filed 10 Jun 2024, $155,700 deposit; terminated 13 Feb 2025 (CourtListener API docket_id 68924777; RECAP entries 6, 13, 15 listed but **not available** free).
+- Feb 2025: confidential global settlement, both matters settled/dismissed (FY24 10-K, Legal Proceedings). Amount not disclosed. Accrued "Legal settlement" $135k at 31 Dec 2024, $1k at 31 Mar 2025 (Q1 2025 10-Q: https://www.sec.gov/Archives/edgar/data/1083522/000164117225011093/form10-q.htm) — **inference** that this is the Core settlement; not stated.
+
+## Record route
+- Opened: FY23 10-K, Q3 2024 10-Q, FY24 10-K, Q1 2025 10-Q, 8-Ks of 23 May 2024 (Amerisource) and 13 Feb 2025 (Two Shores). CourtListener search API for the P3 case.
+- Not public: the Core Agreement (not filed as exhibit — not found in EFTS search restricted to the CIK), the notice of claims, the counterclaim, the arbitrator's rulings, the settlement.
+- Sufficiency: only the headline claim ($7.22M break-up fee), the counterclaim causes of action and "early stages". No hearing date, no merits detail, no schedule. **Record is too thin for Jev to read the dispute** → criterion 3 scores 0–1.
+
+## Liquidity at proposed D = 15 Nov 2024 (Q3 10-Q)
+- Cash $2.69M at 30 Sep 2024; 9-month operating burn $4.4M; AP $2.74M (up from $0.72M); Aug 2024 PIPE net $3.7M.
+- Amerisource AR facility $2M, 80% of eligible AR, prime + 3.5% (≈11.5%), fully repaid and undrawn at 30 Sep 2024 (Q3 10-Q Note 6; 8-K 23 May 2024: https://www.sec.gov/Archives/edgar/data/1083522/000143774924018110/jsda20240521_8k.htm).
+- Q3 10-Q says going-concern doubt "initially raised" was alleviated by the facility and the PIPE (no going-concern doubt at D). The FY24 10-K (after D) reinstated substantial doubt.
+
+## Criterion 8
+- (a) PARTIAL: undrawn AR line at ≈11.5%, borrowing-base limited; equity only via PIPEs.
+- (b) PARTIAL: $2.7M cash ≈ 5–6 months of net burn; management says 12 months funded at D.
+- (c) PASS: COGS about $1.25M/month.
+- (d) PASS on claimed exposure ($7.2M ≈ 2.7× cash) but the record gives no basis to size probability.
+
+## Channels
+- Counterparty is a co-manufacturer (trade partner) for the THC line. AR facility with adverse-change EoD. Dependence on equity raises. Litigation spend (not quantified). Two channels evidenced; interaction weak.
+
+## After D
+- Feb 2025 settlement (amount confidential; $135k accrual suggests small). 5 Feb 2025 Two Shores Capital loan up to $5M at 13.75% (8-K 13 Feb 2025: https://www.sec.gov/Archives/edgar/data/1083522/000149315225006363/form8-k.htm). Cash $1.53M at 31 Dec 2024.
+
+## Scores (W2)
+1: 2 | 2: 2 | 3: 0 | 4: 2 | 5: 1 | 6: 1 (outcome known only as "confidential settlement", amount inferred) | 7: 1 | 8: 1 → **10/16. Reject as lead: record insufficient and outcome amount undisclosed.**
+# Coffee Holding Co. (JVA), CIK 1007019: near miss (no material trade-partner dispute)
+
+Verified by W4 from EDGAR on 25 Sep 2026. I read one filing: the FY2023 10-K, filed 9 Feb 2024, https://www.sec.gov/Archives/edgar/data/1007019/000149315224005726/form10-k.htm
+
+## Why it surfaced
+EDGAR full-text search hit the 10-K's "Circuit Court of" + "supplier" + "substantial doubt" pages, and the loan-agreement exhibits ex10-27 (FY2022 and FY2023) on "arbitration award" + "supplier" + "going concern". The exhibit hits are boilerplate.
+
+## Verified facts (FY ended 31 Oct 2023)
+- **Business:** "an integrated wholesale coffee roaster and dealer" in Staten Island, NY. It has roasting plants in La Junta, CO (owned) and Massachusetts (leased). It buys green coffee on commodity terms. This is a Slope-shaped B2B manufacturer and distributor.
+- **Revenue:** not pulled from this 10-K. The XBRL companyfacts cache holds no value, so revenue is **unverified** here. My recollection of about $60–70M is unverified.
+- **Cash:** $2,733,977. Accounts receivable $7.98M. Inventories $18.99M.
+- **Revolver:** Webster (formerly Sterling) line at SOFR + 1.75%, maturing 30 Jun 2024, with **$9.62M outstanding**. The company breached a covenant at 31 Oct 2023, which is an event of default, and had no waiver. "The lender has reserved its right to exercise its rights and remedies at any time."
+- **Going concern:** the Marcum audit opinion carries a going-concern paragraph based on the default and the maturity.
+- **FY23 cash flow:** operating cash flow +$0.65M.
+- **Pending merger** with Delta (the 10-K references "the Merger with Delta").
+
+## Dispute check
+- Item 3 reads: "We are not currently a party to any material legal proceedings."
+- The only live matter is *Cohen v. [customer]* (D. Mass., filed about 2 Feb 2021). It is a private-label labelling class action. JVA is not a defendant but indemnifies the customer. It is federal, a consumer class action, and immaterial on the filings.
+- An earlier N.D. Ill. labelling class action was dismissed on 28 Sep 2021 and settled in January 2022 on appeal.
+
+## Verdict
+Criterion 8(a) and (b) look strong: a revolver in default and going concern. There is no live trade-partner or competitor dispute of material size, so it **fails criteria 2 and 4**. It is worth keeping as a template borrower only.
+# Yunhong CTI Ltd. (YHGJ, formerly CTI Industries), CIK 1042187: rejected (collapsing; disputes too small or not trade)
+
+Verified by W4 from EDGAR on 25 Sep 2026. I read one filing: the Q2 2021 10-Q, filed 20 Aug 2021, https://www.sec.gov/Archives/edgar/data/1042187/000143774921020604/ctib20210630_10q.htm
+
+## Borrower
+- Foil-balloon and film light manufacturer in Lake Barrington, IL, with a Mexican subsidiary (Flexo).
+- Revenue from XBRL: $24.1M in 2021 and $18.0M in 2022.
+- Walmart is a key customer.
+
+## Liquidity at 30 Jun 2021
+- Cash **$272,631**. The company is "out of compliance" with its PNC facility ($9M revolver plus term loan, with a borrowing base on receivables and inventory).
+- It is under Consent, Forbearance and Amendment No. 6: a $1M forbearance fee, a forbearance reserve raised to $2.525M, Walmart receivables made ineligible from 1 Aug 2021, and PNC to be paid in full by 30 Sep 2021.
+- It sold and leased back its headquarters for $3.5M.
+- Going-concern doubt.
+- Cash is below one month of outflows and defaults have been declared, so it is **collapsing** under the brief's definition.
+
+## Disputes at D (from the 10-Q)
+- *Benchmark Investments v. Yunhong CTI*, S.D.N.Y., filed 16 Mar 2021: more than $500k. Benchmark is the underwriter, not a trade partner.
+- *Transportation Solutions Group (Redwood Multimodal) v. CTI*, Cook County Circuit Court, 2021 L 7225: unpaid freight invoices of $98,661.
+- *FedEx Trade Networks v. CTI*, Lake County, IL, 20 L 46: settled at $10k a month.
+- *Jules & Associates* (JAMS, equipment lease): settled at $90k.
+- These are vendor collection suits, individually immaterial.
+
+## Verdict
+It fails criterion 4 (materiality) and criterion 8 in spirit (a bank-data view already declines it). I did not verify its later history.
+1:# Sweep log, lane W4 (EDGAR full-text search, filing-first)
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

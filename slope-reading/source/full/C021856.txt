@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '30,140p' tools/question_refresh.py; sed -n '140,300p' tools/question_refresh.py; sed -n '590,675p' tools/question_refresh.py; cat .github/workflows/question-mass-check.yml","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":7000}));

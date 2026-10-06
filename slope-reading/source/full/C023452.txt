@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"cat tools/question_fact_fleet.py\nrg -n -A58 -B12 \"'/facts'\" tools/question_preparation_fleet.py\nrg -n -A95 'def parallel_facts|def finalize' tools/question_refresh_assemble.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":11000}));

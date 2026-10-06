@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/split && env -u CLAUDE_CODE_OAUTH_TOKEN OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=. timeout 400 .venv/bin/python $S/memo_check.py $S/g4/prefix.json 2>&1 | grep -v -i warn | tail -8", "timeout": 450}

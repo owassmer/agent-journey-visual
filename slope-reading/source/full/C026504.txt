@@ -1,0 +1,1 @@
+{"command": "grep -n \"^from app.domain.values\\|^from pydantic\" app/domain/investigation.py; python3 /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/p5b_nodes.py && uv run ruff check app && uv run pytest -q -p no:warnings -x 2>&1 | sed 's/\\x1b\\[[0-9;]*m//g' | grep -E \"^FAILED|^E  \" | head -5", "timeout": 600000}

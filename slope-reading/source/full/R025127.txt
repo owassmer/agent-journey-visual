@@ -1,0 +1,109 @@
+User has approved your plan. You can now start coding. Start with updating your todo list if applicable
+
+Your plan has been saved to: /Users/owenwassmer/.claude/plans/pr-3-merged-digest-shiny-deer.md
+You can refer back to it if needed during implementation.
+
+If this plan can be broken down into multiple independent tasks, consider spawning named teammates with the Agent tool (pass a `name`) to parallelize the work.
+
+## Approved Plan:
+# Jev pivot: understanding, implications and what changes
+
+## Context
+Steps 1–3 are merged: the runtime smoke test, dated evidence snapshots and the finance core. `Jev_Pivot.md` redefines step 4 and re-plans steps 5–7. The old step 4 treated Jev as an optional tool the agent calls on (`judge_evidence` with agent-chosen question IDs). The pivot makes Jev a **semantic judgment layer**, applied systematically wherever text turns into a fact, a fact into an economic effect, or evidence conflicts. The layer is host-controlled and recorded in one immutable investigation graph, and the UI, reviewer and evaluator all consume that graph.
+
+This document confirms my understanding before any file changes, and lists exactly what should change.
+
+## My read of the pivot (thesis)
+*Claude thinks broadly, Jev judges narrowly, code computes exactly, the host controls everything, and the reviewer sees the causal chain.*
+
+Jev earns its place by **preventing category errors before they become financial inputs**. Examples: an allegation treated as a liability, a paid matter treated as a future outflow, a noncash gain treated as cash, the wrong entity, a disputed demand treated as a payment. It does not predict risk, and it never sets amounts, dates or decisions.
+
+The graph (source → Jev observation → atomic finding → effect proposal → engine result) is the product's audit trail, so it has to be recorded now rather than reconstructed later.
+
+## Unchanged (non-negotiables the pivot reinforces)
+- Jev confidence is never a probability, a weight or a haircut, and a Jev answer never activates a cash adjustment automatically.
+- Dates, arithmetic, double-count protection and cash conservation stay in `app/finance` (merged step 3).
+- Snapshot isolation stays as it is (step 2 `EvidenceStore`). The agent never passes paths, cutoffs or raw Jev state. Evaluator and facts files never reach the agent, Jev or the reviewer.
+- The deliverable remains a financing decision plus the loan's dated cash flows.
+
+## Where I agree, refine or push back
+1. **The screen labels and orders evidence; it never hides it.** `candidate_screen` routes FTS results into direct evidence, conflict, and context-only. A Jev false negative must not bury the passage that answers the question, so every candidate stays visible to the agent with its label, and screened-out IDs stay readable.
+2. **Host-triggered, not agent-optional.** Two points in the flow become automatic host operations: search triggers the candidate screen, and proposing a finding triggers the finding check. Claim interpretation and statement relation stay agent-requested, but through **profiles plus object IDs**, and the host builds the minimal state. This does not violate the spec §7 rule against a "fixed Jev-question sequence": that rule forbids answer-bearing scripts, and the agent still chooses the research strategy. The spec wording needs updating to say so explicitly.
+3. **Provider provenance: not adopted (your decision).** The pivot's "fix provider provenance" section, meaning the demo/evaluation provider policies, any eval-mode freeze, and direct TypeSafe, is out of scope. The adapter keeps its current behaviour: the OpenRouter route, the returned model recorded on every judgment, and the existing model check. It is not raised in PRs or reports.
+4. **Honest attempt accounting (budget, not provenance).** The budget counts physical attempts including SDK retries, but the adapter counts calls while the SDK silently retries up to 2 times. The fix is to set the `RetryPolicy` explicitly and reserve 1 + max_retries attempts per call against the ceiling.
+5. **Jev budget (decided): 150 physical attempts per run, spend cap unchanged at $0.10.** Per-candidate screening is one request per query–passage pair, about 100–150 per run, which costs about $0.01. Use the async client for parallel fan-out to protect the 600 s wall clock.
+6. **Runtime effects cite findings and spans, never kit fact IDs.** The kit's `economic-effects.json` cites the evaluator-only facts registry. Runtime `EconomicEffectProposal`s must cite `AtomicFinding` IDs and exact source spans: `section_id` plus char offsets plus a quote that the host verifies verbatim against the stored section text. That verbatim check is a deterministic provenance guard worth adding.
+7. **`economic_role` bridges to the mechanisms.** It maps onto the spec §5 mechanism families: existing cash obligation → settlement payment or resolved obligation; noncash accounting item → normalization (never a ledger stream); cash-access constraint → restricted funds; operating change → interruption or receipt delay; financing or reimbursement → expense funding. It is a warning and routing signal; host validation keeps authority.
+8. **Keep, but de-emphasize.** `instruction_like_text` stays cheap and invisible. `next_source` and `candidate_relevance` are retired from the profiles, because `gap_relevance`, `usable_evidence` and `premise_conflict` replace them. Score is not used.
+9. **Deadline realism.** The pivot's step 4 is roughly 2–3× the old one. Semantic eval labels are evaluation data, not a test suite; a small labelled set (about 15–20 boundary cases from both borrowers) is enough to sanity-check the 0.5 routing thresholds, with no automatic confidence gates.
+
+## Exactly what changes
+
+### A. Authoritative documents and contracts (first commit of step 4)
+- **Spec, root and kit copy kept identical:**
+  - §7: tools, Jev role, profiles, budgets, and the reworded "no scripted sequence" rule.
+  - §9 table: the step 4 deliverable and exit condition become the pivot's revised exit condition; a thin viewer is added to step 4 while the polished workbench stays in step 6; step 7 gets the new metrics.
+  - §10: agent acceptance adds the Jev contribution ledger and critical semantic errors.
+- **`agent_config.json`:**
+  - new MCP tool allowlist (below);
+  - budgets: Jev ceiling counted in physical attempts, spend cap unchanged;
+  - Jev integration: profiles, the Noul primitive, async fan-out (the provider block is unchanged);
+  - `comparison_mode_overrides.agent_only`: also removes the screen fields from search and the automatic finding check.
+- **`question_registry.json` → version 3.0.0,** with plain-language questions:
+  - **Screen (Noul):** gap_relevance, usable_evidence, premise_conflict, instruction_like_text.
+  - **Interpretation (Choice):** entity_scope, claim_posture, obligation_status, cash_access, activity_status, offset_status.
+  - **Finding quality:** finding_support, finding_atomicity, context_sufficiency, economic_role.
+  - **Reconciliation:** statement_relation, baseline_overlap (a warning only).
+  - All four sets are generic, with no case-specific hints. `PACKAGE_MANIFEST` hashes are refreshed.
+- **`CLAUDE.md`:** reference `Jev_Pivot.md` as builder-only design rationale, never put in agent prompts, and add the Jev-role summary.
+
+### B. Step 4 code
+- **`app/domain/investigation.py`:** DecisionDependency, EvidenceCandidate, JevCallRecord, SemanticObservation (with `downstream_disposition`), AtomicFinding (spans plus observation references plus agent disposition and override reason), ReconciliationTask, EconomicEffectProposal (aligned with the kit `Effect` schema fields), InvestigationEvent.
+- **`app/agent/run_store.py`:** a run-scoped, append-only JSONL event log with a hash chain plus content-addressed objects under `var/runs/<run_id>/`. It is locked at submit and copied to `runs/recorded/`.
+- **`app/agent/jev.py`:** Choice and Noul support; one `JevCallRecord` per physical request with the raw response stored once and observations split out per question; the async client; honest attempt accounting against the 150 ceiling; the interpretation cache from the agent_config cache spec. The provider route and model check are unchanged.
+- **`app/agent/jev_profiles.py`:** the four profiles (candidate_screen, claim_interpretation, finding_check, statement_relation), each mapping to its questions plus a minimal-state builder from immutable objects only.
+- **`app/agent/tools.py` (scoped MCP server, run-bound):**
+  - get_mission, read_baseline_profile, read_loan_terms;
+  - record_dependency (replaces record_gap);
+  - search_evidence(dependency_id, query, source_ids?), which runs the screen automatically;
+  - read_evidence(id);
+  - judge(profile, ids);
+  - propose_finding, which runs finding_check automatically, then accept or reject with a reason;
+  - propose_effect, validated by finance;
+  - run_sensitivity (the existing `thresholds.py` and ledger over parameter bounds; offer comparison is step 5);
+  - request_missing_fact; submit_packet.
+- **`app/agent/investigation.py`:** the Claude runner, reusing the step 1 options, `AGENT_PROCESS_ENV` and `project_mission`; budgets, the no-progress stop and execution states.
+- **`cases/synergy_20240813/`:** locked run inputs (requested $250k/6m plus the fixture alternatives, $200k reserve, inventory use of proceeds, all operator-labelled). The baseline profile holds only ordinary underwriting facts from admissible text (cash observations, revenue, debt totals, the existing merchant loan). The settlement calendar, L.O.D.C., the gain and the bridge are excluded, so the agent must discover them.
+- **`app/web/`:** a thin read-only viewer of a recorded run (the investigation graph and "so what?" effect cards), if confirmed.
+- **`evals/jev_semantic_cases.json`:** host-only labelled boundary cases.
+- **Tests:**
+  - isolation: Jev state holds only snapshot objects, and no evaluator strings;
+  - span verbatim check;
+  - a Jev answer never creates a cash stream;
+  - state hash and cache-key behaviour;
+  - the agent-only arm has no Jev surface.
+
+### C. Later steps (re-planned, recorded in the spec)
+- **Step 5:**
+  - matched baseline vs event-adjusted scenario pairs, differing only in effect IDs;
+  - the deferred step 3 items: link Account Credits to operating receipts, payment capacity with an allocation rule, and a bridge-date check in the thresholds;
+  - distinct result series;
+  - action-conditioned operating streams;
+  - conditional offers stated as a fact, the acceptable evidence, and threshold branches.
+- **Step 6:** the reviewer receives the graph packet and each issue it raises points to a node or edge; the polished credit workbench; the outcome reveal stays physically inaccessible until the packet is locked.
+- **Step 7:** agent+Jev vs agent-only compared on the pivot's metric table, including the Jev contribution ledger and agent/Jev disagreement, with no claim of statistical superiority.
+
+## Sequencing (decided)
+- **Step 4a, semantic layer** (branch `step-4a-semantic-layer`, off the latest `main`):
+  - documents and contracts;
+  - domain graph and run store;
+  - Jev adapter and profiles;
+  - registry v3;
+  - the semantic eval set, run once live;
+  - tests.
+- **Step 4b, investigation** (branch `step-4b-investigation`): MCP tools, runner, a live recorded Synergy run, and the minimal read-only viewer. The polished credit workbench stays in step 6.
+- Each is its own PR with independent intent-grounded review, labelled `merge-ready` when it passes. You merge.
+
+## Verification
+- **4a:** pytest (isolation, spans, "Jev never produces cash", cache keys); a live run of the semantic eval set reporting per-question agreement; `slope finance check` still green.
+- **4b:** one recorded Synergy agent+Jev run under budget. Its graph must show the HVL mechanism with the bridge unresolved, the March supplier separate, L.O.D.C. as satisfied, the gain as noncash, approximate cash, and Account Credits as the base, and no evaluator content in any Jev state or tool response. The viewer renders the run.

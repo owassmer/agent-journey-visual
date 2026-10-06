@@ -1,0 +1,72 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_c4414f97]
+A background fan-out unit you dispatched earlier — 2 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 15:19:12 (21m17s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1277.64s
+
+--- ✓ TASK 1/2: Worker F (two fixes) for owassmer/Slope_Sparse_Events PR #17, on branch step-6c-fix2 in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-fix2 (based on 896fccf). Make fix 1 and fix 2 below, each ending in targeted tests, a commit of named files and a push. Report SHAs, what changed and test counts. Do not open a PR, call Jev, or run slope analyze.  (status=completed, api_calls=47, 998.58s) ---
+Both fixes are done and pushed to `origin/step-6c-fix2`. The full test suite passes: **178 passed**.
+
+**Fix 1 — `cdb849d`: each court question now describes its own decision day**
+- **How:** a new step, `court_order`, in `Chain.step` (`app/analysis/events.py`) only records facts and books nothing. It returns the day the court rules, using the same formula and lag key the engine uses:
+  - **Stay approval:** it reuses `stay_security(..., approved=False)`, so the collateral and reduced security are measured on the approval day.
+  - **Registration order:** motion + briefing + `lag("registration_{I1|post}")`. After the ruling, the motion day is `EF`, matching the `enforce` levy step.
+- **In `forecast.py`:** a new `_Walk.court` records `stay_approved` and `registration_early` from that step. They were taken out of the `binary`/`take` keys. `stay_motion` still records the motion day.
+- **Node keys unchanged:** node keys and situation tags still come from the motion-day probe, so no key changes.
+- **Tree unchanged, checked on the fixture:** I dumped the tree before and after the fix. Paths (steps, edges, outcome, order), all 282 nodes and `model.probs` (stub answers and even odds) are identical: 12,157 paths. Only the facts of 19 nodes changed, all of them `stay_approved` or `registration_early`.
+- **Examples of the new facts:**
+
+```
+Node                             | Before             | After                                             |                                        |                                                             
+---------------------------------+--------------------+---------------------------------------------------+----------------------------------------+-------------------------------------------------------------
+`stay_approved\                  | I1\                | entered`                                          | 21 Jun, $17,163,095 cash, offer $6.55M | p50 8 Sep, $10,044,296 cash, offer $6.70M, collateral $41.2M
+post-ruling `stay_approved`      | 7 Nov (motion day) | p50 11 Dec, about $1.36M cash beside the $0 offer |                                        |                                                             
+`registration_early\             | I1`                | 21 Jun                                            | p50 8 Sep                              |                                                             
+post-ruling `registration_early` | 7 Nov              | p50 11 Dec                                        |                                        |                                                             
+```
+
+- **New test** in `tests/test_chains.py`: for every `stay_approved` and `registration_early` node, each recorded fact row (day, cash before the lock or levy, and the stay's offer) must equal the engine's own values on every draw. It also checks that `stay_motion` rows keep the motion day and that the new step never appears in a path. `test_chains`: 30 passed.
+- **Registry text:** J8/J9 already say the court rules "after briefing closes", which is accurate. I left the registry unchanged. J9's `timing_parameters` list `ruling_lag_days` and `levy_lag_days` but not `briefing_days_new_motion`, even though the order date uses it; I didn't change that.
+
+**Fix 2 — `4c3f3a2`: the outcome-class filter is removed**
+- **`page.js`:** removed `S.cls`, the click handlers, the "All paths" button, the "Showing" line, `shareIn`, the `classes` parameter in the request, and `eventAll` (the actual-outcome reveal now reads `S.event`). `topSequences()` always covers every path.
+- **`page.html`:** removed the `#filter` span, the `.sel` styling and the pointer cursors.
+- **`page.py` and `app.py`:** `reweight` and both `/reweight` endpoints no longer take `classes`.
+- **`class_of_path` / `class_matrix`:** removed. The only other reader was one test, which now builds its own matrix inline. Removing it touched `build.py` in two places (`run_page`, `load_page_state`: the import and the state dict). That file is in worker P's area, so the orchestrator may need to resolve a merge there.
+- **Unchanged:** outcome shares, the key, the Weighted | Worst paths switch, the sliders, Reset and the charts. `node --check` passes.
+- **Tests:** `test_viewer.py` and `test_bank_row.py` were updated, and a new assertion checks that a stray `classes` field no longer changes the reweight result. 12 passed.
+
+**Also:**
+- The branch had been tracking `origin/step-6c-run`; it now tracks `origin/step-6c-fix2`.
+- I added a note on the court-day recording and the removed filter to the `slope-sparse-events-build` skill.
+- The before/after tree dumps and the comparison script are in `…/scratch/6h_fix/`.
+- No PR was opened, Jev wasn't called, `slope analyze` wasn't run, and the `step-6c-run` worktree wasn't touched.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_c4414f97/task-0.log
+
+--- ✓ TASK 2/2: Worker P (analyze speed) for owassmer/Slope_Sparse_Events PR #17, on branch step-6c-run in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run (HEAD 896fccf): make `slope analyze` for the recorded Akoustis run significantly faster and lighter on memory and disk while producing exactly the same outputs. Measure first, then optimise the stages that dominate, and prove equivalence against a reference run. Report the before/after timing per stage, peak RSS and peak transient disk, the equivalence check results and commit SHAs. Do not open a PR or change any model behaviour.  (status=completed, api_calls=82, 1276.52s) ---
+The reference run is a clean equivalence target. None of my edits leaked into it.
+
+- **Timing:** the reference process (pid 55292) started at 15:20:09. My first code edit (to `engine.py`) came after that, and before `check_engine.py` was written at 15:24:43.
+- **Imports:** the timing wrapper imports `app.analysis.build`, `core`, `engine`, `page` and `app.disputes.forecast` at the top, before it calls the CLI. I checked against the HEAD copy in `scratch/6h_perf/head`: those imports load all five modules I've edited (`build.py`, `core.py`, `engine.py`, `events.py`, `forecast.py`), plus `page.py`. Python doesn't reload a module once it's loaded, and the lazily imported modules (`app.agent.jev`, `jev_profiles`, `run_store`, `evidence.store`) are ones I haven't touched. So the reference ran the HEAD 896fccf code throughout.
+- **Not yet confirmed:** whether the reference finishes cleanly (it has no exit code yet). It has passed `run_page` and is now writing the page state.
+
+**Disk:**
+- The dip to 1.2 GB at 15:34 came from swap growth (9 GB of swapfiles) while I ran slice checks alongside the reference. It happened during the stress pass, before the reference wrote any output.
+- To recover I deleted the rebuildable `.venv` folders of six merged worktrees (steps 1–5a) and my two ~47 MB slice pickles.
+- I stopped my background tree-comparison job so it doesn't compete for memory. Free disk is 4.3 GB and free memory 42%.
+- The page-state write (~1.27 GB) may still take free disk below 3 GB briefly. I'm watching it. For the confirmation run I'll run nothing alongside it, and I'll delete `var/analysis/<run>` first; that is also where the reference's ~1.3 GB state goes, so it gets freed at that point. After both runs I'll restore the committed `runs/recorded/` files, including `analysis.json.gz`, which the reference has already rewritten.
+
+**Progress on the optimisation (nothing committed yet):**
+
+```
+Change                                                                             | Speed-up on test slices             | Result vs HEAD                 
+-----------------------------------------------------------------------------------+-------------------------------------+--------------------------------
+Engine simulates several paths at once and only touches draws that have an invoice | ≈3.1×                               | every field identical          
+Event chains resume from the prefix they share with the previous path              | ≈4.3× (1.4–1.7× on scattered paths) | every trace identical          
+Path probabilities computed in one vectorised pass                                 | 19 ms → 1 ms per evaluation         | identical over 25 override sets
+```
+
+On a 400-path slice, the main pass went from 14.2 s to 5.6 s and the stress pass from 11.3 s to 3.3 s, with zero differences from HEAD. I've also written a compact `analysis.json` writer (the full-size gzip is still made from it) and a smaller page state that keeps only what reweight reads. A process pool that returns results in path order is written but not yet tested.
+
+**Next:** wait for the reference to finish and copy its outputs to `ref/`. Then re-run the tree HEAD-vs-new comparison on its own, test the pool (and its memory) on a slice, run the round-trip checks, commit, and do the confirmation run.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_c4414f97/task-1.log

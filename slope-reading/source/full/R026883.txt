@@ -1,0 +1,22 @@
+                         "apr": f"{econ['apr_equivalent_bps'] / 100:.1f}%" if econ else "",
+                         "collected": f"repaid in full in {full} of {len(scen)} scenarios" if econ else ""}
+        rows.append(row)
+    rec = {view: {**r, "limit": usd(r["limit_cents"]), "order_limit": usd(r["order_limit_cents"]),
+                  "lowest": usd(r["binding"]["lowest_projected_cash_cents"]),
+                  "label": s["structures"][r["structure"]]["label"] if r["structure"] in s["structures"] else r["structure"]}
+           for view, r in s["recommendation"].items()}
+    return {"views": views, "rows": rows, "recommendation": rec, "conditions": s["conditions"], "tier": s["tier"],
+            "bank_feed": s["bank_feed"], "slope_terms": s["slope_terms"], "weights_label": s["weights_label"],
+            "request": s["request"]}
+
+{% if v.decision %}{% set d = v.decision %}
+<h3>Financing decision <span class="tag engine">Engine result</span></h3>
+<div class="grid2">
+  {% for view in d.views %}{% set r = d.recommendation[view] %}
+  <div class="card">
+    <h5>{{ "Bank data only" if view == "bank_only" else "With the disputes' paths" }}</h5>
+    <p><strong>{{ r.label }}</strong>{% if not r.requested_passes %} <span class="tag warn">below the request</span>{% endif %}</p>
+    <p class="muted">Limit {{ r.limit }} ({{ r.limit_set_by }}) · order limit {{ r.order_limit }} · lowest projected cash {{ r.lowest }} on {{ r.binding.on }}{% if r.binding.scenario %} in {{ r.binding.scenario | join(" / ") }} ({{ r.binding.placement }}){% endif %}
+    {% if r.requested_reasons %}<br>Request: {{ r.requested_reasons | join("; ") }}{% endif %}</p>
+  </div>{% endfor %}
+</div>

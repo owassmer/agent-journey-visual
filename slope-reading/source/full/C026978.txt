@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/tool2.py && uv run ruff check app && grep -rn \"weights_label\\|weight_bps\\|pruned_weight\\|transitions\\b\\|\\.refined\\|stage_weights\" app --include=*.py --include=*.html | grep -v \"app/disputes/\\|\\\"transitions\\\"\\]\" ", "description": "Apply tool rewrite; find weight references"}

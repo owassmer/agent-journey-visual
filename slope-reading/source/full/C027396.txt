@@ -1,0 +1,1 @@
+{"delaySeconds": 1200, "noop": true, "prompt": "Check the fresh ChromaDex recording (log /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/cdx_run7.log); if done, run slope analyze on it, browser-walkthrough the page, then PR #8 update and the one focused review.", "reason": "fallback while the fresh end-to-end recording runs"}

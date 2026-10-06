@@ -1,0 +1,3 @@
+text(await tools.write_stdin({session_id:86253,chars:"",yield_time_ms:1000,max_output_tokens:2200}));
+text(await tools.write_stdin({session_id:65051,chars:"",yield_time_ms:1000,max_output_tokens:1200}));
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json\nfrom pathlib import Path\nr={x['unit']:x for p in Path('/tmp/notes-retry-monitor/live').glob('*.json') for x in json.loads(p.read_text())['reports']}\nr.update({x['unit']:x for x in json.loads(Path('/tmp/notes-retry-monitor/results.json').read_text())})\nprint('confirmed',len(r),'passed',sum(x['complete'] for x in r.values()),'failed',sorted(x['unit'] for x in r.values() if not x['complete']),'paths',sum(x.get('paths',0) for x in r.values()))\nPY","max_output_tokens":500}));

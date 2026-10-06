@@ -1,0 +1,1 @@
+{"command": "grep -n \"^#\" /Users/owenwassmer/dev/Slope_Sparse_Events/Slope_Coding_Agent_Context_and_Alignment.md | head -60; wc -w /Users/owenwassmer/dev/Slope_Sparse_Events/Slope_Coding_Agent_Context_and_Alignment.md; ls /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory/"}

@@ -1,0 +1,1 @@
+{"command": "chmod +x ~/Desktop/Connor/slope_run_monitor.sh; timeout 4 bash ~/Desktop/Connor/slope_run_monitor.sh 2>&1 | tail -30; osascript -e 'tell application \"Terminal\" to do script \"bash ~/Desktop/Connor/slope_run_monitor.sh\"' -e 'tell application \"Terminal\" to activate' >/dev/null 2>&1 && echo \"opened in Terminal\""}

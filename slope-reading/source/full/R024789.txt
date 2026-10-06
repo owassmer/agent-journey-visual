@@ -1,0 +1,60 @@
+===== 207 ['SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS']
+Note 11 — Notes Payable (cont.)
+
+This promissory note was modified effective September 30, 2023 in conjunction with the Senior Subordinated Debentures. Interest payments to commence January 31, 2023 on unpaid principal and accrued and unpaid interest through December 31, 2022. Interest expensed and paid during 2023 has amounted to $332,769. Principal and interest payments shall begin effective October 31, 2023 and continue through March 31, 2024 on the earlier of a merger, sale of the Company or Focus Factor or the assets of the Company or March 31, 2024. To the extent that this Note and $6 million March 8, 2022 Loan is not repaid on the terms, Jack Ross shall personally grant: Warrants struck at $0.01 penny per share, covering 10% of his stock in the event that Synergy does not make its principal repayment outlined above, in full. The warrant issuance shall be made to the holders of this Note and the $6 million March 8, 2022 Loan (ratably). The value of the contingent guaranty is nominal as the probability of non -payment is remote. The pro -rata closing fee of $125,000 originally due on September 30 th 2023 was also extended to March 31, 2024.
+
+On March 31, 2024, the Company entered into a Modification Agreement in relation to this loan. Effective March 31, 2024, the interest rate is 12%, compounded quarterly. Cash payments of interest shall be made monthly, on the final day of each month commencing in April 2024. The Company is required to make principal payments of $1,000,000 each quarter, starting from March 31, 2025 through December 31, 2025. The remaining principal and unpaid interest is fully due on March 31, 2026. In addition, a loan renegotiation fee of $500,000 shall be earned and payable on March 31, 2026 or at such time the loan is paid in full. Upon closing of a sale transaction, as defined in the agreement, a bonus success fee of $1,800,000 will be earned and payable. An event of default, as defined in the agreement, will trigger a default interest rate increase by 5% to 17%. An incentive fee of a maximum of $563,092 will be paid, prorated if the loan is paid off early. If the loan is not repaid by March 31, 2026, Jack Ross, majority shareholder shall grant warrants covering 10% of his stock struck at $0.01 per share. The value of the contingent guaranty is nominal as the probability of non -payment is remote. There is a cross -default clause in the agreement which states that if Knight triggers an event of default on its own loan facility, this loan will also be under default. This Agreement consolidates this $2,000,000 loan and the $6,000,000 March 8, 2022 loan as detailed below. The loan has been extended to a maturity date of March 31, 2026. Because these amendments were considered not substantive changes, the Company accounted for the modifications as modification of debt.
+
+The Company is required to make future payments as follows:
+
+[table 46]
+| 2024 | $— |
+| 2025 | $4,000,000 |
+| 2026 | $5,794,165 |
+
+$6,000,000 March 8, 2022 Loans:
+
+On March 8, 2022, the Company entered into Securities Purchase Agreements with debenture holders for the Senior Subordinated Debentures in the amount of $6,000,000 with an original maturity date of September 8, 2022 and warrants with a term of 3 years. The Senior Subordinated Debentures were modified on June 14, 2023 in conjunction with the promissory note. The modification included the exercise of $1.5 million on cash payment in lieu of the exercise of warrants. Pursuant to ASC 480 warrants were liability classified and the Company accrued the warrant liability of $1.5 million on March 8, 2022, the date of issuance. Upon September 8, 2022, the date of exercise of the warrants, the Company offset this warrant liability and added the $1.5 million balance to the Senior Subordinated Debentures, for a combined outstanding balance of $7.5 million. The terms of the warrants were, at the sole option of the holder, to covert the warrant at a 25% discount in the event the Company consummated an IPO, a cash option whereby the holder could convert the warrants at a cash value of $1.5 million or convert the warrants into the private entity valued by an independent third party appraiser.
+
+Covenants pursuant to the loan were as follows: The Company will maintain a minimum EBITDA of $1,000,000 for the three (3) month period ending on the last day of each Fiscal Quarter starting June 30, 2023. The Company shall at all times maintain Focus Factor’s net sales on a trailing twelve month basis of at least $30,000,000. The Company also agreed to pay $50,000 as reimbursement for the debenture holders legal fees incurred in connection with the modification agreement.
+
+F-23
+
+Table of Contents
+===== 208 ['SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS']
+Note 11 — Notes Payable (cont.)
+
+The debentures required payments of interest at 8% per annum for the first 90 days the debentures were funded and outstanding, 9.5% interest per annum for the next 90 days the debentures were funded and outstanding at which time all interest and principal would be due.
+
+These debentures were modified effective September 30, 2023 to the following terms: Interest rate adjusted to 15.5% compounded quarterly, effective September 9, 2022. Interest payments to commence January 31, 2023 on unpaid principal and accrued and unpaid interest through December 31, 2022. Interest accrued and unpaid during 2022 was $672,574 and was subsequently added to the principal balance of the loan outstanding. Interest expensed and paid during 2023 has amounted to $1,257,014. Nominal principal payments were negotiated in lieu of additional extension fees which began effective October 31, 2023 and continue through March 31, 2024 when the balance is due. Loan renegotiation fee of $500,000 is due March 31, 2024. This was accrued for during the year ended December 31, 2022, since this was earned upon renegotiation of the loan during 2022. The combined outstanding loan balance at March 31, 2024 and December 31, 2023 was $6,900,000 and $7,125,000, respectively, which includes original principal amount net off repayment and warrants conversion to loan of $1,500,000.
+
+On March 31, 2024, the Company entered into a Modification Agreement in relation to this loan, which consolidated it with the $2,000,000 February 10, 2022 loan above. The loan has been extended to a maturity date of March 31, 2026. Because these amendments were considered not substantive changes, the Company accounted for the modifications as modification of debt.
+
+$180,800 July 12, 2023 Loan:
+
+On July 12, 2023, the Company entered into a loan agreement of $180,800 with Shopify Capital Inc. for an advancement of working capital from its online processing account. The Company received $160,000 from Shopify Capital Inc. and $20,800 was an original issue discount. The loan bears a repayment rate of 17% of daily sales.
+
+The payment of such amounts is secured by a security interest in certain assets, undertakings and property pursuant to the Security Agreement, which will be released upon receipt of total payments of $180,800.
+
+The Company recognized amortization original issue discount of $8,512, which is included in interest expense in the statement of income during the year ended December 31, 2023. The outstanding loan balance at June 30, 2024 and December 31, 2023 was $0 and $94,525, respectively.
+
+$5,450,000 December 28, 2023 Loan:
+
+On December 28, 2023, the Company entered into a confidential settlement agreement and mutual general release with a former supplier. The loan bears interest at 5% per annum and is payable in full with the last payment. This settlement resulted in a gain to the Company of $2,235,986 and is reflected as a reduction of cost of sales (See Note 13).
+
+During 2023, the Company made payments of $1,000,000 toward this loan. The outstanding loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445, including interest of $352,445.
+
+The Company is required to make future payments as follows:
+
+[table 47]
+| 2024 | $2,000,000 |
+| 2025 | 2,000,000 |
+| 2026 | 802,445 |
+
+$141,250 January 29, 2024 Loan:
+
+On January 21, 2024, the Company entered into a loan agreement of $141,250 with Shopify Capital Inc. for an advancement of working capital from its online processing account. The Company received $125,000 from Shopify Capital Inc. and $16,250 was an original issue discount. The loan bears a repayment rate of 17% of daily sales.
+
+F-24
+
+Table of Contents

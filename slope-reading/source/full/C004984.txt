@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; sed -n 355,372p app/disputes/state14.py; grep -n \"marks\\|notes_due_day\\|nonpayment_day\\|first_unpaid\\|\\\"ruling\\\"\\|delisted\\|stayed_from\\|_offerings()\" app/disputes/state14.py | cut -c1-150 | head -40", "timeout": 30}

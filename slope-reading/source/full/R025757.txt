@@ -1,0 +1,26 @@
+[]
+[
+ {
+  "case_id": "syn_merchant_agreed",
+  "borrower": "synergy",
+  "profile": "claim_interpretation",
+  "question_id": "claim_posture",
+  "state": {
+   "target": "Synergy CHC Corp.",
+   "source": {
+    "source_id": "synergy_merchant_agreement_20240501",
+    "title": "Merchant Loan Agreement between WebBank and Synergy CHC Corp. (S-1 Exhibit 10.32)",
+    "publisher": "SEC EDGAR",
+    "document_kind": "loan_agreement",
+    "available_at": "2024-06-28T23:59:59-04:00"
+   },
+   "passage": {
+    "heading_path": "4. Repayment of the Loan; Authorizations",
+    "text": "4.1.1. Borrower promises to pay Lender (i) a Minimum Payment within the first six (6) Month period from the Effective Date; (ii) an additional Minimum Payment within the next six Month period from Month six (6) to Month twelve (12) of the Term so that the total paid is at least 60 percent of the Total Payment Amount by the end of Month twelve (12) and (iii) the Total Payment Amount prior to the end of the Term."
+   },
+   "claim": "The Borrower must pay a Minimum Payment within the first six-Month period from the Effective Date."
+  },
+  "expected": "agreed_contractually",
+  "why": "An executed loan agreement creates the obligation."
+ }
+]

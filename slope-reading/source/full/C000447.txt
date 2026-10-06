@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-engine && git pull -q --ff-only; gh pr view 11 --json body --jq .body | head -70; env -u CLAUDE_CODE_OAUTH_TOKEN uv run pytest -q -p no:warnings 2>&1 | tail -1; uv run ruff check . | tail -1; git diff --stat origin/main | tail -3", "timeout": 500}

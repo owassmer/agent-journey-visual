@@ -1,0 +1,41 @@
+75:        "Verify native subscription authentication with no unintended API-provider overrides and confirm the requested main model is available.",
+130:      "auth_preflight": "Confirm official subscription sign-in and detect provider/key overrides without printing values. Refuse unintended metered inference. Include the installed runtime version and chosen model in the run record."
+139:      "subscription_coverage": "Separate service; Claude and ChatGPT subscriptions do not include Jev usage.",
+204:        "inventory_coverage": {
+207:            "coverage_supported"
+228:  "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, and propose atomic findings that quote the evidence exactly. Jev screens retrieved evidence and checks narrow semantic claims; you reconcile its judgments with the evidence and may override one with a stated reason. Translate accepted findings into economic effect proposals and use the sensitivity tool to see which unknowns change the result. Code computes dates, money, schedules and cash flows. Finish with the pivotal unresolved inputs and the supported effects, or the exact missing fact that prevents a conclusion. Do not claim to send an offer, change an account, or know Slope's private policy.",
+341:    "agent_only_policy": "Use the same primary model, admissible evidence, research tools, financial tools, review treatment and comparable total budgets. Remove mcp__credit__judge, the screening fields on search results, the automatic finding check and the Jev registry from model context, and replace the role instruction with the agent-only override. This is an explicitly selected evaluation arm, never a service-failure fallback."
+466:    "run_input_policy": "Read these fields only from the locked operator request and ordinary baseline. Missing values remain typed unknown. An event seed may identify the borrower and disputed matter, but contains no expected conclusion, future identity, answer-bearing document order or extracted answer key. If mission_id is present in both case template and locked run inputs, they must match; a runtime override cannot switch cases.",
+485:  "comparison_mode_overrides": {
+          "mcp__credit__search_evidence",
+          "mcp__credit__read_evidence",
+          "mcp__credit__judge",
+          "mcp__credit__propose_finding",
+          "mcp__credit__resolve_finding",
+          "mcp__credit__propose_effect",
+          "mcp__credit__run_sensitivity",
+          "mcp__credit__request_missing_fact",
+          "mcp__credit__read_inventory",
+          "mcp__credit__account_for_items",
+          "mcp__credit__resolve_reconciliation",
+          "mcp__credit__submit_packet"
+        ],
+        "permission_mode": "dontAsk",
+        "setting_sources": [],
+        "max_turns": 80
+    "financial_input_policy": "The agent obtains sourced financial observations and documented existing-loan terms through read_baseline_profile and read_loan_terms. These tools may return ordinary baseline facts with source references; they do not return evaluator conclusions or the expected event adjustments.",
+    "private_evaluation_file": "case_eval_private.json",
+    "private_evaluation_file_visibility": "host_offline_scorer_only",
+    "blind_reviewer_policy": "The reviewer sees the candidate packet and the same complete admissible evidence interface, but not this private evaluator file, answer keys, future outcomes, experimental arm labels or a predetermined preferred offer."
+  },
+  "comparison_mode_overrides": {
+    "agent_only": {
+      "remove_allowed_and_exposed_tools": [
+        "mcp__credit__judge",
+        "mcp__credit__read_inventory",
+        "mcp__credit__account_for_items",
+        "mcp__credit__resolve_reconciliation"
+      ],
+      "expose_jev_registry": false,
+      "require_typesafe_credential": false,
+      "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, make focused evidence judgments yourself, reconcile contradictions, and propose atomic findings that quote the evidence exactly. Translate accepted findings into economic effect proposals and use the sensitivity tool to see which unknowns change the result. Code computes dates, money, schedules and cash flows. Finish with the pivotal unresolved inputs and the supported effects, or the exact missing fact that prevents a conclusion. Do not claim to send an offer, change an account, or know Slope private policy.",

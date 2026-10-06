@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -n -i \"chain\\|dispute model\\|what to find\\|component\\|instantiate_dispute\\|record\" app/agent/mission.py | cut -c1-200 | head -20; grep -n -i \"record_items\\|standard\\|templates\" app/agent/tools.py | cut -c1-160 | head -10"}

@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6a-cases && grep -n -i \"fixture\\|hypothetical\\|illustrat\\|not a real\\|synthetic\" tests/test_analysis.py tests/test_dispute_reading.py | head -12; grep -n \"117\" Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/CASH_CHECK_20240620.md | head -5"}

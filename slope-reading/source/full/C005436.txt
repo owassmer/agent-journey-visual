@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n 1470,1530p app/disputes/forecast.py; sed -n 1575,1600p app/disputes/forecast.py; sed -n 2095,2146p app/disputes/forecast.py; grep -n \"def _classified\\|def _qcls_get\\|def _qcls_put\" -A10 app/disputes/forecast.py | head -40", "timeout": 30}

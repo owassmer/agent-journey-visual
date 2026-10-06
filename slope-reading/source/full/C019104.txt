@@ -1,0 +1,1 @@
+for(const id of ['111095860272','111095860402','111095860435'])text(await tools.exec_command({cmd:`gh api repos/owassmer/Slope_Sparse_Events/actions/jobs/${id}/logs > /tmp/refresh-${id}.log\nrg -n 'Error|RemoteDisconnected|Traceback|question_refresh_fleet.py|cores' /tmp/refresh-${id}.log | tail -n 18`,"max_output_tokens":1600}));

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && git show origin/main:Slope_Model_Extensions_Spec.md > ~/.hermes/profiles/connor/cache/slope_ground/spec_main.md; grep -n '^#' ~/.hermes/profiles/connor/cache/slope_ground/spec_main.md | head -80; wc -c ~/.hermes/profiles/connor/cache/slope_ground/spec_main.md"}

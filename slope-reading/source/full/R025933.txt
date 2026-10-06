@@ -1,0 +1,54 @@
+synergy_20240813-agent_plus_jev-20260925T034522Z INCOMPLETE_REVIEW turns 52 failure wall clock budget of 600s reached
+incomplete: []
+disputes: null
+conclusion: 
+inventory: Counter({'disputed': 31, 'covered': 3, 'not_decision_relevant': 2}) Counter({'accounting_item_from_a_matter': 12, 'debt_or_financing_agreement': 10, 'legal_matter_or_settlement': 4, 'covenant_or_restriction': 3, 'cash_restriction': 2})
+  inv_001 disputed legal_matter_or_settlement  | The Atrium court decision's sections were not read or cited. Its outcome (the December 2023 settlement) is covered by fnd_002/fnd_023/fnd_030, but the ruling's 
+  inv_003 disputed debt_or_financing_agreement  | Remaining WebBank definitions (Other Business Credits/Accounts reach, Obligations, Make-up Payments) are not captured beyond fnd_009/fnd_034.
+  inv_004 disputed debt_or_financing_agreement  | s0027 (Knight 19.6% ownership, budget-approval covenant) has no finding citing it directly.
+  inv_005 disputed covenant_or_restriction  | The lock-up section (s0064) was not read. No finding.
+  inv_006 disputed accounting_item_from_a_matter  | Other 2023/2022 results items in s0083 (2022 inventory write-off, NASCAR spend, 2023 net income) have no finding. Only cost of sales (fnd_031) is captured.
+  inv_007 disputed debt_or_financing_agreement  | Parts of MD&A liquidity s0084 (Shopify loan history, Knight Fifth Amendment fees and covenants, the $1.4M CEO note of March 2024, operating cash flow) have no f
+  inv_008 disputed legal_matter_or_settlement  | The Atrium and LODC narrative in s0121 is not separately cited. The same facts are cited from s0210 (fnd_002, fnd_021).
+  inv_009 disputed debt_or_financing_agreement  | Kenek consulting fees, Canadian distribution fees, Gowan rent and Knight principal/interest paid in 2024 (s0142) have no finding.
+  inv_010 disputed covenant_or_restriction  | The lock-up agreements section (s0153) was not read. No finding.
+  inv_011 disputed debt_or_financing_agreement  | The underwriting agreement (s0160) was not read. Possible offering proceeds or fees are unmodeled.
+  inv_012 disputed covenant_or_restriction  | The underwriter warrants section (s0164) was not read.
+  inv_013 disputed cash_restriction  | The s0183 cash and restricted cash policy text is uncited. Restricted cash is captured from s0084 (fnd_013).
+  inv_014 disputed accounting_item_from_a_matter  | Income tax policy (s0185) not read.
+  inv_015 disputed accounting_item_from_a_matter  | Income taxes note (s0191) was not read. The tax payable cash timing is unknown.
+  inv_016 disputed accounting_item_from_a_matter  | The AR note (s0192) was not read. Allowances and collectability are unmodeled.
+  inv_017 disputed accounting_item_from_a_matter  | The inventory note (s0195) was not read. Reserves and the relevance to inventory financed by the advance are unmodeled.
+  inv_018 disputed accounting_item_from_a_matter  | The intangible note (s0196) is uncited. The related $450k payable is covered by fnd_028.
+  inv_019 disputed debt_or_financing_agreement  | The remaining s0197/s0198 content (prepaid consulting $500k, Knight Third/Fifth Amendment balances, royalties) has no finding.
+  inv_020 disputed accounting_item_from_a_matter  | AP and accruals of $5.18M at June 30, 2024 (including $901k manufacturers and $843k payroll taxes) have no finding. Their payment timing is unmodeled.
+  inv_021 disputed debt_or_financing_agreement  | Parts of Note 11 (Knight 2017 loan terms and covenants in s0202/s0203, the $5M equity-raise condition in s0204, the Shopify May 22 loan in s0208, and the Sander
+  inv_022 disputed legal_matter_or_settlement  | The Atrium counterclaim narrative in s0210 is not separately captured. The settlement outcome is covered by fnd_002, LODC by fnd_021 and materiality by fnd_032.
+  inv_023 disputed accounting_item_from_a_matter  | Stock-based compensation (s0212): non-cash, no finding.
+  inv_025 disputed cash_restriction  | The 2023 restricted cash reconciliation (s0226) was not read.
+  inv_026 disputed accounting_item_from_a_matter  | NOL Section 382 (s0234) was not read.
+  inv_028 disputed accounting_item_from_a_matter  | The 2023 inventory note (s0239) was not read.
+  inv_030 disputed debt_or_financing_agreement  | The 2023 related-party note (s0242-s0243) was not read.
+  inv_031 disputed accounting_item_from_a_matter  | The 2023 AP composition (s0245) was not read.
+  inv_032 disputed debt_or_financing_agreement  | The 2023 annual Notes Payable note (s0246-s0253) was not read. It includes the $5M equity-raise condition in s0249.
+  inv_033 disputed legal_matter_or_settlement  | The 2023 annual contingencies note (s0255) was not read.
+  inv_034 disputed accounting_item_from_a_matter  | Stock options table (s0256) not read.
+  inv_035 disputed debt_or_financing_agreement  | The 2023 FS subsequent events (s0259) were not read.
+effects:
+  eff_001 rejected settlement_payment_timing outflow | Synergy CHC Corp. – settlement loan payable to HVL, LLC d/b/a Atrium I | Category guard: fnd_004 posture is Agreed by contract (ambiguous); settlement_payment_timing needs ['agreed_contractually', 'imposed_by_court_or_authority', 're 
+  eff_002 rejected settlement_payment_timing outflow | Synergy CHC Corp. – $3,020,824 March 27, 2024 supplier settlement loan | Category guard: fnd_005 posture is Posture unclear (ambiguous); settlement_payment_timing needs ['agreed_contractually', 'imposed_by_court_or_authority', 'repor 
+  eff_003 validated funding_constraint none | Synergy CHC Corp. – Knight Therapeutics amended senior secured loan: r |  
+  eff_004 rejected restricted_funds none | Synergy CHC Corp. – $100,000 restricted cash held as credit card colla | Category guard: fnd_013 cash_access is Access not established (ambiguous); restricted_funds needs ['access_limited', 'access_prohibited']; Category guard: fnd_0 
+  eff_005 validated resolved_obligation none | Synergy CHC Corp. – L.O.D.C. Group, Ltd. settlement (E.D. Tex. 4:23-cv |  
+  eff_006 rejected settlement_payment_timing outflow | Synergy CHC Corp. – settlement loan payable to HVL, LLC d/b/a Atrium I | Parameter remaining_current_year_bucket_cents cites findings outside this effect: ['fnd_004'] 
+  eff_007 rejected settlement_payment_timing outflow | Synergy CHC Corp. – $5,450,000 December 28, 2023 former-supplier settl | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_008 rejected settlement_payment_timing outflow | Synergy CHC Corp. – $3,020,824 March 27, 2024 supplier settlement loan | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_009 validated settlement_payment_timing outflow | Synergy CHC Corp. – $5,450,000 December 28, 2023 former-supplier settl |  
+  eff_010 validated settlement_payment_timing outflow | Synergy CHC Corp. – $3,020,824 March 27, 2024 supplier settlement loan |  
+  eff_011 rejected noncash_normalization none | Synergy CHC Corp. – 2023 cost of sales / earnings: Atrium settlement n | Category guard: fnd_031 is not established as a noncash accounting item (Change in operations) 
+  eff_012 rejected noncash_normalization none | Synergy CHC Corp. – 2023 cost of sales / earnings: Atrium settlement n | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_013 validated noncash_normalization none | Synergy CHC Corp. – accounting for the Atrium settlement net gain |  
+inventory checks: Counter({('decision_relevance', 'could_change'): 32, ('coverage_supported', 'partly_covered'): 28, ('coverage_supported', 'not_covered'): 8, ('coverage_supported', 'covered'): 2, ('decision_relevance', 'could_not_change'): 1})
+dispositions: Counter({'used_in_finding': 172, 'unused': 80, 'challenged_agent_draft': 74, 'flagged_conflict': 36, 'overridden_by_agent_with_reason': 24, 'caused_research_redirect': 5})
+gain findings: [('fnd_006', 'accepted', 'Under the amended Knight loan (finalized June 2024), the loan is senior secured against all current and future Synergy a'), ('fnd_027', 'rejected', "Synergy's reported 2023 cost of sales ($10,697,323) is reduced by the $2,235,986 non-cash net gain from the Atrium settl"), ('fnd_030', 'accepted', "The $2,235,986 net gain from the December 2023 Atrium settlement was recorded as a reduction of Synergy's cost of sales.")]
+conclusion checks: [{'answer': 'some_unsupported', 'ambiguous': False, 'passed': False, 'conclusion_sha256': 'ce148990b7e76a5b4a7ef9762d6b656805448f0c35ab9650c2182dd98a9b3fe3'}]

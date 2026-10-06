@@ -1,0 +1,21 @@
+patched
+[1;32mAll checks passed![0m
+brfh_2024q3_release#s0006  [section]  Balance Sheet
+     … The Company expects [expanded] [capacity] to become available in the [fourth] [quarter] of 2024, subject to the risks and uncertainties associated with pre-production activities. Additionally, the Company has taken other measures … 
+brfh_2024q3_release#s0003  [section]  Third Quarter of 2024 Financial Results
+     … The Company expects [expanded] [capacity] for its bottled smoothie to become available in the [fourth] [quarter] of 2024, subject to the risks and uncertainties associated with pre-production activities. Gross Margin for … 
+brfh_2024q3_10q#s0024  [section]  Item 2. Management’s Discussion and Analysis of Financial Condition and Results of Operations. > Results of Operations > Results of Operation for the Three Months Ended September 30, 2024 as Compared to the Three Months Ended September 30, 2023
+     … We expect [expanded] [capacity] to become available in the [fourth] [quarter] of 2024, subject to the risks and uncertainties associated with pre-production activities.
+
+Cost of revenue increased $687,000, or 41 … 
+brfh_2023_10k#s0099  [section]  Barfresh food Group Inc. > Notes to Consolidated Financial Statements > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract manufacturers. One of the Company’s contract manufacturers (the “Manufacturer”) provided approximately 52 % and 42 % of the Company … 
+brfh_2024q1_10q#s0011  [section]  Barfresh Food Group Inc. > Notes to Condensed Consolidated Financial Statements > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract manufacturers. One of the Company’s contract manufacturers (the “Manufacturer”) provided approximately 52 % and 42 % of the Company … 
+synergy_s1a_20240813#s0084  [section]  MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS > Liquidity and Capital Resources
+     … [and] cash equivalents [and] cash provided by sales of our products will be sufficient to meet working [capital] [and] [capital] expenditure needs for at least the next [12] months. Our future [capital] … 
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                                              [100%][0m

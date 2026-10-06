@@ -1,0 +1,46 @@
+41:    "coverage_supported": {"covered": "The findings account for this matter", "partly_covered": "The findings miss part of this matter",
+42-                           "not_covered": "The findings concern a different matter", "unclear": "Coverage unclear"},
+43-    "claims_supported": {"all_supported": "Every factual claim is supported", "some_unsupported": "Some claims are not supported by the cited findings",
+44-                         "unclear": "Support unclear"},
+45-    "matter_inventory": {True: "Describes a specific matter", False: "No specific matter"},
+46-    "baseline_overlap": {"same": "Possibly the same obligation as a baseline item (check for double counting)",
+47-                         "distinct": "Distinct from the baseline item", "unknown": "Overlap unclear"},
+--
+51:NOT_SETTLED = {
+52-    "finding_support": {"contradicts", "does_not_resolve"},
+53-    "finding_atomicity": {"multiple_claims", "unclear"},
+54-    "context_sufficiency": {"missing_target_context", "missing_definition", "missing_condition_or_timing", "unclear"},
+55-    "entity_scope": {"different", "unknown"},
+56-    "claim_posture": {"unknown"},
+57-    "economic_role": {"unclear"},
+99:    async def _ask(self, profile: str, question_ids: list[str], state: dict, subject_ids: tuple[str, ...],
+100-                   hashes: tuple[str, ...]) -> list[SemanticObservation]:
+101-        call, observations = await self.jev.judge(profile=profile, question_ids=question_ids, state=state,
+102-                                                  subject_ids=subject_ids, source_content_hashes=hashes)
+103-        self.run.put("jev_call", call)
+104-        for o in observations:
+105-            self.run.put("observation_recorded", o)
+106-        return observations
+107-
+108-    # --- profiles ------------------------------------------------------------------------------
+109-
+110-    async def screen(self, dependency: DecisionDependency, candidates: list[EvidenceCandidate]) -> list[EvidenceCandidate]:
+111-        """candidate_screen: one request per query-passage pair, fanned out in parallel.
+112-
+113-        Every candidate is returned, labelled and ordered; none is withheld from the agent.
+114-        """
+115-        unanswered = {"question": dependency.question, "premises": list(dependency.premises),
+116-                      "could_change": dependency.affects}
+117-
+118-        async def one(c: EvidenceCandidate) -> EvidenceCandidate:
+119-            try:
+120-                hit = re.search(r"\[([^\]]+)\]", c.snippet)  # FTS highlights the first matched term
+121-                passage, sha = self._passage(c.item_id, anchor=hit.group(1) if hit else None)
+122-                obs = await self._ask("candidate_screen", profile_questions("candidate_screen"),
+123-                                      {"unanswered_question": unanswered, "passage": passage},
+124-                                      (dependency.dependency_id, c.candidate_id, c.item_id), (sha,))
+125-                signals = {o.question_id: o.noul_value for o in obs if o.noul_value is not None}
+126-                screen = CandidateScreen(route=route(signals), observation_ids=tuple(o.observation_id for o in obs),
+127-                                         signals=signals)
+128-            except Exception as e:  # a failed screen never hides the candidate
+129-                if isinstance(e, JevBudgetExceeded):

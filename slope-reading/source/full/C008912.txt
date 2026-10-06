@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory/*.md",max_output_tokens:5000}),
+tools.exec_command({cmd:"sed -n '1,230p' Jev_Pivot.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:5300})
+]);for(let i=0;i<results.length;i++)text({i,...results[i]});

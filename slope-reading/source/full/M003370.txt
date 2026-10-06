@@ -1,0 +1,48 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_78925589]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 20:00:52 (1h32m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 5541.04s
+
+--- ✓ TASK 1/1: Build step 1 of step 9 for owassmer/Slope_Sparse_Events: the daily cash processor (spec QUESTIONS_20240514.md §2.2 and §3.3) in the loan engine, with the Chain reading its cash, gated so every existing run stays bit-identical. Follow the brief at /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9h/BRIEF_step1.md exactly. Commit and push to branch step-9-build; open no PR.  (status=completed, api_calls=150, 5540.72s) ---
+I've built all seven items and pushed them to `step-9-build` (HEAD `01c9251`, no PR). One thing is not as the spec asks: on about 1% of 14 May trajectories, daily cash goes negative on the day a stay's security is locked. The cause is in the walk, not the processor, and I left it unfixed.
+
+**Commits** (on top of `0e74151`)
+- `9c7a49c` items 1–2: the `cash_processing` switch (`net` | `daily`) and `same_day_order`, with the 14 May case set to `daily`. Operating flows now split into inflow and outflow, summing exactly to `total`. The bootstrap is identical to HEAD on both feeds under every control.
+- `77f1b52` item 3: event cash is split by kind (inflow, levy, reduction, settlement, notes_interest, judgment), each obligation with the day it was incurred. The kinds summed exactly to cash on all 9,824 traces of the 14 May tree.
+- `c15f79e` items 4–5: the processor in a new file, `app/analysis/processor.py`, used only under `daily`. It outputs arrears by class, the first unpaid day, the §3.3 day and any levy shortfall. The two §3.3 parameters are in the contract (30 days, sensitivities 15/60; 2500 bps, sensitivity 5000), and the kit manifest is refreshed.
+- `a89e5d2`: the existing net-engine digest tests now set `net` explicitly, since the 14 May case is now `daily`. Every pinned value is unchanged.
+- `75c27c0` items 6–7: the Chain reads its cash, `cash_out()` and the new §3.3 accessor from the processor. A levy takes the balance at processing, less any levy already booked that day. Also the speed-up.
+- `01c9251`: the checks as tests, plus two fixes (below).
+
+**Check results**
+- **Equivalence (full 14 May tree, 2,975 paths, 1,523,200 trajectories):** zero differences in cash, collections, fundings, due or outstanding before the earlier of daily's first unpaid day and net's first failed debit.
+  - The brief's version (before daily's first unpaid day) fails on 317 trajectories. On all 317, net fails a Slope debit on a day the processor pays in full: net counts an invoice that Slope pays only once the debit succeeds. The test checks the corrected condition.
+- **Trajectories reaching an unpaid obligation:** 1,280,363 of 1,523,200. §3.3 is met on 785,581. No levy ever exceeded the balance.
+- **Hand computation:** a separate day-by-day script that doesn't import the processor matches the engine exactly on all 40 candidates tried. The pinned one (settlement before the verdict, company keeps operating, stays listed) goes unpaid on day 132 and meets §3.3 on day 162. Arrears by class on days 132, 147, 162 and 177 are pinned in `tests/test_cash_processing.py`.
+- **20 Jun:** the dump at the final HEAD equals the baseline taken at `0e74151` on every key (13,821 paths).
+- **Suite:** 220 passed, 1 skipped with the two stubbed-Jev files ignored; those two pass separately (32). Ruff is clean.
+- **Tree build:** 87 s before, 146 s after (1.68×). The first version took 177 s (2.03×). Profiling showed too many numpy calls per day in the processor's day loop and too much hashing of the engine-run cache key; the leaner loop gives bit-identical results.
+- **14 May tree:** 2,962 paths became 2,956 after the same-day levy fix. The 14 May case changing is expected under `daily`.
+
+**Could not do: negative cash on stay days**
+- All 15,104 affected trajectories go negative on a stay-approval day, when the stay's security is locked. Net goes negative on the same trajectories.
+- In 13,602 of them, the Chain sizes the security when the stay is walked; a levy walked later but dated before approval then takes the cash, so the lock exceeds what's left.
+- In the other 1,502, the security is locked after a petition that a later-walked step files.
+- Capping the lock at the balance in the processor would be a new design, so I left it for the walker changes in step 2.
+
+**Choices the spec doesn't settle**
+- The surplus that pays arrears is the day's receipts minus the day's obligations, capped at the balance. A balance carried from earlier days does not pay arrears.
+- §3.3 is tested over days t−30 to t−1, only while no petition has been filed. The window's obligations include the levy.
+- A stay's security is taken out with the day's receipts, before anything is paid.
+- An event obligation is paid before the first Slope installment incurred after it.
+- Under the `cash_floor` zero sensitivity, the floor day becomes the first unpaid day, because cash can no longer go below zero.
+- Other than that §3.3 limit, arrears are still processed after a petition, including the surplus paying them.
+- With variability set away from 1, the inflow/outflow split grows larger in both directions, though it still sums to `total` exactly.
+
+**Fixes found by the checks** (both in `01c9251` or `75c27c0`):
+- A second writ on the same day counted the balance again.
+- A negative balance let the surplus step add cash back, which had hidden the negative cash above.
+
+The line's history replay now runs under `daily` and leaves `run_inputs.json` unchanged. I added the pitfalls to the `slope-sparse-events-build` skill, and the check scripts are in `scratch/9h/`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_78925589/task-0.log

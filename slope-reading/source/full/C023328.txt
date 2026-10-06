@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"git diff -- tools/question_refresh.py tools/question_refresh_fleet.py | head -60; sed -n '510,574p' tools/question_refresh.py; sed -n '24,68p' tools/question_refresh_fleet.py; sed -n '745,840p' tools/question_refresh.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":4800}));

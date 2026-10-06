@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ v.borrower }}: investigation{% endblock %}
+{% block body %}
+<hgroup>
+  <h2>{{ v.borrower }}</h2>
+  <p>Review date {{ v.review_date }} · Incremental working-capital draw · <strong>{{ v.status }}</strong>{% if v.late_failure %}
+    · <span class="tag warn">Runner reported after lock</span> {{ v.late_failure }} (from run.json, outside the hash chain){% endif %}</p>
+</hgroup>
+<p class="muted">Run {{ v.run_id }} · arm {{ v.meta.arm }} · event chain verified ({{ v.verified_head }}…) ·
+  {{ v.jev_calls }} Jev calls, {{ v.observations }} semantic observations{% if not v.inputs_locked %} ·
+  <span class="tag warn">Inputs not locked in this run</span> (recorded before inputs were chained; showing the current case file){% endif %}</p>
+
+<div class="grid2">
+  <div class="card">
+    <h5>Request <span class="tag assumption">Assumption</span></h5>
+    <p>{{ v.request.requested_use.value if v.request.requested_use }}<br>
+       {{ (v.request.requested_amount.value / 100) | round | int if v.request.requested_amount }} USD over
+       {{ v.request.requested_term.value if v.request.requested_term }} months; {{ v.request.requested_pricing.value if v.request.requested_pricing }}</p>
+  </div>
+  <div class="card">
+    <h5>Conclusion</h5>
+    <p>{{ v.submitted.conclusion or "No packet conclusion submitted." }}</p>
+    {% for c in v.conclusion_checks %}<p class="muted"><span class="tag jev">Jev check {{ loop.index }}/{{ v.conclusion_checks | length }}</span>Conclusion claims:
+      {% if c.answer == "some_unsupported" and not c.ambiguous %}<strong>some unsupported</strong>{% if c.reply_reason %} · the agent disagreed with this failed check: {{ c.reply_reason }}{% elif c.override_reason %} · overridden: {{ c.override_reason }}{% elif not loop.last %} · rejected; the agent revised{% endif %}
+      {% elif c.answer == "all_supported" and not c.ambiguous %}supported by findings and engine results
+      {% else %}{{ c.answer.replace("_", " ") }} (near-even; not blocking){% if c.override_reason %} · agent's recorded reason: {{ c.override_reason }}{% endif %}{% endif %}</p>{% endfor %}
+    {% if v.submitted.incomplete_reasons %}<p><span class="tag warn">Incomplete</span> {{ v.submitted.incomplete_reasons | join("; ") }}</p>{% endif %}
+    {% for d in v.submitted.disputes or [] %}{% if not d.blocking %}<p class="muted"><span class="tag warn">Open for the reviewer</span> {{ d.reason }}</p>{% endif %}{% endfor %}
+  </div>
+</div>
+147:        "inventory": inventory, "conclusion_check": conclusion_check, "conclusion_checks": conclusion_checks,

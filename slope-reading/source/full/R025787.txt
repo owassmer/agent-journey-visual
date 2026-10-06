@@ -1,0 +1,54 @@
+28:class FakeJev:
+29-    """Realistic default answers (others: first criterion) with 0.8, unless `flat` names a question to answer
+30-    ambiguously; `answers` overrides specific questions."""
+31-
+32-    def __init__(self, adapter, flat=(), answers=None):
+33-        self.adapter, self.flat = adapter, set(flat)
+34-        self.answers = {**DEFAULT_ANSWERS, **(answers or {})}
+35-
+36-    async def system_one(self, *, state, questions, model, response_model):
+37-        self.adapter.physical_attempts += 1
+38-        answers = {}
+39-        for qid, q in questions.items():
+40-            if q.type == "noul":
+41-                answers[qid] = {"type": "noul", "noul": 0.9}
+42-            else:
+43-                keys = list(q.criteria)
+44-                if self.answers.get(qid) in keys:
+45-                    keys.remove(self.answers[qid])
+46-                    keys.insert(0, self.answers[qid])
+47-                top = 0.45 if qid in self.flat else 0.8
+48-                probs = {k: (top if i == 0 else (1 - top) / (len(keys) - 1)) for i, k in enumerate(keys)}
+49-                if qid in self.flat:
+50-                    probs[keys[1]] = 0.4
+51-                answers[qid] = {"type": "choice", "choice": keys[0], "confidence": top, "probabilities": probs}
+52-        return response_model.model_validate({"model": "typesafe/jev-1.13-test", "answers": answers, "usage": {}})
+53-
+54-
+55-@pytest.fixture(scope="module")
+56-def evidence(tmp_path_factory):
+57-    out = tmp_path_factory.mktemp("ev")
+58-    snapshot.build_snapshot(SNAP, out_dir=out)
+246:def test_unsupported_consequence_is_rejected(make_ctx):
+247-    ctx = make_ctx(answers={"claims_supported": "some_unsupported"}, name="unsupported")
+248-    _, fid = _accepted_settlement_finding(ctx)
+249-    eff = call(T.propose_effect, ctx, {"finding_ids": [fid], **SETTLEMENT})
+250-    assert eff["status"] == "rejected" and any("Consequence support" in p for p in eff["problems"])
+251-
+252-
+253-def test_inventory_and_reconciliations_gate_submission(make_ctx):
+254-    from app.domain.investigation import InventoryItem
+255-    ctx = make_ctx(answers={"statement_relation": "conflict"}, name="gates")
+256-    note11 = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")["id"]
+257-    ctx.run.put("inventory_loaded", InventoryItem(item_id="inv_001", section_ids=(note11,), source_id="synergy_s1a_20240813",
+258-                                                 heading_path=("Note 11",), kind="debt_or_financing_agreement", signal=0.9))
+259-    dep, fid = _accepted_settlement_finding(ctx)
+260-    hvl = next(h for h in ctx.evidence.search("December 28, 2023 settlement 802,445") if h["kind"] == "section")
+261-    second = call(T.propose_finding, ctx, {"dependency_id": dep, "proposition": "The settlement loan balance was $4,802,445.",
+262-                                           "target": "Synergy CHC Corp. — the December 28, 2023 supplier settlement loan",
+263-                                           "citations": [{"item_id": hvl["id"], "quote": "The outstanding loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445"}]})
+264-    disp = [{"observation_id": o["observation_id"], "disposition": "used_in_finding"} for o in second["observations"]]
+265-    res = call(T.resolve_finding, ctx, {"finding_id": second["finding_id"], "decision": "accept", "dispositions": disp})
+266-    task = res["relation_checks"][0]["reconciliation_task"]
+267-    submit = {"summary": "s", "conclusion": "The settlement loan requires future payments."}
+268-    with pytest.raises(T.ToolError, match="inventory items are still open"):

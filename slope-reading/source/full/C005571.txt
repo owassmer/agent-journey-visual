@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && git status --short | grep -v '^??'; git diff --stat; env -u CLAUDE_CODE_OAUTH_TOKEN .venv/bin/ruff check app | tail -1; grep -n \"def unfiled\" -B2 -A10 app/disputes/forecast.py | head -5; grep -n \"if: always()\\|upload-artifact\" .github/workflows/walk.yml | head -4", "timeout": 60}

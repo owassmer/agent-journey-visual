@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-09b42b44a8d35909a --command-id 41b708c7-38e1-410c-9b93-69591dbc95af --query '{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}'\nps -o pid,ppid,args -p 63400\nlsof -nP -iTCP:18766 -sTCP:LISTEN","max_output_tokens":1000}));

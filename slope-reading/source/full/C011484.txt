@@ -1,0 +1,2 @@
+text(ALL_TOOLS.filter(x=>/browser|node_repl|search_tools|plugin_management/i.test(x.name)).map(x=>({name:x.name,description:x.description})));
+text(await tools.exec_command({cmd:"tail -n 10 /tmp/notes-6910-repro.log\nrg --files -g 'AGENTS.md' -g 'PLAN.md' -g '*browser*' . | head -30",max_output_tokens:2000}));

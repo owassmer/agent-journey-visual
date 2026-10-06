@@ -1,0 +1,6 @@
+// @exec: {"max_output_tokens": 13000}
+const d=load("digestDir");
+const rs=await Promise.allSettled([
+ tools.exec_command({cmd:"python3 read.py delegation 0 40000",workdir:d,max_output_tokens:11500}),
+ tools.exec_command({cmd:"rg --files /Users/owenwassmer/.hermes/profiles/connor/skills | rg 'slope|connor|cordon|failure|stop'",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:1500})
+]); for(let i=0;i<rs.length;i++){text(i);text(rs[i].status==="fulfilled"?rs[i].value.output:rs[i].reason);}

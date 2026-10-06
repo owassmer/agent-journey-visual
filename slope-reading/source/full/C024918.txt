@@ -1,0 +1,1 @@
+{"command": "sed -i '' 's/PARSER_VERSION = \"1.1.0\"/PARSER_VERSION = \"1.2.0\"/' app/evidence/parse.py && uv run pytest -q -p no:warnings 2>&1 | tail -1 && git commit -qam \"Bump parser version for heading-path changes\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\" && git push -q 2>&1 | tail -1; git log --oneline -1"}

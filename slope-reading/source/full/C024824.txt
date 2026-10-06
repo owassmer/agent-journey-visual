@@ -1,0 +1,1 @@
+{"command": "uv run slope evidence search synergy_20240813 \"settlement supplier future payments\" --limit 5; echo; uv run slope evidence search synergy_20240813 \"L.O.D.C. settlement paid\" --limit 3; echo; uv run slope evidence search barfresh_20241025 \"Schreiber manufacturing dispute\" --limit 3"}

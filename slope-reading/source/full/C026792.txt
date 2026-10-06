@@ -1,0 +1,1 @@
+{"command": "grep -n \"node\\|branch\\|Branch\" Slope_Credit_Scenario_Build_Specification.md | head -40; diff -q Slope_Credit_Scenario_Build_Specification.md Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/deliverables/Slope_Credit_Scenario_Build_Specification.md", "description": "Find dispute node text in spec"}

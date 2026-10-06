@@ -1,0 +1,64 @@
+synergy_20240813-agent_plus_jev-20260925T051511Z INCOMPLETE_REVIEW turns 89 failure None
+incomplete: ["disputed inventory item inv_001 (legal matter or settlement): Court decision pages 2–16 contain the magistrate's legal analysis of Synergy's misrepresentation/fraud pleading (Feb 2023). The matter is covered by fnd_045/fnd_046 (the ruling and background) and fnd_002/fnd_003/fnd_005 (Dec 2023 settlement into a $5.45M loan). The pleading analysis itself has no cash consequence; the reviewer should confirm that no page-level finding is needed.", 'disputed inventory item inv_004 (debt 
+disputes: [
+ {
+  "id": "inv_001",
+  "kind": "legal_matter_or_settlement",
+  "blocking": true,
+  "reason": "disputed inventory item inv_001 (legal matter or settlement): Court decision pages 2\u201316 contain the magistrate's legal analysis of Synergy's misrepresentation/fraud pleading (Feb 2023). The matter is covered by fnd_045/fnd_046 (the ruling and background) and fnd_002/fnd_003/fnd_005 (Dec 2023 settlement into a $5.45M loan). The pleading analysis itself has no cash consequence; the reviewer should confirm that no page-level finding is needed."
+ },
+ {
+  "id": "inv_004",
+  "kind": "debt_or_financing_agreement",
+  "blocking": true,
+  "reason": "disputed inventory item inv_004 (debt or financing agreement): The remaining part of s0027 (Knight affiliate owns ~19.6% of shares; distribution agreements with Knight Therapeutics) was not separately found. Balance, rate, budget approval and covenants are covered by fnd_048/fnd_047/fnd_059/fnd_060/fnd_009."
+ },
+ {
+  "id": "inv_007",
+  "kind": "debt_or_financing_agreement",
+  "blocking": true,
+  "reason": "disputed inventory item inv_007 (debt or financing agreement): MD&A liquidity section: historical Shopify loans (2022\u20132023, repaid) and the Neuragen note history were not separately found. The current obligations, cash and operating cash flow are covered (fnd_017, fnd_052, fnd_053, fnd_054, fnd_012, fnd_029, fnd_016, fnd_003, fnd_007, fnd_022)."
+ },
+ {
+  "id": "inv_009",
+  "kind": "debt_or_financing_agreement",
+  "blocking": true,
+  
+conclusion: No offer can be supported on the current evidence. Knight's senior secured loan terms state that Synergy shall not add any other debt without paying out Knight first (fnd_009). A default on third-party debt automatically defaults the Knight loan (fnd_010), and a Knight default cross-defaults the Sanders loan (fnd_030). Adding any of the three analytical advances therefore depends on Knight consent, which the evidence does not show; this is the pivotal missing fact. Second, the remain
+inventory: Counter({'disputed': 15, 'covered': 13, 'not_decision_relevant': 8}) Counter({'debt_or_financing_agreement': 9, 'accounting_item_from_a_matter': 3, 'legal_matter_or_settlement': 1, 'covenant_or_restriction': 1, 'cash_restriction': 1})
+  inv_001 disputed legal_matter_or_settlement  | Court decision pages 2–16 contain the magistrate's legal analysis of Synergy's misrepresentation/fraud pleading (Feb 2023). The matter is covered by fnd_045/fnd
+  inv_004 disputed debt_or_financing_agreement  | The remaining part of s0027 (Knight affiliate owns ~19.6% of shares; distribution agreements with Knight Therapeutics) was not separately found. Balance, rate, 
+  inv_007 disputed debt_or_financing_agreement  | MD&A liquidity section: historical Shopify loans (2022–2023, repaid) and the Neuragen note history were not separately found. The current obligations, cash and 
+  inv_009 disputed debt_or_financing_agreement  | Related-party section details (Knight Canada distribution-fee percentages, Gowan rent waiver, Sneaky Vaunt royalties) were not separately found. The Kenek note/
+  inv_011 disputed debt_or_financing_agreement  | Underwriter indemnification and dealer concession terms were not separately found. The conditional nature of offering proceeds is covered by fnd_057, and the eq
+  inv_012 disputed covenant_or_restriction  | Warrant exercise price (110%), expiry tranches and FINRA 180-day lock-up were not separately found. Issuance on closing and cashless exercise are covered by fnd
+  inv_017 disputed accounting_item_from_a_matter  | Inventory-in-transit and components/raw-materials line items were not separately found. The total inventory, Knight pledge and absence of H1 2024 write-offs are
+  inv_019 disputed debt_or_financing_agreement  | Note 9 detail (Kenek prepaid consulting $500k, Knight distribution-fee balances consolidated into the loan, royalties owed $25,905) was not separately found. Th
+  inv_021 disputed debt_or_financing_agreement  | Note 11 secondary terms (Knight CEO compensation cap, shareholders agreement, Neuragen/2017 tranche history, Sanders $563,092 incentive fee, Hand MD loan repaid
+  inv_025 disputed cash_restriction  | The Dec 31, 2023 restricted-cash reconciliation (s0226) was not read in full. The June 30, 2024 restricted cash ($100k credit-card collateral) is covered by fnd
+  inv_027 disputed accounting_item_from_a_matter  | Dec 31, 2023 AR ($2,106,094 net; related-party AR $0; 2022 bad-debt write-off) was not separately found. The June 30, 2024 AR is covered by fnd_044; the older p
+  inv_030 disputed debt_or_financing_agreement  | Note 9 (annual): Knight 2023 interest expense and the Feb 2024 amendment consolidating loans were not separately found. The consolidated Knight terms are covere
+  inv_031 disputed accounting_item_from_a_matter  | Dec 31, 2023 AP line items (warehousing, payroll taxes, etc.) were not separately found. The 2023 AP-forgiveness gain (fnd_033) and June 30, 2024 AP total (fnd_
+  inv_032 disputed debt_or_financing_agreement  | Annual-report Note 11 sections s0246–s0251 were not read in full. They restate at Dec 31, 2023 the loans covered at June 30, 2024 by the interim Note 11 finding
+  inv_035 disputed debt_or_financing_agreement  | In the annual subsequent-events note, the Jan 29, 2024 Shopify loan repaid ($0 at June 12) and the March 2024 $1.4M CEO-entity note were not separately found. T
+effects:
+  eff_001 rejected settlement_payment_timing outflow | Synergy CHC Corp. – Atrium (HVL) settlement loan, remaining calendar-2 | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_002 validated settlement_payment_timing outflow | Synergy CHC Corp. – Atrium (HVL) settlement loan, remaining calendar-2 |  
+  eff_003 rejected settlement_payment_timing outflow | Synergy CHC Corp. – March 27, 2024 supplier settlement loan (VitBest r | Category guard: fnd_008 posture is Posture unclear; settlement_payment_timing needs ['agreed_contractually', 'imposed_by_court_or_authority', 'reported_complete 
+  eff_004 rejected funding_constraint unknown | Synergy CHC Corp. – capacity to incur the proposed new working-capital | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_005 validated settlement_payment_timing outflow | Synergy CHC Corp. – March 27, 2024 supplier settlement loan, remaining |  
+  eff_006 rejected funding_constraint unknown | Synergy CHC Corp. – capacity to incur the proposed new working-capital | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_007 rejected funding_constraint unknown | Synergy CHC Corp. – capacity to incur the proposed new working-capital | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_008 validated funding_constraint unknown | Synergy CHC Corp. – capacity to incur the proposed new working-capital |  
+  eff_009 rejected funding_constraint outflow | Synergy CHC Corp. – Shopify Capital/WebBank merchant loans, payoff req | Baseline treatment already_in_baseline_reclassify_timing does not fit funding_constraint; use one of ['modify_available_funding'] 
+  eff_010 rejected restricted_funds none | Synergy CHC Corp. – restricted cash held as credit card collateral | Category guard: fnd_020 cash_access is Access not established (ambiguous); restricted_funds needs ['access_limited', 'access_prohibited']; Category guard: fnd_0 
+  eff_011 validated resolved_obligation none | Synergy CHC Corp. – L.O.D.C. Group and Valenti litigation settlements |  
+  eff_012 rejected noncash_normalization none | Synergy CHC Corp. – FY2023 cost of sales / EBITDA, Atrium settlement g | Consequence support: Some claims are not supported by the cited findings. Revise the model consequence to what the cited findings support 
+  eff_013 validated funding_constraint outflow | Synergy CHC Corp. – Shopify Capital/WebBank merchant loans, payoff req |  
+  eff_014 validated restricted_funds none | Synergy CHC Corp. – restricted cash balance |  
+  eff_015 validated noncash_normalization none | Synergy CHC Corp. – cost of sales, Atrium settlement gain |  
+  eff_016 validated noncash_normalization none | Synergy CHC Corp. – FY2023 selling and marketing expense, gain on forg |  
+jev calls by profile: {'candidate_screen': 35, 'claim_interpretation': 34, 'finding_check': 70, 'statement_relation': 56, 'statement_support': 17, 'inventory_coverage': 102}
+inventory phase: 543 -> 786 s
+last event: packet_submitted 832
+    "physical_attempts": 295,

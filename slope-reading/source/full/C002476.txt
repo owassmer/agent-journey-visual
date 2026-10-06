@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/7_page/edit6.py", "old_string": "rep(\"\"\"const two = t.h >= 36 ? wrap(label\"\"\", \"\"\"const two = t.h >= 30 ? wrap(label\"\"\")", "new_string": "rep(\"\"\"two = t.h >= 36 ? wrap(label\"\"\", \"\"\"two = t.h >= 30 ? wrap(label\"\"\")"}

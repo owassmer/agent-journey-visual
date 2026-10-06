@@ -1,0 +1,160 @@
+        if t["category"] in EXCLUDED or _month_key(d) not in months:
+            continue
+        totals[t["category"]][_month_key(d)] += t["amount_cents"]
+        txns.append((d, t["category"], t["amount_cents"]))
+    scales = {}
+    for cat, by in totals.items():
+        six = sum(by.get(m, 0) for m in months) / len(months)
+        three = sum(by.get(m, 0) for m in months[-RECENT_MONTHS:]) / RECENT_MONTHS
+        scales[cat] = three / six if six else 1.0
+    out = np.zeros((len(months), MAX_BDAYS), dtype=np.float64)
+    bdays = {m: _business_days(*m) for m in months}
+    for d, cat, cents in txns:
+        k = months.index(_month_key(d))
+        prior = [b for b in bdays[_month_key(d)] if b <= d]  # a weekend flow sits on the preceding business day
+        pos = max(len(prior) - 1, 0)
+        out[k, min(pos, MAX_BDAYS - 1)] += cents * scales[cat]
+    return out, scales, months
+
+
+def simulate(feed: BankFeed, horizon_days: int, draws: int, seed: int, variability: float = 1.0) -> np.ndarray:
+    """Daily operating flows [draws, horizon_days] in integer cents, day 0 = the day after the review date."""
+    review = feed.period_end
+    block, _, months = blocks(feed)
+    rng = np.random.default_rng(seed)
+    flows = np.zeros((draws, horizon_days), dtype=np.float64)
+    first, last = review + timedelta(days=1), review + timedelta(days=horizon_days)
+    y, m = first.year, first.month
+    while date(y, m, 1) <= last:
+        bd = _business_days(y, m)
+        pick = rng.integers(0, len(months), size=draws)
+        month_flows = block[pick]  # [draws, MAX_BDAYS]
+        for pos in range(MAX_BDAYS):  # clamp positions beyond the month's last business day onto it
+            target = bd[min(pos, len(bd) - 1)]
+            if first <= target <= last:
+                flows[:, (target - first).days] += month_flows[:, pos]
+        y, m = (y, m + 1) if m < 12 else (y + 1, 1)
+    if variability != 1.0:
+        mean = flows.mean(axis=0, keepdims=True)
+        flows = mean + variability * (flows - mean)
+    return np.rint(flows).astype(np.int64)
+"""The analysis: Jev's conditional probabilities composed over every joint event path, simulated against the shared
+operating draws, carried into the loan's dated cash flows; bank-only versus event-adjusted; 0%/Jev/100% sensitivity
+of each judgment ranked by its effect on the lender; financial-parameter sensitivity; and a separate stress view.
+
+Each trajectory (joint path p, operating draw d) has weight P(p) / draws. Every structurally feasible path is simulated,
+whatever its probability; a zero-probability path simply carries no weight in the distribution and stays in stress.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field, replace
+from datetime import timedelta
+
+import numpy as np
+
+from app.analysis import operating
+from app.analysis.engine import Trajectories, run, schedule_arrays
+from app.analysis.events import Draws, EventCash, event_cash
+from app.analysis.setup import DRAWS, SEED, Setup
+from app.analysis.stats import expectation, weighted_quantiles
+from app.disputes.forecast import DisputePath, Judgment, combo_probability, distributions, joint_paths
+from app.disputes.rules import load_model
+from app.domain.investigation import DisputeInstance
+from app.finance.bank import BankFeed
+
+QS = (0.05, 0.5, 0.95)
+STEP_LABELS = {("settle_before_ruling", "yes"): "settle before the ruling", ("amount_fixed", "yes"): "amount fixed",
+               ("amount_fixed", "no"): "no ruling in the period", ("settle_after_judgment", "yes"): "settle",
+               ("appeal", "yes"): "appeal", ("secured_stay", "yes"): "secured stay",
+               ("secured_stay", "no"): "no secured stay", ("settle_during_appeal", "yes"): "settle during the appeal",
+               ("settle_during_appeal", "no"): "appeal still pending", ("voluntary_payment", "yes"): "paid",
+               ("enforcement", "yes"): "collected by enforcement", ("enforcement", "no"): "uncollected",
+               ("security_form", "cash_deposit"): "cash deposit", ("security_form", "surety_bond"): "surety bond",
+               ("security_form", "letter_of_credit"): "letter of credit"}
+
+
+@dataclass
+class EventModel:
+    disputes: dict[str, DisputeInstance]
+    judgments: dict[str, Judgment]
+    per: dict[str, dict[str, list[DisputePath]]]
+    order: list[tuple[DisputeInstance, DisputeInstance | None]]
+    combos: list[tuple[DisputePath, ...]] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        if not self.combos:
+            self.combos = joint_paths(self.per, self.order) if self.order else [()]
+
+    def probs(self, overrides: dict | None = None) -> np.ndarray:
+        dist = distributions(self.judgments, overrides)
+        return np.array([combo_probability(c, dist) for c in self.combos])
+
+
+def path_label(p: DisputePath) -> str:
+    return " → ".join(STEP_LABELS[(n, b)] for n, _, b in p.steps if (n, b) in STEP_LABELS)
+
+
+class Analysis:
+    """Holds the operating draws and event cash for one setup; recomputes weights without re-simulating."""
+
+    def __init__(self, feed: BankFeed, setup: Setup, model: EventModel, stress: bool = False) -> None:
+        self.feed, self.setup, self.model, self.m = feed, setup, model, load_model()
+        self.days = (setup.horizon - setup.review).days
+        self.ops = operating.simulate(feed, self.days, DRAWS, SEED, setup.variability)
+        draws = Draws(DRAWS, stress=stress)
+        cache: dict = {}
+
+        def cash_for(p: DisputePath) -> EventCash:
+            key = (p.instance_id, p.steps)
+            if key not in cache:
+                cache[key] = event_cash(model.disputes[p.instance_id], p, setup, self.m, draws)
+            return cache[key]
+
+        opening = feed.available_cents
+        self.bank = run(setup, opening, self.ops, EventCash.zeros(DRAWS, self.days))
+        self.paths: list[Trajectories] = []
+        for combo in model.combos:
+            ev = EventCash.zeros(DRAWS, self.days)
+            for p in combo:
+                ev = ev + cash_for(p)
+            self.paths.append(run(setup, opening, self.ops, ev))
+        self.means = {k: np.array([getattr(t, k).mean() for t in self.paths]) for k in
+                      ("lender_pv", "dollar_days", "uncollected_maturity", "uncollected_horizon", "min_cash")}
+        self.means["shortfall_p"] = np.array([(t.min_cash < 0).mean() for t in self.paths])
+        self.means["shortfall"] = np.array([np.maximum(-t.min_cash, 0).mean() for t in self.paths])
+        self.means["full_p"] = np.array([(t.uncollected_maturity == 0).mean() for t in self.paths])
+        self.means["peak_locked"] = np.array([t.locked.max(axis=1).mean() for t in self.paths])
+        self.means["peak_capacity"] = np.array([t.capacity.max(axis=1).mean() for t in self.paths])
+
+    # --- summaries ---------------------------------------------------------------------------------
+
+    def expected(self, probs: np.ndarray) -> dict[str, float]:
+        return {k: expectation(v, probs) for k, v in self.means.items()}
+
+    def _view(self, trajs: list[Trajectories], probs: np.ndarray) -> dict:
+        w = np.repeat(probs / DRAWS, DRAWS)
+        stack = lambda attr: np.concatenate([getattr(t, attr) for t in trajs], axis=0)  # noqa: E731
+        cash, cum = stack("cash"), np.cumsum(stack("collections"), axis=1)
+        mins = stack("min_cash")
+        unc = stack("uncollected_maturity")
+        cq, kq, mq = weighted_quantiles(cash, w, QS), weighted_quantiles(cum, w, QS), weighted_quantiles(mins, w, QS)
+        due, maturity, _, total = schedule_arrays(self.setup)
+        return {
+            "metrics": {
+                "lender_pv_cents": float(w @ stack("lender_pv")), "dollar_days": float(w @ stack("dollar_days")),
+                "full_collection_by_maturity_p": min(1.0, float(w @ (unc == 0))),
+                "uncollected_maturity_cents": float(w @ unc),
+                "uncollected_horizon_cents": float(w @ stack("uncollected_horizon")),
+                "min_cash_mean_cents": float(w @ mins), "min_cash_p5_cents": float(mq[0]),
+                "shortfall_p": min(1.0, float(w @ (mins < 0))), "shortfall_mean_cents": float(w @ np.maximum(-mins, 0)),
+                "peak_locked_cents": float(w @ stack("locked").max(axis=1)),
+                "peak_capacity_cents": float(w @ stack("capacity").max(axis=1)),
+                "horizon_cash_mean_cents": float(w @ cash[:, -1]),
+            },
+            "daily": {
+                "cash_mean": np.rint(w @ cash).astype(int).tolist(),
+                "cash_p5": cq[0].astype(int).tolist(), "cash_p50": cq[1].astype(int).tolist(),
+                "cash_p95": cq[2].astype(int).tolist(),
+                "collected_mean": np.rint(w @ cum).astype(int).tolist(),
+                "collected_p5": kq[0].astype(int).tolist(), "collected_p50": kq[1].astype(int).tolist(),

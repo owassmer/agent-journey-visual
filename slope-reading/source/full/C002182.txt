@@ -1,0 +1,1 @@
+{"command": "L=/Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_c4414f97/task-1.log; sed -n '/15:34:34/,/15:38:13 assistant/p' $L | cut -c1-500 | head -40; ls -la ~/.hermes/profiles/connor/cache/scratch/6h_perf/ 2>/dev/null | tail -15; pgrep -fl \"slope analyze|6h_perf\" | cut -c1-150"}

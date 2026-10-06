@@ -1,0 +1,51 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_0b49ffc7]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 15:41:31 (39m22s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2362.85s
+
+--- ✓ TASK 1/1: Worker P2 (analyze speed, continuation) for owassmer/Slope_Sparse_Events PR #17 in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run (branch step-6c-run, HEAD 896fccf plus uncommitted optimisation edits by the previous worker). Finish the optimisation of `slope analyze`, prove exact equivalence against the reference run, commit and push. Report before/after per-stage timing, peak RSS, peak transient disk, the equivalence results and commit SHAs.  (status=completed, api_calls=91, 2362.56s) ---
+I've stopped as asked. Everything is committed and pushed to `step-6c-run`, and `runs/recorded/` is back to its committed state. One call is yours: the confirmation run differs from the reference in Jev's `observation_id` values, and I treated that as expected and went ahead. Say if you want that handled differently.
+
+**Equivalence against the reference run:**
+- **Differences:** `analysis.json` (plain and gzip, parsed) and `page.json` each differ in exactly 338 places, and every one is an `observation_id`. No number, path, probability, date or text differs.
+- **Why the IDs differ:** each Jev answer gets a new random ID on every run (`jev.new_id("obs")`). The reference run, made from the unchanged code, doesn't match the committed run's IDs either. So I treated this like the `call_id`/`created_at` differences in the Jev log.
+- **Other outputs:** `collections.csv` and `cashflows.csv` are byte-identical. `jev_log` has the same 338 records, identical except `call_id`/`created_at`.
+- **Not run (stopped per your message):** the reweight comparison on three override sets, and rebuilding the page state from `analysis.json.gz` alone.
+
+**Time per stage (reference → new, seconds, cache-only):**
+
+```
+Stage                                         | Reference | New    
+----------------------------------------------+-----------+--------
+Tree build                                    | 195.8     | 28.5   
+Jev answers from cache                        | 18        | 2      
+`_bins`                                       | 95.2      | 25.9   
+Main simulation (its own part, after `_bins`) | 347       | 91     
+Views, scenarios, attribution, sensitivity    | 27.5      | 8.1    
+Stress pass                                   | 414.6     | 65.7   
+`page_payload`                                | 92.8      | 21.1   
+Saving the page state                         | 20.5      | 12.0   
+**Total**                                     | **1,217** | **256**
+```
+
+Wall clock was 1,260 s → 260 s.
+
+**Peak RSS went up, from 1.75 GB to 2.41 GB.** This breaks the 1.75 GB ceiling in your brief; the 0.66 GB increase comes from the tree build. It keeps its saved path traces in active memory, where the old code let macOS compress them. The old tree phase's total memory footprint was actually larger: 6.7 GB against 2.3 GB now. Peak transient disk fell from 6.8 GB to 4.1 GB.
+
+**Process pool:** I dropped it. On a 2,400-path slice it gave identical results in path order and ran 2.2–2.4× faster. But all processes together already peaked at 1,747 MB on that slice, so the full run would go well past the limit.
+
+**Tree build, old code against new on the Akoustis fixture:** 157.9 s → 24.5 s, with no differences in paths, nodes, recorded facts, traces, path facts or classes.
+
+**Tests:** the full suite passed (178 tests), including one new test in `tests/test_line.py`. It checks the stress view's petition-at-peak figures against running the engine again with the petition.
+
+**Commits (on top of 896fccf, all pushed):**
+- `f1b2813` – the engine simulates several paths at once.
+- `272eea7` – event chains resume from the steps they share with the previous path.
+- `5374d59` – path probabilities are computed as one array product.
+- `574a651` – the main pass reuses the event cash `_bins` already computed, and the stress pass simulates each path once instead of twice.
+- `12d9fdc` – `analysis.json` is written compact, and the saved page state is streamed and holds only what reweight reads.
+- `060b404` – the prefix fingerprint hashes only the non-zero values.
+
+**Merge with `origin/step-6c-fix2`:** `git merge-tree` reports no conflicts. My changes stay out of `Chain.step`, the `_Walk` methods and `run_page`. The one overlap is `load_page_state`: I changed its first branch to `pickle.load`, next to fix2's removal of `classes`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_0b49ffc7/task-0.log

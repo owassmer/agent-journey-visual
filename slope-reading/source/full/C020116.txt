@@ -1,0 +1,28 @@
+const script=`import pickle,json,sqlite3
+from pathlib import Path
+import numpy as np
+from app.disputes import pool
+from tools.question_refresh import Results
+from array import array
+root=Path('/opt/slope-question-refresh/refresh-v1')
+ctl=pickle.load(open('/opt/slope-pool/ctl/control.pkl','rb'))
+fc=pool.forecaster('akoustis_20240514-agent_plus_jev-20260929T052558Z',ctl)
+db=sqlite3.connect('file:'+str(root/'0/plan.sqlite')+'?mode=ro',uri=True)
+db.execute('CREATE TEMP TABLE wanted (binding INTEGER PRIMARY KEY, mask BLOB NOT NULL)')
+store=Results(db)
+for source in sorted(Path('/opt/slope-pool/ctl/walked').glob('part*.pkl'),key=lambda p:int(p.stem[4:]))[:8]:
+ paths=pickle.load(source.open('rb'))
+ for index,path in enumerate(paths[:10]):
+  try: store.rebind(fc,path,source.name,index)
+  except TypeError:
+   refs=array('Q');refs.frombytes(db.execute('SELECT bindings FROM consumers WHERE part=? AND row=?',(source.name,index)).fetchone()[0])
+   for binding in refs:
+    key,row,cls=store.get(binding,fc.draws.n)
+    if fc.nodes[key].node in ('judgment_response','financing_at_floor','petition_cash_out') and row['groups'] is None:
+     print(json.dumps(dict(source=source.name,index=index,binding=binding,key=key,node=fc.nodes[key].node,live=int(fc.live(fc.nodes[key],row).sum()),days=np.unique(row['day']).tolist(),classes=np.unique(cls).tolist(),steps=path.steps)),flush=True)
+   raise SystemExit(0)
+raise SystemExit('No matching example')
+`;
+store("probeNone",script);
+const cmds=["cat > /tmp/refresh-none-groups.py <<'PY'\n"+script+"\nPY","cd /opt/slope-question-refresh-fast","PYTHONPATH=/opt/slope-question-refresh-fast PYTHONDONTWRITEBYTECODE=1 /opt/slope/.venv/bin/python /tmp/refresh-none-groups.py"];
+text(await tools.exec_command({cmd:"PYTHONDONTWRITEBYTECODE=1 .venv/bin/python - <<'PY'\nimport boto3,json\ns=boto3.Session(profile_name='slope',region_name='us-east-2').client('ssm')\nr=s.send_command(InstanceIds=['i-09b42b44a8d35909a'],DocumentName='AWS-RunShellScript',Parameters={'commands':json.loads(r'''"+JSON.stringify(cmds)+"''')})\nprint(r['Command']['CommandId'])\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:500}));

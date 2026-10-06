@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && sqlite3 -header state.db \"select id, source, parent_session_id, datetime(started_at,'unixepoch','localtime') st, datetime(coalesce(last_activity_at,ended_at),'unixepoch','localtime') last, message_count, title, cwd from sessions where started_at > strftime('%s','now','-10 days') order by started_at desc limit 40\""}

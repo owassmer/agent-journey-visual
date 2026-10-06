@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-1-runtime-smoke && P=.venv/lib/python3.12/site-packages/typesafe_sdk; cat $P/_core/constants.py; grep -n \"class ChoiceAnswer\" -A 25 $P/_schemas/models.py; grep -n \"class Usage\" -A 12 $P/_schemas/models.py; cat $P/_core/retry.py | sed -n 1,60p"}

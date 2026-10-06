@@ -1,0 +1,25 @@
+(eval):1: no matches found: --include=*.py
+PACKAGE_MANIFEST.json
+README.md
+research
+            "amount_status",
+            "amount_includes_interest",
+            "event_entitlement_decided",
+            "event_amount_fixed",
+            "event_judgment_entered",
+            "event_appeal_filed",
+            "event_stay_secured",
+            "event_paid",
+            "bears_on_amount_finality",
+            "bears_on_appeal_intent",
+            "bears_on_appeal_barred",
+            "bears_on_debtor_resistance",
+            "bears_on_debtor_liquidity",
+            "bears_on_settlement_signals",
+            "factor_level"
+          ]
+        },
+        "dispute_forecast": {
+          "trigger": "host, when the analysis is built: one request per forecast node and parent context (cached); a later same-counterparty dispute is asked once per outcome class of the earlier one",
+          "questions": [
+            "forecast_settlement",

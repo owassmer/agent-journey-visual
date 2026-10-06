@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ec2 stop-instances --instance-ids i-00b6051aa298e85e2 --profile slope --region us-east-2 --query 'StoppingInstances[].{instance:InstanceId,state:CurrentState.Name}' --output json","max_output_tokens":1000}));
+text(await tools.exec_command({cmd:"rg -n 'unclassed|raw.*post_trial' tests/test_question*; sed -n '1,100p' tests/test_question_refresh.py; git status --short","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

@@ -1,0 +1,13 @@
+Counter({'observation_recorded': 75, 'observation_disposition': 25, 'jev_call': 19, 'candidate_screened': 12, 'finding_proposed': 12, 'evidence_read': 10, 'finding_resolved': 5, 'search': 3, 'run_started': 1, 'dependency_recorded': 1})
+DEP dep_001 | What cash payments does Synergy CHC Corp. still owe under its settlement(s) with its former contract manufactu | target: Synergy CHC Corp. — settlement payment obligation to HVL, LLC d/b/a Atrium Innov
+  SEARCH settlement Atrium contract manufacturer payment
+  SEARCH Atrium loan payable $5,450,000 installments Note 11
+  SEARCH Atrium settlement agreement monthly payments promissory
+  FIND= fnd_001 rejected Synergy CHC Corp.'s December 2023 settlement with HVL, LLC d/b/a Atrium Innovations created a $5,450
+  FIND= fnd_002 accepted The December 2023 settlement of Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovations left Synergy 
+  FIND= fnd_003 accepted The settlement loan payable to the former supplier (Atrium) has $2,000,000 of payments scheduled for
+  FIND? fnd_004 The Atrium settlement loan balance was unchanged at $4,802,445 between December 31, 2023 and June 30, 2024, so none of t
+  FIND= fnd_004 rejected The Atrium settlement loan balance was unchanged at $4,802,445 between December 31, 2023 and June 30
+  FIND? fnd_005 The reported outstanding balance of the Atrium settlement loan was $4,802,445 at June 30, 2024, the same as at December 
+  FIND= fnd_005 accepted The reported outstanding balance of the Atrium settlement loan was $4,802,445 at June 30, 2024, the 
+  FIND? fnd_006 Management reported approximately $2.0 million of cash as of August 12, 2024.

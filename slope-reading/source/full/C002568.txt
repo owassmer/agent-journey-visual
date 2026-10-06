@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && git worktree add -q -b step-8-may14 .claude/worktrees/step-8-may14 origin/main && cd .claude/worktrees/step-8-may14 && git log --oneline -1 && grep -n \"Lead case\\|lead\\|bank-only\\|Bank-only\\|event-adjusted\\|180-day\\|horizon\" CLAUDE.md | head; grep -n \"^## \\|^### \" Slope_Model_Extensions_Spec.md | head -40"}

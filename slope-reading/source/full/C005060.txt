@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && python3 ~/.hermes/profiles/connor/cache/scratch/9z/edit_classes2.py && env -u CLAUDE_CODE_OAUTH_TOKEN .venv/bin/ruff check app/disputes/forecast.py | tail -5; grep -n \"def merge_equivalent\" -A36 app/disputes/forecast.py | head -40", "timeout": 30}

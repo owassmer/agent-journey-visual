@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; for k in _price_key _stay_owed _offer_memo _hd _keys rec late; do echo \"== $k\"; grep -n \"self\\.$k\\b\" app/analysis/events.py | grep -v \"^\\s*#\" | head -8; done; grep -n \"    SHARED = \\|    REPLACED = \" -A4 app/analysis/events.py", "timeout": 30}

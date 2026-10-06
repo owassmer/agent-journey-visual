@@ -1,0 +1,8 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"pwd",max_output_tokens:1000}),
+  tools.exec_command({cmd:"rg --files -g 'AGENTS.md' -g '*connor*' -g '*Connor*' -g '*transcript*' -g '*session*' -g '*memory*' -g '*context*' -g '*SKILL.md' -g '!node_modules' -g '!.git' -g '!venv' -g '!.venv' .",max_output_tokens:5000}),
+  tools.exec_command({cmd:"cat /Users/owenwassmer/.codex/skills/.system/openai-docs/SKILL.md",max_output_tokens:6000}),
+  tools.exec_command({cmd:"ls -la /Users/owenwassmer/.codex",max_output_tokens:5000})
+]);
+results.forEach((r,i)=>text({i,...(r.status==="fulfilled"?{result:r.value}:{error:String(r.reason)})}));
+text(ALL_TOOLS.filter(x=>/search|session|memory|skill|profile|connor|history|thread/i.test(x.name+" "+x.description)).map(x=>({name:x.name,description:x.description.slice(0,360)})));

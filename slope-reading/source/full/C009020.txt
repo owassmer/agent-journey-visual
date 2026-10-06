@@ -1,0 +1,5 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"pwd\nrg --files -g AGENTS.md -g CLAUDE.md -g Slope_Coding_Agent_Context_and_Alignment.md -g Slope_Credit_Scenario_Build_Specification.md -g '*plan*' -g '*Plan*' -g '*Pivot*' -g '!kit/**' -g '!runs/**' -g '!.git/**' .",max_output_tokens:4000}),
+  tools.exec_command({cmd:"git status --short\ngit log -1 --format='%h %s'\nsed -n '1,230p' app/decisions/scenarios.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:8500}),
+  tools.exec_command({cmd:"sed -n '1,230p' app/agent/jev_profiles.py\nsed -n '1,220p' app/finance/valuation.py\nsed -n '1,160p' app/web/templates/run.html",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:11500})
+]); for(let i=0;i<results.length;i++) text({i,...results[i]});

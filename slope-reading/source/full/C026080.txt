@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/viewer_run8.py 2>&1 | head -2; uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/run_jev_cases.py 2>&1 | grep -E \"coverage|adds_matter|decision_relevance|disagree|agree;\"; git diff --stat | tail -1", "timeout": 300000}

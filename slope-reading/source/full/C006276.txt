@@ -1,0 +1,1 @@
+{"command": "sleep 120; cd ~/dev/Slope_Sparse_Events && gh run view 36634378487 --json jobs --jq '.jobs[] | select(.status==\"completed\") | \"\\(.name) \\(.conclusion) \\(.completedAt)\"'; date -u +%H:%M; tail -3 ~/.hermes/profiles/connor/cache/scratch/memo/par_279.log ~/.hermes/profiles/connor/cache/scratch/memo/single_279.log", "timeout": 200}

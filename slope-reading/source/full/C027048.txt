@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/release.py && uv run ruff check . && grep -n \"c.kind == \\\"lock\\\"\\|kind in (\\\"outflow\\\", \\\"lock\\\")\\|\\\"inflow\\\" if\" app/decisions/*.py app/disputes/*.py app/web/*.py | head", "description": "Apply release fix, obligation limit, titled conditions"}

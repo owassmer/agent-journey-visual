@@ -1,0 +1,1 @@
+{"command": "grep -n \"def _disputes\" -A 14 app/agent/tools.py; grep -n \"An escalated legal\" app/agent/investigation.py Slope_Credit_Scenario_Build_Specification.md; grep -n \"escalated_matter\" Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json; grep -n \"disputed inventory item inv_001\" tests/test_investigation_tools.py"}

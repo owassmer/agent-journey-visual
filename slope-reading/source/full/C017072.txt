@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --command-id 76426330-c424-4413-8b67-3b90e70a4532 --instance-id i-09b42b44a8d35909a --query '{Status:Status,Output:StandardOutputContent}'","max_output_tokens":1800}));
+text(await tools.exec_command({cmd:"curl -fsS http://127.0.0.1:18766/api/status | python3 -c 'import json,sys; d=json.load(sys.stdin); s=d[\"state\"];print({k:s.get(k) for k in [\"done\",\"active\",\"replacement_active\",\"updated\",\"error\"]}); print(d[\"events\"][-2:])'","max_output_tokens":600}));

@@ -1,0 +1,1 @@
+{"file_path": "/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/probe5.py", "content": "from pathlib import Path\nfrom app.evidence.parse import blocks_for\nK = Path('Slope_Credit_Scenario_Research_and_Design_Kit/research/')\nfor b in blocks_for(K / 'recent_cases/synergy_chc/2024_05_01_webbank_shopify_loan.html')[:400]:\n    print(b.kind[0], b.level, b.text[:110])\n"}

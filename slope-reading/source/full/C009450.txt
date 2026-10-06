@@ -1,0 +1,2 @@
+text((await tools.exec_command({cmd:"git status --short && cat CLAUDE.md && cat .github/workflows/pool.yml && cat .github/workflows/reduce.yml","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":8500})).output);
+text((await tools.exec_command({cmd:"rg --files -g AGENTS.md -g '*scenario*.json' -g '*QUESTIONS*' -g '*Spec*' . && cat cases/akoustis_20240514/scenario.json","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":8500})).output);

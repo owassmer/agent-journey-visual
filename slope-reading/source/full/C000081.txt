@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/case_search/round2 && grep -i -A40 \"reject\" notes_W2_sweep.md | head -45; echo ====; grep -i -A30 \"reject\" sweep_W3.md | head -35; echo ====; tail -c 2500 /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_845be11a/task-3.log"}

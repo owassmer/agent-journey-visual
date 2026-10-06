@@ -1,0 +1,100 @@
+80	          'Other-case records are excluded regardless of chronological eligibility.',
+81	          'Indexes and metadata must not expose later filing contents to a historical agent.',
+82	          'Original and package relative paths are relative to the research-kit root; preserve this directory layout.'],
+83	 'sources':sources}
+84	(OUT/'sources.json').write_text(json.dumps(index,indent=2)+'\n')
+85	
+86	facts=[]
+87	def fact(fid,value,unit,source_id,section,anchor,measurement=None,notes=None,precision='exact',kind='disclosed'):
+88	    facts.append({'fact_id':fid,'value':value,'unit':unit,'kind':kind,'value_precision':precision,
+89	                  'measurement_date':measurement,'source_id':source_id,
+90	                  'locator':{'section':section,'anchor':anchor},'notes':notes or []})
+91	S='synergy_s1a_20240813'; M='synergy_merchant_agreement_20240501'
+92	cashnotes=['June 30 financial statement measurement; do not use as fresh August cash.']
+93	fact('synergy_cash_20240630_unrestricted',87293,'USD',S,'Condensed consolidated balance sheets, F-2; Liquidity and Capital Resources','Cash and cash equivalents','2024-06-30',cashnotes)
+94	fact('synergy_cash_20240630_restricted',100000,'USD',S,'Condensed consolidated balance sheets, F-2; Liquidity and Capital Resources','Restricted cash','2024-06-30',['Credit-card collateral, excluded from freely available cash.'])
+95	fact('synergy_cash_20240812_approx',2000000,'USD',S,'Prospectus summary and Liquidity and Capital Resources','As of August 12, 2024','2024-08-12',['Management reports approximate cash; restricted/unrestricted composition is not reconciled here.','Bridge settlement and other debt payments since June 30 before forecasting from this cash observation.'],precision='approximate')
+96	for suffix,value,anchor in [('receivables',3268086,'Accounts receivable, net'),('inventory',1920290,'Inventory, net'),('related_party_receivable',4424547,'Loan receivable (related party)'),('equity',-25878273,"Total stockholders’ deficit"),('current_assets',10873698,'Total Current Assets'),('current_liabilities',14711896,'Total Current Liabilities')]:
+97	    fact('synergy_'+suffix+'_20240630',value,'USD',S,'Condensed consolidated balance sheets, F-2',anchor,'2024-06-30')
+98	fact('synergy_debt_carrying_20240630',31458899,'USD',S,'Note 11, Notes Payable, summary table','31,458,899','2024-06-30',['Carrying amount includes accounting discounts; not interchangeable with gross contractual cash owed.','Includes settlement obligations; do not add them again to balance-sheet debt.'])
+99	fact('synergy_revenue_2023',42777633,'USD',S,'Consolidated statements of operations, F-31','Revenue','2023-12-31')
+100	fact('synergy_revenue_h1_2024',17436703,'USD',S,'Condensed consolidated statements of income, F-3','Revenue','2024-06-30')
+101	fact('synergy_operating_income_h1_2024',3391921,'USD',S,'Condensed consolidated statements of income, F-3','Income from operations','2024-06-30')
+102	fact('synergy_ebitda_h1_2024',3463701,'USD',S,'Summary financial data; Non-GAAP financial measures','EBITDA','2024-06-30',['Non-GAAP EBITDA is not cash available for debt service.'])
+103	fact('synergy_operating_cashflow_h1_2024',-1140005,'USD',S,'Condensed consolidated statements of cash flows, F-5','Net cash used by operating activities','2024-06-30',['Includes working-capital movements; do not extrapolate as constant recurring burn.'])
+104	fact('synergy_employee_count',25,'people',S,'Human Capital Management','25 full','2024-08-07')
+105	fact('synergy_hvl_lawsuit_identity','Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovations, 2:22-cv-00301-JAW','text',S,'Note 13, Commitments and Contingencies, Litigation','Atrium Innovations','2024-06-30',['Note 13 explicitly links this lawsuit to the December 2023 settlement loan in Note 11.'])
+106	fact('synergy_hvl_settlement_date','2023-12-28','date',S,'Note 11, $5,450,000 December 28, 2023 Loan','confidential settlement agreement','2023-12-28')
+107	fact('synergy_hvl_2023_noncash_gain',2235986,'USD',S,'Note 11, December 28, 2023 Loan; Note 13, Litigation','reduction of cost of sales','2023-12-31',['Accounting gain from settlement, not cash received.','Normalize FY2023 historical profitability if used; do not remove from H1 2024 income where it is not included.'])
+108	fact('synergy_hvl_balance_20240630',4802445,'USD',S,'Note 11, December 28, 2023 Loan','outstanding loan balance at both June','2024-06-30',['Includes 352445 interest; do not add that amount twice.'])
+109	fact('synergy_hvl_interest_included',352445,'USD',S,'Note 11, December 28, 2023 Loan','including interest','2024-06-30')
+110	fact('synergy_hvl_stated_interest_rate',0.05,'fraction_per_year',S,'Note 11, December 28, 2023 Loan','5% per annum','2024-06-30',['Source says interest payable with last payment; exact settlement contract not acquired.'])
+111	bridge=['Amount scheduled for H2 2024 as measured June 30; NOT verified still unpaid on August 13.','Subtract actual July 1–August 12 settlement payments in a bridge before using August 12 cash.','Exact installment dates unknown; choose explicit timing scenarios, not invented historical dates.']
+112	fact('synergy_hvl_h2_2024_payment',2000000,'USD',S,'Note 11, December 28, 2023 Loan, future payment table','2024','2024-06-30',bridge)
+113	fact('synergy_hvl_2025_payment',2000000,'USD',S,'Note 11, December 28, 2023 Loan, future payment table','2025','2024-06-30')
+114	fact('synergy_hvl_2026_payment',802445,'USD',S,'Note 11, December 28, 2023 Loan, future payment table','2026','2024-06-30')
+115	fact('synergy_supplier_march_settlement_date','2024-03-27','date',S,'Note 11, $3,020,824 March 27, 2024 Loan','March 27, 2024 Loan','2024-03-27',['Counterparty unnamed in decision-date source; do not backfill later Vitabest identification into this run.','A settlement does not independently prove a filed lawsuit.'])
+116	fact('synergy_supplier_march_balance_20240630',2920824,'USD',S,'Note 11, March 27, 2024 Loan','outstanding loan balance','2024-06-30')
+117	fact('synergy_supplier_march_paid_h1_2024',100000,'USD',S,'Note 11, March 27, 2024 Loan','payments of $100,000','2024-06-30')
+118	fact('synergy_supplier_march_h2_2024_payment',600000,'USD',S,'Note 11, March 27, 2024 Loan, future payment table','2024','2024-06-30',bridge)
+119	fact('synergy_supplier_march_2025_payment',1460412,'USD',S,'Note 11, March 27, 2024 Loan, future payment table','2025','2024-06-30')
+120	fact('synergy_supplier_march_2026_payment',860412,'USD',S,'Note 11, March 27, 2024 Loan, future payment table','2026','2024-06-30')
+121	fact('synergy_lodc_paid_may_2024',True,'boolean',S,'Note 13, Litigation, L.O.D.C. Group paragraph','During May 2024','2024-05',['Distinct Texas lawsuit 4:23-cv-691.','Settlement amount is undisclosed; allegation over $1m is not settlement amount.','No incremental future payment for this settled obligation in the August run.'],precision='month')
+122	for suffix,value,unit,section,anchor in [
+123	 ('advance',370000,'USD','Cover; section 2.3','Loan Amount'),('total_repayment',418100,'USD','Cover; section 1','Total Payment Amount'),
+124	 ('cost_of_funds',48100,'USD','Cover','Cost of Funds'),('receipts_fraction',0.25,'fraction','Section 1, Daily Payment and Daily Payment Percentage','Daily Payment Percentage'),
+125	 ('term_months',18,'months','Section 1, Term','eighteen (18)'),('6m_min_fraction',0.30,'fraction_of_total_repayment','Section 1, Minimum Payment; section 4.1.1','thirty (30)'),
+126	 ('12m_min_fraction',0.60,'fraction_of_total_repayment','Section 4.1.1; section 4.2.1(b)','at least 60 percent'),
+127	 ('second_window_min_fraction',0.30,'fraction_of_total_repayment','Section 4.1.1; section 4.2.1(b)','beginning of Month seven')]:
+128	    fact('synergy_webbank_'+suffix,value,unit,M,section,anchor,'2024-05-01',
+129	         ['Agreement date is not confirmed effective funding date.','Daily percentage applies to defined Shopify Account Credits, not consolidated sales.'])
+130	    if suffix == '12m_min_fraction':
+131	        facts[-1]['notes'].extend(['The 60% cumulative amount is a necessary floor, not the complete second-period minimum rule.',
+132	                                  'Section 4.2.1(b) measures the second Minimum Payment against Month 7–12 Daily Payments. Excess paid during Months 1–6 does not offset that period minimum unless the entire loan is paid off.'])
+133	    if suffix == 'second_window_min_fraction':
+134	        facts[-1]['notes'].append('Track a separate Month 7–12 payment ledger. The second six-month period requires an additional 30% of Total Payment Amount; cap obligations by the outstanding total amount and stop after full payoff.')
+135	fact('synergy_webbank_lender','WebBank','text',M,'Opening paragraph','Utah-chartered industrial bank','2024-05-01')
+136	fact('synergy_webbank_effective_date_rule','date lender delivers funding','text',M,'Section 1, Effective Date; section 2.3','Effective Date','2024-05-01')
+137	fact('synergy_webbank_gross_receipts_rule','Apply the percentage to defined gross Shopify Account Credits; refunds, returns and cancellations do not reduce Daily Payments.','text',M,'Section 1, Shopify Account Credits; section 4.1.1','gross sales','2024-05-01',['This account-specific contract definition is not equivalent to net sales or consolidated company revenue.'])
+138	fact('synergy_webbank_minimum_payment_ledger_rule','Maintain separate Month 1–6 and Month 7–12 minimum-payment ledgers. The second period resets its Daily Payment measurement; prior-period excess does not offset its 30% requirement unless the total loan is already paid in full.','text',M,'Section 4.1.1; section 4.2.1(b)','beginning of Month seven','2024-05-01',['A cumulative-only 30%/60%/100% implementation is incomplete.','Cap any collection by the remaining Total Payment Amount; full repayment extinguishes further payment obligations.'])
+139	fact('synergy_webbank_nonbusiness_payment_rule','Amounts due on non-business days transfer on the following business day.','text',M,'Section 4.2.1(a)','non-Business Day','2024-05-01')
+140	fact('synergy_webbank_voluntary_payment_rule','Manual payments reduce outstanding total payment amount; no assumed pro-rata fee rebate.','text',M,'Section 4.1.2','Manual Payments','2024-05-01')
+141	fact('synergy_webbank_carrying_balance_20240630',333454,'USD',S,'Note 11, $418,100 May 1, 2024 Loan','outstanding loan balance','2024-06-30',['Accounting balance is not the verified remaining contractual total payment amount.','Actual remittances through August 13 require borrower/servicer ledger.'])
+142	fact('synergy_other_shopify_may22_advance',105000,'USD',S,'Note 11, $118,650 May 22, 2024 Loan','received $105,000','2024-05-22',['Separate obligation; do not sum two 25% remittance rates without mapping the accounts/stores.'])
+143	fact('synergy_other_shopify_may22_total_repayment',118650,'USD',S,'Note 11, $118,650 May 22, 2024 Loan','total payments','2024-05-22')
+144	fact('synergy_other_shopify_may22_carrying_balance_20240630',93736,'USD',S,'Note 11, $118,650 May 22, 2024 Loan','outstanding loan balance','2024-06-30')
+145	fact('synergy_shopify_january_loan_repaid_20240630',True,'boolean',S,'Note 11, $141,250 January 29, 2024 Loan','outstanding loan balance at June','2024-06-30',['Note narrative says January 21 but heading says January 29; do not infer a new loan from this typo.'])
+146	
+147	unknowns=[
+148	 {'unknown_id':'synergy_hvl_paid_20240701_20240812','unit':'USD','required_for':'Bridge June 30 settlement liability to August decision date.','allocation_bounds_for_2024_bucket_only':[0,2000000],'resolution':'Borrower bank transactions and settlement payment ledger.','rule':'Do not hardcode zero historical payments. Any prepayment of later-year obligations needs a separate bridge; the bucket allocation cap is not a cap on possible actual payments.'},
+149	 {'unknown_id':'synergy_supplier_march_paid_20240701_20240812','unit':'USD','required_for':'Bridge June 30 settlement liability to August decision date.','allocation_bounds_for_2024_bucket_only':[0,600000],'resolution':'Borrower bank transactions and settlement payment ledger.','rule':'No additional August outflow for payments already reflected in August cash. Any prepayment of later-year obligations needs a separate bridge.'},
+150	 {'unknown_id':'synergy_exact_settlement_installment_dates','required_for':'Payment calendar within disclosed annual buckets.','resolution':'Executed settlement agreements or borrower schedules.','rule':'Show conditional timing scenarios until obtained.'},
+151	 {'unknown_id':'synergy_august_cash_composition','required_for':'Unrestricted cash available at August 13 decision.','resolution':'Latest bank balances and restriction documentation.','rule':'Approximately $2m cash is not a verified $2m unrestricted balance.'},
+152	 {'unknown_id':'synergy_shopify_account_credits_daily','required_for':'Actual daily merchant loan remittances.','resolution':'Eligible store/account transaction history.','rule':'Do not substitute consolidated revenue or brand revenue.'},
+153	 {'unknown_id':'synergy_shopify_effective_funding_date','required_for':'Calendar dates of 6-, 12- and 18-month milestones.','resolution':'Funding receipt/servicer record.','rule':'May 1 agreement date is not automatically the funding date.'},
+154	 {'unknown_id':'synergy_shopify_remittances_to_cutoff','required_for':'Remaining contractual repayment balance and milestone headroom.','resolution':'Servicer ledger plus bank reconciliation.','rule':'Do not treat accounting carrying balance as remaining gross contractual repayment.'},
+155	 {'unknown_id':'synergy_shopify_account_mapping','required_for':'Interaction of May 1 and May 22 loans.','resolution':'Account/store IDs and servicing agreement.','rule':'Do not automatically apply 50% aggregate deduction to one receipts stream.'},
+156	 {'unknown_id':'synergy_liens_and_new_borrowing_permissions','required_for':'Eligibility of incremental secured financing.','resolution':'Existing debt contracts, lien search and any waivers.','rule':'No invented first-lien status or available new debt permission.'},
+157	 {'unknown_id':'synergy_full_existing_debt_calendar','required_for':'Complete borrower cash-availability model.','resolution':'Reconcile Note 11 to executed agreements and current borrower debt schedule.','rule':'Do not model settlement obligations alone while ignoring other existing payments.'},
+158	 {'unknown_id':'synergy_supplier_march_identity_at_cutoff','required_for':'Counterparty identification, if relevant to operating mechanism.','resolution':'Decision-date settlement agreement.','rule':'Later 2025 identification is outcome evidence only.'},
+159	 {'unknown_id':'synergy_proposed_slope_offer','required_for':'Candidate advance comparisons.','resolution':'Explicit analyst-selected amount, term, price and policy parameters.','rule':'This is a modeled offer; no historical Slope application or relationship is established.'},
+160	]
+161	payload={'schema_version':'1.0','case_id':'synergy_chc_2024','mission_id':'synergy_20240813',
+162	 'as_of':'2024-08-13T23:59:59-04:00','currency':'USD','source_index':'sources.json',
+163	 'scope':'Decision-date factual anchors and unresolved inputs, not a full historical transaction ledger or live lender underwriting output.',
+164	 'facts':facts,'known_unknowns':unknowns,
+165	 'modeling_rules':['Record legal settlements as payment schedules for existing liabilities, not new duplicate liabilities.',
+166	                   'Merchant-loan 30%/60%/100% cumulative milestones alone do not implement the contract: the second six-month period has an additional 30% minimum measured against its own period payments, subject to remaining total repayment and full payoff.',
+167	                   'Use defined gross Shopify Account Credits without deducting refunds, returns or cancellations; never substitute consolidated revenue.',
+168	                   'June 30 amounts and August 12 cash require a bridge; $2.6m cannot be called verified remaining August debt service.',
+169	                   'Treat a settlement gain as an accounting normalization, not a cash inflow.',
+170	                   'Conditional scenario probabilities and candidate-loan economics are assumptions unless separately supported.',
+171	                   'No 2025 refinancing proceeds are committed August 2024 funding.',
+172	                   'The February 2023 court document is a recommended decision on a motion to dismiss, not a merits judgment.'],
+173	 'outcome_source_ids':['synergy_annual_2024','synergy_credit_agreement_20250530','synergy_quarterly_20250630']}
+174	(OUT/'facts_synergy.json').write_text(json.dumps(payload,indent=2)+'\n')
+175	outcomes={'case_id':'synergy_chc_2024','runtime_use':'Evaluator only after decision is locked; excluded from August 13 agent context.',
+176	          'conflicts_to_preserve':[{'subject':'May 1 loan December 31, 2024 carrying balance','source_values':[{'source_id':'synergy_annual_2024','value':269488},{'source_id':'synergy_quarterly_20250630','value':280732}],'unit':'USD','locator':'Note 11, May 1, 2024 Loan','rule':'Do not silently reconcile or infer exact payment timing/default from this conflict.'}]}
+177	(OUT/'outcome_checks_synergy.json').write_text(json.dumps(outcomes,indent=2)+'\n')
+178	print(json.dumps({'sources':len(sources),'facts':len(facts),'known_unknowns':len(unknowns),'output_files':['sources.json','facts_synergy.json']}))
+179	

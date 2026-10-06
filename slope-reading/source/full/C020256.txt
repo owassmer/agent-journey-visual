@@ -1,0 +1,3 @@
+text(await tools.exec_command({cmd:"aws freetier get-account-plan-state --profile slope --region us-east-1 --output json","max_output_tokens":1200}));
+text(await tools.exec_command({cmd:"aws ec2 describe-images --profile slope --region us-east-2 --owners self --query 'Images[].{Id:ImageId,Name:Name,Created:CreationDate,State:State}' --output json","max_output_tokens":700}));
+text(await tools.exec_command({cmd:"aws s3api get-object --profile slope --region us-east-2 --bucket slope-walk-462947327980-20261001 --key walk-36781427817/question-refresh/index.log /tmp/slope-question-index-latest.log --query ContentLength --output text","max_output_tokens":300}));

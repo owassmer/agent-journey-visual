@@ -1,0 +1,24 @@
+__pycache__
+test_analysis.py
+test_evidence_snapshots.py
+test_finance.py
+test_investigation_tools.py
+test_mission_isolation.py
+test_semantic_layer.py
+test_viewer.py
+29:def ev(cents: int) -> EvidenceValue:
+33:def dispute(iid: str, role: str, stage: str, amount: int, judgment: date | None = None) -> DisputeInstance:
+42:def model_with(disputes: list[DisputeInstance], p: float = 0.5, form: dict | None = None) -> EventModel:
+44:    fc = Forecaster(disputes, {}, borrower="ChromaDex Corporation", review=REVIEW, horizon=SETUP.horizon,
+62:def test_conditional_probabilities_compose_and_conserve_mass():
+80:def test_a_node_probability_moves_dated_collections_by_a_hand_computable_amount():
+102:def test_a_zero_probability_path_stays_in_the_stress_set():
+115:def test_collateral_and_credit_capacity_are_released_exactly_on_the_settlement_date():
+138:def test_the_invoice_remainder_is_paid_once_and_collections_never_exceed_the_contract():
+150:def test_events_keep_the_full_window_jev_was_asked_about():
+162:def test_views_match_without_events_and_a_fixed_event_moves_cash_exactly():
+176:def test_weighted_expectations_and_quantiles_match_a_fixture():
+186:def test_the_docket_reference_cannot_pre_answer_jev():
+195:def test_judgment_dates_must_appear_in_the_record():
+201:def test_bank_feed_matches_public_anchors_and_stops_at_the_review_date():
+207:def test_the_supplied_schedule_conserves_its_totals():

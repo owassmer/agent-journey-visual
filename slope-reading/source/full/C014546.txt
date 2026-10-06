@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:86253,chars:"",yield_time_ms:1000,max_output_tokens:1800}));
+text(await tools.exec_command({cmd:"gh api 'repos/owassmer/Slope_Sparse_Events/actions/runs/36939735152/artifacts?per_page=100' > /tmp/notes-retry-monitor/artifacts.json\npython3 - <<'PY'\nimport json\nv=json.load(open('/tmp/notes-retry-monitor/artifacts.json'))\nprint('Saved GitHub artifacts',v['total_count'],'bytes',sum(x['size_in_bytes'] for x in v['artifacts']),'earliest expiry',min(x['expires_at'] for x in v['artifacts']))\nPY","max_output_tokens":500}));

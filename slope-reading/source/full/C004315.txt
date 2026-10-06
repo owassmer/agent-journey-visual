@@ -1,0 +1,1 @@
+{"command": "sqlite3 ~/.hermes/profiles/connor/state.db \"select id, title, datetime(started_at,'unixepoch','localtime'), message_count, parent_session_id from sessions where started_at > strftime('%s','2026-09-29 12:00') order by started_at\" 2>&1 | head -40; sqlite3 ~/.hermes/profiles/connor/state.db \".schema sessions\" | head -30"}

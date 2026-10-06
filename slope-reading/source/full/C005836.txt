@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && sqlite3 state.db \".schema async_delegations\" | head -30; sqlite3 -header state.db \"select * from async_delegations order by rowid desc limit 6\" | cut -c1-400; ps -axo pid,etime,pcpu,rss,command | grep -E \"slope|pytest|numba|uv run|python.*analy\" | grep -v grep | cut -c1-220"}

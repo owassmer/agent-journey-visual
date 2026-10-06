@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/main_cc8adf7 && C=Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts; grep -n \"7.01(j)\\|(j)(v)\\|generally is not paying\\|not paying its debts\" $C/*.json app -r | cut -c1-250 | head; echo ===; grep -n \"def cash_out\\|cash_exhausted\\|petition_cash_out\" app/disputes/forecast.py | head; "}

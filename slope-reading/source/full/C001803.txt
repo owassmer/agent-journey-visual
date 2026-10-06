@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && git status -sb | head -3 && wc -l app/disputes/*.py app/analysis/*.py app/agent/jev_profiles.py app/web/*.py app/web/static/* 2>/dev/null | sort -n | tail -25; grep -n \"^    def \\|^def \\|^class \" app/disputes/forecast.py | head -80"}

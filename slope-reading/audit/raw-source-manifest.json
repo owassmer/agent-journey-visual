@@ -1,0 +1,751 @@
+{
+  "schema": "Each record retains untouched raw event/DB row, original source locator, actor, source sequence, full-precision timestamp. No deduplication/filtering/semantic classification. Raw bytes encoded as hex where needed. Actor knowledge follows actor sequence, not global wall time.",
+  "files": [
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/hermes-20260925_194036_0dd3e1.jsonl",
+      "events": 1888,
+      "event_types": {
+        "session_metadata": 1,
+        "message:user": 110,
+        "message:assistant": 943,
+        "message:tool": 834
+      },
+      "bytes": 6728964,
+      "source": {
+        "database": "/Users/owenwassmer/.hermes/profiles/connor/state.db",
+        "session": "20260925_194036_0dd3e1"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/hermes-20260926_234625_5c0cc6.jsonl",
+      "events": 1524,
+      "event_types": {
+        "session_metadata": 1,
+        "message:user": 92,
+        "message:assistant": 760,
+        "message:tool": 671
+      },
+      "bytes": 6678299,
+      "source": {
+        "database": "/Users/owenwassmer/.hermes/profiles/connor/state.db",
+        "session": "20260926_234625_5c0cc6"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/hermes-20260928_172908_0aef31.jsonl",
+      "events": 3065,
+      "event_types": {
+        "session_metadata": 1,
+        "message:user": 170,
+        "message:assistant": 1527,
+        "message:tool": 1367
+      },
+      "bytes": 10055684,
+      "source": {
+        "database": "/Users/owenwassmer/.hermes/profiles/connor/state.db",
+        "session": "20260928_172908_0aef31"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/hermes-20260929_020301_63c14b.jsonl",
+      "events": 1012,
+      "event_types": {
+        "session_metadata": 1,
+        "message:user": 45,
+        "message:assistant": 498,
+        "message:tool": 468
+      },
+      "bytes": 4084702,
+      "source": {
+        "database": "/Users/owenwassmer/.hermes/profiles/connor/state.db",
+        "session": "20260929_020301_63c14b"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/hermes-20260929_175426_2e120e.jsonl",
+      "events": 177,
+      "event_types": {
+        "session_metadata": 1,
+        "message:user": 7,
+        "message:assistant": 88,
+        "message:tool": 81
+      },
+      "bytes": 977571,
+      "source": {
+        "database": "/Users/owenwassmer/.hermes/profiles/connor/state.db",
+        "session": "20260929_175426_2e120e"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/hermes-20260930_144102_6fa0b2.jsonl",
+      "events": 907,
+      "event_types": {
+        "session_metadata": 1,
+        "message:user": 16,
+        "message:assistant": 451,
+        "message:tool": 439
+      },
+      "bytes": 4551211,
+      "source": {
+        "database": "/Users/owenwassmer/.hermes/profiles/connor/state.db",
+        "session": "20260930_144102_6fa0b2"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/hermes-20261004_150251_ebc057.jsonl",
+      "events": 1189,
+      "event_types": {
+        "session_metadata": 1,
+        "message:user": 55,
+        "message:assistant": 592,
+        "message:tool": 541
+      },
+      "bytes": 3722864,
+      "source": {
+        "database": "/Users/owenwassmer/.hermes/profiles/connor/state.db",
+        "session": "20261004_150251_ebc057"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-09-25T14-03-12-01a0d9bc-5125-7591-a439-724d3d41ae39.jsonl",
+      "events": 873,
+      "event_types": {
+        "session_meta": 1,
+        "event_msg": 444,
+        "response_item": 328,
+        "world_state": 5,
+        "turn_context": 6,
+        "token_usage_record": 86,
+        "compacted": 3
+      },
+      "bytes": 14854117,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/09/25/rollout-2026-09-25T14-03-12-01a0d9bc-5125-7591-a439-724d3d41ae39.jsonl",
+        "sha256": "dd3f4bb8b45a519873670411bc71ac7ed7bf9ba81d442c8e1326df94d6043219"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-09-30T13-52-08-01a0f371-fa54-7eb1-beb9-e94020156e8f.jsonl",
+      "events": 12369,
+      "event_types": {
+        "session_meta": 1,
+        "event_msg": 5548,
+        "response_item": 5012,
+        "world_state": 30,
+        "turn_context": 99,
+        "token_usage_record": 1533,
+        "compacted": 20,
+        "inter_agent_communication_metadata": 126
+      },
+      "bytes": 87165969,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/09/30/rollout-2026-09-30T13-52-08-01a0f371-fa54-7eb1-beb9-e94020156e8f.jsonl",
+        "sha256": "4592900785ce52772c98771ed3bbe29438bf52658046e19390db75a71eb8c446"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-09-30T15-51-42-01a0f3df-70d9-72d0-9bba-f45f0eb783da.jsonl",
+      "events": 211,
+      "event_types": {
+        "session_meta": 1,
+        "event_msg": 114,
+        "response_item": 71,
+        "world_state": 1,
+        "turn_context": 6,
+        "token_usage_record": 18
+      },
+      "bytes": 4184710,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/09/30/rollout-2026-09-30T15-51-42-01a0f3df-70d9-72d0-9bba-f45f0eb783da.jsonl",
+        "sha256": "9a5a46a17e2c5426adc49eb0151b9732902e9a3d12fba0e13ae8fe26c02e6fd7"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-09-30T17-51-08-01a0f44c-ca7e-7613-87dc-5b2bd9aec48b.jsonl",
+      "events": 2,
+      "event_types": {
+        "session_meta": 1,
+        "event_msg": 1
+      },
+      "bytes": 25351,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/09/30/rollout-2026-09-30T17-51-08-01a0f44c-ca7e-7613-87dc-5b2bd9aec48b.jsonl",
+        "sha256": "bdcf41c61d397e6a87bd4a64ff073a1063473adf6ef670950f322255ac3ee5d9"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-09-30T23-34-49-01a0f587-6fab-7313-a2e0-9a7ea1b22cd1.jsonl",
+      "events": 9563,
+      "event_types": {
+        "session_meta": 2,
+        "compacted": 9,
+        "world_state": 19,
+        "turn_context": 122,
+        "response_item": 3848,
+        "event_msg": 3977,
+        "inter_agent_communication_metadata": 252,
+        "token_usage_record": 1334
+      },
+      "bytes": 33323630,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/09/30/rollout-2026-09-30T23-34-49-01a0f587-6fab-7313-a2e0-9a7ea1b22cd1.jsonl",
+        "sha256": "dcc31cf265ebaaa4477aaaccea9fda05e0bc4800d318bc07668acefd9abcc6f8"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-10-01T19-06-55-01a0f371-fa54-7eb1-beb9-e94020156e8f_01a0f9b8-88fa-7722-94c4-e1d2033c460e.jsonl",
+      "events": 10566,
+      "event_types": {
+        "session_meta": 1,
+        "event_msg": 4624,
+        "turn_context": 51,
+        "response_item": 4414,
+        "token_usage_record": 1319,
+        "inter_agent_communication_metadata": 134,
+        "world_state": 13,
+        "compacted": 10
+      },
+      "bytes": 37961258,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/10/01/rollout-2026-10-01T19-06-55-01a0f371-fa54-7eb1-beb9-e94020156e8f_01a0f9b8-88fa-7722-94c4-e1d2033c460e.jsonl",
+        "sha256": "869535950a02b04bee009aee30f135b3a733c7b567949067cdfb141508b41d32"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-10-01T19-39-54-01a0f9d6-bb4a-7bf0-a470-5c3ac2ca56ac.jsonl",
+      "events": 188,
+      "event_types": {
+        "session_meta": 1,
+        "event_msg": 78,
+        "response_item": 81,
+        "world_state": 1,
+        "turn_context": 1,
+        "token_usage_record": 26
+      },
+      "bytes": 1963718,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/10/01/rollout-2026-10-01T19-39-54-01a0f9d6-bb4a-7bf0-a470-5c3ac2ca56ac.jsonl",
+        "sha256": "66f3ae21c1881b1473cfc47e1322564a3433c9bc1c3dce369c76f5294f0391fc"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-10-02T02-03-45-01a0fb36-2718-70a1-a13c-40fe2259643f.jsonl",
+      "events": 76,
+      "event_types": {
+        "session_meta": 2,
+        "compacted": 1,
+        "response_item": 29,
+        "world_state": 2,
+        "turn_context": 6,
+        "event_msg": 29,
+        "inter_agent_communication_metadata": 1,
+        "token_usage_record": 6
+      },
+      "bytes": 620947,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/10/02/rollout-2026-10-02T02-03-45-01a0fb36-2718-70a1-a13c-40fe2259643f.jsonl",
+        "sha256": "830c210f51617080abd56e0fd09ba68a117df73f433abfc9eef29b621f37e1ea"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-10-02T13-10-18-01a0f371-fa54-7eb1-beb9-e94020156e8f_01a0fd98-6628-7352-9b68-40ead25c9d01.jsonl",
+      "events": 24543,
+      "event_types": {
+        "session_meta": 1,
+        "event_msg": 10726,
+        "turn_context": 102,
+        "response_item": 10103,
+        "token_usage_record": 3119,
+        "inter_agent_communication_metadata": 435,
+        "compacted": 26,
+        "world_state": 31
+      },
+      "bytes": 89009672,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/10/02/rollout-2026-10-02T13-10-18-01a0f371-fa54-7eb1-beb9-e94020156e8f_01a0fd98-6628-7352-9b68-40ead25c9d01.jsonl",
+        "sha256": "49eb286fd0962a615c8b2c4da0aff2c2433e4686463a3e920054c521ed2dbc48"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/codex-rollout-2026-10-02T19-25-46-01a0fef0-275c-7c70-bf0a-db133a54f867.jsonl",
+      "events": 5823,
+      "event_types": {
+        "session_meta": 2,
+        "compacted": 7,
+        "world_state": 12,
+        "turn_context": 57,
+        "response_item": 2355,
+        "event_msg": 2408,
+        "inter_agent_communication_metadata": 148,
+        "token_usage_record": 834
+      },
+      "bytes": 21823135,
+      "source": {
+        "file": "/Users/owenwassmer/.codex/sessions/2026/10/02/rollout-2026-10-02T19-25-46-01a0fef0-275c-7c70-bf0a-db133a54f867.jsonl",
+        "sha256": "67c1d64f87c509df622d52cb84df1b8d49d543e95aa1e03a1c49a24354d55277"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-1ebb1026-a1f0-4809-9321-bc3d6f875530.jsonl",
+      "events": 13709,
+      "event_types": {
+        "ai-title": 652,
+        "agent-name": 652,
+        "mode": 650,
+        "permission-mode": 650,
+        "atis-latch": 663,
+        "file-history-snapshot": 54,
+        "user": 1713,
+        "attachment": 2342,
+        "last-prompt": 651,
+        "assistant": 3119,
+        "system": 118,
+        "file-history-delta": 327,
+        "pr-link": 687,
+        "queue-operation": 140,
+        "relocated": 644,
+        "worktree-state": 643,
+        "cost-state": 4
+      },
+      "bytes": 42808955,
+      "source": {
+        "file": "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530.jsonl",
+        "sha256": "40599440b90016e6f4446f39cb7ef88b075ec2ca347df10ef25c2fcccf33fa4b"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "events": 353,
+      "event_types": {
+        "mode": 27,
+        "permission-mode": 27,
+        "file-history-snapshot": 5,
+        "user": 50,
+        "atis-latch": 27,
+        "attachment": 69,
+        "last-prompt": 29,
+        "ai-title": 26,
+        "assistant": 77,
+        "file-history-delta": 7,
+        "system": 2,
+        "cost-state": 6,
+        "continued-in": 1
+      },
+      "bytes": 1742855,
+      "source": {
+        "file": "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+        "sha256": "a5b7ddf3e4234e7d69a35f2a83015bfbcb657775a7566b1a35eeab5261b22c2d"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-7758c950-3aa2-4c97-a055-a1abfe1bbe2d.jsonl",
+      "events": 32,
+      "event_types": {
+        "mode": 3,
+        "permission-mode": 3,
+        "file-history-snapshot": 2,
+        "user": 3,
+        "attachment": 13,
+        "atis-latch": 3,
+        "last-prompt": 2,
+        "assistant": 2,
+        "cost-state": 1
+      },
+      "bytes": 199302,
+      "source": {
+        "file": "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/7758c950-3aa2-4c97-a055-a1abfe1bbe2d.jsonl",
+        "sha256": "5f56a8fc9c84cad97497882548e2e63fe1eb4e427ab47bebd86cef3ddf51d183"
+      }
+    },
+    {
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-c59d86ce-8917-4f47-a553-c84c92011c04.jsonl",
+      "events": 27,
+      "event_types": {
+        "mode": 2,
+        "permission-mode": 2,
+        "atis-latch": 2,
+        "file-history-snapshot": 2,
+        "user": 3,
+        "attachment": 12,
+        "last-prompt": 1,
+        "assistant": 2,
+        "cost-state": 1
+      },
+      "bytes": 75272,
+      "source": {
+        "file": "/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/c59d86ce-8917-4f47-a553-c84c92011c04.jsonl",
+        "sha256": "8031356dddc595a5d45bc991bfa926bd491c63a4531bdca4bd3164d89160ad65"
+      }
+    }
+  ],
+  "counts": {
+    "hermes_user": 495,
+    "hermes_assistant": 4859,
+    "hermes_tool": 4401,
+    "export_dropped_repeated_user": 53,
+    "export_dropped_repeated_assistant": 129,
+    "export_dropped_assistant_with_tool_calls": 66,
+    "codex_event_session_meta": 13,
+    "codex_event_event_msg": 27949,
+    "codex_message_developer": 111,
+    "codex_event_response_item": 26241,
+    "codex_message_user": 282,
+    "codex_dropped_user_xml": 33,
+    "codex_event_world_state": 114,
+    "codex_event_turn_context": 450,
+    "codex_message_assistant": 1572,
+    "codex_event_token_usage_record": 8275,
+    "codex_event_compacted": 76,
+    "codex_event_inter_agent_communication_metadata": 1096,
+    "claudecode_event_ai-title": 678,
+    "claudecode_event_agent-name": 652,
+    "claudecode_event_mode": 682,
+    "claudecode_event_permission-mode": 682,
+    "claudecode_event_atis-latch": 695,
+    "claudecode_event_file-history-snapshot": 63,
+    "claudecode_event_user": 1769,
+    "claudecode_event_attachment": 2436,
+    "claudecode_event_last-prompt": 683,
+    "claudecode_event_assistant": 3200,
+    "claudecode_event_system": 120,
+    "claudecode_event_file-history-delta": 334,
+    "claudecode_event_pr-link": 687,
+    "claudecode_event_queue-operation": 140,
+    "claudecode_event_relocated": 644,
+    "claudecode_event_worktree-state": 643,
+    "claudecode_event_cost-state": 12,
+    "claudecode_event_continued-in": 1
+  },
+  "repeated_assistant_records_with_calls_dropped_by_previous_export": [
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775480,
+      "prior": 772697
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775498,
+      "prior": 774632
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775506,
+      "prior": 774831
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775508,
+      "prior": 774833
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775512,
+      "prior": 774887
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775520,
+      "prior": 774895
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775532,
+      "prior": 774907
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775540,
+      "prior": 774915
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 775578,
+      "prior": 775222
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777479,
+      "prior": 777355
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777501,
+      "prior": 777377
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777523,
+      "prior": 777399
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777537,
+      "prior": 777413
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777543,
+      "prior": 777419
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777557,
+      "prior": 777433
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777575,
+      "prior": 777451
+    },
+    {
+      "session": "20260925_194036_0dd3e1",
+      "id": 777579,
+      "prior": 777455
+    },
+    {
+      "session": "20260926_234625_5c0cc6",
+      "id": 780889,
+      "prior": 778287
+    },
+    {
+      "session": "20260926_234625_5c0cc6",
+      "id": 780903,
+      "prior": 780836
+    },
+    {
+      "session": "20260926_234625_5c0cc6",
+      "id": 780917,
+      "prior": 780867
+    },
+    {
+      "session": "20260926_234625_5c0cc6",
+      "id": 780929,
+      "prior": 780879
+    },
+    {
+      "session": "20260926_234625_5c0cc6",
+      "id": 785902,
+      "prior": 785776
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 790810,
+      "prior": 788997
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 790824,
+      "prior": 789033
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 790828,
+      "prior": 789308
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 790846,
+      "prior": 789703
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 790872,
+      "prior": 789890
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 795220,
+      "prior": 793734
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 795238,
+      "prior": 793752
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 795276,
+      "prior": 795114
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796195,
+      "prior": 796048
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796209,
+      "prior": 796062
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796227,
+      "prior": 796080
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796229,
+      "prior": 796082
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796235,
+      "prior": 796088
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796247,
+      "prior": 796100
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796255,
+      "prior": 796108
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796287,
+      "prior": 796140
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796291,
+      "prior": 796144
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796295,
+      "prior": 796148
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796299,
+      "prior": 796152
+    },
+    {
+      "session": "20260928_172908_0aef31",
+      "id": 796319,
+      "prior": 796172
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794181,
+      "prior": 791558
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794184,
+      "prior": 793848
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794192,
+      "prior": 793856
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794200,
+      "prior": 793864
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794222,
+      "prior": 793887
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794234,
+      "prior": 793963
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794250,
+      "prior": 793980
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794252,
+      "prior": 793982
+    },
+    {
+      "session": "20260929_020301_63c14b",
+      "id": 794335,
+      "prior": 794130
+    },
+    {
+      "session": "20260930_144102_6fa0b2",
+      "id": 797031,
+      "prior": 796863
+    },
+    {
+      "session": "20260930_144102_6fa0b2",
+      "id": 797039,
+      "prior": 796881
+    },
+    {
+      "session": "20260930_144102_6fa0b2",
+      "id": 797063,
+      "prior": 796905
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798566,
+      "prior": 798411
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798574,
+      "prior": 798419
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798576,
+      "prior": 798421
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798588,
+      "prior": 798433
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798600,
+      "prior": 798445
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798621,
+      "prior": 798466
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798625,
+      "prior": 798470
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798635,
+      "prior": 798480
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798641,
+      "prior": 798486
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798653,
+      "prior": 798498
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798655,
+      "prior": 798500
+    },
+    {
+      "session": "20261004_150251_ebc057",
+      "id": 798663,
+      "prior": 798508
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+Web search results for query: "TypeSafe Jev model "decision" typesafe.ai Jev-1 judgment model"
+
+Links: [{"title":"What Is Jev? Inside TypeSafe's Decision-Only AI Model and Its Developer Use Cases","url":"https://www.firecrawl.dev/blog/what-is-jev"},{"title":"Jev Explained: Typesafe AI's Non-Autoregressive System-1 Model | MindStudio","url":"https://www.mindstudio.ai/blog/jev-system-one-model-launch"},{"title":"Jev by TypeSafe: A Decision Model for AI Agents","url":"https://beam.ai/agentic-insights/jev-typesafe-ai-agents"},{"title":"A deep dive into Jev, TypeSafe's System One model","url":"https://flaviocopes.com/jev/"},{"title":"How to Use Jev: A practical guide to TypeSafe's System One model - DEV Community","url":"https://dev.to/valyuai/how-to-use-jev-a-practical-guide-to-typesafes-system-one-model-g5e"},{"title":"What Is Jev? A Guide to TypeSafe AI’s System One Model","url":"https://www.langchain.com/blog/building-a-harness-with-jev"},{"title":"Introducing System One Models & Jev - TypeSafe AI Blog","url":"https://typesafe.ai/blog/introducing-system-one-models-and-jev"},{"title":"A Coding Guide to TypeSafe AI Jev: Typed Decisions, Calibrated Confidence, and Speculative Fan-Out with a System One Model - MarkTechPost","url":"https://www.marktechpost.com/2026/09/23/a-coding-guide-to-typesafe-ai-jev/"},{"title":"TypeSafe AI Releases Jev: A System One Model That Returns Typed, Calibrated Decisions Instead of Text - MarkTechPost","url":"https://www.marktechpost.com/2026/09/19/typesafe-ai-releases-jev/"}]
+
+Based on the search results, here's what I found about TypeSafe's Jev model:
+
+## Overview
+
+Jev is the first model from TypeSafe AI, a San Francisco lab founded by Diogo Almeida, a co-author of the InstructGPT paper that led to ChatGPT. The company emerged from stealth on September 15, 2026 with $40 million in seed funding led by DCVC and Jev in early access.
+
+## Model Design
+
+Jev was built for that shape of problem, a judgment your software needs to make fast and thousands of times, where the answer is a single decision. Jev is Typesafe AI's new System-1 model that skips token-by-token generation for instant decisions. Instead of generating text word by word like a typical large language model, Jev is what Typesafe calls a "System 1" model: it outputs decisions directly, as probabilities and confidence scores, rather than autoregressively predicting the next token.
+
+## Key Features
+
+Rather than writing out a chain of reasoning or a sentence, it receives structured input (a description of a situation, along with a list of allowed actions) and returns a decision directly, attached to a probability and confidence score.
+
+What it cannot do is return something outside the set, or malformed, or off-schema. This prevents hallucination and format errors common in traditional LLMs.
+
+## Performance and Pricing
+
+Typesafe claims this makes Jev up to 100 times faster and 100 times cheaper than conventional LLMs for certain tasks, while remaining competitive on intelligence. Pricing is $0.042 per million input tokens, output free. TypeSafe's homepage says $42 per billion tokens, the same number in a form that makes the point.
+
+
+REMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.

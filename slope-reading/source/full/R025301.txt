@@ -1,0 +1,12 @@
+[1;32mAll checks passed![0m
+_________________ test_a_failed_screen_never_hides_candidates __________________
+tmp_path = PosixPath('/private/var/folders/t1/05nck9rj6w7_jqgkkycxjcxw0000gn/T/pytest-of-owenwassmer/pytest-32/test_a_failed_screen_never_hid0')
+    def test_a_failed_screen_never_hides_candidates(adapter, evidence, tmp_path):
+        failed = [c for c in out if c.item_id == failing_item]
+>       assert failed and failed[0].screen.route == "unscreened" and "provider unavailable" in failed[0].screen.error
+E       AssertionError: assert ([EvidenceCandidate(candidate_id='cand_001', dependency_id='dep_001', search_id='search_001', query='q', rank=0, item_i...nals={'gap_relevance': 0.9, 'usable_evidence': 0.9, 'premise_conflict': 0.9, 'instruction_like_text': 0.9}, error=''))] and 'instruction_flagged' == 'unscreened'
+E         
+E         - unscreened
+E         + instruction_flagged)
+FAILED tests/test_semantic_layer.py::test_a_failed_screen_never_hides_candidates - AssertionError: assert ([EvidenceCandidate(candidate_id='cand_001', depende...
+ AssertionError: assert ([EvidenceCandidate(candidate_id='cand_001', depende...

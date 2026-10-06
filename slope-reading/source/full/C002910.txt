@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-8-page && python3 -c \"\nimport re;s=open('runs/recorded/akoustis_20240514-agent_plus_jev-20260928T052641Z/page.json').read()\nfor m in re.finditer('D.I. 616|23,100,000|remittitur',s): print(s[max(0,m.start()-200):m.end()+100].replace('\\n',' '))\""}

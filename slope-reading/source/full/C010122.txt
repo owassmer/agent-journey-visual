@@ -1,0 +1,4 @@
+await Promise.allSettled([
+tools.exec_command({cmd:"aws organizations describe-organization --profile slope --query 'Organization.{Id:Id,ManagementAccountId:MasterAccountId,ManagementAccountEmail:MasterAccountEmail}' --output json; aws organizations describe-policy --profile slope --policy-id p-xuk9jpyn --query 'Policy.{Summary:PolicySummary,Content:Content}' --output json; aws ec2 describe-instances --profile slope --region us-east-2 --query 'Reservations[].Instances[].InstanceId' --output json; aws s3api list-buckets --profile slope --query 'Buckets[].Name' --output json; aws freetier get-account-plan-state --profile slope --region us-east-1",max_output_tokens:2200}),
+tools.web__run({search_query:[{q:'AWS "AccountFullAccessRole" "service control policy"'},{q:'AWS free plan EC2 explicit deny service control policy upgrade paid plan'}],response_length:"short"})
+]).then(r=>r.forEach(text));

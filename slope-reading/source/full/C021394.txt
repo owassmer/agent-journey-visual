@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"curl -s http://127.0.0.1:18766/api/status | python3 -c 'import json,sys; s=json.load(sys.stdin)[\"state\"]; print({k:s.get(k) for k in (\"phase\",\"done\",\"total\",\"active\",\"updated\",\"error\")})'","max_output_tokens":300}));
+text(await tools.exec_command({cmd:"ps -p 52758 -o pid,etime; tail -n 2 /tmp/slope-storage-boost-watch.log","max_output_tokens":250}));

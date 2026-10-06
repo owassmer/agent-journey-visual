@@ -1,0 +1,571 @@
+1	# Prototype financial contracts and examples
+2	
+3	These files define the implementation contracts and provide useful conditional calculations. They are not a running agent application, a calibrated credit model, or actual Slope offers.
+4	
+5	## Main example and secondary case
+6	
+7	- `economic-effects.json`: **Synergy CHC**, case `synergy_chc_2024`, mission `synergy_20240813`, decision cutoff August 13, 2024. Contains real settlement and merchant-loan facts, named operator assumptions, four economic-effect mappings, and calculated decision thresholds.
+8	- `synergy-decision-context.json`: standalone decision context for the same mission.
+9	- `proposal-fixtures.json`: three explicitly analytical incremental financing options: $100k/6 months/6% fixed total fee, $250k/6 months/6%, and $250k/3 months/3%. Monthly payment indices avoid inventing actual funding or due dates. These are not Slope pricing, historical applications, or modifications of the existing $370k WebBank loan.
+10	- `barfresh-economic-effects.json`: separately named secondary case `barfresh_schreiber_2024`, mission `barfresh_20241025`. Historical observations and research effects only; it is not the lead model.
+11	- `build-contracts.schema.json`: JSON Schema Draft 2020-12 reusable contracts including evidence values, decision context, loan terms, merchant repayment rules, economic effects, scenarios, threshold results, decisions, and cash-flow exports.
+12	- `proposal-fixtures.schema.json`: schema for the analytical proposals.
+13	- `validation-report.json`: actual artifact validation results, including conditional arithmetic and malformed-example checks.
+14	
+15	## Useful output without fictitious history
+16	
+17	The main packet computes a conditional threshold, rather than ending with a generic missing-input message:
+18	
+19	`required_remaining_period_net_cash = max(0, $2m HVL + $600k supplier - intervening_payments + reserve - opening_cash)`
+20	
+21	The $2.6m is the contractual remaining-2024 schedule measured **June 30**, not proof that all of it remains unpaid on August 13. Actual July–August payments are unknown and must be bridged. With named example assumptions of no intervening payments, a $200k reserve, and $2m starting cash, the remaining-period net-cash requirement is **$800k**. This is a conditional threshold, not an observed shortfall. Management described August 12 cash as approximately $2m; it is not a verified unrestricted bank balance. The example adopts it only as a rounded sensitivity input.
+22	
+23	Net cash in this threshold means cash after operating needs and other existing debt service, excluding the two settlement payments separately modeled. The condition is necessary over the aggregate period, not sufficient at every date: obligations can come due before receipts arrive. Exact installment dates remain unknown. New-loan proceeds, payments, fees, and the changed funded operating plan must enter together before selecting an offer. A six-month proposal beginning in August crosses into 2025: include the disclosed 2025 settlement buckets and an explicit within-year timing assumption. The H2-only threshold cannot establish feasibility for the entire loan term.
+24	
+25	The merchant contract also provides actionable receipt thresholds. A 25% remittance rate requires $501,720 of specified Account Credits for $125,430 of remittances. This applies separately to the first six-month window and the second six-month window, before valid manual credits and the outstanding-total cap. Full $418,100 repayment through percentage remittances alone requires $1,672,400 of lifetime Account Credits. These are not consolidated company sales forecasts.
+26	
+27	**Do not replace the second six-month requirement with a cumulative-60% test.** Section 4.1.1 requires an additional 30% during months 7–12; section 4.2.1(b) resets the daily-payment subtraction to that window. Paying 50% in the first window and 10% in the second reaches 60% cumulatively but leaves a second-window shortfall. Apply valid manual credits once, reverse reversed payments, cap collection at remaining total, and stop after full payoff. Calendar months begin at actual effective funding, not automatically the agreement date.
+28	
+29	## Source and assumption separation
+30	
+31	Main Synergy fact IDs resolve in `../data/facts_synergy.json`; source IDs, hashes, dates and locators are in `../data/sources.json`. The generator loads the registry and resolves each referenced fact. Registry USD amounts are deliberately converted to integer cents in the contract examples. Merchant-agreement public availability is June 28, 2024; the S-1/A is August 13, 2024. Date-only availability is conservatively admitted at end of its known publication date, not represented as an exact SEC acceptance time.
+32	
+33	Neither example uses pending source IDs. Synergy references resolve to the unified facts registry. Barfresh references resolve to named, inspected source sections in the same archived source catalog; they are section anchors rather than standalone entries in the Synergy facts registry.
+34	
+35	Money uses integer USD cents. Rates/fractions use decimal strings parsed with `Decimal`. `EvidenceValue.status` distinguishes exact reported numbers, ranges, and unknowns; `provenance.basis` separately distinguishes documented evidence, operator assumptions, derived values, and absence of evidence. Approximately reported source amounts must retain that qualification in their note and registry precision; exact numeric representation does not imply exact underlying measurement.
+36	
+37	The four main effects are:
+38	
+39	1. Place the existing HVL debt into a payment calendar, less subsequent payments; do not add the debt twice.
+40	2. Do the same for the separate March supplier settlement. The supplier's later-disclosed identity is excluded from the August information set.
+41	3. Remove the $2,235,986 noncash gain only from FY2023 metrics that contain it; do not charge it against cash or H1 2024 profit.
+42	4. Exclude a new future L.O.D.C. payment because the distinct matter was paid in full in May; do not substitute alleged damages for settlement cash.
+43	
+44	## Permitted assumption models
+45	
+46	A complete bank-data baseline is valuable but is not a prerequisite to an explicitly labeled scenario exercise. `baseline_status=explicit_assumption_model` permits conditional modeling when every nonobserved numerical input, date convention, allocation behavior and policy choice has an assumption ID. This allows practical offer comparisons and break-even surfaces without inventing historical transactions.
+47	
+48	Keep reported data unchanged when testing assumptions. An unknown actual prior payment remains unknown even if an example assumes zero. A probability-weighted expected curve needs documented scenario weights summing to one. Jev confidence is not a weight source. A conditional curve needs a named scenario and coherent ledger but no probability.
+49	
+50	The main packet deliberately has no exact dated collection rows yet: effective funding, account credits, intervening remittances and settlement dates are not established. Its decision output is nevertheless useful: the conditional liquidity threshold, merchant receipt boundaries and three explicit financing-payment fixtures. The application should let an operator supply facts or assumptions and calculate the next layer.
+51	
+52	## Reproduce and validate
+53	
+54	From this directory, after installing `jsonschema>=4.26,<5` into your environment:
+55	
+56	    python build_synergy_example.py
+57	    python build_proposal_fixtures.py
+58	    python validate_contracts.py
+59	
+60	`build_synergy_example.py` imports the base generator, creates the separately named Barfresh example, then writes the final expanded schema and Synergy main packet. Do not run the base generator alone as the final step: it creates the earlier base schema before Synergy extensions. Paths are relative to the script location and source registry; no workspace-specific absolute paths are required.
+61	
+62	Validation covers schema shape, unit conventions, references, date cutoffs, consistent assumption IDs, threshold arithmetic, proposal payment conservation, and several deliberately invalid cases. It does not validate the eventual full financial engine, actual borrower creditworthiness, legal conclusions, or live model/agent behavior. The application must additionally enforce cash conservation, payment allocation, complete source cutoffs, and the separate merchant minimum-payment windows.
+63	# Offline financial reference
+64	
+65	This small standard-library Python calculator makes the numerical spine of the design reviewable. It does not create a borrower forecast, infer private transaction data or decide whether a loan should be approved. All arithmetic uses `Decimal`; no API, model, package installation or network connection is required. Python 3.10 or later.
+66	
+67	Run from this directory:
+68	
+69	```sh
+70	python calculator.py
+71	python -m unittest -v test_calculator.py
+72	```
+73	
+74	`calculation_outputs.json` contains source-linked contractual calculations, the unresolved cash-budget identity, and a clearly separate timing test fixture. Monetary amounts are strings rounded to cents for display.
+75	
+76	## Contract-derived thresholds: Synergy CHC
+77	
+78	The May 1, 2024 WebBank merchant agreement advances **$370,000** and requires total payments of **$418,100**, including a fixed **$48,100** cost. That cost is 13% of the advance; **13% is not an APR**.
+79	
+80	| Checkpoint | Cumulative payments required | Qualifying Shopify Account Credits needed if paid entirely through the 25% remittance |
+81	|---|---:|---:|
+82	| 6 months | $125,430 | $501,720 |
+83	| 12 months | $250,860 | $1,003,440 |
+84	| 18 months | $418,100 | $1,672,400 |
+85	
+86	These are **necessary cumulative thresholds, not a complete compliance test**. Sections 4.1.1 and 4.2.1(b) separately require a 30% minimum ($125,430) in the first six-month window and another 30% in months 7–12. Each window needs $501,720 of qualifying credits if met entirely through the 25% remittance. Excess first-window payments do not automatically satisfy the second-window requirement.
+87	
+88	For example, paying 50% ($209,050) in months 1–6 and 10% ($41,810) in months 7–12 reaches 60% cumulatively, yet leaves a **$83,620 second-window top-up**. The included counterexample test prevents a false pass based only on cumulative payments.
+89	
+90	`window_top_up` uses daily payments within the applicable window, explicitly confirmed manual credit for that window, and total lender receipts to date. It caps the top-up at the remaining total payment obligation. Manual payments must have been accepted and credited; reversed payments and an assumed carry of prior-window manual credit do not count. Earlier unresolved obligations are not erased. `cumulative_shortfall_only` is deliberately named to prevent using it as a complete checkpoint test. No threshold calculation by itself establishes an observed default.
+91	
+92	“Shopify Account Credits” follows the contract definition. It is not company-wide revenue, brand-segment revenue or net customer cash after refunds. The contract uses gross sales without deducting returns/refunds/cancellations; settlement timing also matters. Thresholds assume the corresponding remittances have reached the lender by the checkpoint. Calendar months start at effective funding, not automatically on the exhibit's May 1 date. No effective funding date is invented.
+93	
+94	The separate May 22 advance is excluded because applying two 25% rates to the same receipts without store/account mapping could double-count collections. The calculator does not allocate payments between principal and fee, infer APR, add late charges, or assume a fee rebate on prepayment.
+95	
+96	Source ID: `synergy_merchant_agreement_20240501` — [executed agreement](https://www.sec.gov/Archives/edgar/data/1562733/000121390024056991/ea020832401ex10-32_synergy.htm), cover, definitions and payment provisions.
+97	
+98	## Conditional capacity: the missing timeline must stay visible
+99	
+100	The August 13, 2024 filing reports approximately **$2m cash on August 12**; this does not verify that all of it was unrestricted or available. The unavailable portion is therefore a required input, left unknown. Its June 30 settlement schedules show **$2m HVL/Atrium plus $600,000 for a second supplier remaining in H2 2024**. The second supplier's later identification as Vitabest is outside this cutoff. The amount already paid during July 1–August 12 is unknown in these inputs.
+101	
+102	The valid identity is:
+103	
+104	```text
+105	Year-end cash residual before a new facility =
+106	    approximately $2m opening cash
+107	  - unavailable portion of that opening cash
+108	  + customer cash collected after August 12
+109	  + committed financing drawn after August 12
+110	  + other confirmed cash inflows after August 12
+111	  - ($2.6m June 30 H2 settlement schedule - payments made July 1–August 12)
+112	  - other operating cash outflows after August 12
+113	  - other debt service after August 12
+114	  - operator-required cash reserve
+115	```
+116	
+117	Therefore the conditional break-even threshold is:
+118	
+119	```text
+120	Prior H2 settlement payments + future customer cash + committed financing
+121	+ other confirmed inflows
+122	>= approximately $600,000 + unavailable opening cash
+123	 + other operating outflows + other debt service + reserve
+124	```
+125	
+126	**The $600,000 difference is not an observed August 13 funding gap.** The code leaves every missing input as `None` and returns no residual until all are supplied. No public-data claim is made for the filled values used only in the unit test.
+127	
+128	The identity schedules existing liabilities; it does not add settlement debt to the balance sheet again. Other operating outflows must exclude the separately scheduled settlements and debt service. Customer collections must be measured before separately modeled debt remittances. Exclude the hypothetical new loan from committed financing. Do not treat the 2025 refinancing as available cash in August 2024.
+129	
+130	A positive year-end residual is only a horizon-level necessary check: dated cash flows and reserve requirements are needed to establish whether cash runs out earlier and to size or price a new facility. Neither EBITDA nor an undisclosed annualized burn rate substitutes for those inputs.
+131	
+132	Source ID: `synergy_s1a_20240813` — [August 13 filing](https://www.sec.gov/Archives/edgar/data/1562733/000121390024068424/ea0208324-04.htm), liquidity discussion and Note 11. June 30 unrestricted cash of $87,293 is not carried forward as the August 12 cash balance.
+133	
+134	## Timing mechanics only
+135	
+136	A separate, explicitly artificial arithmetic fixture returns $100,000 principal at day 90 versus day 120. At an operator-assumed 12% effective annual discount rate, ACT/365:
+137	
+138	- Both paths return the same $100,000 principal; principal loss is zero.
+139	- The delayed receipt has lower present value and 30 extra exposure days.
+140	- The extra principal exposure is $3m dollar-days.
+141	
+142	This is an engine invariant, not a Synergy repayment forecast, not a proposed synthetic borrower, and not an asserted contractual fee allocation. The exposure function accepts principal-only payments and must not be applied to mixed principal/fee remittances without an explicit allocation policy. For actual merchant payments, the calculator provides the total-payment thresholds above without inventing that allocation.
+143	
+144	Tests cover exact cumulative floors, the 50%/10% window counterexample, confirmed manual credits, the remaining-obligation cap, one-cent boundaries, unknown cash availability, missing information, avoiding double-counted pre-cutoff settlement payments, conserved principal under delay, reduced PV at positive discount rates, and invalid numeric inputs.
+145	{
+146	  "configuration_id": "slope_external_event_cashflow_investigation",
+147	  "configuration_version": "2.0.1-design",
+148	  "status": "design_template_not_implemented_or_live_validated",
+149	  "scope": "One local investigation of a real borrower and a proposed new discretionary advance, followed by loan cash-flow scenario comparison and independent review. Analysis candidates are not claims of actual Slope offers or customers.",
+150	  "default_mission": {
+151	    "case_id": "synergy_chc_2024",
+152	    "borrower": "Synergy CHC Corp.",
+153	    "decision_date": "2024-08-13",
+154	    "as_of": "2024-08-13T23:59:59-04:00",
+155	    "decision_timezone": "America/New_York",
+156	    "cutoff_precision": "Conservative end of the disclosed filing date; not an asserted intraday SEC acceptance timestamp or actual loan-decision time.",
+157	    "financial_measurement_date": "2024-06-30",
+158	    "updated_cash_measurement_date": "2024-08-12",
+159	    "updated_cash_precision": "Approximately USD 2 million, as disclosed by management; not an exact current bank balance or a reconciliation of every post-June cash movement.",
+160	    "financial_filing_publication_date": "2024-08-13",
+161	    "source_ids": [
+162	      "synergy_s1a_20240813",
+163	      "synergy_merchant_agreement_20240501",
+164	      "synergy_court_20230227"
+165	    ],
+166	    "mission_type": "new_discretionary_advance",
+167	    "loan_terms_basis": "analysis_candidate",
+168	    "relationship_claim": "No claim that Synergy is or was a Slope customer, applied to Slope, received this offer, or qualified for a particular partner program.",
+169	    "product_selection": "Compare explicitly modeled fixed-installment working-capital offers compatible with Slope's product family. Do not describe current partner marketing terms as an offer available to Synergy in August 2024. Store the actual existing merchant loan under its own sales-linked contract logic.",
+170	    "existing_merchant_loan_role": "The May 1 WebBank loan, described by the issuer as Shopify Capital, is an existing obligation and a contract-engine test: USD 370000 advanced, USD 418100 total contractual repayment, remittance from 25 percent of defined Shopify Account Credits. Section 4.1.1 requires a 30 percent Minimum Payment in months 1-6 and an additional 30 percent Minimum Payment in months 7-12, with total repayment at least 60 percent by month 12 and full payment by the end of month 18. Section 4.2(b) computes each period top-up from Daily Payments in that six-month period; do not replace the second-period rule with a cumulative 60 percent test that credits first-period excess. All dates run from the effective funding date, not automatically the agreement date. This sales-linked existing loan is not the proposed Slope-style fixed-installment loan.",
+171	    "mission_id": "synergy_chc_2024_working_capital_advance"
+172	  },
+173	  "transfer_mission": {
+174	    "case_id": "barfresh_schreiber_2024",
+175	    "borrower": "Barfresh Food Group Inc.",
+176	    "as_of": "2024-10-25T23:59:59-04:00",
+177	    "decision_timezone": "America/New_York",
+178	    "financial_measurement_date": "2024-09-30",
+179	    "financial_filing_publication_date": "2024-10-24",
+180	    "source_id": "brfh_2024q3_10q",
+181	    "source_accepted_at": "2024-10-24T20:10:34Z",
+182	    "financing_basis": "Analysis candidate for new inventory funding alongside the documented receivables facility; no actual Slope relationship asserted.",
+183	    "mission_type": "new_discretionary_advance",
+184	    "loan_terms_basis": "analysis_candidate",
+185	    "mission_id": "barfresh_2024_inventory_advance"
+186	  },
+187	  "runtime": {
+188	    "python": "3.12",
+189	    "dependency_manager": "uv",
+190	    "lock_policy": "Create and retain uv.lock after a local authentication and custom-tool smoke test; do not claim package compatibility merely from this design file.",
+191	    "source_verified_versions": {
+192	      "verified_on": "2026-09-24",
+193	      "claude_model_ids": {
+194	        "values": [
+195	          "claude-opus-5-5",
+196	          "claude-sonnet-5"
+197	        ],
+198	        "source": "https://platform.claude.com/docs/en/models/overview",
+199	        "scope": "The official provider lists these IDs. This does not establish their availability in the user's authenticated subscription runtime, and an ID is not proof of immutable underlying weights."
+200	      },
+201	      "claude_agent_sdk": {
+202	        "value": "0.2.159",
+203	        "source": "https://pypi.org/project/claude-agent-sdk/0.2.159/"
+204	      },
+205	      "typesafe_sdk": {
+206	        "value": "0.7.1",
+207	        "source": "https://pypi.org/project/typesafe-sdk/0.7.1/"
+208	      },
+209	      "jev": {
+210	        "value": "jev-1.13.0",
+211	        "source": "https://docs.typesafe.ai/models"
+212	      }
+213	    },
+214	    "local_smoke_test_gate": {
+215	      "status": "not_run",
+216	      "reason": "This deliverable is a design contract. No subscription session, model request or SDK installation was performed.",
+217	      "must_pass_before_case_execution": [
+218	        "Install the exact requested SDK versions and freeze resolved dependencies; record SDK and bundled CLI versions.",
+219	        "Verify native subscription authentication with no unintended API-provider overrides and confirm the requested main model is available.",
+220	        "Invoke a harmless scoped MCP tool through ClaudeSDKClient and receive valid schema-constrained output; verify built-in and ambient tools are unavailable.",
+221	        "Make one focused Jev request using the pinned model and preserve its returned model, typed answer and raw response.",
+222	        "Confirm the chosen reviewer can read the complete eligible evidence bundle and cannot read outcome or answer files."
+223	      ],
+224	      "failure_behavior": "Stop before case execution with FAILED_CONFIGURATION. Select any runtime/model change explicitly and record a revised configuration; never silently switch to metered inference."
+225	    },
+226	    "main_agent": {
+227	      "provider_runtime": "official_claude_agent_sdk",
+228	      "package_pin": "claude-agent-sdk==0.2.159",
+229	      "authentication": "native_claude_subscription",
+230	      "model": "claude-opus-5-5",
+231	      "effort": "high",
+232	      "paid_api_fallback": false,
+233	      "model_substitution_policy": "If the specified model is unavailable, stop for explicit local configuration selection. Record the actual model used; do not silently substitute a different model or metered provider.",
+234	      "native_sdk_options": {
+235	        "model": "claude-opus-5-5",
+236	        "effort": "high",
+237	        "tools": [],
+238	        "strict_mcp_config": true,
+239	        "allowed_tools": [
+240	          "mcp__credit__get_mission",
+241	          "mcp__credit__read_baseline_profile",
+242	          "mcp__credit__read_loan_terms",
+243	          "mcp__credit__search_evidence",
+244	          "mcp__credit__read_source_section",
+245	          "mcp__credit__judge_evidence",
+246	          "mcp__credit__record_finding",
+247	          "mcp__credit__record_gap",
+248	          "mcp__credit__propose_patch",
+249	          "mcp__credit__run_scenarios",
+250	          "mcp__credit__compare_offers",
+251	          "mcp__credit__request_missing_fact",
+252	          "mcp__credit__submit_decision_packet"
+253	        ],
+254	        "permission_mode": "dontAsk",
+255	        "setting_sources": [],
+256	        "max_turns": 40
+257	      },
+258	      "runtime_bindings_required": {
+259	        "mcp_servers": "Inject exactly one scoped credit MCP server into ClaudeAgentOptions.mcp_servers. No ambient MCP servers.",
+260	        "cwd": "Create an empty per-run working directory containing no acquired corpus, prior output, outcome evidence or evaluation answers.",
+261	        "system_prompt": "Combine the role instruction and explicit invariants below into a custom system prompt. Do not load the coding-agent default prompt.",
+262	        "output_format": "Inject a concrete Pydantic-generated JSON Schema for the decision packet using the SDK's json_schema output format; no unresolved schema path is passed as a schema."
+263	      },
+264	      "prohibited_auth_paths": [
+265	        "ANTHROPIC_API_KEY inference",
+266	        "OpenAI API inference",
+267	        "custom OAuth token extraction or proxy",
+268	        "--bare",
+269	        "automatic paid overflow"
+270	      ],
+271	      "auth_preflight": "Confirm official subscription sign-in and detect provider/key overrides without printing values. Refuse unintended metered inference. Include the installed runtime version and chosen model in the run record."
+272	    },
+273	    "jev": {
+274	      "provider": "TypeSafe",
+275	      "package_pin": "typesafe-sdk==0.7.1",
+276	      "model_pin": "jev-1.13.0",
+277	      "integration": "direct_SDK_through_scoped_judge_evidence_tool",
+278	      "registry_file": "question_registry.json",
+279	      "authentication": "TYPESAFE_API_KEY available only to the host-side tool handler",
+280	      "subscription_coverage": "Separate service; Claude and ChatGPT subscriptions do not include Jev usage.",
+281	      "generative_model_fallback": false,
+282	      "version_policy": "Verify the actual returned model ID equals the pinned version and retain the raw response. Reject unexpected version changes for evaluation comparability.",
+283	      "retry_policy": "Use the SDK's bounded retry behavior and host deadline. Do not add a second general-purpose retry wrapper.",
+284	      "target_state_tokens": 6000,
+285	      "max_state_plus_longest_question_tokens": 32000,
+286	      "max_entire_request_tokens": 64000,
+287	      "provider_price_usd_per_million_input_tokens_at_design": "0.042",
+288	      "spend_cap_usd_per_run": "0.10",
+289	      "spend_cap_policy": "Host reserves a conservative estimated input-token charge before dispatch and reconciles actual usage. This caps Jev service spend only, not Claude/Codex subscription usage."
+290	    },
+291	    "reviewer": {
+292	      "preferred_runtime": "official_codex_cli_exec",
+293	      "authentication": "saved_ChatGPT_sign_in",
+294	      "model_policy": "Select an available reasoning model through the installed Codex subscription configuration; freeze that model choice for an evaluation set and record the actual identifier. No fabricated model pin.",
+295	      "session": "fresh",
+296	      "structured_output": "JSONL event log plus --output-schema with a concrete reviewer-report schema",
+297	      "access": "Candidate packet plus the complete admissible source interface, not just quotations chosen by the main agent.",
+298	      "isolation": "Use only scoped tools, or an OS-isolated directory containing the eligible review bundle. A read-only filesystem sandbox alone is not a proof of read isolation.",
+299	      "paid_api_fallback": false,
+300	      "initial_integration_alternative": "A fresh separately scoped Claude subscription session with model claude-sonnet-5 may review the first milestone. Configure this choice explicitly before the run; it is not a silent failure fallback.",
+301	      "max_repair_cycles": 1
+302	    }
+303	  },
+304	  "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Select the next research action adaptively. Establish the relevant repayment mechanism, translate supported facts into explicit scenario patches, and compare the permitted offers using the financial engine. Jev supplies focused evidence judgments; you reconcile them and reason about the business. Code computes dates, money, schedules and cash flows. Finish with a concrete recommended action or the exact unresolved input that prevents choosing one. Do not claim to send an offer, change an account, or know Slope's private policy.",
+305	  "invariants": [
+306	    "Start with the same baseline profile, existing obligations, decision date and candidate financing request for the before/after comparison.",
+307	    "Keep borrower cash flows, contractual loan payments, scenario collections and funding-facility cash flows distinct.",
+308	    "Use only evidence admitted by the host's snapshot rules. Do not use remembered future outcomes.",
+309	    "All amounts, dates and parameter values have reported, derived or operator-assumption basis; unknown remains unknown.",
+310	    "Use source-supported ranges or named scenario parameters where exact values are unavailable. Never silently interpolate financial statements into daily historical facts.",
+311	    "Do not turn Jev confidence or lawsuit severity into default probabilities or dollar adjustments.",
+312	    "Track legal-entity, asset, product, channel and period scope for every adjustment.",
+313	    "Reconcile every patch with baseline entries to prevent double counting; preserve associated avoided costs, recoveries and delayed receipts.",
+314	    "Do not automatically rewrite existing contractual payments, assume new creditor seniority, or freeze committed credit.",
+315	    "Do not label loan principal collections or all interest as Slope corporate revenue; use the selected stakeholder accounting scope.",
+316	    "Do not assume lower principal is always safer; financed inventory and resulting receipts must respond to the action chosen.",
+317	    "A missing incidental fact need not block the decision. A pivotal missing fact requires its exact question and the action consequences of alternative answers.",
+318	    "Runtime or quota failure means incomplete investigation, not an adverse borrower recommendation."
+319	  ],
+320	  "tools": {
+321	    "host_scope": [
+322	      "run_id",
+323	      "case_id",
+324	      "snapshot_id",
+325	      "evidence_manifest_hash",
+326	      "baseline_version",
+327	      "policy_version"
+328	    ],
+329	    "scope_enforcement": "The host binds scope at run creation. Tools do not accept arbitrary filesystem paths, database names, network endpoints, case IDs or later cutoffs from the model.",
+330	    "read_tools": {
+331	      "get_mission": "Construct a fresh mission object using mission_projection.allowed_case_fields and allowed_run_input_fields only. Never return the raw mission/configuration object. Return the financing question, use of proceeds, allowed policy/product references and cutoff without evaluator expectations or future hints.",
+332	      "read_baseline_profile": "Read source-backed opening balances, receipts, operating expenses, existing financing and explicit assumptions by field or stream ID.",
+333	      "read_loan_terms": "Return existing contractual schedules and permitted analysis-candidate schedules, with exact pricing/convention basis.",
+334	      "search_evidence": "Search only eligible records with source/category filters and return dated snippets and IDs. Do not reveal answer keys or future documents.",
+335	      "read_source_section": "Return a selected section with surrounding definitions, table headers/units and qualifications, plus source metadata."
+336	    },
+337	    "analysis_tools": {
+338	      "judge_evidence": "Validate selected registry entries and narrow state; call the direct TypeSafe SDK, or return a clearly identified eligible interpretation-cache hit.",
+339	      "record_finding": "Write a run-scoped factual or computed finding with source references, measurement dates and disposition. This is internal analysis state only.",
+340	      "record_gap": "Write one unresolved premise, its decision dependency, feasible next actions and whether sensitivity shows it can change the chosen offer.",
+341	      "propose_patch": "Validate a proposed EconomicEffect against target streams, evidence basis, existing adjustments and known double-count rules; do not silently activate an invalid effect.",
+342	      "run_scenarios": "Apply explicit validated effects and parameter realizations, calculate borrower capacity and loan cash flows, and return calculation references.",
+343	      "compare_offers": "Evaluate the permitted action menu under explicit policy and operating assumptions; return feasible actions, economics and break-even conditions.",
+344	      "request_missing_fact": "Record the exact requested fact/document and the action consequences. This tool sends no communication.",
+345	      "submit_decision_packet": "Validate and lock the candidate evidence, patch, scenario, offer and calculation versions; then enqueue independent review. No actual lending action."
+346	    },
+347	    "disallowed_capabilities": [
+348	      "unscoped shell or code execution by the agent",
+349	      "generic filesystem access",
+350	      "unrestricted browser or network search during historical runs",
+351	      "reading outcome stores, old reports, goldens or another run's mutable facts",
+352	      "posting messages, email or borrower requests",
+353	      "writing to Slope, bank, marketplace or servicing systems",
+354	      "making offers, moving funds, changing limits or editing existing contracts",
+355	      "changing model/provider/auth configuration during the run"
+356	    ]
+357	  },
+358	  "budgets": {
+359	    "main_agent_max_turns": 40,
+360	    "jev_max_requests_including_retries": 30,
+361	    "main_investigation_wall_clock_seconds": 600,
+362	    "review_wall_clock_seconds": 300,
+363	    "total_wall_clock_seconds_including_one_repair": 1200,
+364	    "consecutive_no_progress_actions": 3,
+365	    "no_progress_definition": "An action produces no new eligible evidence, no corrected finding, no resolved/narrowed gap, no new valid patch and no changed sensitivity result. Repeating the same query alone is not progress.",
+366	    "budget_policy": "Ceilings, not targets. Record actual elapsed time, token usage, requests and spend. Finish early when further accessible evidence cannot change the action across the stated sensitivity range."
+367	  },
+368	  "completion_and_decisions": {
+369	    "execution_states": [
+370	      "CREATED",
+371	      "RUNNING",
+372	      "CANDIDATE_READY",
+373	      "REVIEWING",
+374	      "COMPLETE_REVIEWED",
+375	      "INCOMPLETE_REVIEW",
+376	      "FAILED_CONFIGURATION"
+377	    ],
+378	    "lending_recommendation_values": [
+379	      "APPROVE_REQUESTED_STRUCTURE",
+380	      "OFFER_ALTERNATIVE_STRUCTURE",
+381	      "CONDITIONAL_OFFER",
+382	      "DECLINE_REQUEST",
+383	      "UNDETERMINED"
+384	    ],
+385	    "review_dispositions": [
+386	      "PASS",
+387	      "REPAIR_REQUIRED",
+388	      "UNRESOLVED_MATERIAL_ERROR"
+389	    ],
+390	    "failure_mapping": {
+391	      "missing_subscription_auth_or_unintended_api_provider": "FAILED_CONFIGURATION",
+392	      "missing_required_jev_credential_before_agent_plus_jev_run": "FAILED_CONFIGURATION",
+393	      "quota_or_deadline_exhaustion": "INCOMPLETE_REVIEW",
+394	      "unrecoverable_source_or_model_service_failure": "INCOMPLETE_REVIEW",
+395	      "unresolved_material_review_error_after_one_repair": "INCOMPLETE_REVIEW"
+396	    },
+397	    "failure_recommendation_policy": "Keep any prior provisional recommendation in the trace, but do not publish it as a completed result. Set final lending recommendation UNDETERMINED unless an independently completed supported decision packet exists. Execution failure itself is never a reason for DECLINE_REQUEST.",
+398	    "complete_with_pivotal_gap": "A reviewed packet may finish with UNDETERMINED and a precise borrower question plus action map. It must not claim that the financing decision has been resolved.",
+399	    "conditional_offer_requirement": "Specify the exact condition, acceptable resolving evidence, deadline if supported, and the amount/term/schedule offered when the condition is satisfied. Generic monitoring is not a condition.",
+400	    "submission_requirement": "Every final action must reference the source-supported mechanisms, explicit assumptions, considered offers and financial results that justify it."
+401	  },
+402	  "state_and_replay": {
+403	    "run_isolation": "Facts, gaps, patches, calculations and outputs are scoped by run_id; snapshot_id alone is insufficient because repeated evaluations must not share mutable state.",
+404	    "final_packet": "Immutable graph of source versions, accepted findings, effects, assumption set, scenarios, calculation versions, chosen action and review report.",
+405	    "date_update": "Create a fresh mission/snapshot. Reuse eligible immutable observations while retaining original measurement dates; recompute time-dependent applicability and resulting cash flows.",
+406	    "comparison_modes": [
+407	      "agent_plus_jev",
+408	      "agent_only"
+409	    ],
+410	    "agent_only_policy": "Use the same primary model, admissible evidence, research tools, financial tools, review treatment and comparable total budgets. Remove mcp__credit__judge_evidence from exposed and allowed tools, omit the Jev registry from model context, and replace the role instruction with the agent-only override. This is an explicitly selected evaluation arm, never a service-failure fallback."
+411	  },
+412	  "cache": {
+413	    "algorithm": "SHA-256 over canonical JSON; preserve numeric units and string values",
+414	    "immutable_interpretation": {
+415	      "key_fields": [
+416	        "returned_model_id",
+417	        "question_id",
+418	        "question_version",
+419	        "registry_version",
+420	        "exact_source_content_hashes",
+421	        "passage_and_definition_hash",
+422	        "target_scope",
+423	        "atomic_claim",
+424	        "proposed_finding_if_used",
+425	        "all_other_semantically_used_state_values"
+426	      ],
+427	      "exclusions": [
+428	        "run_id",
+429	        "snapshot_id",
+430	        "as_of only if the question genuinely does not depend on it"
+431	      ],
+432	      "eligibility_on_every_reuse": "Verify all source versions are admitted in the current snapshot and the exact relevant semantic state matches. Return original creation time and a cache-hit marker.",
+433	      "restriction": "Interpretations whose instructions depend on current applicability, date or active document set belong in the dated cache, not this cache."
+434	    },
+435	    "dated_application": {
+436	      "key_fields": [
+437	        "interpretation_hashes",
+438	        "as_of",
+439	        "evidence_manifest_hash",
+440	        "active_evidence_versions",
+441	        "effective_intervals",
+442	        "supersession_links",
+443	        "baseline_version",
+444	        "existing_loan_terms_versions",
+445	        "effect_versions",
+446	        "scenario_parameters",
+447	        "action_candidate_version",
+448	        "policy_version",
+449	        "calculation_engine_version"
+450	      ],
+451	      "restriction": "Never reuse across a changed key. New time alone can change applicability, debt service and funding needs even without a new document."
+452	    },
+453	    "failed_call_policy": "Never substitute a stale or ineligible cache result because a live request failed. An already eligible exact cache hit remains a normal logged operation."
+454	  },
+455	  "validation_before_live_use": [
+456	    "Enforce the selected case's stored source IDs and conservative date cutoffs; preserve date-only precision where no intraday acceptance timestamp is asserted.",
+457	    "Confirm package installation, official subscription auth, custom MCP access and JSON-schema output in the user's local runtime.",
+458	    "Validate every Choice criteria boundary against source-labeled examples, including unknown and combined-claim cases.",
+459	    "Exercise cross-run isolation, future-document exclusion and dated-cache invalidation.",
+460	    "Validate scenario conservation, baseline double counting and separation of contractual schedule from collection paths.",
+461	    "Make one actual Jev request and retain its raw versioned result before claiming a live Jev integration.",
+462	    "Do not publish the existing historical case's known outcome as proof that the modeled counterfactual offer was optimal.",
+463	    "Build the get_mission response from the explicit whitelist and assert that evaluator-only fields, future identities and expected findings cannot appear in initial agent context.",
+464	    "Verify case_eval_private.json is absent from both investigator and blind-reviewer filesystems and source interfaces.",
+465	    "For the actual merchant contract, test the second six-month Minimum Payment independently: excess first-period collections do not replace the second-period requirement under Section 4.2(b).",
+466	    "Verify the agent-only comparison arm removes both the Jev tool and registry-specific prompt requirements while preserving the research and financial tool set."
+467	  ],
+468	  "configuration_sources": [
+469	    "https://support.claude.com/en/articles/15036540-use-the-claude-agent-sdk-with-your-claude-plan",
+470	    "https://code.claude.com/docs/en/agent-sdk/python",
+471	    "https://learn.chatgpt.com/docs/non-interactive-mode",
+472	    "https://docs.typesafe.ai/models",
+473	    "https://docs.typesafe.ai/primitives",
+474	    "https://slopepay.com/blog/agents-platform",
+475	    "https://help.slopepay.com/en/articles/4357633",
+476	    "https://slopepay.com/blog/slope-amazon-sellers"
+477	  ],
+478	  "case_source_references": [
+479	    {
+480	      "source_id": "synergy_s1a_20240813",
+481	      "url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024068424/ea0208324-04.htm",
+482	      "publication_date": "2024-08-13",
+483	      "sha256": "449f730007a457114f0f91b9570442cf5db0b8be82f9cda760e97b9f99a26816"
+484	    },
+485	    {
+486	      "source_id": "synergy_merchant_agreement_20240501",
+487	      "url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024056991/ea020832401ex10-32_synergy.htm",
+488	      "agreement_date": "2024-05-01",
+489	      "publication_date": "2024-06-28",
+490	      "accepted_at": "2024-06-28T15:32:30Z",
+491	      "filing_index_url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024056991/0001213900-24-056991-index.htm",
+492	      "date_note": "The agreement was publicly filed June 28 and is eligible on August 13. Its May 1 agreement date is not automatically the loan's effective funding date.",
+493	      "sha256": "ac8e4d3a6bb05cb51ed876299199acb7e7536f817a350209cb8298dd2b404ada"
+494	    },
+495	    {
+496	      "source_id": "synergy_court_20230227",
+497	      "url": "https://www.govinfo.gov/content/pkg/USCOURTS-med-2_22-cv-00301/pdf/USCOURTS-med-2_22-cv-00301-0.pdf",
+498	      "document_date": "2023-02-27",
+499	      "sha256": "ccdfc38167a2abf3cb18ae0c7a4c5a041bf37fe36c2057a2be9859a2148a8b21"
+500	    },
+501	    {
+502	      "source_id": "brfh_2024q3_10q",
+503	      "url": "https://www.sec.gov/Archives/edgar/data/1487197/000149315224042368/form10-q.htm",
+504	      "publication_date": "2024-10-24",
+505	      "accepted_at": "2024-10-24T20:10:34Z",
+506	      "sha256": "b59c1e4ef795f546bde5131dc7f374477c11942ffce86a6f85c7cf08ef9feebc"
+507	    }
+508	  ],
+509	  "mission_projection": {
+510	    "enforcement": "get_mission constructs a fresh object from the explicit whitelist below. It must not serialize the mission dictionary or the full agent configuration wholesale. Extra keys are denied by default.",
+511	    "allowed_case_fields": [
+512	      "case_id",
+513	      "mission_id",
+514	      "borrower",
+515	      "as_of",
+516	      "decision_timezone",
+517	      "mission_type",
+518	      "loan_terms_basis",
+519	      "relationship_claim",
+520	      "product_selection",
+521	      "financing_basis"
+522	    ],
+523	    "allowed_run_input_fields": [
+524	      "mission_id",
+525	      "requested_use",
+526	      "requested_amount",
+527	      "requested_term",
+528	      "requested_pricing",
+529	      "baseline_profile_id",
+530	      "existing_loan_record_ids",
+531	      "permitted_offer_set_id",
+532	      "policy_config_id",
+533	      "initial_event_seed"
+534	    ],
+535	    "run_input_policy": "Read these fields only from the locked operator request and ordinary baseline. Missing values remain typed unknown. An event seed may identify the borrower and disputed matter, but contains no expected conclusion, future identity, answer-bearing document order or extracted answer key. If mission_id is present in both case template and locked run inputs, they must match; a runtime override cannot switch cases.",
+536	    "excluded_fields": [
+537	      "case_specific_investigation_priorities",
+538	      "expected_findings_and_error_checks",
+539	      "transfer_tests",
+540	      "outcome_source_ids",
+541	      "outcome_source_ids_excluded_from_initial_snapshot",
+542	      "existing_merchant_loan_role",
+543	      "source_ids",
+544	      "source_id",
+545	      "case_source_references",
+546	      "source_accepted_at",
+547	      "updated_cash_precision"
+548	    ],
+549	    "financial_input_policy": "The agent obtains sourced financial observations and documented existing-loan terms through read_baseline_profile and read_loan_terms. These tools may return ordinary baseline facts with source references; they do not return evaluator conclusions or the expected event adjustments.",
+550	    "private_evaluation_file": "case_eval_private.json",
+551	    "private_evaluation_file_visibility": "host_offline_scorer_only",
+552	    "blind_reviewer_policy": "The reviewer sees the candidate packet and the same complete admissible evidence interface, but not this private evaluator file, answer keys, future outcomes, experimental arm labels or a predetermined preferred offer."
+553	  },
+554	  "comparison_mode_overrides": {
+555	    "agent_only": {
+556	      "remove_allowed_and_exposed_tools": [
+557	        "mcp__credit__judge_evidence"
+558	      ],
+559	      "expose_jev_registry": false,
+560	      "require_typesafe_credential": false,
+561	      "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Select the next research action adaptively. Establish the relevant repayment mechanism, make focused evidence judgments yourself, reconcile contradictions, translate supported facts into explicit scenario patches, and compare permitted offers using the financial engine. Code computes dates, money, schedules and cash flows. Finish with a concrete recommended action or the exact unresolved input that prevents choosing one. Do not claim to send an offer, change an account, or know Slope private policy.",
+562	      "evaluation_metadata_visibility": "Host scorer only; do not reveal arm labels or expected findings to the blind reviewer."
+563	    },
+564	    "agent_plus_jev": {
+565	      "expose_jev_registry": true,
+566	      "require_typesafe_credential": true,
+567	      "use_configured_role_instruction": true
+568	    }
+569	  }
+570	}
+571	

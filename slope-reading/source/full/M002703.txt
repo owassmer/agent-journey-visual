@@ -1,0 +1,44 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_5ca81f0b]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 03:44:21 (50m17s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3017.44s
+
+--- ✓ TASK 1/1: Worker P3: fix the page review's findings on branch step-8-page (worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-page, HEAD 595e8db), then, once worker G's model fixes land on origin/step-8-model, merge them and rebuild the page data. Checkpointed commits of named files, each pushed. Report the SHAs, what each fix changed, the final figure check, and screenshot paths. Do not open a PR, run a full `slope analyze`, or stop the viewer on 8012 except to restart it on the new code.  (status=completed, api_calls=96, 3017.21s) ---
+I've fixed all the review findings on step-8-page and pushed them in two commits. The merge with G didn't happen: after about 30 minutes of polling (04:03–04:33), origin/step-8-model was still at 6718bf2. G's changes to `events.py`, `forecast.py` and `tests/test_pending_claim.py` are still uncommitted in its worktree, and it hasn't started the lead re-run or the variants. So the page still shows the pre-fix model's figures, and M2 is still visible.
+
+**Commits (pushed)**
+- **a5cdb5b** – the review fixes below; page.json rebuilt from the saved run with no new Jev calls (218 cached answers) and every figure identical to before.
+- **a34453c** – the P5–P95 range on the "Collected to date" chart, redrawn as month-end whiskers.
+
+**What each fix changed**
+- **M1 key figures:** Due by 10 Nov $913k = Collected $823k + Past due $9k + Due, frozen by a filing $81k.
+  - Beside Filing probability 27% the tiles now read "Balance at filing, if filed" $362k and "Preference exposure, if filed" $398k. The weighted figures ($96k, $106k) are in the tooltips.
+  - The "if filed" figures are computed from the data for each view and each assumption. To make that exact I added a per-path balance-at-filing figure in `page.py`. The section 3 and section 5 tables use the same terms.
+- **M3:** the column header reads "Most likely next (share of this outcome)" and each entry "N% of this outcome". The collected and filing columns say "given this outcome", and the tree's hover says "on this branch".
+- **M4:** question 1(b)'s answers now read "Jury adopts Qorvo's damages theory 62% · Jury: lower award 38%", the same names section 3 uses. Earlier answers read "Question No. 1(a): Yes (trade-secret liability found)". The plain wording comes from a new `plain` block per question in `scenario.json`.
+  - What Jev is shown is unchanged; "(never the amount)" no longer appears on the page.
+  - "1(b)" is no longer uppercased.
+- **M5:** the explanation now reads "Why this judgment: its answer moves expected collections most for how uncertain Jev is about it…".
+- **M6:** each assumption has a plain label stating both values (e.g. "Jury: lower award at $9,999,999, instead of $1.4M") and a note, both in `scenario.json`. The authoring notes (names, J1/O1, spec sections, paragraph citations) no longer render.
+- **M7:** after a drag, the effect table reads 0% | Jev 62% | Your value 0% | 100%, and the tornado labels an overridden answer "Your value".
+- **M8:** the tree, step and tag wording is plain throughout: enforces, seizes cash, noteholders demand repayment, court pauses collection, sets the judgment aside, notes not bought back as required, and "no bankruptcy filing".
+- **Items you picked from NOTED:**
+  - A visible P5–P95 range, shown only for the central forecast with Jev's answers (the data has no range under an override or an assumption).
+  - The defense position now shows as "Akoustis's position"; other requested items show as "asserted at trial".
+  - Case-specific strings are out of `page.py`: the dev settings moved to `cases/akoustis_20240620/dev_settings.json` and the exchange name is gone. The notes' judgment-default clause moved into the contract; Jev's facts and the case terms both read it there, word for word as before. Kit manifest refreshed.
+
+**Checks**
+- **Figure check:** the central figures and all 9 assumption switches match page.json and assumptions.json, with 0 mismatches. The "if filed" figures equal weighted ÷ filing probability. The override moves the figures to $920k and 12%.
+- **Page errors:** none, apart from the single 404 on first load that the review also saw.
+- **Full suite:** 241 passed (82 s), and the name-free test passes.
+- **Viewer:** restarted on 8012 with the new code and left running.
+- **Screenshots:** `~/.hermes/profiles/connor/cache/scratch/8/p3/shots/final_*.png` (14 files, including `final_4e_override.png`) and `fix3_2b_collected_to_date.png`. The figure check script is `scratch/8/p3/check.py`.
+
+**Still to do:** you'll need to do the merge.
+1. Merge origin/step-8-model into step-8-page. Expect conflicts in `app/disputes/forecast.py` (my change moves the default clause into a small function; G's changes are elsewhere in that file) and possibly in the kit manifest (re-hash if so).
+2. Run `scratch/8/p2/rebuild_page.py` on the run, then `scratch/8/p3/check.py final`.
+3. Restart the 8012 viewer.
+
+I also updated the skill notes with the new page conventions.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_5ca81f0b/task-0.log

@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 14500}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"python - <<'PY'\nimport sqlite3\nc=sqlite3.connect('file:var/evidence/chromadex_20240819.sqlite?mode=ro',uri=True)\nfor sid in ('cdxc_2024q2_10q#s0026','cdxc_2024q2_10q#s0028','cdxc_2024q2_10q#s0046','cdxc_2024q2_10q#s0085'):\n for row in c.execute('select section_id, text from sections where section_id=?',(sid,)):print('\\n',row[0],row[1])\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:7300}),
+tools.exec_command({cmd:"cat tests/test_semantic_layer.py tests/test_evidence_snapshots.py tests/test_mission_isolation.py tests/test_viewer.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:8500})
+]);results.forEach((r,i)=>text({i,...r}));

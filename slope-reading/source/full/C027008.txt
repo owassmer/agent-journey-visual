@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/tests5.py && uv run ruff check --fix -q tests; uv run ruff check . && time uv run pytest -q -p no:cacheprovider --color=no -W ignore tests/test_decision_model.py 2>&1 | grep -E \"^E |passed|failed|Error\" | head -30", "description": "Write compiler tests and run them", "timeout": 600000}

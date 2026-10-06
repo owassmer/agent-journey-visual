@@ -1,0 +1,149 @@
+['schema_version', 'case_id', 'mission_id', 'as_of', 'currency', 'source_index', 'scope', 'facts', 'known_unknowns', 'modeling_rules']
+51
+{
+ "fact_id": "synergy_cash_20240630_unrestricted",
+ "value": 87293,
+ "unit": "USD",
+ "kind": "disclosed",
+ "value_precision": "exact",
+ "measurement_date": "2024-06-30",
+ "source_id": "synergy_s1a_20240813",
+ "locator": {
+  "section": "Condensed consolidated balance sheets, F-2; Liquidity and Capital Resources",
+  "anchor": "Cash and cash equivalents"
+ },
+ "notes": [
+  "June 30 financial statement measurement; do not use as fresh August cash."
+ ]
+}
+{
+ "fact_id": "synergy_cash_20240630_restricted",
+ "value": 100000,
+ "unit": "USD",
+ "kind": "disclosed",
+ "value_precision": "exact",
+ "measurement_date": "2024-06-30",
+ "source_id": "synergy_s1a_20240813",
+ "locator": {
+  "section": "Condensed consolidated balance sheets, F-2; Liquidity and Capital Resources",
+  "anchor": "Restricted cash"
+ },
+ "notes": [
+  "Credit-card collateral, excluded from freely available cash."
+ ]
+}
+{
+ "fact_id": "synergy_cash_20240812_approx",
+ "value": 2000000,
+ "unit": "USD",
+ "kind": "disclosed",
+ "value_precision": "approximate",
+ "measurement_date": "2024-08-12",
+ "source_id": "synergy_s1a_20240813",
+ "locator": {
+  "section": "Prospectus summary and Liquidity and Capital Resources",
+  "anchor": "As of August 12, 2024"
+ },
+ "notes": [
+  "Management reports approximate cash; restricted/unrestricted composition is not reconciled here.",
+  "Bridge settlement and other debt payments since June 30 before forecasting from this cash observation."
+ ]
+}
+{
+ "fact_id": "synergy_receivables_20240630",
+ "value": 3268086,
+ "unit": "USD",
+ "kind": "disclosed",
+ "value_precision": "exact",
+ "measurement_date": "2024-06-30",
+ "source_id": "synergy_s1a_20240813",
+ "locator": {
+  "section": "Condensed consolidated balance sheets, F-2",
+  "anchor": "Accounts receivable, net"
+ },
+ "notes": []
+}
+build_case_index.py
+facts_synergy.json
+outcome_checks_synergy.json
+sources.json
+"""Rebuild compact case indexes from already-acquired primary documents.
+
+Run from the research-kit root. Does not download or change source documents.
+"""
+import hashlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[3]
+OUT = ROOT / 'research/revision_v2/data'
+LEAD_CUTOFF = '2024-08-13'
+
+def source(sid, filename, url, date, events, basis, index_url=None, accepted=None):
+    p = ROOT / 'research/recent_cases/synergy_chc' / filename
+    return {
+        'source_id': sid, 'case_id': 'synergy_chc_2024', 'primary_url': url,
+        'original_relative_path': p.relative_to(ROOT).as_posix(),
+        'package_relative_path': p.relative_to(ROOT).as_posix(),
+        'sha256': hashlib.sha256(p.read_bytes()).hexdigest(), 'bytes': p.stat().st_size,
+        'availability': {'date': date, 'precision': 'day' if date else 'unknown',
+                         'basis': basis, 'verification_url': index_url or url,
+                         'accepted_at_as_displayed': accepted,
+                         'intraday_runtime_policy': 'Conservative end of stated date in America/New_York; do not invent an acceptance time.'},
+        'event_dates': events,
+        'relative_to_lead_cutoff': 'eligible' if date and date <= LEAD_CUTOFF else 'outcome' if date else 'unknown',
+        'mission_membership': {'synergy_20240813': 'eligible' if date and date <= LEAD_CUTOFF else 'outcome' if date else 'unknown',
+                               'barfresh_20241025': 'out_of_case'},
+    }
+
+base='https://www.sec.gov/Archives/edgar/data/1562733/'
+sources = [
+ source('synergy_s1a_20240813','2024_s1a.html',base+'000121390024068424/ea0208324-04.htm','2024-08-13',
+        [{'type':'interim_measurement','date':'2024-06-30'}, {'type':'updated_cash_measurement','date':'2024-08-12'}, {'type':'employee_measurement','date':'2024-08-07'}],
+        'Cover expressly says filed August 13, 2024. Intraday SEC index retrieval failed; date is verified from document.'),
+ source('synergy_merchant_agreement_20240501','2024_05_01_webbank_shopify_loan.html',base+'000121390024056991/ea020832401ex10-32_synergy.htm','2024-06-28',
+        [{'type':'agreement_date','date':'2024-05-01'},{'type':'effective_funding_date','date':None,'precision':'unknown'}],
+        'SEC filing index lists agreement as Exhibit 10.32 within June 28, 2024 S-1.',base+'000121390024056991/0001213900-24-056991-index.htm','2024-06-28 11:32:30'),
+ source('synergy_court_20230227','2023_02_27_court_order.pdf','https://www.govinfo.gov/content/pkg/USCOURTS-med-2_22-cv-00301/pdf/USCOURTS-med-2_22-cv-00301-0.pdf','2023-02-27',
+        [{'type':'court_filing','date':'2023-02-27'},{'type':'alleged_operational_events','date_range':['2020','2021'],'precision':'year'}],
+        'Public court document 31 bears Filed 02/27/23 on page 1. This is court filing availability; GovInfo upload date is not established.'),
+ source('synergy_annual_2024','2024_annual_report.html',base+'000121390025026254/ea0235758-10k_synergy.htm','2025-03-31',
+        [{'type':'financial_year_end','date':'2024-12-31'}],
+        'SEC filing index.',base+'000121390025026254/0001213900-25-026254-index.htm','2025-03-31 16:10:25'),
+ source('synergy_credit_agreement_20250530','2025_05_30_credit_agreement.html',base+'000121390025050984/ea024464201ex10-1_synergy.htm','2025-06-04',
+        [{'type':'agreement_date','date':'2025-05-30'}],
+        'SEC June 4, 2025 8-K index identifies agreement as Exhibit 10.1.',base+'000121390025050984/0001213900-25-050984-index.htm','2025-06-04 08:37:50'),
+ source('synergy_quarterly_20250630','2025_06_30_quarterly_report.html',base+'000121390025076060/ea0252562-10q_synergy.htm','2025-08-14',
+        [{'type':'quarter_end','date':'2025-06-30'}],
+        'SEC filing index.',base+'000121390025076060/0001213900-25-076060-index.htm','2025-08-14 08:05:51'),
+]
+
+periods={'brfh_2023_10k':'2023-12-31','brfh_2024q1_10q':'2024-03-31','brfh_2024q2_10q':'2024-06-30',
+         'brfh_2024q2_release':'2024-06-30','brfh_2024q3_10q':'2024-09-30','brfh_2024q3_release':'2024-09-30',
+         'brfh_2024_10k':'2024-12-31','brfh_2025q1_10q':'2025-03-31'}
+for x in json.loads((ROOT/'research/barfresh_case/acquired_sources.json').read_text()):
+    if not x['id'].startswith('brfh_'): continue
+    p=ROOT/'research/barfresh_case'/Path(x['path']).name
+    date=x.get('publication_date'); metadata=x.get('role')=='metadata'
+    sources.append({
+        'source_id':x['id'],'case_id':'barfresh_schreiber_2024','primary_url':x['url'],
+        'original_relative_path':p.relative_to(ROOT).as_posix(),'package_relative_path':p.relative_to(ROOT).as_posix(),
+        'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size,
+        'availability':{'date':date,'precision':'second' if x.get('accepted_at') else 'day' if date else 'unknown',
+                        'accepted_at':x.get('accepted_at'), 'basis':x.get('date_verification','Issuer release dated in URL and document.'),
+                        'verification_metadata':'research/barfresh_case/brfh_sec_submissions.json' if 'SEC submissions' in x.get('date_verification','') else None},
+        'event_dates':[{'type':'financial_period_end','date':periods[x['id']]}] if x['id'] in periods else
+                      [{'type':'financing_announcement','date':'2024-08-13'}] if 'litigation_funding' in x['id'] else [],
+        'relative_to_lead_cutoff':'metadata_only' if metadata else 'eligible' if date and date<=LEAD_CUTOFF else 'outcome' if date else 'unknown',
+        'mission_membership':{'synergy_20240813':'out_of_case','barfresh_20240815':'metadata_only' if metadata else 'eligible' if date and date<='2024-08-15' else 'outcome' if date else 'unknown',
+                              'barfresh_20241025':'metadata_only' if metadata else 'eligible' if date and date<='2024-10-25' else 'outcome' if date else 'unknown'},
+    })
+
+index={
+ 'schema_version':'1.0','case_selection':{'lead':'synergy_chc_2024','transfer':'barfresh_schreiber_2024'},
+ 'missions':{'synergy_20240813':{'cutoff':'2024-08-13T23:59:59-04:00','financial_measurement':'2024-06-30','latest_cash_measurement':'2024-08-12'},
+             'barfresh_20240815':{'cutoff':'2024-08-15T23:59:59-04:00'},
+             'barfresh_20241025':{'cutoff':'2024-10-25T23:59:59-04:00','financial_measurement':'2024-09-30'}},
+ 'rules':['Event, agreement, measurement and public-availability dates are different fields.',
+          'Outcome is a relationship to a mission cutoff, never a permanent property of a document.',
+          'Other-case records are excluded regardless of chronological eligibility.',

@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:79846,chars:"","yield_time_ms":1000,"max_output_tokens":700}));
+text(await tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-0d1ad1d0761e877d8 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"ps -eo pid,ppid,pcpu,rss,args | grep -E \\\"fresh_walk|refine_walk|app.disputes.parallel\\\" | grep -v grep || true\"]}' --query Command.CommandId --output text","max_output_tokens":300}));

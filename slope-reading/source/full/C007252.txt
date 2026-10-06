@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && mkdir -p ~/.hermes/profiles/connor/cache/scratch/fix1 && (env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 uv run pytest tests/test_pending_claim.py -x -p no:warnings --durations=3 -k \"test_1_\" > ~/.hermes/profiles/connor/cache/scratch/fix1/time_tree.log 2>&1 &) ; echo started"}

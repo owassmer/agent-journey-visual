@@ -1,0 +1,29 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_95a836fa]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 01:30:30 (6m15s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 375.79s
+
+--- ✓ TASK 1/1: Independent focused review of PR #10 in owassmer/Slope_Sparse_Events (branch step-6a-cases): isolation of the Akoustis snapshot and bank feed, correctness of the feed and line-sizing arithmetic, and completeness of the ChromaDex removal. Post one PR comment with demonstrated defects only.  (status=completed, api_calls=43, 375.57s) ---
+I found two small defects, both in text. Isolation, the bank-feed arithmetic, the line sizing and the ChromaDex removal all check out. The review is posted as one comment on PR #10: https://github.com/owassmer/Slope_Sparse_Events/pull/10#issuecomment-5843575632. No label, approval or merge.
+
+**Defects**
+1. **`tests/test_analysis.py:58-61` (with `:36`, `:41`):** the comment says the `DE` fixture is Qorvo's 17 Jun fee motion (D.I. 618). But the fixture marks the court as having decided Akoustis is liable (`entitlement_decided`, stage `amount_pending`). At 20 Jun the motion was still pending and the court "may" award fees. The test still works as a probability-composition test. The fix is to label it a mechanics fixture, as the `CA` fixture already is.
+2. **`Slope_Model_Extensions_Spec.md:83-85`:** §1.1 still describes the old rule (prorate the whole April–June quarter). That contradicts the amended D1 at `:572-575` and the feed as built.
+
+**Checks that passed**
+- **(a) Isolation:**
+  - All 23 eligible SEC sources match EDGAR acceptance times exactly.
+  - All 27 eligible court PDFs match their "Filed" stamps or signature dates. The latest is 17 Jun.
+  - The docket report stops at D.I. 621, with nothing filed after 20 Jun.
+  - The rebuilt snapshot (51 sources, 918 sections) contains none of 30 post-D search strings. These cover the customer note, the fee and interest award figures, the October 10-K, Chapter 11 and the asset sale.
+  - One gap in the probe list, not a leak: the spec §1.1 probe for the Chapter 11 petition is missing from `snapshot.json`. I checked directly and that text is absent.
+- **(b) Feed:** `make_bank_feed.py` regenerates `bank_feed.json` byte for byte. Cash at 20 Jun reproduces to the cent ($17,163,095.24), and rolling forward reproduces the reported 30 Jun balance of $24,447,000. The only post-D-published inputs are the April–June quarter totals, as CASH_CHECK documents.
+- **(c) Line:** the limit is $357,172.37 from March–May receipts, with no debt service. The draw is the $309,736.24 Tai-Saw invoice of 8 Mar, the largest under the limit. `make_run_inputs.py` regenerates `run_inputs.json` byte for byte.
+- **(d) ChromaDex:** no references remain in the code, tests, cases, runs, contracts, `sources.json`, manifest or mission keys. The only mentions left are in the alignment doc, the build spec's historical sections and spec §1.3. All 113 manifest hashes and all 71 catalog hashes match. I did not run `package_kit.py`, because it writes a zip.
+- **(e) Tests:** each rewritten test checks what its name says, apart from defect 1.
+
+`pytest` shows 103 passed and `ruff` passes clean. The snapshot build succeeded.
+
+I changed nothing in the worktree. I rebuilt the snapshot database in the ignored `var/` folder and re-ran `make_run_inputs.py`, which rewrote `run_inputs.json` with identical content. The worktree still shows no changes. The only file I created is the comment text, `pr10_review.md`, in the scratch folder.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_95a836fa/task-0.log

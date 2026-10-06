@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'isal|zstandard|orjson' pyproject.toml uv.lock tools/question_fact_coordinate.py; .venv/bin/python - <<'PY'\nimport importlib.util\nfor name in ['isal','zstandard','orjson']:print(name,bool(importlib.util.find_spec(name)))\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":900}));

@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split && python3 ssm.py --wait 30 -- \"grep -n -E 'exited|Traceback|Error' /var/log/slope-walk-worker.log | head -20; wc -l /var/log/slope-walk-worker.log; ls -d /tmp/refine-* 2>/dev/null | head; ps -eo etime,args | grep 'app.disputes.parallel' | grep -v grep | wc -l\"", "timeout": 60}

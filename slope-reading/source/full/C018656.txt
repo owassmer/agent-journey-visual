@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:81563,chars:"","yield_time_ms":1000,"max_output_tokens":1800}));
+text(await tools.exec_command({cmd:"aws sts get-caller-identity --profile slope --query Account --output text; aws ec2 describe-instances --instance-ids i-09b42b44a8d35909a --profile slope --region us-east-2 --query 'Reservations[0].Instances[0].State.Name' --output text","max_output_tokens":1000}));

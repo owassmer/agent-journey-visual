@@ -1,0 +1,10 @@
+  coverage_supported       4/6
+  entity_scope             2/3
+  disagree: syn_table_without_context: expected 'missing_target_context', got 'missing_condition_or_timing' (noul=None, probs={'missing_definition': 0.1, 'enough': 0.03, 'missing_target_context': 0.29, 'missing_condition_or_timing': 0.34, 'unclear': 0.24})
+  disagree: syn_coverage_full: expected 'covered', got 'partly_covered' (noul=None, probs={'not_covered': 0.0, 'unclear': 0.0, 'partly_covered': 0.6, 'covered': 0.4})
+  disagree: syn_coverage_other_matter: expected 'not_covered', got 'partly_covered' (noul=None, probs={'covered': 0.0, 'partly_covered': 0.59, 'not_covered': 0.4, 'unclear': 0.01})
+  disagree: syn_entity_counterparty_unnamed: expected 'unknown', got 'target' (noul=None, probs={'target': 0.81, 'different': 0.02, 'unknown': 0.17})
+36/40 agree; usage {'provider': 'openrouter', 'requests': 40, 'cache_hits': 0, 'physical_attempts': 40, 'attempt_ceiling': 400, 'spent_usd': '0.001448370', 'spend_cap_usd': '0.10'}
+{'sections': 297, 'flagged': 67, 'unscreened': 0, 'chunks': 305, 'units': 590, 'flagged_units': 329, 'unscreened_units': 0}
+{'provider': 'openrouter', 'requests': 581, 'cache_hits': 314, 'physical_attempts': 581, 'attempt_ceiling': 1500, 'spent_usd': '0.025373292', 'spend_cap_usd': '0.10'}
+Counter({'debt_or_financing_agreement': 194, 'accounting_item_from_a_matter': 63, 'legal_matter_or_settlement': 46, 'covenant_or_restriction': 23, 'cash_restriction': 3}) Counter({'paragraph': 259, 'table_row': 70})

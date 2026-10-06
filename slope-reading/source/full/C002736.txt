@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && git status --short | grep -v '^??' | head; git diff --stat 6718bf2 HEAD -- app | tail -15; git diff 6718bf2 HEAD -- app/analysis/core.py app/analysis/build.py app/analysis/assumptions.py | grep -E \"^[+-]\" | grep -vE \"^(\\+\\+\\+|---)\" | cut -c1-200 | head -120"}

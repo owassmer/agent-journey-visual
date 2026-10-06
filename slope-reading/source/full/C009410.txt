@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\np=Path('/tmp/connor-reground-current')\nprint(p.read_text() if p.exists() else 'EXPORT PENDING')\nif p.exists():\n d=Path(p.read_text());s=(d/'dialogue.txt').read_text();print('TOTAL',len(s));print(s[:30000])\nPY","max_output_tokens":9500,"yield_time_ms":1000}));

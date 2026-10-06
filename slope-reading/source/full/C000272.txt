@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/cthr && sed -n '395,440p' jpm_credit_2021.txt | grep -v '^$' | cut -c1-260; grep -n -i -E \"financial (statement|information|report)|within .{0,20} days after the end|10-K|10-Q\" jpm_credit_2021.txt | head -8 | cut -c1-240"}

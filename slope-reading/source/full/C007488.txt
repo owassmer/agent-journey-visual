@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/fix1 && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 timeout 580 uv run pytest tests/test_chains.py -x -p no:warnings > $S/t4.log 2>&1; echo \"exit $?\"; tail -3 $S/t4.log", "timeout": 600}

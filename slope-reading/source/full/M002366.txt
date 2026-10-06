@@ -1,0 +1,66 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_b89443c8]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 20:32:41 (41m43s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 2503.38s
+
+--- ✓ TASK 1/1: Build the new analysis page for owassmer/Slope_Sparse_Events, from scratch, as a clickable page on the real recorded Akoustis run. Work in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-7-page (branch step-7-page, pushed; HEAD 85a74ad). Replace app/web/templates/page.html and app/web/static/page.js entirely. Every visible word about the case, law or loan comes from app/web/static/words.json. Deliver five checkpointed steps, each ending in a commit of named files and a push. Then report: the commit SHAs, the screenshot paths, and the cold-read verdict with what you changed because of it. Do not open a PR, call Jev, run `slope analyze` or edit anything under app/analysis, app/disputes or runs/.  (status=completed, api_calls=82, 2502.99s) ---
+I rebuilt the analysis page from scratch and pushed it in five commits on `step-7-page`. The headless check matched every recorded figure, and the viewer tests pass (10 of 10).
+
+One thing to look at first: **Owen's viewer on port 8000 is not running.** `curl` gets no connection and nothing is listening on that port. When I stopped my server I used the specific pattern `pkill -f 'slope viewer --port 8011'`, which can't match the 8000 process. I never checked port 8000 before starting, though, so I can't say when it went down.
+
+**Commits:**
+- `d0650be` step 1: data layer and skeleton page.
+- `afa2d91` step 2: situation, the 100 dots with the comparison table, and "When trouble arrives".
+- `12277c8` step 3: "How it could unfold", both variants (paths tree and decision map).
+- `aba8b4a` step 4: close-up drawer with its slider, "which answers matter most", "What actually happened", footer.
+- `33980f1` step 5: cold-read fixes and the one test update.
+
+**Checks:**
+- **Step-1 figures:** bank data alone gives funded $934k, collected $646k, due $742k, filing 51.0%. With the research: $630k, $339k, $557k, 61.3%. Both match exactly.
+- **Speed:** a slider move updates the page locally in about 14 ms. The first `/reweight` call for the chart took about 1.4–1.6 s, and that call is debounced. Working out every answer's effect on collections takes about 360 ms, so it runs once at page load and when a slider is released, not during a drag.
+- **Tests:** `node --check` is clean. `tests/test_viewer.py` gives 10 passed; I changed only the one assertion that looked for old page text. `uv run pytest` found no fastapi, so I ran it as `uv run python -m pytest`.
+
+**Screenshots** (1440×900, in `~/.hermes/profiles/connor/cache/scratch/7_page/shots/`):
+- `final_1_situation`
+- `final_2_futures`
+- `final_3_when`
+- `final_4a_tree_paths`
+- `final_4b_tree_map`
+- `final_5_closeup_from_tree`
+- `final_5b_closeup_at_100` (one slider dragged to 100)
+- `final_6_levers`
+- `final_7_actual`
+- `final_8_after_100_futures`
+- `final_8_after_100_when`
+
+**Cold-read verdict:** the reader understood the core story: a filing is more likely than not, the research moves trouble from late November to August, the line stops earlier, collects less, and more is caught in a filing. What confused them, and what I changed:
+- **"Judgments" meant two things** (court rulings and Jev's forecasts). Section 6 is now "Which of Jev's answers matter most". Each row gives Jev's answer, the reason from `words.decisions`, and the three values in the order the bar shows them.
+- **A missing amount:** the settlement explanation showed an unfilled `{offer}`; it now shows the actual offer amount.
+- **The grey band on the chart** was unexplained; it is now labelled as the period in which the judge's ruling can come. The bank-line note now reads "no chance of a filing before 20 Nov".
+- **46 vs 25:** Jev's 46 in 100 in the drawer looked like it contradicted the 25 in 100 on the tree. A sentence now says it is the chance once that situation arises, not the chance of the whole path.
+- **Outcome labels:** "Still open" became "No filing; the dispute is still unresolved on 17 Dec", "Keeps operating" became "Keeps operating, no filing", and the "files…" decisions say "files for bankruptcy".
+- **Hover notes:** the collected-out-of-due row now says only installments due by 17 Dec count. The give-back row now explains why it falls with the research.
+- **Wording:** "What the research adds" is now "What the research changes", since most values fall. The situations read "because of the judgment / delisting" instead of "over the judgment as entered".
+- **Layout:** the tree gained a legend and a "Today, 20 Jun 2024" root, and the path labels are shorter.
+
+Not fixed, because they are outside this design: the reader asked for a single recommendation, recovery in a bankruptcy, and how often Jev has been right.
+
+**Readings of the data you may want to check:**
+- The filed share of the dots is rounded first and the causes are split within it, so the filed dots equal the chart's end value. That gives 61 filed dots where plain rounding of each cause gave 62.
+- The tree shows three steps, not four, so the labels fit. A branch stops at its first filing.
+- A step maps to a decision through a small `STEP_DEC` table. "Ruling leaves …" opens the judge's damages ruling, and "Settles …" opens Qorvo accepting the settlement.
+- The close-up for one decision type opens the situation that carries the most probability.
+
+**Files changed:** `app/web/templates/page.html` and `app/web/static/page.js` (both rewritten), `app/web/static/words.json` (additions only), and `tests/test_viewer.py` (one assertion).
+
+**Added to `words.json`:**
+- `reveal.filed`
+- `situations` (plain wording for each part of a situation)
+- `steps_short` (short step names for the tree)
+- `ui.*` (layout words, tree legend, dot and tree hover text, "biggest jump" annotation, ruling-band label, drawer labels, conditional note, footer, the changed-answers banner)
+
+**Existing `words.json` entries I edited:** `views.difference`, the `Unresolved` and `bank_not_filed` outcome labels, the `rate` and `clawback` notes, `levers.title` and `levers.sub`, the three "files" short labels, and the settlement-accept question.
+
+My 8011 server is stopped. There is no PR.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_b89443c8/task-0.log

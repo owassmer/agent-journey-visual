@@ -1,0 +1,3 @@
+text(ALL_TOOLS.filter(x=>/search|browse|fetch|web/i.test(x.name+" "+x.description)).map(x=>({name:x.name,description:x.description.slice(0,130)})).slice(0,100));
+text(await tools.exec_command({cmd:"sed -n '1,160p' /Users/owenwassmer/.codex/skills/failure-led-realignment/SKILL.md",max_output_tokens:3500}));
+text(await tools.exec_command({cmd:"sed -n '1,180p' /Users/owenwassmer/.codex/skills/telos-anchored-reasoning/SKILL.md",max_output_tokens:4000}));

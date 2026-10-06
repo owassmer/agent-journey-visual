@@ -1,0 +1,1 @@
+{"command": "~/.hermes/profiles/connor/scripts/wait_job ~/.hermes/profiles/connor/cache/scratch/6g/ci.log 380 | tail -2; cd ~/dev/Slope_Sparse_Events && gh pr view 17 --json headRefOid,labels,mergeable -q '{head:.headRefOid[:7],labels:[.labels[].name],mergeable}'; git worktree remove --force .claude/worktrees/step-6c-fix2; df -h / | tail -1", "timeout": 400}

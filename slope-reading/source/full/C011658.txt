@@ -1,0 +1,4 @@
+const rs=await Promise.allSettled([
+tools.exec_command({cmd:"gh run view 36909118504 --repo owassmer/Slope_Sparse_Events --json status,jobs --jq '{status:.status,done:[.jobs[]|select(.status==\"completed\")|{name:.name,conclusion:.conclusion}],running:([.jobs[]|select(.status==\"in_progress\")]|length)}'\npython3 /tmp/monitor_notes_recovery.py > /tmp/notes-report-refresh.log",yield_time_ms:1000,max_output_tokens:2200}),
+tools.exec_command({cmd:"cat CLAUDE.md\nsed -n '3120,3304p' app/disputes/forecast.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:6400})
+]);for(let i=0;i<rs.length;i++)text({i,...rs[i]});

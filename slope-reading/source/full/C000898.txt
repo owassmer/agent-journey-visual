@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run/app/disputes/forecast.py", "old_string": "    if len(branches) == 2 and (o.noul_value is not None or branches == (\"yes\", \"no\")):", "new_string": "    if len(branches) == 2 and (o.primitive == \"noul\" or branches == (\"yes\", \"no\")):"}

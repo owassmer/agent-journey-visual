@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; grep -n \"^BIG\\b\\|^BIG =\" app/analysis/events.py; grep -n \"^from app.disputes\\|^import app.disputes\\|^from app.analysis\" app/analysis/events.py app/disputes/forecast.py | head; grep -n \"late_key\\|pack_row\" app/disputes/parallel.py"}

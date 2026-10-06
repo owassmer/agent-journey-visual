@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\ns=Path('/tmp/read_ci_tail.py').read_text().replace(\"tab=osa(\",\"jobs=jobs[:3]\\ntab=osa(\")\nPath('/tmp/read_refresh_sample.py').write_text(s)\nPY\npython3 /tmp/read_refresh_sample.py 36961410934","yield_time_ms":1000,"max_output_tokens":2200}));

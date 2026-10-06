@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-page && D=Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design; sed -n 160,200p $D/DECOMPOSITION.md; grep -n \"def i1\\|def pre\\|execute_pre_ruling\\|\\\"debtor_response\\\", \\\"I1\\\"\\|debtor_response\\\", phase\" app/disputes/forecast.py | head; "}

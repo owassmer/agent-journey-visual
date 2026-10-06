@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/9z; .venv/bin/python -c \"\nimport pstats, io; out = io.StringIO(); s = pstats.Stats('$S/shard_prof.pstats', stream=out)\ns.print_callees('_same_after'); print(out.getvalue()[-2500:])\n\" 2>&1 | grep -v -E \"npmrc|nvm|globalconfig\" | cut -c1-200", "timeout": 60}

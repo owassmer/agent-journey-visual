@@ -1,0 +1,27 @@
+[1;32mAll checks passed![0m
+OK  merchant total payment 41810000 41810000
+OK  month 6 cumulative floor 12543000 12543000
+OK  month 6 qualifying Account Credits 50172000 50172000
+OK  month 12 cumulative floor 25086000 25086000
+OK  month 12 qualifying Account Credits 100344000 100344000
+OK  month 18 cumulative floor 41810000 41810000
+OK  month 18 qualifying Account Credits 167240000 167240000
+OK  window minimum payment 12543000 12543000
+OK  window qualifying Account Credits 50172000 50172000
+OK  50%/10% cumulative-only shortfall 0 0
+OK  50%/10% second-window top-up 8362000 8362000
+OK  PV original receipt 9724428 9724428
+OK  PV delayed receipt 9634268 9634268
+OK  PV change from delay -90159 -90159
+OK  extra principal dollar-days 3000000 3000000
+OK  analysis_100k_6m fee 600000 600000
+OK  analysis_100k_6m total 10600000 10600000
+OK  analysis_100k_6m payment rows [1766667, 1766667, 1766667, 1766667, 1766667, 1766665] [1766667, 1766667, 1766667, 1766667, 1766667, 1766665]
+OK  analysis_250k_6m fee 1500000 1500000
+OK  analysis_250k_6m total 26500000 26500000
+OK  analysis_250k_6m payment rows [4416667, 4416667, 4416667, 4416667, 4416667, 4416665] [4416667, 4416667, 4416667, 4416667, 4416667, 4416665]
+OK  analysis_250k_3m fee 750000 750000
+OK  analysis_250k_3m total 25750000 25750000
+OK  analysis_250k_3m payment rows [8583333, 8583333, 8583334] [8583333, 8583333, 8583334]
+OK  H2 required net cash (T_H2) 80000000 80000000
+mismatches 0

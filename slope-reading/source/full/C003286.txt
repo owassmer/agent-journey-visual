@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-questions && sed -n 185,210p cases/akoustis_20240514/bank_feed.json; grep -n \"equity_proceeds\\|def simulate\\|categories\\|by_category\\[\" app/analysis/operating.py | head -12; sed -n 1,30p app/analysis/operating.py | cut -c1-200"}

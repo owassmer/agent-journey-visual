@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; env -u CLAUDE_CODE_OAUTH_TOKEN timeout 590 .venv/bin/python ~/.hermes/profiles/connor/cache/scratch/9z/split_measure.py ~/.hermes/profiles/connor/cache/scratch/9z/w17/out 2>&1 | grep -v -E \"npmrc|nvm|globalconfig\"", "timeout": 600}

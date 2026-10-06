@@ -1,0 +1,1 @@
+{"command": "uv run pytest -q -p no:cacheprovider --color=no -W ignore tests/test_evidence_snapshots.py -k chromadex_outcome 2>&1 | grep -E \"^E |assert\" | head -10; grep -n \"def test_chromadex_outcome_facts_are_absent\" -A22 tests/test_evidence_snapshots.py", "description": "Inspect isolation test failure", "timeout": 300000}

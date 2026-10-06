@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split && sed -i '' 's/ProcessPoolExecutor(16)/ProcessPoolExecutor(4)/' unmatched.py && python3 ssm.py --put unmatched.py /opt/slope-tools/unmatched.py --wait 500 -- \"cd /opt/slope-walk && PYTHONPATH=/opt/slope-walk nice -n 19 .venv/bin/python /opt/slope-tools/unmatched.py 2>&1 | cut -c1-900\"", "timeout": 560}

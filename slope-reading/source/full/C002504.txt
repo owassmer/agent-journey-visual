@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/7_page/edit9.py", "old_string": "rep(\"\"\"fill=\"${t.depth ? fillOf(t) : \"#dfe2e6\"}\"/>${txt}</g>`;\"\"\", \"\"\"fill=\"${t.depth ? fillOf(t) : \"#dfe2e6\"}\"/>${txt}</g>`;\n      if (!t.depth) t.rootIdx = nodes.length;\"\"\")\n", "new_string": ""}

@@ -1,0 +1,61 @@
+107:def _obs_view(o: SemanticObservation) -> dict[str, Any]:
+118:def _unsettled(o: SemanticObservation) -> bool:
+122:def _record_jev_failure(ctx: RunContext, e: Exception) -> None:
+131:def _cents_in_text(cents: int, text: str) -> bool:
+142:def _baseline_item(ctx: RunContext, key: str) -> dict | None:
+148:# --- handlers (plain async functions; testable without the SDK) ------------------------------------
+150:async def get_mission(ctx: RunContext, _args: dict) -> dict:
+158:async def read_baseline_profile(ctx: RunContext, _args: dict) -> dict:
+162:async def read_loan_terms(ctx: RunContext, _args: dict) -> dict:
+175:async def record_dependency(ctx: RunContext, args: dict) -> dict:
+186:async def search_evidence(ctx: RunContext, args: dict) -> dict:
+226:async def read_evidence(ctx: RunContext, args: dict) -> dict:
+245:async def judge(ctx: RunContext, args: dict) -> dict:
+283:async def propose_finding(ctx: RunContext, args: dict) -> dict:
+322:async def resolve_finding(ctx: RunContext, args: dict) -> dict:
+369:def _parameter(p: dict, findings: dict[str, AtomicFinding]) -> ParameterRequirement:
+392:async def propose_effect(ctx: RunContext, args: dict) -> dict:
+452:async def run_sensitivity(ctx: RunContext, args: dict) -> dict:
+502:async def request_missing_fact(ctx: RunContext, args: dict) -> dict:
+509:async def read_inventory(ctx: RunContext, _args: dict) -> dict:
+526:async def account_for_items(ctx: RunContext, args: dict) -> dict:
+544:async def _account_one(ctx: RunContext, entry: dict) -> str | dict:
+586:async def escalate_effect(ctx: RunContext, args: dict) -> dict:
+608:async def resolve_reconciliation(ctx: RunContext, args: dict) -> dict:
+617:async def submit_packet(ctx: RunContext, args: dict) -> dict:
+644:def _disputes(ctx: RunContext) -> list[dict]:
+661:# --- 4c host checks --------------------------------------------------------------------------------
+663:def _dispose(ctx: RunContext, observations: list[SemanticObservation], disposition: str, note: str) -> None:
+670:def _attribute_screen(ctx: RunContext, finding: AtomicFinding) -> None:
+681:def _matter_passages(ctx: RunContext, item: InventoryItem) -> list[tuple[str, dict, str]]:
+693:async def _per_section(ctx: RunContext, item: InventoryItem, ask, failing: set[str], label: str, advice: str,
+723:async def _check_coverage(ctx: RunContext, item: InventoryItem, fids: tuple[str, ...]) -> list[SemanticObservation]:
+743:async def _check_duplicate(ctx: RunContext, item: InventoryItem, other: InventoryItem) -> list[SemanticObservation]:
+755:async def _check_relevance(ctx: RunContext, item: InventoryItem) -> list[SemanticObservation]:
+765:def _escalate_item(ctx: RunContext, item: InventoryItem, observation_id: str, missing: str) -> InventoryItem:
+779:def _consequence_reply(ctx: RunContext, effect: EconomicEffectProposal, reply: dict | None) -> tuple[SemanticObservation, str] | None:
+797:async def _auto_relations(ctx: RunContext, finding: AtomicFinding) -> list[dict]:
+822:async def _category_guard(ctx: RunContext, effect: EconomicEffectProposal,
+861:async def _consequence_support(ctx: RunContext, effect: EconomicEffectProposal,
+884:async def _check_conclusion(ctx: RunContext, args: dict) -> None:
+929:# --- tool schemas ------------------------------------------------------------------------------------
+940:def obj(props: dict, required: list[str]) -> dict:
+944:TOOL_SPECS: list[tuple[str, str, dict, Any]] = [
+945:    ("get_mission", "The financing question, borrower, review date, locked operator request and the admissible evidence sources.",
+947:    ("read_baseline_profile", "Ordinary baseline facts (with citations) and the operator's cash-reserve policy.", obj({}, []),
+949:    ("read_loan_terms", "Existing loan cover terms and the permitted analytical offers with their contractual payment rows.",
+951:    ("record_dependency", "Record one decision-relevant unknown: the question, the precisely named target (entity plus the specific "
+955:    ("search_evidence", "Full-text search of the admissible evidence for one recorded dependency. Returns every result with IDs, "
+959:    ("read_evidence", "Read a section or table by item ID with its heading path, context and source date.",
+961:    ("judge", "Ask for a narrow semantic judgment. profile=claim_interpretation: item_id, one claim, a precise target, optional "
+967:    ("propose_finding", "Propose one atomic finding for a dependency, citing verbatim quotes (item_id + exact quote). Mark "
+972:    ("resolve_finding", "Accept or reject a proposed finding, giving a disposition for each linked observation (used_in_finding, "
+980:    ("propose_effect", "Propose an economic effect from accepted findings: mechanism (settlement_payment_timing, "
+993:    ("run_sensitivity", "Deterministic remaining-period cash requirement for validated settlement effects across scenarios of "
+997:    ("request_missing_fact", "Record a pivotal fact the evidence cannot supply: what it is, why it is pivotal, what evidence "
+1001:    ("read_inventory", "List the matters the host sweep flagged in the admissible evidence and their accounting status.",
+1003:    ("account_for_items", "Account for inventory items in a batch. Each entry is checked on its own: covered_by_findings "
+1011:    ("escalate_effect", "Escalate an effect the category guard rejected when you disagree with the check: it becomes disputed, "
+1014:    ("resolve_reconciliation", "Resolve an open reconciliation task: explain how the statements relate and which finding stands.",
+1016:    ("submit_packet", "Lock the investigation for review with a summary, the pivotal unknowns, the supported effect IDs and the "
+1035:def build_server(ctx: RunContext, allowed: list[str]):

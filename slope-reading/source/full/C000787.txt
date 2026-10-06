@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-record && env -u CLAUDE_CODE_OAUTH_TOKEN uv run python /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/sweep_once.py > /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/sweep.log 2>&1", "background": true, "notify": true}

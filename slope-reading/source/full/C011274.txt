@@ -1,0 +1,4 @@
+const results = await Promise.allSettled([
+tools.exec_command({cmd:"aws sts get-caller-identity --profile slope --query Account --output text","max_output_tokens":800,"yield_time_ms":1000}),
+tools.exec_command({cmd:"gh run list --repo owassmer/Slope_Sparse_Events --limit 6 --json databaseId,name,status,conclusion; cat /tmp/make_notes_manifest.py | head -90","max_output_tokens":2500,"yield_time_ms":1000})
+]); for (const r of results) text(r);

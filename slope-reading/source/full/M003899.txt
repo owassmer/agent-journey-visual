@@ -1,0 +1,36 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_d304092e]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 13:46:33 (9m28s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 568.15s
+
+--- ✓ TASK 1/1: Make the 14 May step-9 tree walk of owassmer/Slope_Sparse_Events much faster with exactly the same paths, node keys, facts and cash: settle each question only up to its own day, book the at-the-market sales incrementally, and walk across four processes by subtree. Then build the full tree once. Branch step-9-int. Commit and push; open no PR.  (status=completed, api_calls=36, 568.08s) ---
+No code has changed yet for the subtree reuse or for changes 1 and 2; I'm still reading the code and the diagnostic.
+
+**What I checked just now**
+- The cache worker's change isn't on origin yet: `HEAD..origin/step-9-int` is empty.
+- Their uncommitted `forecast.py` edit (the ancestor-stack cache) no longer shows in `git status`, so it was probably committed locally in this worktree. I'll confirm with `git log` before touching `forecast.py`.
+- The diagnostic's biggest reusable splits in `classdiff2.json` (extra paths):
+  - listing compliant vs hearing (1,730) and delisting accelerated vs none (1,398): nothing later differs, so their subtrees can be reused.
+  - delisting accelerated vs none where a later floor question differs by the `notes_due` tag (668): that tag must block reuse, as you said.
+  - initiate offering vs neither at floor 1 (602).
+
+**How the reuse will work**
+- **When:** at the end of a sibling's subtree walk, and only if all of these match the walked sibling: the mask, a digest of the whole event-cash state, and the value of every recorded read on that sibling's draws.
+- **Recorded reads, over the subtree:**
+  - every `_trace`/`_raw` field any walker branch or recorded fact used (day, cash, owed, collateral, petition, marks, reads, settle, stay and raise offers, triggers, groups, `sit` snapshot)
+  - every situation tag and node-key context
+  - everything `record_late` stores
+  - the walker's `_S` fields (appealed, stayed, failed, `notes_due`, a4, resp, k, out, np)
+- **Otherwise:** it walks normally.
+- **On reuse:** the walked sibling's paths are emitted again with the step and edge swapped, and their recorded facts are appended as the full walk would append them.
+- **Check:** the bit-for-bit comparison against `part0.pkl`/`part1.pkl`, and I'll count the paths emitted without walking.
+
+**Order:**
+1. Pull or confirm the cache change.
+2. Change 1: settle each read only to its question's day (events.py mode, plus the list of call sites and their modes).
+3. Change 2: memoize the at-the-market booking and vectorize `_offer_shares_on`.
+4. Commit and push; run the tests, the 20 Jun dump and ruff.
+5. Add the subtree reuse, then commit and push.
+6. Check power, then run the four-process build and the checks.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_d304092e/task-0.log

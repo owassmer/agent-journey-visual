@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/akts/recap && for f in *.pdf; do pdftotext -layout $f ${f%.pdf}.txt; done; wc -w *.txt | sort -n | tail -20; for f in 605.0 611.0 618.0 622.0; do echo \"######## $f\"; grep -v '^\\s*$' $f.txt | sed 's/  */ /g' | head -70 | cut -c1-220; done"}

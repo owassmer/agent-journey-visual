@@ -1,0 +1,58 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_68a22449]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 23:29:03 (51m42s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3102.22s
+
+--- ✓ TASK 1/1: Make the 14 May investigation run complete (not INCOMPLETE_REVIEW) on branch step-9-contracts of owassmer/Slope_Sparse_Events: fix the causes of the two incomplete reasons, re-run once, commit the recorded run. Commit and push; open no PR.  (status=completed, api_calls=93, 3101.95s) ---
+The re-run finished with status INCOMPLETE_REVIEW, and this time the packet was never submitted. Fixes 1 and 2 plus the 14 May instruction rewrite are committed and pushed to `step-9-contracts`, and the recorded run is committed (fecec8d). I didn't run `slope analyze`.
+
+**Why the run is incomplete:** at submission, the host checks each cited paragraph or table row for payment and default terms. On nine submit attempts that check failed on the same row of the blank verdict form (D.I. 580, `s0003:13-156`). The row is a bare list of trade-secret numbers ("Group 3 3.1 3.2 … Group 8 8.5"), so it looks like a false positive; Jev answered `not_covered` at 0.62. Your instructions removed the escalation route for this mission, so the agent had no way past the check and ended the session unsubmitted. Its closing summary calls it a false positive that needs a reviewer. Two ways to unblock it, your call:
+- restore coverage escalation as a non-blocking reviewer item for this mission, or
+- skip rows that state no payment, obligation or default term.
+
+Separately, `run.json` shows `incomplete_reasons: []` even though `packet.json` records "packet not submitted". That's a small reporting bug; I didn't fix it.
+
+**Fixes**
+- **Fix 1 (dbfa237), the oversized call:** it was the finding check on `fnd_033`. That finding cites three rows of the AKTS price table, and the check sent the whole 13k-character table once per row: a 43,080-character state (~14k tokens), which Jev rejected. Now each cited item is sent once with all its quotes, and a long table sends its header plus the cited rows and five neighbours each. `fnd_033` is now 2,014 characters, and the largest check in that run fell from 138,648 to 26,392 characters. All cited quotes are still in their passages across the 57 findings.
+- **Fix 2 (e24af90), the zero-cash effect:** the effect tool now refuses an effect whose mechanism moves cash but whose `cash_direction` is `none`; the finding stays a finding. Reason, as in the commit: only cash-free mechanisms may carry `none`, and the guard blocks every disputed cash mechanism, so a documented zero is not an effect.
+- **Rewrite (b641ec1):**
+  - The 14 May mission's prompt is the Role and Working method from AGENT_TEXT.md, verbatim; other missions' prompts are unchanged.
+  - Under this mission, `dependency_id` is optional: one host-created dependency is used, and its question text is mine. It is sent to Jev for screening but not shown to the agent.
+  - Submission needs only a summary, which is checked against accepted findings.
+  - The existing invariants list is no longer in this mission's prompt, since the file holds only the Role and Working method.
+  - `propose_finding` takes an optional `speaker`; code checks the name appears in the cited section and records it on the finding.
+  - Tests: 220 + 32 after fix 2, and the 55 in the touched files after the rewrite. I didn't re-run the full suite after the rewrite.
+
+**The re-run: `akoustis_20240514-agent_plus_jev-20260929T034443Z`**
+- **Spend:** investigation Jev $0.086 (802 requests, 507 cache hits); sweep cached, no new cost; Claude's notional cost $21.60.
+- **Turns:** 174 of 320 (SDK count 537), 1,711 s of the 2,700 s budget.
+- **Tool calls:** `propose_finding` 135, `resolve_finding` 130, `read_evidence` 97, `attach_record_item` 91, `search_evidence` 34, `resolve_reconciliation` 22, `submit_packet` 9, `instantiate_dispute` 7, `get_record_items` 3, `instantiate_financing` 3, `judge` 1, `get_mission` / `read_baseline_profile` / `read_inventory` 1 each. No effects, dependencies, sensitivity runs or missing-fact requests.
+- **Record items:** 80 of 90 filled, 10 recorded as not in the record. The full item → findings list prints with `scratch/9n/report.py <run>`. Examples:
+  - the witness and exhibit lists → fnd_053–055
+  - the holders of record of the notes → fnd_097, fnd_098
+  - counsel's statement on the ability to raise money → fnd_069
+- **Speakers:** 41 findings carry a speaker, 38 of them accepted. The commit message says "38 with a speaker"; that is the accepted count.
+  - Qorvo: fnd_017–024, 029, 045, 047, 048, 113, 128.
+  - Akoustis: fnd_027, 028, 030–033, 044, 051–067, 111, 114, 115.
+  - Rejected: fnd_020, 051, 052.
+
+**Unfilled items, with their §8 sources.** All 10 are items for after the verdict or judgment. Every §8 source I matched to them is in the snapshot.
+
+```
+Unfilled item                                                     | Nearest §8 row and source                                                                                                                             | In snapshot               
+------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------
+the verdict form's answers on trade-secret misappropriation       | "the verdict form": D.I. 580, blank                                                                                                                   | yes                       
+the jury's answer on the unfair-trade-practices claim             | no row; closest D.I. 580 and D.I. 590                                                                                                                 | yes                       
+Qorvo's public statements on the damages award                    | "Qorvo's statements on the litigation": D.I. 133, 476, 543-1 Ex. A.2, 587, 588. §8 lists its statements outside those filings as not public by 14 May | yes                       
+Qorvo's public statements on collecting or enforcing the judgment | same row                                                                                                                                              | yes                       
+Qorvo's public statements on the judgment and the verdict         | same row                                                                                                                                              | yes                       
+the docket entry for the motion for interest                      | no row (a later filing)                                                                                                                               | —                         
+the company's stay motion and the security it offers              | no row                                                                                                                                                | —                         
+any waiver of the right to appeal                                 | no row                                                                                                                                                | —                         
+court orders referring the case to mediation                      | no row; §8 lists the company's settlement statements as not public                                                                                    | —                         
+public statements by holders of the notes                         | "the holders of record": resale S-3 of 13 May 2024, "Selling Stockholders"                                                                            | yes (`akts_2024_05_13_s3`)
+```
+
+Free disk dropped to 1.1–1.3 GB twice during the run because of swap from the other step-9 workers. It recovered on its own to 3.5 GB, and I deleted nothing. My scripts are in `~/.hermes/profiles/connor/cache/scratch/9n/`; the run log is `investigate.log` there.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_68a22449/task-0.log

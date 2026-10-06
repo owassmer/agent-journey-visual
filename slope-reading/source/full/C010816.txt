@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"gh run list --workflow notes-repair --limit 2 --json databaseId,status,conclusion,url; aws ec2 describe-instances --instance-ids i-0ec1292733be502cc --profile slope --region us-east-2 --query 'Reservations[].Instances[].State.Name' --output text","max_output_tokens":900}));
+text(await tools.write_stdin({session_id:91718,chars:"","yield_time_ms":1000,"max_output_tokens":700}));

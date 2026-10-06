@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/akts/recap && for f in 601.0 602.0 608.0 613.0 616.0; do echo \"######## $f\"; grep -v '^\\s*$' $f.txt | sed 's/  */ /g' | grep -v -i \"^ *(\\?[0-9]\\{3\\})\\|LLP\\|Suite\\|@\\|Street\\|Avenue\" | head -45 | cut -c1-230; done"}

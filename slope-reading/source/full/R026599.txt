@@ -1,0 +1,35 @@
+  },
+  "recorded_at": "runs/recorded/chromadex_20240819-agent_plus_jev-20260925T152328Z"
+}
+chromadex_20240819-agent_plus_jev-20260925T152328Z CANDIDATE_READY | turns 30 | failure None
+jev: {'provider': 'openrouter', 'requests': 92, 'cache_hits': 6, 'physical_attempts': 92, 'attempt_ceiling': 400, 'spent_usd': '0.008421168', 'spend_cap_usd': '0.10'}
+incomplete: []
+findings: Counter({'accepted': 6})
+   fnd_001 The C.D. Cal. final judgment dated August 13, 2024 orders Elysium to pay ChromaDex $2,500,000 to resolve outstanding issues on the Jury Claims (including prejudgment inte
+   fnd_002 Under the August 13, 2024 judgment, all parties bear their own attorney's fees and costs arising from the Jury Claims, outstanding issues on the Jury Claims including pre
+   fnd_003 On March 25, 2024 the D. Del. court granted Elysium's motion for attorneys' fees and costs against ChromaDex and directed the parties to set a schedule to resolve the amo
+   fnd_004 As of the Q2 2024 10-Q (filed August 7, 2024), the amount of Elysium's Delaware fee and cost award was fully briefed and awaiting a ruling; ChromaDex intends to appeal; m
+   fnd_005 The Western Alliance Bank Credit Agreement (fifth amendment, December 8, 2023) provides a revolving line of up to $10.0 million maturing November 12, 2025 at the greater 
+   fnd_006 As of June 30, 2024 ChromaDex had cash and cash equivalents of $27.9 million including $152,000 restricted, no outstanding borrowings under the Western Alliance Bank line
+NODE node_001 Whether and when Elysium pays the $2,500,000 ordered by the final C.D. Cal. judgment of August 13, 2024 (no payment date stated; court retains enforce {'br_3': 2200, 'br_2': 7700, 'br_1': 100}
+     br_1 prompt_payment [('inflow', 250000000, 'documented_evidence', '2024-08-20', '2024-09-19')]
+     br_2 payment_within_enforcement_window [('inflow', 250000000, 'documented_evidence', '2024-09-20', '2024-12-11')]
+     br_3 not_collected_in_horizon []
+NODE node_002 Whether the D. Del. court fixes the amount of Elysium's attorney fee and cost award during the Slope repayment horizon, and if so whether ChromaDex ap {'br_2': 4600, 'br_1': 5300, 'br_3': 100}
+     br_1 no_amount_ruling_in_horizon []
+     br_2 ruling_appeal_with_bond [('lock', (0, 980000000), 'model_derived', '2024-09-20', '2024-12-20')]
+     br_3 ruling_and_payment [('outflow', (0, 980000000), 'model_derived', '2024-09-20', '2024-12-20')]
+effects: [('eff_001', 'rejected', 'resolved_obligation'), ('eff_002', 'rejected', 'restricted_funds'), ('eff_003', 'rejected', 'funding_constraint'), ('eff_004', 'rejected', 'settlement_payment_timing'), ('eff_005', 'rejected', 'expense_funding'), ('eff_006', 'rejected', 'funding_constraint'), ('eff_007', 'validated', 'settlement_payment_timing'), ('eff_008', 'rejected', 'settlement_payment_timing'), ('eff_009', 'validated', 'funding_constraint'), ('eff_010', 'rejected', 'resolved_obligation'), ('eff_011', 'disputed', 'noncash_normalization')]
+SCENARIOS {"bank_only": {"structure": "inst_120_2000000", "requested": "inst_120_2000000", "limit_cents": 357926602, "order_limit_cents": 268444952, "requested_passes": true, "requested_reasons": []}, "event_adjusted": {"structure": "inst_120_1850000", "requested": "inst_120_2000000", "limit_cents": 246753014, "order_limit_cents": 185064761, "requested_passes": false, "requested_reasons": ["amount above the order limit (192895354 cents)"]}}
+MISSING Has the D. Del. court (1:18-cv-01434) fixed the amount of Elysium's attorney fee and cost award? If so, what is the amount, and how will ChromaDex secure a stay pending appeal (surety bond with or wit
+MISSING Do the Western Alliance Bank Credit Agreement's indebtedness restriction, cash-at-lender, quick-ratio or minimum-liquidity covenants (fifth amendment, Dec 8, 2023) apply while the line is undrawn? Do 
+MISSING Has Elysium paid the $2,500,000 ordered by the C.D. Cal. judgment of August 13, 2024, and on what date?
+conclusion: Bank-only, the requested USD 2.0M inst_120 financing passes Slope policy. Event-adjusted, the requested $2.0M fails the order limit (about $1.93M) because of the Delaware fee-award branches, while the liquidity floor is still met. The engine's event-adjusted recommendation is inst_120 at $1.85M.
+
+The Delaware award amount is not fixed. ChromaDex intends to appeal, and its possible liability is about $9.8M including post-judgment interest. The request meets Slope's exception-review triggers for material contingent litigation and for an existing lender whose consent may be required.
+
+Recommended path: offer $1.85M on inst_120, or send $2.0M to exception review, subject to two conditions:
+1. Confirm the status of the Delaware amount ruling and the terms of any appeal security.
+2. Confirm that Western Alliance's covenants permit the financing.
+
+The $2.5M court-ordered payment from Elysium has no stated payment date and is not counted as a repayment source until received. No offer is sent and no account is changed.

@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --command-id 3a5a6c51-0c75-4bb9-86a0-54ac84665753 --instance-id i-07454d2f7582ce015 --profile slope --region us-east-2 --query StandardOutputContent --output text","max_output_tokens":2000}));
+text(await tools.exec_command({cmd:"gh run view 36827669452 --json status,jobs --jq '{status,jobs:[.jobs[]|{name,status,conclusion}]}'","max_output_tokens":3000}));

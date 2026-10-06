@@ -1,0 +1,23 @@
+5:  "scope": "One local investigation of a real borrower and a proposed new discretionary advance, followed by loan cash-flow scenario comparison and independent review. The case is reconstructed as if the borrower appli
+9:    "decision_date": "2024-08-13",
+11:    "decision_timezone": "America/New_York",
+12:    "cutoff_precision": "Conservative end of the disclosed filing date; not an asserted intraday SEC acceptance timestamp or actual loan-decision time.",
+33:    "decision_timezone": "America/New_York",
+123:        "output_format": "Inject a concrete Pydantic-generated JSON Schema for the decision packet using the SDK's json_schema output format; no unresolved schema path is passed as a schema."
+240:  "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, and propose atomic finding
+242:    "Start with the same baseline profile, existing obligations, decision date and candidate financing request for the before/after comparison.",
+253:    "A missing incidental fact need not block the decision. A pivotal missing fact requires its exact question and the action consequences of alternative answers.",
+254:    "Runtime or quota failure means incomplete investigation, not an adverse borrower recommendation."
+270:      "search_evidence": "Search eligible records for one recorded decision dependency; return dated snippets and IDs. In the agent-plus-Jev arm each candidate carries its candidate_screen labels; no candidate is wit
+274:      "record_dependency": "Record one decision-relevant unknown premise, the financial quantity or action it could change, and what evidence could resolve it.",
+283:      "submit_packet": "Lock the investigation graph, source hashes, findings, effects and calculation versions for review. No lending action.",
+313:  "completion_and_decisions": {
+323:    "lending_recommendation_values": [
+344:    "failure_recommendation_policy": "Keep any prior provisional recommendation in the trace, but do not publish it as a completed result. Set final lending recommendation UNDETERMINED unless an independently complet
+345:    "complete_with_pivotal_gap": "A reviewed packet may finish with UNDETERMINED and a precise borrower question plus action map. It must not claim that the financing decision has been resolved.",
+463:      "decision_timezone",
+511:      "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, make focused evidence 
+525:      "use_configured_role_instruction": true
+532:    "decision_date": "2024-08-19",
+534:    "decision_timezone": "America/New_York",
+535:    "cutoff_precision": "Conservative end of the decision date in New York; court filings count from the end of their filing day.",

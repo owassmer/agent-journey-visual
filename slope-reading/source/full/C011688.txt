@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"tail -8 /tmp/notes-terminal-probe.log; tail -4 /tmp/notes-terminal-measure.log; python3 - <<'PY'\nimport json\ns=json.load(open('/tmp/notes-recovery-reports/status.txt'));print({k:(len(v) if k=='failed_units' else v) for k,v in s.items()})\nPY","max_output_tokens":1200}));

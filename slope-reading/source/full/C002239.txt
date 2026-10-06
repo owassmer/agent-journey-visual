@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/6h_perf && ls -t | head -12; for f in $(ls -t *.log | head -4); do echo \"== $f\"; grep -v \"npmrc\\|nvm use\\|globalconfig\" $f | tail -6 | cut -c1-200; [ -f $f.rc ] && echo \"rc $(cat $f.rc)\"; done; pgrep -fl \"timed_analyze|slope analyze|tree_dump|python.*6h_perf\" | grep -v \"claude \" | cut -c1-120"}

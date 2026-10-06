@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"git show --format=fuller --stat 9f48f22; rg -l 'stay_pending|stay motion|stay approval' /Users/owenwassmer/.hermes/profiles/connor/memories /Users/owenwassmer/.hermes/profiles/connor/sessions -g '*.jsonl' -g '*.md' | head -30","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

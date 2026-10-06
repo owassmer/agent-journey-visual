@@ -1,0 +1,25 @@
+turns 57 duration_s 191 notional 1.2059852000000002
+{
+ "conclusion": "The Atrium litigation is no longer a contingent risk. It is a settled, fixed cash obligation: $2.0M due in the rest of 2024, plus $0.6M on a second supplier settlement (VitBest), against about $2.0M of reported cash on Aug 12, 2024. Whether the requested $250k/6m advance ($265,000 total, ~$44,167 a month) can be repaid from cash on hand depends on how much of these 2024 settlement amounts was already paid by Aug 12 and when the rest falls due. If they are largely unpaid, $0.8\u20130.9M must come from H2 operating cash flow or refinancing before the illustrative $200k reserve and any installment are covered. In that case the 3-month offer is the most exposed and the $100k/6m offer the least. If about 35% or more is already paid, the settlements do not constrain the requested offer. The existing WebBank/Shopify loan stays under its own contract logic (25% of daily sales, with a 30% minimum in the first six months). No lending action taken; no default probability inferred from the litigation.",
+ "pivotal_unknowns": [
+  "How much of the $2.0M Atrium and $0.6M VitBest 2024 settlement amounts was paid between Jul 1 and Aug 12, 2024, and the dates of the remaining 2024 installments (settlement terms are confidential)",
+  "Whether the ~$2.0M Aug 12 cash includes the $100k restricted cash, and Synergy's monthly operating cash flow for Aug\u2013Dec 2024 (not disclosed; not interpolated from half-year revenue)"
+ ],
+ "supported_effect_ids": [
+  "eff_001",
+  "eff_002"
+ ]
+}
+DEP dep_001 What cash payments does Synergy CHC Corp. still owe under its settlement(s) with its former contract manufacturer (HVL, LLC d/b/a Atrium Innovations / related litigation), and when are they due relative to the 2024-08-13 review date? | Synergy CHC Corp. — settlement payment obligation to HVL, LLC d/b/a Atrium Innovations (former contract manufacturer)
+DEP dep_002 What cash does Synergy CHC Corp. owe in the rest of 2024 under the May 2024 confidential settlement with a current supplier (monthly payments through June 2026), and is that the 'VitBest' note payable? | Synergy CHC Corp. — May 2024 supplier settlement obligation (VitBest note payable)
+DEP dep_003 Under the executed WebBank Merchant Loan Agreement (May 1, 2024), are Synergy's repayments purely 25% of daily sales, or are there minimum payment requirements, events of default, or cross-default/new-debt restrictions that would affect a new fixed-installment advance? | Synergy CHC Corp. — WebBank/Shopify $418,100 merchant loan (May 1, 2024): repayment mechanics and minimum-payment terms
+F fnd_001 rejected True | Synergy CHC Corp.'s December 2023 settlement with HVL, LLC d/b/a Atrium Innovations created a $5,450,000 settlement loan payable (carried as 'Atrium' in notes payable), which is a contractual cash obl
+F fnd_002 accepted False | The December 2023 settlement of Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovations left Synergy with a settlement loan payable of $5,450,000.
+F fnd_003 accepted False | The settlement loan payable to the former supplier (Atrium) has $2,000,000 of payments scheduled for calendar year 2024.
+F fnd_004 rejected True | The Atrium settlement loan balance was unchanged at $4,802,445 between December 31, 2023 and June 30, 2024, so none of the $2,000,000 scheduled for 2024 was paid before June 30, 2024.
+F fnd_005 accepted False | The reported outstanding balance of the Atrium settlement loan was $4,802,445 at June 30, 2024, the same as at December 31, 2023.
+F fnd_006 accepted False | Management reported approximately $2.0 million of cash as of August 12, 2024.
+F fnd_007 accepted False | The interim (June 30, 2024) Note 13 states that the Atrium case was settled during December 2023 with a $5,450,000 loan payable cross-referenced to Note 11.
+F fnd_008 rejected True | The March 27, 2024 supplier settlement loan (VitBest, balance $2,920,824 at June 30, 2024) requires future payments of $600,000 in 2024; because the scheduled amounts sum to the June 30 balance, the $
+F fnd_009 accepted False | The $3,020,824 March 27, 2024 supplier settlement loan has $600,000 of future payments required in 2024 under the schedule reported with the June 30, 2024 balance.
+F fnd_010 accepted False | Under the WebBank Merchant Loan Agreement, Synergy must pay a Minimum Payment equal to 30 percent of the $418,100 Total Payment Amount within the first six months from the Effective Date, with any sho

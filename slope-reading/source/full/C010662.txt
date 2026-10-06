@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\np='/tmp/inspect-pool-key.py'\ns=open(p).read().replace(\"print('exact_atom',repr(q));sys.exit()\", \"print('exact_atom',repr(hit),'classes',repr([c for c in q.classes if c[0]==k]),'mask',repr(q.mask));sys.exit()\")\nopen(p,'w').write(s)\nPY\npython3 /tmp/inspect-pool-key.py","max_output_tokens":1000}));

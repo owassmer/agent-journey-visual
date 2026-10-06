@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-chains && env -u CLAUDE_CODE_OAUTH_TOKEN uv run python /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6b_ci/peak.py \"tests/test_chains.py::test_composition_sums_to_one_and_keeps_every_path\" 2>&1 | tail -2", "timeout": 600}

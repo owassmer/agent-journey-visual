@@ -1,0 +1,31 @@
+242:def blocks_for(path: Path) -> list[Block]:
+243-    return pdf_blocks(path) if path.suffix.lower() == ".pdf" else html_blocks(path)
+244-
+245-
+246-# --- Sections ----------------------------------------------------------------------------------
+247-
+248-@dataclass
+249-class ParsedTable:
+250-    ordinal: int
+251-    rows: list[list[str]]
+252-    header_rows: int
+253-    caption: str
+254-    context_before: str
+255-    context_after: str
+256-    units_hint: str | None
+257-
+258-    def rendered(self) -> str:
+259-        return "\n".join("| " + " | ".join(r) + " |" for r in self.rows)
+260-
+261-
+262-@dataclass
+263-class ParsedSection:
+264-    ordinal: int
+265-    heading: str
+266-    heading_path: list[str]
+267-    page: int | None
+74:        return Block("heading", text.removesuffix("(cont.)").strip(), level=2)
+217:def pdf_blocks(path: Path) -> list[Block]:
+218:    from pypdf import PdfReader
+243:    return pdf_blocks(path) if path.suffix.lower() == ".pdf" else html_blocks(path)
+24:    "pypdf>=6.19.0",

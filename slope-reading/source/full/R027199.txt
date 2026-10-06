@@ -1,0 +1,89 @@
+                        "heading_path": json.loads(r["heading_path"]), "page": r["page"],
+                        "snippet": r["snippet"]})
+        return out
+
+    # --- reads -------------------------------------------------------------------------------
+
+    def read_section(self, section_id: str) -> dict[str, Any]:
+        row = self.con.execute("SELECT * FROM sections WHERE section_id = ?", (section_id,)).fetchone()
+        if row is None:
+            raise EvidenceAccessError(f"{section_id!r} is not available in this snapshot")
+        sec = dict(row)
+        sec["heading_path"] = json.loads(sec["heading_path"])
+        sec["source"] = self._source(sec["source_id"])
+        sec["tables"] = [r["table_id"] for r in self.con.execute(
+            "SELECT table_id FROM tables WHERE section_id = ? ORDER BY ordinal", (section_id,))]
+        nav = self.con.execute(
+            "SELECT section_id, ordinal FROM sections WHERE source_id = ? AND ordinal IN (?, ?)",
+            (sec["source_id"], sec["ordinal"] - 1, sec["ordinal"] + 1)).fetchall()
+        sec["previous_section_id"] = next((r[0] for r in nav if r[1] < sec["ordinal"]), None)
+        sec["next_section_id"] = next((r[0] for r in nav if r[1] > sec["ordinal"]), None)
+        return sec
+
+    def read_table(self, table_id: str) -> dict[str, Any]:
+        row = self.con.execute("SELECT * FROM tables WHERE table_id = ?", (table_id,)).fetchone()
+        if row is None:
+            raise EvidenceAccessError(f"{table_id!r} is not available in this snapshot")
+        t = dict(row)
+        t["rows"] = json.loads(t["rows"])
+        sec = self.con.execute("SELECT heading_path, page FROM sections WHERE section_id = ?",
+                               (t["section_id"],)).fetchone()
+        t["heading_path"], t["page"] = json.loads(sec["heading_path"]), sec["page"]
+        t["source"] = self._source(t["source_id"])
+        return t
+
+    def read(self, item_id: str) -> dict[str, Any]:
+        return self.read_table(item_id) if "#t" in item_id else self.read_section(item_id)
+app/disputes/rules.py:18:from app.domain.investigation import BranchCash
+app/disputes/rules.py:84:             finding_ids: tuple[str, ...], interest_included: bool = False) -> list[BranchCash]:
+app/disputes/rules.py:129:        out.append(BranchCash(kind=kind, label=label, amount=_derived(lo, hi, why), window_start=w.start,
+app/disputes/evaluate.py:21:    BranchCash,
+app/disputes/evaluate.py:22:    Decisive,
+app/disputes/evaluate.py:23:    DisputeInstance,
+app/disputes/evaluate.py:24:    DisputePath,
+app/disputes/evaluate.py:25:    EvidenceRequest,
+app/disputes/evaluate.py:26:    FactorResult,
+app/disputes/evaluate.py:27:    FindingReading,
+app/disputes/evaluate.py:50:    def __init__(self, draft: DisputeInstance, findings: list[AtomicFinding], *, judge: DisputeJudge | None,
+app/disputes/evaluate.py:59:        self.requests: list[EvidenceRequest] = []
+app/disputes/evaluate.py:70:    def _decisive(self, f: AtomicFinding) -> Decisive:
+app/disputes/evaluate.py:72:        return Decisive(finding_id=f.finding_id, source_date=self._date(f),
+app/disputes/evaluate.py:75:    async def _read(self, f: AtomicFinding) -> FindingReading:
+app/disputes/evaluate.py:83:        return FindingReading(finding_id=f.finding_id, source_date=self._date(f),
+app/disputes/evaluate.py:89:    async def _factors_for(self, f: AtomicFinding, r: FindingReading, obligation: dict) -> FindingReading:
+app/disputes/evaluate.py:108:    def _aggregate(self, readings: list[FindingReading]) -> list[FactorResult]:
+app/disputes/evaluate.py:118:                    out.append(FactorResult(**base, level=1, level_label="established",
+app/disputes/evaluate.py:121:                    out.append(FactorResult(**base, level=0, level_label="not established"))
+app/disputes/evaluate.py:125:                out.append(FactorResult(**base))
+app/disputes/evaluate.py:135:            out.append(FactorResult(**base, level=level, conflict=conflict,
+app/disputes/evaluate.py:143:    def _holds(cond: dict, factors: dict[str, FactorResult]) -> bool:
+app/disputes/evaluate.py:153:    def _note(self, cond: dict, factors: dict[str, FactorResult]) -> str:
+app/disputes/evaluate.py:157:    def _expand(self, stage: str, at: Window, path: list[dict], cash: tuple[BranchCash, ...],
+app/disputes/evaluate.py:158:                factors: dict[str, FactorResult], closed: dict[str, str], out: list[tuple]) -> None:
+app/disputes/evaluate.py:174:    def _paths(self, raw: list[tuple]) -> tuple[DisputePath, ...]:
+app/disputes/evaluate.py:183:            out.append(DisputePath(
+app/disputes/evaluate.py:193:        self.requests.append(EvidenceRequest(factor_id=factor_id, action=action, if_satisfied=if_satisfied,
+app/disputes/evaluate.py:196:    def _outside(self, update: dict) -> DisputeInstance:
+app/disputes/evaluate.py:200:    async def run(self) -> DisputeInstance:
+app/agent/run_store.py:23:    DisputeInstance,
+app/agent/run_store.py:39:    "effects": EconomicEffectProposal, "inventory": InventoryItem, "disputes": DisputeInstance,
+app/agent/tools.py:41:    DisputeInstance,
+app/agent/tools.py:637:    draft = DisputeInstance(
+app/decisions/case.py:15:from app.domain.investigation import DisputeInstance
+app/decisions/case.py:34:def live(disputes: list[DisputeInstance]) -> list[DisputeInstance]:
+app/decisions/case.py:38:def modelled(disputes: list[DisputeInstance]) -> list[DisputeInstance]:
+app/decisions/case.py:42:def describe(d: DisputeInstance, borrower: str, labels: dict[str, str]) -> str:
+app/decisions/case.py:50:def conditions(disputes: list[DisputeInstance], inputs: dict, recommendation: dict | None = None) -> list[dict]:
+app/decisions/case.py:93:def decide(snapshot_id: str, inputs: dict, disputes: list[DisputeInstance], review: date) -> dict:
+app/decisions/scenarios.py:26:from app.domain.investigation import DisputePath
+app/decisions/scenarios.py:75:def scenarios(disputes: list[list[DisputePath]]) -> list[Scenario]:
+app/decisions/scenarios.py:211:def compare(feed: BankFeed, terms: dict, request: Request, disputes: list[list[DisputePath]],
+tests/test_investigation_tools.py:370:    from app.domain.investigation import DisputeInstance
+tests/test_investigation_tools.py:377:    ctx.run.put("dispute_instantiated", DisputeInstance(
+tests/test_decision_model.py:14:    BranchCash,
+tests/test_decision_model.py:15:    DisputeInstance,
+tests/test_decision_model.py:16:    DisputePath,
+tests/test_decision_model.py:84:    draft = DisputeInstance(instance_id=fid_prefix, dependency_id="dep_001", model_id="m", model_version="0", title="t
+tests/test_decision_model.py:138:    lock = BranchCash(kind="lock", label="bond", amount=ev(980_000_000), window_start=FUNDING,
+tests/test_decision_model.py:155:    bond = BranchCash(kind="lock", label="bond", amount=ev(1_225_000_000), window_start=FUNDING,
+tests/test_decision_model.py:158:    paths = [DisputePath(path_id="p1", transitions=("appeal_secured",), labels=("bond",), terminal="t", cash=(bond,))

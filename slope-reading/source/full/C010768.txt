@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --command-id 5b19aca5-dfd0-46fd-849f-a3b224183bd0 --instance-id i-0ec1292733be502cc --profile slope --region us-east-2 --query StandardOutputContent --output text; git diff app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1600}));

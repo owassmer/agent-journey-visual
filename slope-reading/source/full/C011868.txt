@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json\nr=json.load(open('/tmp/notes-lender-impact.json'))\nfor k,v in r.items():\n print(k,'preference',v['metrics'].get('preference'))\n if k.startswith('original'):\n  print('draw7',next(x for x in v['rows'] if x['draw']==7)['changed_cashflow_dates'])\n  print('summary',v['metrics'])\nPY","max_output_tokens":1500}));

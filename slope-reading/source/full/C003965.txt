@@ -1,0 +1,1 @@
+{"command": "sleep 150; date +%H:%M; grep -v -E \"npmrc|nvm|globalconfig\" ~/.hermes/profiles/connor/cache/scratch/9f2/analyze.log | tail -12 | cut -c1-220; ps -Ao pid,etime,%cpu,rss,command | grep -E \"slope analyze|parallel|multiprocessing\" | grep -v grep | cut -c1-120; memory_pressure | tail -1; df -h / | tail -1", "timeout": 200}

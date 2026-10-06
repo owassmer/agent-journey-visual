@@ -1,0 +1,96 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_1e9dc640]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 18:16:16 (8m52s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 533.1s
+
+--- ✓ TASK 1/1: Measure, read-only and with no Jev spend, how much of the 14 May Akoustis lead run reaches the state 'cash exhausted and the company did not file', what that state looks like on the trajectories, and how filings split by cause. Write results to /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9e/nonfiling_measure.md and return the figures.  (status=completed, api_calls=29, 532.8s) ---
+In the forecast view, 12.1% of the run's weight reaches cash below zero before any filing. In 6.7% the company then does not file. In the no-lawsuit view the figures are 2.25% and 0.90%.
+
+My replay reproduces the recorded run exactly: collected, due, past due, balance at filing and filing probability (27.11% forecast, 8.34% no-lawsuit). I used step-8-page, whose diff against main (`cc8adf7`) is empty. No Jev calls were made, no tracked file was changed and nothing was committed.
+
+**Method:** I replayed all 2,962 forecast paths and all 19 no-lawsuit paths with `Chain.run`, then ran the loan engine on each path's final cash. Each trajectory counts path probability × 1/512. "Reached" means the path's cash-exhaustion step fires before 10 Nov with no earlier petition. On every 'no' trajectory, the engine's own cash first goes below zero on exactly that day.
+
+**1. Reaching cash exhaustion**
+
+```
+                                            | Forecast | No-lawsuit
+--------------------------------------------+----------+-----------
+Reaches cash below zero before any petition | 12.12%   | 2.25%     
+Reaches it and does not file                | 6.72%    | 0.90%     
+Does not file, given it reached             | 55.4%    | 40.0%     
+```
+
+- **Jev's answers (chance of not filing):** 0.52–0.60 across the ten forecast situations. It is 0.40 in the no-lawsuit view. The largest forecast situation is post-trial motions pending while seeking a sale or financing: 0.54, carrying 2.12% of weight that doesn't file and 1.81% that does.
+- **Exhaustion the model never asks about:** none. No trajectory goes below zero without the cash-exhaustion decision on its path.
+
+**2. The trajectories that do not file**
+
+```
+                                                                        | Forecast                    | No-lawsuit                                      
+------------------------------------------------------------------------+-----------------------------+-------------------------------------------------
+Exhaustion date (p5 / p50 / p95)                                        | 27 Jun / 24 Sep / 11 Oct    | 22 Oct / 7 Nov / 8 Nov                          
+Days to the earlier of a later petition or the horizon (p5 / p50 / p95) | 19 / 48 / 87                | 3 / 4 / 20                                      
+Lowest cash (p5 / p50 / p95)                                            | −$8.00M / −$3.55M / −$1.22M | −$1.10M / −$0.82M / −$0.02M                     
+Reaches the horizon unfiled                                             | 80.4%                       | 98.7%                                           
+Cash shortfall at the horizon, unfiled (p5 / p50 / p95)                 | $8.13M / $3.50M / $1.01M    | $1.10M / $0.82M / cash back above zero by $0.30M
+Files later                                                             | 19.6%                       | 1.3%                                            
+```
+
+- **Who files later, forecast view:** enforcement 9.3%, notes holders' petition on the judgment default 4.1%, notes delisting 3.9%, notes company filing on the judgment default 2.4%. None file later at the cash floor or on cash grounds.
+- **Who files later, no-lawsuit view:** only the notes delisting route (1.3%).
+- **Horizon cash, no-lawsuit:** 83.4% of the unfiled trajectories are still below zero on 10 Nov; in the forecast view all of them are.
+
+**3. What falls due after exhaustion and before the petition or horizon (mean per trajectory that does not file)**
+
+- **Slope installments, forecast:** $204,644 falls due; Slope collects $5,522. There are 29.7 failed debit attempts ($946k face value, counting each retry again).
+- **Slope installments, no-lawsuit:** $14,813 falls due; Slope collects $14,453. There are 0.16 failed attempts.
+- **Settlement installments (forecast only):** paid on 16.4% of these trajectories, $453,526 where they occur (mean $74,352 across all).
+- **Judgment payments:** none.
+- **Levies:** about zero after the exhaustion day. On 0.1% of forecast trajectories a $2.68M levy lands on the exhaustion day itself.
+- **Notes coupon:** none. The only interest date inside the horizon is 15 Jun ($1.32M), and its cash part is $0 because it is paid in shares.
+
+**4. Filing probability by 10 Nov, by cause**
+
+```
+Cause                                       | Forecast                                                                             | No-lawsuit                
+--------------------------------------------+--------------------------------------------------------------------------------------+---------------------------
+Enforcement (company files on the judgment) | 9.56% (35% of filings)                                                               | —                         
+Notes routes                                | 6.57% (24%): judgment default, company files 3.47; holders file 0.28; delisting 2.82 | 3.99% (48%), all delisting
+Cash floor                                  | 5.58% (21%)                                                                          | 3.00% (36%)               
+Cash exhaustion                             | 5.39% (20%)                                                                          | 1.35% (16%)               
+**Total**                                   | **27.11%**                                                                           | **8.34%**                 
+```
+
+**5. Lender effect (trajectories that do not file vs the whole run)**
+
+```
+                       | Collected | Past due | Balance at filing | Collection rate
+-----------------------+-----------+----------+-------------------+----------------
+Forecast, not filing   | $711k     | $169k    | $71k              | 76.5%          
+Forecast, whole run    | $828k     | $11.4k   | $98k              | 90.4%          
+No-lawsuit, not filing | $965k     | $2.5k    | $4.7k             | 99.7%          
+No-lawsuit, whole run  | $959k     | $22      | $30k              | 99.2%          
+```
+
+- **Past due:** all of the run's past due sits on these trajectories, in both views.
+- **Failed debits:** of all the run's failed debits, those falling after exhaustion on these trajectories are 99% (forecast) and 54% (no-lawsuit).
+
+**What I couldn't measure exactly:**
+- **Failed debits** are attempts, not distinct installments, because the engine retries each unpaid one on later due dates and month-ends. The unpaid amount is the past-due figure.
+- **Notes routes:** where a path has more than one notes filing step (0.06% of weight), I credited the last one rather than matching by date.
+- **Legal spend** after exhaustion is not broken out, because it sits in the base cash flows rather than in the event bookings.
+
+Files are in `~/.hermes/profiles/connor/cache/scratch/9e/`:
+- nonfiling_measure.md
+- measure.py
+- aggregate.py
+- metrics.py
+- check_notes.py
+- explore.py
+- measure.log
+- aggregate.log
+- sums.json
+- rows_event.npz
+- rows_no_lawsuit.npz
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_1e9dc640/task-0.log

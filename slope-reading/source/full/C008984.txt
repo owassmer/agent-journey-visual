@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+  tools.web__run({search_query:[{q:'site:docs.typesafe.ai Jev probability calibration score distribution composition'},{q:'site:typesafe.ai Jev real world users examples decision model probabilities'}],response_length:"long"}),
+  tools.exec_command({cmd:"sed -n '1,285p' app/disputes/evaluate.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:6000})
+]);results.forEach((r,i)=>text({i,...r}));

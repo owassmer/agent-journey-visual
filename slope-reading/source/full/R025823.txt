@@ -1,0 +1,20 @@
+5:question sequence. Execution states follow agent_config: CANDIDATE_READY when the packet is submitted and
+6:no budget ran out; INCOMPLETE_REVIEW on budget, deadline or service failure (never a borrower decline);
+33:from app.agent.sweep import build_sweep, inventory_groups, sweep_path
+55:  and give a reason whenever you override one.
+67:JEV_METHOD = """- read_inventory early: the host screened every admissible section and lists the specific matters it found. Before
+71:  under the same question against each other. Revise when a check fails; override only with a stated reason.
+87:    role = (cfg["comparison_mode_overrides"]["agent_only"]["role_instruction"] if arm == "agent_only"
+90:    method = WORKING_METHOD.format(jev_method=JEV_METHOD if arm == "agent_plus_jev" else "", turn_budget=max_turns)
+146:        run.lock({"summary": None, "configuration_failure": str(e), "incomplete_reasons": [str(e)]})
+150:    if jev is not None:  # host sweep inventory (cached per snapshot; its own budget)
+154:            status = "FAILED_CONFIGURATION" if isinstance(e, ConfigurationError) else "INCOMPLETE_REVIEW"
+156:                      "incomplete_reasons": [f"snapshot sweep failed: {e}"]})
+158:        for g in inventory_groups(sweep):
+159:            run.put("inventory_loaded", InventoryItem(
+165:                           "inventory_items": len(run.graph["inventory"])}
+191:                  "incomplete_reasons": ctx.incomplete_reasons + [failure or "packet not submitted"]})
+194:    elif ctx.submitted and not ctx.incomplete_reasons and not failure:
+195:        status = "CANDIDATE_READY"
+197:        status = "INCOMPLETE_REVIEW"
+201:        "run_id": run_id, "status": status, "failure": failure, "incomplete_reasons": ctx.incomplete_reasons,

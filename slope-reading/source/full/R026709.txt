@@ -1,0 +1,90 @@
+1	"""Assemble a case's decision: request, bank feed, Slope terms, dispute nodes -> scenarios, conditions, export.
+2	
+3	Used by `slope compare --run <id>` (after a recorded investigation) and by the agent's `run_scenarios` tool.
+4	"""
+5	
+6	from __future__ import annotations
+7	
+8	import json
+9	from datetime import date, timedelta
+10	from pathlib import Path
+11	
+12	from app.config import ROOT
+13	from app.decisions.scenarios import Request, compare, summarize
+14	from app.domain.investigation import DisputeNode
+15	from app.finance.bank import load_feed
+16	from app.finance.calendar import next_business_day
+17	from app.finance.slope_products import load_terms
+18	
+19	
+20	def is_slope_case(inputs: dict) -> bool:
+21	    return "terms_file" in (inputs.get("permitted_offers") or {})
+22	
+23	
+24	def request_from_inputs(inputs: dict, review: date) -> Request:
+25	    plan = inputs["financing_plan"]
+26	    funding = next_business_day(review + timedelta(days=1))
+27	    return Request(amount_cents=inputs["run_inputs"]["requested_amount"]["value"],
+28	                   invoice_due=next_business_day(funding + timedelta(days=plan["invoice_due_days_after_funding"])),
+29	                   funding=funding, requested_term_id=inputs["permitted_offers"]["requested_term_id"])
+30	
+31	
+32	def conditions(nodes: list[DisputeNode], inputs: dict) -> list[dict]:
+33	    """Funding conditions phrased as actions, from the dispute nodes and the existing lenders (deterministic)."""
+34	    out = []
+35	    for n in nodes:
+36	        if any(c.kind == "lock" for b in n.branches for c in b.cash):
+37	            out.append({"action": "Confirm how the appeal bond or other security will be provided (cash collateral or a "
+38	                                  "letter of credit) and its amount",
+39	                        "why": f"{n.decision_point}: a branch locks cash or credit capacity, which sets the limit",
+40	                        "node_id": n.node_id})
+41	        if any(c.kind == "inflow" for b in n.branches for c in b.cash):
+42	            out.append({"action": "Do not count the judgment receivable as a repayment source until it is received",
+43	                        "why": f"{n.decision_point}: whether and when it arrives is a branch, not a fact",
+44	                        "node_id": n.node_id})
+45	    for loan in inputs["baseline_profile"].get("existing_loans", []):
+46	        out.append({"action": f"Confirm {loan['lender']}'s covenants permit this financing and have room after the "
+47	                              "dispute's cash effects",
+48	                    "why": "an existing lender with liquidity covenants", "loan_id": loan["loan_id"]})
+49	    return out
+50	
+51	
+52	def decide(snapshot_id: str, inputs: dict, nodes: list[DisputeNode], review: date) -> dict:
+53	    feed = load_feed(snapshot_id)
+54	    terms = load_terms(ROOT / inputs["permitted_offers"]["terms_file"])
+55	    req = request_from_inputs(inputs, review)
+56	    comp = compare(feed, terms, req, [n for n in nodes if n.status == "accepted"])
+57	    summary = summarize(comp, terms)
+58	    summary.update({
+59	        "request": {"amount_cents": req.amount_cents, "term_id": req.requested_term_id, "funding": req.funding.isoformat(),
+60	                    "invoice_due": req.invoice_due.isoformat()},
+61	        "bank_feed": {"feed_id": feed.feed_id, "provenance": feed.provenance, "as_of": feed.period_end.isoformat()},
+62	        "slope_terms": {"terms_id": terms["terms_id"], "provenance": terms["provenance"]},
+63	        "conditions": conditions(comp.nodes, inputs),
+64	        "weights_label": ("Branch weights are Jev's judgment of which branch the record supports (model judgment, "
+65	                          "calibrated to frontier-model consensus, not observed litigation outcomes). Nodes are treated "
+66	                          "as independent."),
+67	    })
+68	    return summary
+69	
+70	
+71	def export(summary: dict, out_dir: Path) -> tuple[Path, Path]:
+72	    """Write the decision (JSON) and the marginal funding export: dated contractual rows per structure (CSV)."""
+73	    out_dir.mkdir(parents=True, exist_ok=True)
+74	    js = out_dir / "scenarios.json"
+75	    js.write_text(json.dumps(summary, indent=1, default=str) + "\n")
+76	    rows = ["structure,view,series,date,amount_cents,principal_cents,fee_cents,outstanding_principal_cents"]
+77	    for name, entry in summary["structures"].items():
+78	        for view, v in entry["views"].items():
+79	            if "contractual" not in v:
+80	                continue
+81	            outstanding = sum(r["principal_cents"] for r in v["contractual"])
+82	            rows.append(f"{name},{view},disbursement,{summary['request']['funding']},-{outstanding},{outstanding},0,{outstanding}")
+83	            for r in v["contractual"]:
+84	                outstanding -= r["principal_cents"]
+85	                rows.append(f"{name},{view},contractual,{r['due']},{r['amount_cents']},{r['principal_cents']},"
+86	                            f"{r['fee_cents']},{outstanding}")
+87	    csv = out_dir / "collections.csv"
+88	    csv.write_text("\n".join(rows) + "\n")
+89	    return js, csv
+90	

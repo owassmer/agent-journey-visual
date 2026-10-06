@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-3-financial-core && uv run ruff check app && uv run python -c \"\nfrom app.finance.reference_check import checks\nbad=0\nfor n,e,r in checks():\n    ok = e==r; bad += not ok\n    print('OK ' if ok else 'XX ', n, e, r)\nprint('mismatches', bad)\""}

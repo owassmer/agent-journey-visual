@@ -1,0 +1,26 @@
+ok
+
+
+async def _account_one(ctx: RunContext, entry: dict) -> str | dict:
+    """Account for one inventory entry: the item ID when recorded, or {item_id, reason} when rejected."""
+    try:
+        item = ctx.run.get("inventory", entry["item_id"])
+        if item.status != "open":
+            raise ToolError(f"{item.item_id} is already {item.status}")
+        disposition = entry.get("disposition")
+        reason = (entry.get("reason") or "").strip()
+        if disposition == "covered_by_findings":
+            raise ToolError(f"{entry.get('item_id')}: disposition must be covered_by_findings, duplicate_of, "
+                            "not_decision_relevant or escalate")
+        ctx.run.put("inventory_accounted", update)
+        return update.item_id
+    except (ToolError, KeyError) as e:
+        return {"item_id": entry.get("item_id"), "reason": str(e).strip("'")}
+
+
+async def escalate_effect(ctx: RunContext, args: dict) -> dict:
+    """Disagreement with the category guard is escalated, never overridden: the effect becomes disputed, creates no cash
+    stream, and is left open for the human reviewer."""
+[1;32mAll checks passed![0m
+E           app.agent.tools.ToolError: Each item may appear once per batch
+FAILED tests/test_investigation_tools.py::test_duplicate_and_relevance_claims_are_checked - app.agent.tools.ToolError: Each item may appear once per batch

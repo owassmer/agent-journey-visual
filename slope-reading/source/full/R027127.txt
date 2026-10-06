@@ -1,0 +1,60 @@
+1	# Slope credit-event scenario module — definitive build specification
+2	
+3	Prepared 24 September 2026. Revision 2 replaced the Trinity/A10 implementation direction. **Revision 3 (25 September 2026):** the lead case is ChromaDex at 19 August 2024, whose disputes are live on the decision date; Synergy becomes the secondary case. A live dispute is compiled onto a generic, host-owned post-judgment dispute model: Jev reads each cited passage atomically, code keeps every cash path the evidence permits, and Slope's product, pricing, policy and the connected-bank baseline are reconstructed as closely as public information allows.
+4	
+5	## 1. The product to build
+6	
+7	**Given a proposed working-capital advance and an unusual external event, determine which financing structures remain supportable and how the event changes the loan's projected collections.**
+8	
+9	The borrower’s financial profile supplies the repayment capacity. The loan’s dated cash flows are the main output. The agent researches evidence that ordinary transaction-based underwriting may miss; Jev makes focused judgments within that investigation; deterministic financial code translates the resulting economic effects into financing choices.
+10	
+11	The demonstration should end with an amount, schedule and explicit funding conditions—or a concrete reason no offered structure works. It should also show the cash the asset holder receives under each modeled scenario. A litigation summary or monitoring recommendation is insufficient.
+12	
+13	This is a useful connection between Russell’s two topics: unusual borrower events create scenarios for individual loan collections; those collections feed portfolio liquidity and capital planning. It is one coherent extension of the credit workflow, not a full capital-markets platform.
+14	
+15	### Where it fits at Slope
+16	
+17	Use **exception review before a new discretionary advance or increase in exposure**. Slope publicly describes higher-risk, larger and unusual applications entering human review, supported by agents and traceable evidence. It also describes a reconstructed cash-flow understanding from bank data. Our module consumes that baseline rather than recreating bank connectivity or ordinary underwriting. [S1–S2]
+18	
+19	The recommendation addresses controls Slope actually describes: business limit, maximum order/draw amount, available terms and pricing. Public product terms vary by program. Slope’s Amazon program describes fixed repayment schedules with 2–12-month draw terms; its invoice Pay Later materials describe different terms. Select one product configuration; never blend them. [S3–S5]
+20	
+21	For this demonstration, **reconstruct Slope's actual product as closely as public information allows**: bill-pay financing, where Slope pays the supplier and the business repays on net terms or in monthly installments over 60 or 90 days, priced by risk tier from connected bank data. The reconstructed price card, credit policy and the synthetic connected-bank data are each labelled once, at their source, and are otherwise used plainly. The case is reconstructed as if the borrower applied to Slope on the decision date; there is no claim that it did. A borrower's actual existing financing (a bank revolver, a merchant loan) stays a separate existing obligation with its own contract logic.
+22	
+23	The first financial viewpoint is the **loan asset holder**. Lead Bank origination, Slope servicing and external capital support do not mean every borrower payment is Slope corporate revenue. Platform fees, asset ownership and warehouse cash flows require separate accounting scopes. [S4]
+24	
+25	## 2. Case selection: ChromaDex first, Synergy second
+26	
+27	**Why the lead changed.** A lawsuit carries the most lender-relevant signal while it is unresolved: bank data shows nothing about a pending ruling, an appeal bond or whether a judgment debtor will pay, and those are branching, forward-looking questions. By 13 August 2024 Synergy's dispute had already become ordinary settlement debt, which turns the investigation into document archaeology. The lead case must therefore have a dispute that is live on the decision date, a federal docket with public filings before that date, public financials, a Slope-shaped business and a known later outcome.
+28	
+29	**Lead: ChromaDex Corporation, using information available by the end of 19 August 2024.** A consumer supplement brand (Tru Niagen) that buys finished goods from contract manufacturers and sells online, on Amazon and in retail; about $84 million of 2023 net sales, $27.9 million of cash at 30 June 2024, an undrawn $10.0 million Western Alliance Bank revolver with liquidity covenants. Two disputes with Elysium Health, a former customer, move money in opposite directions on the decision date: in Delaware the court has granted Elysium its attorney fees, against ChromaDex, Inc. (the operating subsidiary) and the Trustees of Dartmouth College, and the amount (about $9.8 million with interest, by ChromaDex's estimate, reported as the Company's contingent liability) awaits a ruling that ChromaDex intends to appeal; in California a 13 August 2024 judgment orders Elysium to pay ChromaDex $2.5 million, with no payment date. Most resolution events (the fee judgment, the appeal bond, Elysium's appeal) fall inside the 180-day horizon over which a 90-day financing is assessed; the December settlement payment lands just after a 90-day term. Evidence: the 10-K, both 2024 10-Qs, the Q2 results release, the revolver amendment and nine federal court filings (CourtListener RECAP copies of PACER documents). The date is 19 August because on 20 August the Delaware court issued an order on the fee-amount dispute; by early September that branch was largely decided.
+30	
+31	**Secondary: Synergy CHC at 13 August 2024** (below): a resolved dispute whose obligations hide inside aggregate debt; its recorded runs stay as the hidden-obligation example.
+32	
+33	**Barfresh is deferred:** its live dispute is in California state court with no docket we could access, so the dispute cannot be modelled from court records.
+34	
+35	**Synergy CHC (secondary), using information available by the end of 13 August 2024.** It is a real consumer-products business with 25 employees, approximately $42.8 million of 2023 sales and an actual $370,000 merchant advance. We acquired a court opinion, financial disclosures, its executed merchant-loan contract, later repayment disclosures and a later credit agreement that expressly financed the settlement obligations. [C1–C6]
+36	
+37	The dispute is older than the underwriting snapshot: supplier litigation began in 2022, the main settlement occurred in December 2023, and the relevant payment obligations and financing decisions run through 2024–2025. Describe that chronology accurately. This is much more recent and economically applicable than the decade-old public-company cases, while remaining a historical demonstration with observable financing outcomes.
+38	
+39	| Candidate | Fit and evidence | Role |
+40	|---|---|---|
+41	| **ChromaDex** | Consumer supplement brand buying from contract manufacturers; live fee award and judgment receivable on the decision date; two federal dockets with filed orders; public financials; public outcome | Lead: live disputes on the dispute model → weighted paths with rule-derived cash → loan collections |
+42	| **Synergy CHC** | Small employee base, actual sub-$400,000 merchant advance, executed repayment terms, lawsuit settlement schedule, later settlement-financing contract | Secondary: resolved dispute → hidden settlement obligations → loan capacity |
+43	| **Barfresh** | Roughly ten employees, small beverage supplier, production dispute, real receivables facility; live case in state court with no public docket | Deferred |
+44	| Ya Ya Creations | Strong public evidence of Shopify/Stripe disruption and restored receipts; key financial declarations sealed, insufficient pre-outcome loan terms | Optional receipt-delay mechanism test, not the quantitative lead |
+45	| Kin Social Tonics | Recent financial disclosure and vendor finance; severe pre-existing distress, several paid or non-filed disputes | Optional negative control: do not attribute an ordinary financial rejection to a new lawsuit signal |
+46	| True Made Foods | Recent litigation/bankruptcy but inadequate contemporaneous public financial baseline | Exclude from first build |
+47	| Trinity/A10 | Rich contracts but old and poor borrower fit | Retire as headline cases; do not reuse their decision labels |
+48	
+49	Synergy is already highly leveraged. That does not disqualify a real financing analysis, but it rules out an invented “healthy company suddenly becomes unlendable” story. The goal is a defensible change in payment forecasts, supported exposure or funding conditions. An unchanged final approval stance is acceptable if the model correctly explains why.
+50	
+51	### Exact lead mission
+52	
+53	> As of 19 August 2024, assess Slope financing of a USD 2.0 million contract-manufacturer invoice for ChromaDex Corporation. ChromaDex's public filings describe long-running litigation with Elysium Health, a former customer, in several federal courts.
+54	
+55	The request is reconstructed (Slope bill-pay financing of a real borrower's supplier invoice). The mission names the borrower and the counterparty but no expected finding.
+56	
+57	### Secondary mission (Synergy)
+58	
+59	> As of 13 August 2024, assess a proposed incremental working-capital draw for Synergy CHC. Reconcile existing merchant financing and supplier-settlement obligations. Compare the requested structure with permitted alternatives, identify the binding cash requirements and export conditional loan collections.
+60	

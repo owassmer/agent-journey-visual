@@ -1,0 +1,25 @@
+# Amazon Seller Line of Credit Specifics
+
+**Credit Line Sizes**
+Up to "$5M in reusable working capital" for approved sellers with the strongest profiles.
+
+**Draw Terms**
+"Flexible 2–12 month terms for every draw." Borrowers select a term when making each draw, allowing repayment schedules to align with their inventory and sales cycles.
+
+**Repayment Schedule**
+Payments process automatically from linked business accounts. The specific payment frequency (monthly, etc.) isn't detailed, but the structure uses fixed terms per draw with automatic replenishment of available credit upon repayment.
+
+**Pricing**
+Annual percentage rates start "as low as 8.99% APR" for top-tier sellers. The program discloses APR ranges rather than flat fees, with rates varying by credit profile.
+
+**Underwriting Data**
+Slope's AI evaluates "your Amazon performance and cash flow in real time" using live transaction data. Applicants must "securely link your business bank account" to provide detailed cash flow visibility.
+
+**Eligibility**
+Eligible U.S. Amazon sellers receive invitations in Seller Central. Requirements include minimum revenue and business thresholds (unspecified), with no personal credit score impact just to receive an approval decision.
+
+**Fund Disbursement**
+Approved sellers "draw from your line as needed," with immediate access after approval.
+
+**Limit Increase Rules**
+"Over time, as your sales and cash flow grow, your line may be eligible for automatic increases (subject to ongoing review and credit approval)."

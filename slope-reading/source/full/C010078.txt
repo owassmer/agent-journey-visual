@@ -1,0 +1,2 @@
+text(await tools.web__run({search_query:[{q:"site.docs.aws.amazon.com RDS delete automated snapshots after database deleted delete-db-snapshot automated"}],response_length:"short"}));
+text(await tools.exec_command({cmd:"aws rds delete-db-snapshot --profile default --region us-east-2 --db-snapshot-identifier rds:reddit-fintech-db-2026-09-22-03-36 --query 'DBSnapshot.{Id:DBSnapshotIdentifier,Status:Status}' --output json",max_output_tokens:500}));

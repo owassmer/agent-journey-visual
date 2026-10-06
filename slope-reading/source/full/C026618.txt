@@ -1,0 +1,1 @@
+{"command": "uv run python -c \"\nimport typesafe_sdk as t, inspect\nfor n in ('ScoreAnswer','ChoiceAnswer','NoulAnswer','Score'):\n    c=getattr(t,n); print(n, getattr(c,'model_fields',None) and {k:str(v.annotation) for k,v in c.model_fields.items()})\n\"; grep -n \"class _Raw\" -A 12 app/agent/jev.py"}

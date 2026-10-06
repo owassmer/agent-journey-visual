@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-0d1ad1d0761e877d8 --command-id 966a9a58-7f29-4e54-817e-349ba2b403e4 --query '{Status:Status,Output:StandardOutputContent,Error:StandardErrorContent}' --output json; python3 /tmp/check-fresh-progress.py","max_output_tokens":1200}));

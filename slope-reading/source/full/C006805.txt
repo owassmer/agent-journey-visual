@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && sqlite3 state.db \"select datetime(timestamp,'unixepoch','localtime'), substr(tool_calls,1,1500) from messages where session_id in ('20260928_172908_0aef31','20260929_020301_63c14b') and tool_calls like '%skill_manage%' order by timestamp\" | cut -c1-1300"}

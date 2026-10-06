@@ -1,0 +1,16 @@
+== the attorneys' fees and costs awarded to Elysium Health agai | role debtor | status estimated | stage None | interest True | outside_model
+   de1 not_stated not_stated False {} {'amount_finality': True, 'appeal_intent': True} {'amount_finality': 2, 'appeal_intent': 3}
+   de2 borrower estimated True {} {} {}
+   factors [('amount_finality', 'The amount has been fully briefed or submitted to the court for decision'), ('appeal_intent', 'The payer states it intends to appeal'), ('appeal_barred', 'not established')]
+   closed {}
+== the $2,500,000 ChromaDex is to receive from Elysium Health u | role creditor | status fixed | stage judgment_entered | interest False | compiled
+   ca1 counterparty fixed False {'entitlement_decided': True, 'amount_fixed': True, 'judgment_entered': True} {'amount_finality': True} {'amount_finality': 3}
+   ca2 not_stated not_stated False {} {'appeal_intent': True} {'appeal_intent': 0}
+   factors [('amount_finality', 'The court has fixed the amount'), ('appeal_intent', 'The payer accepts the judgment or says it will not appeal'), ('appeal_barred', 'not established')]
+   closed {}
+   P pay [('inflow', 250821918, 252054795)] points
+   P appeal_secured -> appeal_continues [] 
+   P appeal_secured -> settle [('inflow', 150000000, 250000000)] 
+   P settle [('inflow', 150000000, 250000000)] 
+   P unpaid_no_secured_stay -> collected [('inflow', 250000000, 253082192)] 
+{'provider': 'openrouter', 'requests': 12, 'cache_hits': 0, 'physical_attempts': 12, 'attempt_ceiling': 400, 'spent_usd': '0.000908922', 'spend_cap_usd': '0.10'}

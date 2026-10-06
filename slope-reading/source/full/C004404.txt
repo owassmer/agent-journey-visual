@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; env -u CLAUDE_CODE_OAUTH_TOKEN .venv/bin/python ~/.hermes/profiles/connor/cache/scratch/9z/path_bytes.py $TMPDIR/art18/out/part71.pkl 2>&1 | grep -v -E \"npmrc|nvm|globalconfig\"; grep -n \"def composite\" -A5 app/disputes/forecast.py", "timeout": 120}

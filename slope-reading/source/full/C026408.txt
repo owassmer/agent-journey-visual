@@ -1,0 +1,1 @@
+{"url": "https://help.slopepay.com/en/articles/4357633", "prompt": "Extract every specific about Slope borrowing limits and terms: how limits are set (bank data, revenue, cash flow), limit ranges, term options, fees/pricing, repayment schedule (installments, frequency, autopay), what affects limits, re-underwriting/limit changes, late fees, early repayment."}

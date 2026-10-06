@@ -1,0 +1,39 @@
+ok
+[1;32mAll checks passed![0m
+- If you connect a name, label or table row to an obligation by matching amounts or dates, mark that finding is_inference and
+  describe the link as an inference in your conclusion.
+- run_sensitivity on validated settlement effects to see which unknown changes the cash requirement.
+- request_missing_fact for each pivotal fact the evidence cannot supply, then submit_packet.
+- Use only the evidence returned by the tools; do not rely on remembered facts about this company or later events.
+- Work efficiently: the run stops at {turn_budget} turns; submit before then."""
+
+JEV_METHOD = """- read_inventory early: the host screened every admissible section and lists the specific matters it found. Before
+  submitting, account_for_items for every item: covered by accepted findings, or not decision-relevant with a reason.
+- The host checks each proposed effect: its supporting findings' posture and status must fit the mechanism, and its model
+  consequence must be supported by the cited findings. It also checks your conclusion at submission and checks accepted findings
+  under the same question against each other. Revise when a check fails; override only with a stated reason.
+- Search results carry a semantic screen label; all results are shown and you decide what to read.
+- When the posture, status or entity of a statement matters, call judge (claim_interpretation) with one claim, a precise target
+  and the verbatim anchor_quote, and link the observations to the finding. When two statements may conflict, use
+  statement_relation. An ambiguous or unsettled judgment means: read more context or narrow the target, not accept.
+35:        runs.append({"run_id": r.get("run_id"), "status": r.get("status"), "arm": r.get("arm"),
+43:    if ev.get("status") == "range":
+47:    return ("approx. " if ev.get("status") == "approximate" else "") + usd(int(ev["value"]))
+63:        status = "FAILED_CONFIGURATION"
+65:        status = "CANDIDATE_READY"
+67:        status = "INCOMPLETE_REVIEW"
+82:            "id": f.finding_id, "proposition": f.proposition, "target": f.target, "status": f.status,
+87:    effects = []
+88:    for e in g["effects"].values():
+89:        effects.append({"id": e.effect_id, "mechanism": MECHANISM_LABELS.get(e.mechanism, e.mechanism), "target": e.target,
+91:                        "consequence": e.model_consequence, "status": e.status, "problems": list(e.validation_messages),
+93:                        "parameters": [{"name": p.name.replace("_", " "), "description": p.description, "status": p.status,
+116:    titles = {sid: run_source_title(inputs, sid) for sid in {i.source_id for i in g["inventory"].values()}}
+124:    inventory = [{"id": i.item_id, "kind": i.kind.replace("_", " "), "source": titles.get(i.source_id, i.source_id),
+126:                  "status": i.status.replace("_", " "), "findings": list(i.finding_ids), "note": i.note,
+128:                 for i in sorted(g["inventory"].values(), key=lambda i: i.item_id)]
+132:        "late_failure": (record.get("status") not in (None, status)) and (record.get("failure") or record.get("status")),
+133:        "run_id": run_id, "verified_head": run.head[:16], "record": record, "meta": meta, "status": status,
+137:        "request": inputs.get("run_inputs", {}), "submitted": submitted, "effects": effects, "dependencies": deps,
+142:        "inventory": inventory, "conclusion_check": conclusion_check, "conclusion_checks": conclusion_checks,
+143:        "sweep": next((e.payload for e in run.events if e.kind == "inventory_loaded"), None),

@@ -1,0 +1,8 @@
+227:- **Amounts:** quoted components; statutory computations from quoted law; code-owned ranges only where the record bounds them (e.g. between the two sides' figures), with a sensitivity.
+307:**Path facts:** the amount and the cash on that path. The amount paid comes from a code-owned share range with a sensitivity; Jev never sets it. **Jev residual:** each interval.
+320:| **New trial on damages, or remittitur** | Rule 59. A remittitur must be offered to the plaintiff, who may refuse and take a new trial (Seventh Amendment; *Hetzel v. Prince William County*, 523 U.S. 208 (1998)). The
+323:| **Fees (D.I. 618)** | 18 U.S.C. §1836(b)(3)(D) and N.C. Gen. Stat. §66-154(d): the court "may" award fees for willful and malicious misappropriation (Record: the jury so found) | D.I. 618 | ≤ $12,116,123.30 request
+325:| **Post-judgment interest** | 28 U.S.C. §1961 | — | **Arithmetic:** the statutory rate from the date of judgment (a code-owned range until the rate is sourced) | none (Law) |
+381:| 4 | Pay, settle or challenge? | C&C | **Arithmetic:** award on the path against cash (P5 / P50). **Record:** going concern; funding shut off; the proxy contest. **Law:** vacatur only on the limited grounds of FAA §
+442:  - component amounts, including statutory interest and code-owned ranges;
+600:**What it is.** If the parties settle on a path, how much cash leaves, and when? The inherited model uses "60–100% of the amount". Revision 1 added "50–100% paid up front, the rest in 300 days". **Neither has a basis

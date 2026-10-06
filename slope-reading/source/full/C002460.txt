@@ -1,0 +1,1 @@
+{"image_url": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/7_page/shots3/p2_2_outcomes.png", "question": "Transcribe all text. Then list only concrete visual defects: overlaps, clipping, misalignment, illegible or inconsistent elements, numbers that don't add up. Be specific and brief; no general design advice."}

@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"python3 /tmp/monitor_notes_recovery.py > /tmp/notes-report-refresh.log","yield_time_ms":1000,"max_output_tokens":300}));
+text(await tools.exec_command({cmd:"rg -n 'D4|J3|pending|denied|before its own|own answer|stay motion' Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/QUESTIONS_20240514.md | head -32; tail -3 /tmp/notes-all-terminal-measure.log","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2200}));

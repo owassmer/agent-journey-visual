@@ -1,0 +1,1 @@
+{"file_path": "/Users/owenwassmer/.claude/jobs/1ebb1026/tmp/jev_smoke_only.py", "content": "from app.agent.smoke import run_jev_smoke\n\nr = run_jev_smoke(\"smoke-jev-4a\")\nprint(r[\"checks\"], r[\"observation\"][\"answer\"], r[\"call\"][\"returned_model\"], r[\"attempts_reserved\"], r[\"requests\"])\n"}

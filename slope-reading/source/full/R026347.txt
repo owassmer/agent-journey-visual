@@ -1,0 +1,237 @@
+{
+ "mission_id": "synergy_chc_2024_working_capital_advance",
+ "case_id": "synergy_chc_2024",
+ "snapshot_id": "synergy_20240813",
+ "status": "locked_operator_inputs",
+ "note": "Operator request and ordinary baseline for the 13 Aug 2024 review. Offers are analytical fixtures, not Slope pricing or a historical application. The baseline holds only ordinary underwriting facts; event mechanisms are for the investigation to establish.",
+ "run_inputs": {
+  "mission_id": "synergy_chc_2024_working_capital_advance",
+  "requested_use": {
+   "value": "Inventory purchase for existing product lines",
+   "basis": "operator_assumption"
+  },
+  "requested_amount": {
+   "value": 25000000,
+   "unit": "USD_cents",
+   "basis": "operator_assumption"
+  },
+  "requested_term": {
+   "value": 6,
+   "unit": "months",
+   "basis": "operator_assumption"
+  },
+  "requested_pricing": {
+   "value": "fixed total fee of 6% of the advance, equal monthly payments",
+   "basis": "operator_assumption",
+   "note": "Analytical fixture; not an APR and not Slope pricing."
+  },
+  "baseline_profile_id": "synergy_ordinary_baseline_v1",
+  "existing_loan_record_ids": [
+   "synergy_webbank_shopify_2024-05-01"
+  ],
+  "permitted_offer_set_id": "synergy_analytical_offers_v1",
+  "policy_config_id": "demo_policy_reserve_v1",
+  "initial_event_seed": "As of 13 August 2024, assess a proposed incremental working-capital draw for Synergy CHC. Reconcile existing merchant financing and supplier-settlement obligations. Compare the requested structure with permitted alternatives and identify the binding cash requirements. Synergy's public filings describe litigation with a former contract manufacturer."
+ },
+ "baseline_profile": {
+  "baseline_profile_id": "synergy_ordinary_baseline_v1",
+  "borrower": "Synergy CHC Corp.",
+  "opening_cash_observation_id": "cash_20240812_reported",
+  "aggregate_debt_observation_id": "debt_due_2024",
+  "observations": [
+   {
+    "observation_id": "cash_20240630",
+    "label": "Cash and cash equivalents",
+    "value": 8729300,
+    "unit": "USD_cents",
+    "precision": "exact",
+    "observed_on": "2024-06-30",
+    "basis": "documented_evidence",
+    "note": null,
+    "citation": {
+     "source_id": "synergy_s1a_20240813",
+     "item_id": "synergy_s1a_20240813#s0183",
+     "quote": "| Cash and cash equivalents | $87,293 | $632,534 |"
+    }
+   },
+   {
+    "observation_id": "restricted_cash_20240630",
+    "label": "Restricted cash",
+    "value": 10000000,
+    "unit": "USD_cents",
+    "precision": "exact",
+    "observed_on": "2024-06-30",
+    "basis": "documented_evidence",
+    "note": null,
+    "citation": {
+     "source_id": "synergy_s1a_20240813",
+     "item_id": "synergy_s1a_20240813#s0183",
+     "quote": "| Restricted cash | 100,000 | 100,000 |"
+    }
+   }
+  ],
+  "existing_loans": [
+   {
+    "loan_id": "synergy_webbank_shopify_2024-05-01",
+    "basis": "executed_contract",
+    "lender": "WebBank",
+    "cover_terms": [
+     {
+      "label": "Total Payment Amount, Loan Amount, Cost of Funds",
+      "citation": {
+       "item_id": "synergy_merchant_agreement_20240501#s0000",
+       "quote": "$418,100.00 $370,000.00 USD $48,100.00 USD"
+      }
+     },
+     {
+      "label": "Repayment rate and Term",
+      "citation": {
+       "item_id": "synergy_merchant_agreement_20240501#s0000",
+       "quote": "USD 25% of daily sales 18 Months"
+      }
+     }
+    ],
+    "note": "Existing obligation. The full agreement is in the evidence (source synergy_merchant_agreement_20240501); read it for the payment rules."
+   }
+  ]
+ },
+ "permitted_offers": {
+  "permitted_offer_set_id": "synergy_analytical_offers_v1",
+  "requested_proposal_id": "analysis_250k_6m",
+  "offers": [
+   {
+    "proposal_id": "analysis_100k_6m",
+    "advance_cents": 10000000,
+    "term_months": 6,
+    "fixed_total_fee_fraction": "0.06",
+    "basis": "operator_assumption"
+   },
+   {
+    "proposal_id": "analysis_250k_6m",
+    "advance_cents": 25000000,
+    "term_months": 6,
+    "fixed_total_fee_fraction": "0.06",
+    "basis": "operator_assumption"
+   },
+   {
+    "proposal_id": "analysis_250k_3m",
+    "advance_cents": 25000000,
+    "term_months": 3,
+    "fixed_total_fee_fraction": "0.03",
+    "basis": "operator_assumption"
+   }
+  ]
+ },
+ "policy": {
+  "policy_config_id": "demo_policy_reserve_v1",
+  "required_cash_reserve": {
+   "value": 20000000,
+   "unit": "USD_cents",
+   "basis": "operator_assumption",
+   "note": "Illustrative $200,000 liquidity reserve; not Slope policy."
+  }
+ }
+}
+"""Whitelist projection of the mission: the only mission view the investigating agent receives.
+
+get_mission builds a fresh object from `mission_projection.allowed_*_fields`. It never serializes
+the mission dictionary or agent configuration wholesale; extra keys are denied by default.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from app.config import ConfigurationError, agent_config
+
+MISSION_KEYS = {"synergy_chc_2024": "default_mission", "barfresh_schreiber_2024": "transfer_mission"}
+
+
+def project_mission(case_id: str, run_inputs: dict[str, Any] | None = None) -> dict[str, Any]:
+    cfg = agent_config()
+    projection = cfg["mission_projection"]
+    if case_id not in MISSION_KEYS:
+        raise ConfigurationError(f"Unknown case {case_id!r}")
+    template = cfg[MISSION_KEYS[case_id]]
+
+    mission = {k: template[k] for k in projection["allowed_case_fields"] if k in template}
+    run_inputs = run_inputs or {}
+    extra = set(run_inputs) - set(projection["allowed_run_input_fields"])
+    if extra:
+        raise ConfigurationError(f"Run inputs outside the mission whitelist: {sorted(extra)}")
+    if "mission_id" in run_inputs and run_inputs["mission_id"] != mission.get("mission_id"):
+        raise ConfigurationError("Run input mission_id does not match the case template")
+    # Missing run inputs stay explicitly unknown rather than absent or defaulted.
+    for field in projection["allowed_run_input_fields"]:
+        if field in run_inputs:
+            mission[field] = run_inputs[field]
+        else:
+            mission.setdefault(field, {"status": "unknown", "reason": "not supplied in locked run inputs"})
+    return mission
+{
+ "case_id": "synergy_chc_2024",
+ "borrower": "Synergy CHC Corp.",
+ "decision_date": "2024-08-13",
+ "as_of": "2024-08-13T23:59:59-04:00",
+ "decision_timezone": "America/New_York",
+ "cutoff_precision": "Conservative end of the disclosed filing date; not an asserted intraday SEC acceptance timestamp or actual loan-decision time.",
+ "financial_measurement_date": "2024-06-30",
+ "updated_cash_measurement_date": "2024-08-12",
+ "updated_cash_precision": "Approximately USD 2 million, as disclosed by management; not an exact current bank balance or a reconciliation of every post-June cash movement.",
+ "financial_filing_publication_date": "2024-08-13",
+ "source_ids": [
+  "synergy_s1a_20240813",
+  "synergy_merchant_agreement_20240501",
+  "synergy_court_20230227"
+ ],
+ "mission_type": "new_discretionary_advance",
+ "loan_terms_basis": "analysis_candidate",
+ "relationship_claim": "No claim that Synergy is or was a Slope customer, applied to Slope, received this offer, or qualified for a particular partner program.",
+ "product_selection": "Compare explicitly modeled fixed-installment working-capital offers compatible with Slope's product family. Do not describe current partner marketing terms as an offer available to Synergy in August 2024. Store the actual existing merchant loan under its own sales-linked contract logic.",
+ "existing_merchant_loan_role": "The May 1 WebBank loan, described by the issuer as Shopify Capital, is an existing obligation and a contract-engine test: USD 370000 advanced, USD 418100 total contractual repayment, remittance from 25 percent of defined Shopify Account Credits. Section 4.1.1 requires a 30 percent Minimum Payment in months 1-6 and an additional 30 percent Minimum Payment in months 7-12, with total repayment at least 60 percent by month 12 and full payment by the end of month 18. Section 4.2(b) computes each period top-up from Daily Payments in that six-month period; do not replace the second-period rule with a cumulative 60 percent test that credits first-period excess. All dates run from the effective funding date, not automatically the agreement date. This sales-linked existing loan is not the proposed Slope-style fixed-installment loan.",
+ "mission_id": "synergy_chc_2024_working_capital_advance"
+}
+{
+ "enforcement": "get_mission constructs a fresh object from the explicit whitelist below. It must not serialize the mission dictionary or the full agent configuration wholesale. Extra keys are denied by default.",
+ "allowed_case_fields": [
+  "case_id",
+  "mission_id",
+  "borrower",
+  "as_of",
+  "decision_timezone",
+  "mission_type",
+  "loan_terms_basis",
+  "relationship_claim",
+  "product_selection",
+  "financing_basis"
+ ],
+ "allowed_run_input_fields": [
+  "mission_id",
+  "requested_use",
+  "requested_amount",
+  "requested_term",
+  "requested_pricing",
+  "baseline_profile_id",
+  "existing_loan_record_ids",
+  "permitted_offer_set_id",
+  "policy_config_id",
+  "initial_event_seed"
+ ],
+ "run_input_policy": "Read these fields only from the locked operator request and ordinary baseline. Missing values remain typed unknown. An event seed may identify the borrower and disputed matter, but contains no expected conclusion, future identity, answer-bearing document order or extracted answer key. If mission_id is present in both case template and locked run inputs, they must match; a runtime override cannot switch cases.",
+ "excluded_fields": [
+  "case_specific_investigation_priorities",
+  "expected_findings_and_error_checks",
+  "transfer_tests",
+  "outcome_source_ids",
+  "outcome_source_ids_excluded_from_initial_snapshot",
+  "existing_merchant_loan_role",
+  "source_ids",
+  "source_id",
+  "case_source_references",
+  "source_accepted_at",
+  "updated_cash_precision"
+ ],
+ "financial_input_policy": "The agent obtains sourced financial observations and documented existing-loan terms through read_baseline_profile and read_loan_terms. These tools may return ordinary baseline facts with source references; they do not return evaluator conclusions or the expected event adjustments.",
+ "private_evaluation_file": "case_eval_private.json",
+ "private_evaluation_file_visibility": "host_offline_scorer_only",
+ "blind_reviewer_policy": "The reviewer sees the candidate packet and the same comple

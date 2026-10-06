@@ -1,0 +1,84 @@
+(*, type: Literal['score'] = 'score', instructions: Optional[JSONContent] = None, criteria: collections.abc.Sequence[JSONContent]) -> None
+{'$defs': {'JSONContent': {'anyOf': [{'type': 'string'}, {'additionalProperties': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'object'}, {'items': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'array'}]}, 'JSONValue': {'anyOf': [{'type': 'string'}, {'type': 'integer'}, {'type': 'number'}, {'type': 'boolean'}, {'items': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'array'}, {'additionalProperties': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'object'}]}}, 'additionalProperties': False, 'description': 'A question that assigns a score using an ordered rubric.\n\nSee the [score primitive](https://docs.typesafe.ai/primitives/score) for details.', 'properties': {'type': {'const': 'score', 'default': 'score', 'title': 'Type', 'type': 'string'}, 'instructions': {'anyOf': [{'$ref': '#/$defs/JSONContent'}, {'type': 'null'}], 'default': None}, 'criteria': {'items': {'$ref': '#/$defs/JSONContent'}, 'title': 'Criteria', 'type': 'array'}}, 'required': ['criteria'], 'title': 'Score', 'type': 'object'}
+{'$defs': {'JSONContent': {'anyOf': [{'type': 'string'}, {'additionalProperties': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'object'}, {'items': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'array'}]}, 'JSONValue': {'anyOf': [{'type': 'string'}, {'type': 'integer'}, {'type': 'number'}, {'type': 'boolean'}, {'items': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'array'}, {'additionalProperties': {'anyOf': [{'$ref': '#/$defs/JSONValue'}, {'type': 'null'}]}, 'type': 'object'}]}}, 'additionalProperties': False, 'description': 'A question that selects between named alternatives.\n\nSee the [choice primitive](https://docs.typesafe.ai/primitives/choice) for details.', 'properties': {'type': {'const': 'choice', 'default': 'choice', 'title': 'Type', 'type': 'string'}, 'instructions': {'anyOf': [{'$ref': '#/$defs/JSONContent'}, {'type': 'null'}], 'default': None}, 'criteria': {'additionalProperties': {'anyOf': [{'$ref': '#/$defs/JSONContent'}, {'type': 'null'}]}, 'title': 'Criteria', 'type': 'object'}}, 'required': ['criteria'], 'title': 'Choice', 'type': 'object'}
+117:class SemanticObservation(Frozen):
+118-    observation_id: str
+119-    call_id: str
+120-    profile: str
+121-    question_id: str
+122-    question_version: str
+123-    primitive: Literal["choice", "noul"]
+124-    answer: str | bool | None
+125-    probabilities: dict[str, float] | None = None  # Choice distribution; a judgment, never an event probability
+126-    noul_value: float | None = None  # Noul score in [0, 1]
+127-    confidence: float | None = None
+128-    subject_ids: tuple[str, ...] = ()
+129-    downstream_disposition: Disposition = "unused"
+130-    disposition_note: str = ""
+131-
+132-
+133-class AtomicFinding(Frozen):
+134-    finding_id: str
+135-    dependency_id: str
+136-    proposition: str
+137-    target: str
+138-    subject_kind: SubjectKind = "other"
+139-    subject: str = ""
+140-    is_inference: bool = False  # the agent's own linkage of cited premises, labelled as such
+141-    spans: tuple[SourceSpan, ...] = Field(min_length=1)  # every finding rests on verbatim snapshot text
+142-    observation_ids: tuple[str, ...] = ()
+83-      "trigger": "host, when the agent proposes a decision node of a live dispute",
+84-      "questions": [
+85:        "dispute_branch"
+86-      ]
+87-    }
+88-  },
+89-  "state_contract": {
+90-    "unanswered_question": "The recorded decision dependency: the question, its embedded premises and the financial quantity it could change.",
+91-    "passage": "Source text with its heading path and enough surrounding qualification to preserve meaning (a section or table from the admissible snapshot).",
+92-    "target": "The resolved legal entity plus the specific affiliate, asset, activity or obligation being evaluated.",
+93-    "source": "Source ID, title, publisher, document kind and public availability date. Eligibility is already checked by the host.",
+94-    "claim": "One statement extracted by the agent from the passage.",
+95-    "subject": "The identified obligation, cash pool, activity or offset a status question is about.",
+96-    "proposed_finding": "One agent-authored proposition, with entity and scope, that the agent wants to record.",
+97-    "proposed_fact": "The fact two statements are being compared against.",
+98-    "statement_a": "First statement with its source and passage context.",
+99-    "statement_b": "Second statement with its source and passage context.",
+100-    "effect_description": "The proposed economic effect in words: mechanism, obligation or activity, and scope.",
+101-    "baseline_item": "The baseline stream or item it might duplicate, in words.",
+102-    "company": "The borrower's legal name.",
+103-    "statement": "Agent-written text to check (an effect's model consequence or the packet conclusion).",
+104-    "cited_findings": "The accepted findings the statement rests on: proposition plus verbatim quotes.",
+105-    "engine_results": "Deterministic results the statement may cite (validated effects, sensitivity outputs).",
+106-    "decision_point": "One pending decision in a live dispute, in the agent's words (who decides what, next).",
+107-    "record": "The accepted findings the node rests on: proposition plus verbatim quotes, with source dates."
+108-  },
+109-  "observation_record": {
+110-    "call_fields": [
+111-      "call_id",
+112-      "run_id",
+113-      "profile",
+114-      "question_ids",
+115-      "registry_version",
+--
+626-    },
+627-    {
+628:      "id": "dispute_branch",
+629-      "version": "3.9.0",
+630-      "profile": "dispute_branching",
+631-      "primitive": "choice",
+632-      "question": "Which branch of this pending decision does the record most support as what happens next?",
+633-      "applies_when": "The agent proposes a decision node of a live dispute with two to five mutually exclusive branches.",
+634-      "state_fields": [
+635-        "decision_point",
+636-        "record"
+637-      ],
+638-      "prompt": {
+639-        "instructions": "state.decision_point is one decision still pending in a live dispute on the review date. state.record holds the accepted findings about it, with their verbatim quotes. Using only the record, judge which branch is the next development the record most supports: the parties' stated intentions, the court's orders so far, the procedural posture, and each party's past conduct in this dispute. Do not use outside knowledge of how the dispute ended. Do not judge amounts or dates; code sets those for each branch.",
+640-        "criteria_from_host": true,
+641-        "criteria": {}
+642-      },
+643-      "application": "The distribution becomes each branch's weight, labelled once as model judgment (calibrated by TypeSafe to frontier-model consensus, not to observed litigation outcomes). It never sets an amount, a date or the credit decision; conditional results for every branch are always shown."
+644-    }
+645-  ]
+646-}

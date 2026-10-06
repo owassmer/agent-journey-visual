@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"uv run --no-project --with appscript python - <<'PY'\nfrom appscript import app\nc=app(pid=34693);t=c.windows[1].active_tab\nprint(t.execute(javascript='JSON.stringify(Array.from(document.querySelectorAll(\"[class*=log]\" )).slice(-12).map(e=>({tag:e.tagName,cls:e.className,id:e.id,text:e.textContent.slice(0,100)})))'))\nprint(t.execute(javascript='document.body.innerText.slice(0,1800)'))\nPY",max_output_tokens:2000}));
+text(await tools.exec_command({cmd:"tail -n 5 /tmp/notes-6910-diagnostic.log",max_output_tokens:1000}));

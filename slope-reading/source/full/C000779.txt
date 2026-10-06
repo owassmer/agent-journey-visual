@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-record && git status --short | head; grep -rn \"sweep_max_physical_attempts_per_snapshot\\|sweep_spend_cap_usd_per_snapshot\\|def .*sweep\" app --include=*.py | head -20; env -u CLAUDE_CODE_OAUTH_TOKEN uv run slope jev --help 2>/dev/null | sed -n 8,30p"}

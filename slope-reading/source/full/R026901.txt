@@ -1,0 +1,16 @@
+4:import asyncio
+5:import json
+7:import pytest
+9:import app.agent.jev as jev_module
+10:from app.agent import tools as T
+11:from app.agent.jev import JevAdapter
+12:from app.agent.jev_profiles import Semantics
+13:from app.agent.run_store import RunStore
+14:from app.config import CASES_DIR, CONTRACTS
+15:from app.evidence import snapshot
+16:from app.evidence.store import EvidenceStore
+    text = "Daily Payment Percentage means 25%\n\nThe Minimum Payment is thirty percent of the Total Payment Amount."
+    assert [u["text"] for u in units_touching(text, 0, 10)] == ["Daily Payment Percentage means 25%"]  # short, still checked
+    assert len(units_touching(text, 5, text.index("Minimum") + 3)) == 2  # a quote across paragraphs checks both
+    assert T._cents_in_text(223_598_600, "a gain to us of $2,235,986, and is reflected")  # comma after the amount
+    assert not T._cents_in_text(60_000_000, "$2,600,000")

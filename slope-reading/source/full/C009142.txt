@@ -1,0 +1,6 @@
+// @exec: {"max_output_tokens": 14000}
+const out=await Promise.allSettled([
+tools.exec_command({cmd:"python3 read.py assistant 103000 11000",workdir:load("digestDir"),max_output_tokens:5000}),
+tools.exec_command({cmd:"rg --files -g '*.md' -g '*.yaml' -g '*.json' -g '*.toml' -g '!cache/**' -g '!sessions/**' -g '!state.db*' -g '!logs/**' -g '!browser/**' -g '!memories/**' .",workdir:"/Users/owenwassmer/.hermes/profiles/connor",max_output_tokens:9000}),
+tools.exec_command({cmd:"git worktree list --porcelain",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:2000})
+]);for(let i=0;i<out.length;i++)text({i,...out[i]});

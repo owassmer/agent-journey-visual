@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"    def divergence\" app/analysis/events.py; sed -n \"$(grep -n '    def divergence' app/analysis/events.py | cut -d: -f1),+50p\" app/analysis/events.py; grep -n \"^UNSEEN\\|^DATED\\|^SHARED\\|^REPLACED\\|^[A-Z_]* = frozenset\" app/analysis/events.py", "timeout": 30}

@@ -1,0 +1,1 @@
+{"calls": [{"name": "mcp__browser_mcp__browser_execute_script", "arguments": {"code": "new Promise(r => setTimeout(() => { const t = document.body.innerText; const i = t.indexOf('part '); r(t.split('\\n').filter(l => /part \\d+:|segments|Traceback|Error/.test(l)).join('\\n').slice(-3000) || t.slice(0, 1500)); }, 4000))"}}]}

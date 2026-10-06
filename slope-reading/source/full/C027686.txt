@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/recall_probe.py > /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/recall_probe_out.json 2>&1; cat /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/recall_probe_out.json", "description": "Run the blind recall probe through Jev", "timeout": 300000}

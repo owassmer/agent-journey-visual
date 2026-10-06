@@ -1,0 +1,1 @@
+{"command": "grep -rn \"dispute_node\\|DisputeNode\\|DisputeBranch\\|propose_dispute\\|dispute_branch\\|\\.nodes\\b\\|comp.nodes\" app tests Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json Slope_Credit_Scenario_Build_Specification.md | grep -v \"\\.pyc\"", "description": "Find stale dispute-node references"}

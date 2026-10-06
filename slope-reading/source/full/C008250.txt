@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split/base && for c in 2d097b1 1ca49d1; do git checkout -q --detach $c; echo \"== $c: $(env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 timeout 300 .venv/bin/python -m pytest -p no:warnings tests/test_chains.py -q -k 'filing_path_sets_the_petition' 2>&1 | grep -E 'passed|failed' | tail -1)\"; done", "timeout": 660}

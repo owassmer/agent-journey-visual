@@ -1,0 +1,30 @@
+290	    for i, b in enumerate(blocks):
+291	        if b.kind == "heading":
+292	            if current.items:
+293	                flush()
+294	            if b.level == 1:
+295	                top = b.text
+296	            path = [b.text] if b.level == 1 else [p for p in (top, b.text) if p]
+297	            current = ParsedSection(len(sections), b.text, path, b.page)
+298	            continue
+299	        if b.kind == "para":
+300	            current.items.append(b.text)
+301	            if current.page is None:
+302	                current.page = b.page
+303	            continue
+304	        prev = [x for x in current.items[-3:] if isinstance(x, str)]
+305	        after = next((x.text for x in blocks[i + 1:i + 3] if x.kind == "para"), "")
+306	        head_text = " ".join(" ".join(r) for r in b.rows[:max(b.header_rows, 1)])
+307	        unit = UNIT_HINT.search(" ".join(prev[-1:]) + " " + head_text)
+308	        current.items.append(ParsedTable(
+309	            ordinal=table_n, rows=b.rows, header_rows=b.header_rows,
+310	            caption=prev[-1] if prev else current.heading, context_before="\n".join(prev),
+311	            context_after=after,
+312	            units_hint=unit.group(0) if unit else None))
+313	        table_n += 1
+314	    flush()
+315	
+316	    # Split oversized sections at block boundaries; every part keeps its heading path.
+317	    out: list[ParsedSection] = []
+318	    for s in sections:
+319	        groups: list[list] = [[]]

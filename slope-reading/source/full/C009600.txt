@@ -1,0 +1,2 @@
+text(ALL_TOOLS.filter(x=>/search|browse/i.test(x.name+" "+x.description)).map(x=>({name:x.name,description:x.description.slice(0,100)})).slice(0,60));
+text(await tools.exec_command({cmd:"cat CLAUDE.md; sed -n '790,890p' app/analysis/events.py; sed -n '280,510p' app/disputes/parallel.py; sed -n '1,130p' app/analysis/processor.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:8500}));

@@ -1,0 +1,7 @@
+const results=await Promise.allSettled([
+  tools.exec_command({cmd:"rg --files /tmp/slope-grounding-1ebb1026",max_output_tokens:1500}),
+  tools.exec_command({cmd:"cat cases/chromadex_20240819/make_run_inputs.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3200}),
+  tools.exec_command({cmd:"sed -n '175,320p' tests/test_semantic_layer.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3900}),
+  tools.exec_command({cmd:"sed -n '1,65p' tests/test_evidence_snapshots.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:1300}),
+  tools.exec_command({cmd:"rg -n '^#|^##|^###' Slope_Coding_Agent_Context_and_Alignment.md Slope_Credit_Scenario_Build_Specification.md CLAUDE.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:3500})
+]);results.forEach((r,i)=>text({i,...r}));

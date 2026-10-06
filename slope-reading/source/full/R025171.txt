@@ -1,0 +1,5 @@
+8:## Authoritative documents (read before implementing any step)
+11:3. `Slope_Credit_Scenario_Research_and_Design_Kit/`: evidence, schemas, config, reference math. All source-catalog paths are relative to this directory, so never move or rename files inside it.
+18:**Isolation (non-negotiable):** `case_eval_private.json`, `outcome_checks_synergy.json`, the facts registry, and any source whose `mission_membership` is `outcome` must never reach the investigating agent or the blind reviewer. They reach the agent only through scoped MCP handlers built from the dated snapshot DB. This document and the alignment doc are builder context, and they must not be injected into agent prompts either.
+40:## Product judgment
+41:Ask: *does this help the reviewer decide what to fund and understand the cash that comes back?* Keep contractual, conditional, and expected series distinct. Unknown is a typed state, never zero. Deterministic code does the arithmetic. The agent and Jev interpret evidence.

@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/split && python3 ssm.py --wait 60 -- \"tail -5 /opt/fresh-walk/cut6/topology.log; ls -la /opt/fresh-walk/cut6/out /opt/fresh-walk/cut8/out 2>&1; cd /opt/slope-walk; .venv/bin/python -c \\\"import pickle;c=pickle.load(open('/opt/fresh-walk/cut6/out/calls.pkl','rb'));print('cut6 roots',len(c))\\\" 2>&1 | tail -1\""}

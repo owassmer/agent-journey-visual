@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:74720,chars:"","yield_time_ms":1000,"max_output_tokens":2600}));
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --command-id 01312cd2-502d-4869-9e60-36c9ccd35596 --instance-id i-09b42b44a8d35909a --query '{Status:Status,Error:StandardErrorContent}'","max_output_tokens":500}));

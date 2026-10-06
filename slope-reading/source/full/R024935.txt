@@ -1,0 +1,16 @@
+87:def fact(fid,value,unit,source_id,section,anchor,measurement=None,notes=None,precision='exact',kind='disclosed'):
+115:fact('synergy_supplier_march_settlement_date','2024-03-27','date',S,'Note 11, $3,020,824 March 27, 2024 Loan','March 27, 2024 Loan','2024-03-27',['Counterparty unnamed in decision-date source; do not backfill later Vitabest identification into this run.','A settlement does not independently prov
+116:fact('synergy_supplier_march_balance_20240630',2920824,'USD',S,'Note 11, March 27, 2024 Loan','outstanding loan balance','2024-06-30')
+117:fact('synergy_supplier_march_paid_h1_2024',100000,'USD',S,'Note 11, March 27, 2024 Loan','payments of $100,000','2024-06-30')
+118:fact('synergy_supplier_march_h2_2024_payment',600000,'USD',S,'Note 11, March 27, 2024 Loan, future payment table','2024','2024-06-30',bridge)
+119:fact('synergy_supplier_march_2025_payment',1460412,'USD',S,'Note 11, March 27, 2024 Loan, future payment table','2025','2024-06-30')
+120:fact('synergy_supplier_march_2026_payment',860412,'USD',S,'Note 11, March 27, 2024 Loan, future payment table','2026','2024-06-30')
+149: {'unknown_id':'synergy_supplier_march_paid_20240701_20240812','unit':'USD','required_for':'Bridge June 30 settlement liability to August decision date.','allocation_bounds_for_2024_bucket_only':[0,600000],'resolution':'Borrower bank transactions and settlement payment ledger.','rule':'No additi
+158: {'unknown_id':'synergy_supplier_march_identity_at_cutoff','required_for':'Counterparty identification, if relevant to operating mechanism.','resolution':'Decision-date settlement agreement.','rule':'Later 2025 identification is outcome evidence only.'},
+388:      "fact_id": "synergy_supplier_march_settlement_date",
+405:      "fact_id": "synergy_supplier_march_balance_20240630",
+419:      "fact_id": "synergy_supplier_march_paid_h1_2024",
+433:      "fact_id": "synergy_supplier_march_h2_2024_payment",
+451:      "fact_id": "synergy_supplier_march_2025_payment",
+465:      "fact_id": "synergy_supplier_march_2026_payment",
+(eval):1: no matches found: --include=*.py

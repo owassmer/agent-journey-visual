@@ -1,0 +1,1 @@
+{"command": "S=~/.hermes/profiles/connor/cache/scratch/memo; for i in $(seq 1 50); do [ -s $S/rowsF_new.log ] && [ -s $S/rowsF_old.log ] && grep -q dumped $S/rowsF_old.log && grep -q dumped $S/rowsF_new.log && break; sleep 10; done; sleep 20; tail -1 $S/rowsF_old.log $S/rowsF_new.log", "timeout": 560}

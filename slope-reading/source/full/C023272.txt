@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'bank_paths\\(|judge_bank\\(|bank_facts|bank_nodes' app -g '*.py' | tail -35; rg -n 'def forecaster|for d|_Walk\\(' app/disputes/pool.py app/disputes/parallel.py | head -35","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

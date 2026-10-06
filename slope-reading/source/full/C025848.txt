@@ -1,0 +1,1 @@
+{"command": "python3 -c \"\nimport json; d=json.load(open('cases/synergy_20240813/inputs.json')) if __import__('os').path.exists('cases/synergy_20240813/inputs.json') else None; print(d and list(d.keys()))\"; ls cases/synergy_20240813/; grep -n \"snapshot_info\\|decision_date\\|as_of\" app/evidence/store.py | head"}

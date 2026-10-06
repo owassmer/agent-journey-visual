@@ -1,0 +1,81 @@
+total 456
+drwxr-xr-x@ 27 owenwassmer  staff    864 Sep 25 21:21:41 2026 .
+drwxr-xr-x@  8 owenwassmer  staff    256 Sep 25 19:51:12 2026 ..
+-rw-r--r--@  1 owenwassmer  staff  13811 Sep 25 21:20:49 2026 acquisition_akoustis_20240620.md
+-rw-r--r--@  1 owenwassmer  staff   8568 Sep 25 21:21:41 2026 acquisition_cthr_20241118.md
+-rw-r--r--@  1 owenwassmer  staff   9914 Sep 25 20:16:11 2026 brief.md
+-rw-r--r--@  1 owenwassmer  staff   4445 Sep 25 20:00:51 2026 notes_barfresh.md
+-rw-r--r--@  1 owenwassmer  staff  10156 Sep 25 19:57:29 2026 notes_charles_colvard.md
+-rw-r--r--@  1 owenwassmer  staff   2340 Sep 25 20:13:33 2026 notes_coffee_holding.md
+-rw-r--r--@  1 owenwassmer  staff   4182 Sep 25 19:58:53 2026 notes_jones_soda.md
+-rw-r--r--@  1 owenwassmer  staff   5232 Sep 25 19:57:55 2026 notes_massimo.md
+-rw-r--r--@  1 owenwassmer  staff   6256 Sep 25 20:00:15 2026 notes_musclepharm.md
+-rw-r--r--@  1 owenwassmer  staff   9328 Sep 25 20:02:20 2026 notes_nanophase.md
+-rw-r--r--@  1 owenwassmer  staff   8254 Sep 25 19:56:14 2026 notes_tikk.md
+-rw-r--r--@  1 owenwassmer  staff   5253 Sep 25 20:03:11 2026 notes_W2_sweep.md
+-rw-r--r--@  1 owenwassmer  staff   2714 Sep 25 20:13:53 2026 notes_W4_screened.md
+-rw-r--r--@  1 owenwassmer  staff   1788 Sep 25 20:13:40 2026 notes_yunhong_cti.md
+-rw-r--r--@  1 owenwassmer  staff  17913 Sep 25 20:19:48 2026 shortlist.md
+-rw-r--r--@  1 owenwassmer  staff   6667 Sep 25 20:15:53 2026 slope_practices.md
+drwxr-xr-x@ 23 owenwassmer  staff    736 Sep 25 21:19:57 2026 sources_akoustis_20240620
+drwxr-xr-x@ 35 owenwassmer  staff   1120 Sep 25 21:19:57 2026 sources_cthr_20241118
+-rw-r--r--@  1 owenwassmer  staff   4580 Sep 25 21:21:35 2026 spec_corrections.md
+-rw-r--r--@  1 owenwassmer  staff   3792 Sep 25 20:02:34 2026 sweep_W3.md
+-rw-r--r--@  1 owenwassmer  staff  44620 Sep 25 20:13:17 2026 sweep_W4.md
+-rw-r--r--@  1 owenwassmer  staff    742 Sep 25 19:53:29 2026 toolcheck_W1.md
+-rw-r--r--@  1 owenwassmer  staff   1052 Sep 25 19:53:42 2026 toolcheck_W2.md
+-rw-r--r--@  1 owenwassmer  staff   1471 Sep 25 20:02:38 2026 toolcheck_W3.md
+-rw-r--r--@  1 owenwassmer  staff    954 Sep 25 19:53:44 2026 toolcheck_W4.md
+
+./sources_akoustis_20240620:
+total 2160
+drwxr-xr-x@ 23 owenwassmer  staff     736 Sep 25 21:19:57 2026 .
+drwxr-xr-x@ 27 owenwassmer  staff     864 Sep 25 21:21:41 2026 ..
+-rw-r--r--@  1 owenwassmer  staff  137878 Sep 25 21:19:57 2026 10q_0513.txt
+-rw-r--r--@  1 owenwassmer  staff   70935 Sep 25 21:19:57 2026 424b3_0524.txt
+-rw-r--r--@  1 owenwassmer  staff  165089 Sep 25 21:19:57 2026 424b5_0523.txt
+-rw-r--r--@  1 owenwassmer  staff    5909 Sep 25 21:19:57 2026 8k_0129.txt
+-rw-r--r--@  1 owenwassmer  staff    3559 Sep 25 21:19:57 2026 8k_0513.txt
+-rw-r--r--@  1 owenwassmer  staff    7567 Sep 25 21:19:57 2026 8k_0520.txt
+-rw-r--r--@  1 owenwassmer  staff    9771 Sep 25 21:19:57 2026 8k_0522_ex991.txt
+-rw-r--r--@  1 owenwassmer  staff   10281 Sep 25 21:19:57 2026 8k_0522_ex992.txt
+-rw-r--r--@  1 owenwassmer  staff    8204 Sep 25 21:19:57 2026 8k_0522.txt
+-rw-r--r--@  1 owenwassmer  staff  119940 Sep 25 21:19:57 2026 8k_0524_ex101.txt
+-rw-r--r--@  1 owenwassmer  staff   59423 Sep 25 21:19:57 2026 8k_0524_ex102.txt
+-rw-r--r--@  1 owenwassmer  staff   51478 Sep 25 21:19:57 2026 8k_0524_ex41.txt
+-rw-r--r--@  1 owenwassmer  staff    8035 Sep 25 21:19:57 2026 8k_0524.txt
+-rw-r--r--@  1 owenwassmer  staff    6817 Sep 25 21:19:57 2026 8k_1027_301.txt
+-rw-r--r--@  1 owenwassmer  staff    1486 Sep 25 21:19:57 2026 corresp_0517.txt
+-rw-r--r--@  1 owenwassmer  staff   13816 Sep 25 21:19:57 2026 notes_2022_8k.txt
+-rw-r--r--@  1 owenwassmer  staff  355488 Sep 25 21:19:57 2026 notes_2022_ex41.txt
+-rw-r--r--@  1 owenwassmer  staff    8979 Sep 25 21:19:57 2026 qorvo_8k_0520.txt
+-rw-r--r--@  1 owenwassmer  staff    5788 Sep 25 21:19:57 2026 qorvo_pr_0520.txt
+drwxr-xr-x@ 18 owenwassmer  staff     576 Sep 25 21:19:57 2026 recap
+-rw-r--r--@  1 owenwassmer  staff   14836 Sep 25 21:19:57 2026 sd_0531.txt
+
+./sources_akoustis_20240620/recap:
+total 11304
+drwxr-xr-x@ 18 owenwassmer  staff      576 Sep 25 21:19:57 2026 .
+drwxr-xr-x@ 23 owenwassmer  staff      736 Sep 25 21:19:57 2026 ..
+-rw-r--r--@  1 owenwassmer  staff  1007268 Sep 25 21:19:57 2026 601.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   177621 Sep 25 21:19:57 2026 602.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   105356 Sep 25 21:19:57 2026 604.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   162396 Sep 25 21:19:57 2026 605.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   153898 Sep 25 21:19:57 2026 608.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   206873 Sep 25 21:19:57 2026 608.1.pdf
+-rw-r--r--@  1 owenwassmer  staff   152121 Sep 25 21:19:57 2026 611.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   134271 Sep 25 21:19:57 2026 613.0.pdf
+-rw-r--r--@  1 owenwassmer  staff    76859 Sep 25 21:19:57 2026 613.1.pdf
+-rw-r--r--@  1 owenwassmer  staff   145743 Sep 25 21:19:57 2026 616.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   467782 Sep 25 21:19:57 2026 616.1.pdf
+-rw-r--r--@  1 owenwassmer  staff  1007334 Sep 25 21:19:57 2026 616.2.pdf
+-rw-r--r--@  1 owenwassmer  staff   400173 Sep 25 21:19:57 2026 616.3.pdf
+-rw-r--r--@  1 owenwassmer  staff  1309859 Sep 25 21:19:57 2026 616.4.pdf
+-rw-r--r--@  1 owenwassmer  staff   137124 Sep 25 21:19:57 2026 618.0.pdf
+-rw-r--r--@  1 owenwassmer  staff   117720 Sep 25 21:19:57 2026 622.0.pdf
+
+./sources_cthr_20241118:
+total 1272
+drwxr-xr-x@ 35 owenwassmer  staff    1120 Sep 25 21:19:57 2026 .
+drwxr-xr-x@ 27 owenwassmer  staff     864 Sep 25 21:21:41 2026 ..
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

@@ -1,0 +1,9 @@
+{
+  "assignment_id": "initial-09",
+  "source": "audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+  "source_lines_read": [272, 325],
+  "context_source_lines_read": [9, 37, 230, 269],
+  "unread_material": [],
+  "compaction_occurred": false,
+  "notes": "Read supplied context and assigned history, including full tool arguments/results. Recovered truncated context display with targeted reads; identical wireToolInputs reused from their message payloads. Opaque thinking signatures contain no readable reasoning. Live probe JSON display is complete despite the command's character cap."
+}

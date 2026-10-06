@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"rg -n 'systemd-run|slope-pool-recovery|slope-mass-check|slope-prepare-review' /tmp/slope-*.py /tmp/*recovery*.sh 2>/dev/null | head -n 35; sed -n '110,240p' /tmp/slope-pool-after-refresh.py","max_output_tokens":2300}));
+text(await tools.write_stdin({session_id:26109,chars:"","yield_time_ms":1000,"max_output_tokens":2000}));

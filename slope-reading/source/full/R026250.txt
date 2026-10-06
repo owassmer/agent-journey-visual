@@ -1,0 +1,19 @@
+# ShipBob Capital Financing Program Overview
+
+**Borrowers:** Small- to medium-sized eCommerce businesses and mid-market merchants using ShipBob's supply chain platform.
+
+**What It Finances:** The program provides flexible lines of credit for general business needs, including inventory purchases and new product launches, though specific asset-based restrictions aren't detailed.
+
+**Loan Amounts:**
+- Up to $250,000 approved instantly
+- "up to millions of dollars in as little as two days"
+
+**Terms & Repayment:** The program offers "a choice of repayment plans with competitive APRs," though specific rates and repayment structures aren't disclosed.
+
+**Underwriting Data:** Slope leverages real-time operational visibility into borrowers' metrics, including "order volumes, inventory turnover and shipping data," enabling improved underwriting and higher approval rates compared to traditional lending.
+
+**Application Process:** "an application process that takes about five minutes"
+
+**Key Differentiator:** Built directly into ShipBob's dashboard as an integrated feature, making capital access frictionless for existing platform users.
+
+**Notable Gap:** The announcement doesn't specify originating lender details, default rates, prepayment penalties, or specific APR ranges.

@@ -1,0 +1,119 @@
+"""Internal protocol and logging constants."""
+
+MAX_ERROR_BODY_LENGTH = 200
+
+SYSTEM_ONE_PATH = "/v1/systemone"
+MODELS_PATH = "/v1/models"
+SDK_NAME = "typesafe-sdk"
+LOGGER_NAME = "typesafe_sdk"
+JSON_CONTENT_TYPE = "application/json"
+
+AUTHORIZATION_HEADER = "Authorization"
+ACCEPT_HEADER = "Accept"
+CONTENT_TYPE_HEADER = "Content-Type"
+USER_AGENT_HEADER = "User-Agent"
+SDK_HEADER = "X-TypeSafe-SDK"
+RUNTIME_HEADER = "X-TypeSafe-Runtime"
+RETRY_COUNT_HEADER = "X-TypeSafe-Retry-Count"
+REQUEST_ID_HEADER = "x-typesafe-request-id"
+RETRY_AFTER_HEADER = "retry-after"
+RETRY_AFTER_MS_HEADER = "retry-after-ms"
+SECRET_HEADERS = frozenset({"authorization", "proxy-authorization", "x-api-key", "api-key", "cookie", "set-cookie"})
+11:class ChoiceAnswer(BaseModel):
+12-    type: Literal["choice"] = Field(..., description="Identifies a selection from the requested choices.", examples=["choice"], title="Type")
+13-    choice: str = Field(
+14-        ...,
+15-        description="The name of the choice with the highest probability among the question's criteria.",
+16-        examples=["angry"],
+17-        title="Choice",
+18-    )
+19-    confidence: float = Field(
+20-        ...,
+21-        description="Confidence in the selected choice, from 0 to 1. Higher values indicate greater certainty; use lower values to flag uncertain selections for review.",
+22-        examples=[0.9],
+23-        title="Confidence",
+24-    )
+25-    probabilities: dict[str, float] = Field(
+26-        ...,
+27-        description="Probability of each choice in criteria, keyed by choice name, from 0 to 1. Shows how likely the alternatives are; values sum to approximately 1.",
+28-        examples=[{"angry": 0.8, "calm": 0.1, "excited": 0.1}],
+29-        title="Probabilities",
+30-    )
+31-
+32-
+33-class ChoiceQuestion(BaseModel):
+34-    type: Literal["choice"] = Field(
+35-        ..., description="Identifies a question that selects one of the choices in criteria.", examples=["choice"], title="Type"
+36-    )
+151:class Usage(BaseModel):
+152-    input_tokens: int = Field(
+153-        ..., description="Number of billable input tokens used to evaluate the request.", examples=[120], title="Input Tokens"
+154-    )
+155-    output_tokens: int = Field(
+156-        ...,
+157-        description="Number of output tokens used to answer the questions. Output tokens are currently free of charge.",
+158-        examples=[12],
+159-        title="Output Tokens",
+160-    )
+161-
+162-
+163-class ValidationError(BaseModel):
+"""RetryPolicy configuration and the Tenacity policies built from it."""
+
+import math
+import random
+from collections.abc import Callable
+from dataclasses import dataclass, field
+
+from tenacity import AsyncRetrying, RetryCallState, Retrying, retry_if_exception, stop_after_attempt, stop_before_delay
+from tenacity.stop import stop_base
+
+from typesafe_sdk._core.config import resolve_timeout
+from typesafe_sdk._core.errors import TypeSafeAPIConnectionError, TypeSafeAPIError, TypeSafeAPITimeoutError, TypeSafeError, parse_retry_after
+
+# `build_tenacity`/`build_tenacity_async` are internal build seams and stay out of the public docs.
+__all__ = ["RetryPolicy"]
+
+
+def _retry_after(state: RetryCallState) -> float | None:
+    error = state.outcome.exception() if state.outcome is not None else None
+    if isinstance(error, TypeSafeAPIError):
+        delay = parse_retry_after(error.headers)
+        if delay is not None:
+            return delay / 1000
+    return None
+
+
+def _backoff(attempt: int, initial: float, maximum: float, jitter: float) -> float:
+    if initial == 0 or maximum == 0:
+        return 0.0
+    exponent = attempt - 1
+    exponential = maximum if exponent >= math.log2(maximum) - math.log2(initial) else math.ldexp(initial, exponent)
+    delay = exponential * (1 - random.random() * jitter)  # noqa: S311 - Backoff jitter, not cryptography.
+    return min(exponential, round(delay, 3))
+
+
+@dataclass(frozen=True)
+class RetryPolicy:
+    """Configuration for SDK retry behavior.
+
+    Examples:
+        ```python
+        from typesafe_sdk import RetryPolicy, TypeSafeClient
+
+        client = TypeSafeClient(
+            retry=RetryPolicy(
+                max_retries=3, timeout=10.0, http_statuses={429, 500, 502, 503, 504}
+            )
+        )
+        ```
+    """
+
+    max_retries: int = 2
+    """Maximum retries after the initial attempt; `0` disables retries."""
+
+    backoff_initial: float = 0.5
+    """First backoff delay in seconds, doubled each attempt up to `backoff_max`; zero disables backoff."""
+
+    backoff_max: float = 5.0
+    """Maximum backoff delay in seconds; zero disables backoff."""

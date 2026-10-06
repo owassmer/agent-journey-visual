@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"gh run view 36909118504 --repo owassmer/Slope_Sparse_Events --json status,jobs --jq '{status,finished:([.jobs[]|select(.status==\"completed\")]|length),running:([.jobs[]|select(.status==\"in_progress\")]|length)}'; cat /tmp/notes-terminal-finance.log; tail -3 /tmp/notes-terminal-measure.log","max_output_tokens":800}));

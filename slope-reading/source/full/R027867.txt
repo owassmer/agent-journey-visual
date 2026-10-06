@@ -1,0 +1,478 @@
+30	    use_of_proceeds : string  
+31	    baseline_id : ['string', 'null']  
+32	    baseline_status : None ['complete', 'historical_observations_only', 'missing', 'explicit_assumption_model'] 
+33	    available_actions : array  
+34	    missing_inputs : array  
+35	    note : string  
+36	## Observation | req: ['observation_id', 'metric', 'value', 'period_start', 'period_end', 'available_at', 'is_current_bank_observation'] | enum: None
+37	    observation_id : string  
+38	    metric : string  
+39	    value : #/$defs/EvidenceValue  
+40	    period_start : None  
+41	    period_end : string  
+42	    available_at : string  
+43	    is_current_bank_observation : boolean  
+44	## PaymentRow | req: ['due_date', 'principal_cents', 'interest_cents', 'fee_cents', 'source_fact_ids', 'assumption_id'] | enum: None
+45	    due_date : string  
+46	    principal_cents : integer  
+47	    interest_cents : integer  
+48	    fee_cents : integer  
+49	    source_fact_ids : array  
+50	    assumption_id : ['string', 'null']  
+51	## FeeTerm | req: ['name', 'rate', 'basis', 'frequency'] | enum: None
+52	    name : string  
+53	    rate : #/$defs/EvidenceValue  
+54	    basis : string  
+55	    frequency : None ['one_time', 'annual', 'monthly', 'daily', 'unknown'] 
+56	## LoanTerms | req: ['loan_id', 'borrower_id', 'terms_basis', 'product_type', 'facility_limit', 'principal_outstanding', 'interest_index', 'annual_spread', 'reported_all_in_annual_rate', 'advance_rate', 'eligible_receivables_amount', 'reported_undrawn_availability', 'maturity', 'automatic_renewal_reported', 'fees', 'schedule_status', 'contractual_schedule', 'payment_allocation_rule', 'collateral_summary', 'missing_terms', 'source_fact_ids'] | enum: None
+57	    loan_id : string  
+58	    borrower_id : string  
+59	    terms_basis : None ['executed_contract', 'public_disclosure', 'operator_candidate'] 
+60	    product_type : None ['receivables_revolver', 'fixed_installment_draw', 'net_terms', 'other', 'revenue_share_merchant_loan'] 
+61	    facility_limit : #/$defs/EvidenceValue  
+62	    principal_outstanding : #/$defs/EvidenceValue  
+63	    interest_index : None ['US_prime', 'fixed', 'unknown'] 
+64	    annual_spread : #/$defs/EvidenceValue  
+65	    reported_all_in_annual_rate : #/$defs/EvidenceValue  
+66	    advance_rate : #/$defs/EvidenceValue  
+67	    eligible_receivables_amount : #/$defs/EvidenceValue  
+68	    reported_undrawn_availability : #/$defs/EvidenceValue  
+69	    maturity : #/$defs/EvidenceValue  
+70	    automatic_renewal_reported : boolean  
+71	    fees : array  #/$defs/FeeTerm
+72	    schedule_status : None ['documented', 'generated_from_complete_terms', 'unknown', 'documented_rules_with_unknown_dates'] 
+73	    contractual_schedule : array  #/$defs/PaymentRow
+74	    payment_allocation_rule : None ['contract_documented', 'operator_assumption', 'unknown'] 
+75	    collateral_summary : string  
+76	    missing_terms : array  
+77	    source_fact_ids : array  
+78	    merchant_repayment_rules : #/$defs/MerchantRepaymentRules  
+79	## Parameter | req: ['name', 'role', 'value'] | enum: None
+80	    name : string  
+81	    role : None ['source_anchor', 'model_input', 'sensitivity_input'] 
+82	    value : #/$defs/EvidenceValue  
+83	## Effect | req: ['effect_id', 'event_id', 'borrower_id', 'mechanism', 'finding', 'target_stream_ids', 'source_fact_ids', 'parameters', 'baseline_reflection', 'proposed_operation', 'application_status', 'activation_condition', 'cash_direction', 'double_count_guard', 'missing_inputs'] | enum: None
+84	    effect_id : string  
+85	    event_id : string  
+86	    borrower_id : string  
+87	    mechanism : None ['existing_liability_payment_timing', 'expense_funding_change', 'receipt_timing_change', 'receipt_impairment', 'cash_restriction', 'collateral_posting', 'reimbursement', 'financing_capacity_change', 'inventory_conversion', 'historical_non_cash_normalization', 'resolved_obligation_exclusion'] 
+88	    finding : string  
+89	    target_stream_ids : array  
+90	    source_fact_ids : array  
+91	    parameters : array  #/$defs/Parameter
+92	    baseline_reflection : None ['already_in_historical_balance', 'already_in_historical_cashflow', 'partly_reflected', 'not_reflected', 'unknown'] 
+93	    proposed_operation : None ['reclassify_timing', 'replace_future_forecast', 'shift_cash_receipts', 'reduce_cash_receipts', 'transfer_cash_pool', 'modify_available_funding', 'convert_inventory_to_receipts', 'normalize_historical_metric', 'exclude_already_paid_obligation'] 
+94	    application_status : None ['ready_after_baseline_match', 'requires_parameters', 'research_only'] 
+95	    activation_condition : string  
+96	    cash_direction : None ['outflow', 'inflow', 'timing_only', 'mixed', 'unknown', 'none'] 
+97	    double_count_guard : string  
+98	    missing_inputs : array  
+99	## Scenario | req: ['scenario_id', 'decision_id', 'baseline_id', 'label', 'conditions', 'effect_ids', 'parameter_overrides', 'probability', 'payment_behavior', 'forecast_status', 'is_realized_outcome'] | enum: None
+100	    scenario_id : string  
+101	    decision_id : string  
+102	    baseline_id : ['string', 'null']  
+103	    label : string  
+104	    conditions : array  
+105	    effect_ids : array  
+106	    parameter_overrides : array  #/$defs/Parameter
+107	    probability : #/$defs/EvidenceValue  
+108	    payment_behavior : None ['contractual_if_feasible_with_documented_allocation', 'operator_assumption', 'unknown'] 
+109	    forecast_status : None ['ready', 'requires_inputs', 'not_run'] 
+110	    is_realized_outcome : boolean  
+111	    analysis_scope : None ['economic_thresholds', 'loan_cashflow'] 
+112	## ActionResult | req: ['action_id', 'status', 'amount', 'term_months', 'npv', 'binding_conditions'] | enum: None
+113	    action_id : string  
+114	    status : None ['feasible', 'infeasible', 'conditional', 'not_computable'] 
+115	    amount : #/$defs/EvidenceValue  
+116	    term_months : ['integer', 'null']  
+117	    npv : #/$defs/EvidenceValue  
+118	    binding_conditions : array  
+119	## DecisionResult | req: ['decision_id', 'result_status', 'preferred_action_id', 'action_results', 'policy_basis', 'policy_id', 'required_conditions', 'decisive_missing_inputs', 'summary'] | enum: None
+120	    decision_id : string  
+121	    result_status : None ['recommendation', 'conditional_recommendation', 'decision_boundary', 'insufficient_inputs', 'incomplete_review'] 
+122	    preferred_action_id : ['string', 'null']  
+123	    action_results : array  #/$defs/ActionResult
+124	    policy_basis : None ['provided_policy', 'operator_demo_policy', 'none'] 
+125	    policy_id : ['string', 'null']  
+126	    required_conditions : array  
+127	    decisive_missing_inputs : array  
+128	    summary : string  
+129	    threshold_results : array  #/$defs/ThresholdResult
+130	## CollectionRow | req: ['date', 'disbursement_cents', 'principal_collected_cents', 'interest_collected_cents', 'fees_collected_cents', 'net_recovery_cents', 'explicit_cost_cents', 'principal_outstanding_cents', 'calculation_id'] | enum: None
+131	    date : string  
+132	    disbursement_cents : integer  
+133	    principal_collected_cents : integer  
+134	    interest_collected_cents : integer  
+135	    fees_collected_cents : integer  
+136	    net_recovery_cents : integer  
+137	    explicit_cost_cents : integer  
+138	    principal_outstanding_cents : integer  
+139	    calculation_id : string  
+140	## ScenarioWeight | req: ['scenario_id', 'weight', 'basis', 'source_id'] | enum: None
+141	    scenario_id : string  
+142	    weight : string  
+143	    basis : None ['provided_empirical_model', 'operator_scenario_view'] 
+144	    source_id : string  
+145	## LoanCashflowExport | req: ['export_id', 'loan_id', 'borrower_id', 'decision_id', 'as_of', 'currency', 'cashflow_type', 'status', 'scenario_id', 'baseline_id', 'scenario_weights', 'rows', 'terminal_unresolved_principal', 'missing_inputs', 'stakeholder_scope'] | enum: None
+146	    export_id : string  
+147	    loan_id : string  
+148	    borrower_id : string  
+149	    decision_id : string  
+150	    as_of : string  
+151	    currency : None  
+152	    cashflow_type : None ['contractual', 'conditional', 'expected', 'realized'] 
+153	    status : None ['complete', 'partial', 'not_computable', 'not_run'] 
+154	    scenario_id : ['string', 'null']  
+155	    baseline_id : ['string', 'null']  
+156	    scenario_weights : array  #/$defs/ScenarioWeight
+157	    rows : array  #/$defs/CollectionRow
+158	    terminal_unresolved_principal : #/$defs/EvidenceValue  
+159	    missing_inputs : array  
+160	    stakeholder_scope : None ['loan_asset_holder', 'platform_net', 'warehouse_equity'] 
+161	## SourceFactReference | req: ['fact_id', 'document_id', 'section', 'note'] | enum: None
+162	    fact_id : string  
+163	    document_id : string  
+164	    section : string  
+165	    note : string  
+166	## CasePacket | req: ['schema_version', 'case_id', 'artifact_status', 'source_fact_references', 'decision_context', 'historical_observations', 'loan_terms', 'effects', 'scenarios', 'decision_result', 'loan_cashflow_export'] | enum: None
+167	    schema_version : None  
+168	    case_id : string  
+169	    artifact_status : None  
+170	    source_fact_references : array  #/$defs/SourceFactReference
+171	    decision_context : #/$defs/DecisionContext  
+172	    historical_observations : array  #/$defs/Observation
+173	    loan_terms : #/$defs/LoanTerms  
+174	    effects : array  #/$defs/Effect
+175	    scenarios : array  #/$defs/Scenario
+176	    decision_result : #/$defs/DecisionResult  
+177	    loan_cashflow_export : #/$defs/LoanCashflowExport  
+178	    operator_assumptions : array  #/$defs/Parameter
+179	## MinimumCheckpoint | req: ['months_from_funding', 'minimum_cumulative_fraction', 'minimum_cumulative_repayment', 'window_start_month', 'window_minimum_fraction', 'cap_at_outstanding_total_repayment', 'manual_payment_credit_rule'] | enum: None
+180	    months_from_funding : integer  
+181	    minimum_cumulative_fraction : #/$defs/EvidenceValue  
+182	    minimum_cumulative_repayment : #/$defs/EvidenceValue  
+183	    window_start_month : integer  
+184	    window_minimum_fraction : #/$defs/EvidenceValue  
+185	    cap_at_outstanding_total_repayment : None  
+186	    manual_payment_credit_rule : string  
+187	## MerchantRepaymentRules | req: ['advance', 'total_repayment', 'fixed_financing_cost', 'receipts_fraction', 'receipt_base_definition', 'funding_date', 'term_months', 'minimum_checkpoints', 'remittance_calendar', 'prepayment_treatment'] | enum: None
+188	    advance : #/$defs/EvidenceValue  
+189	    total_repayment : #/$defs/EvidenceValue  
+190	    fixed_financing_cost : #/$defs/EvidenceValue  
+191	    receipts_fraction : #/$defs/EvidenceValue  
+192	    receipt_base_definition : string  
+193	    funding_date : #/$defs/EvidenceValue  
+194	    term_months : integer  
+195	    minimum_checkpoints : array  #/$defs/MinimumCheckpoint
+196	    remittance_calendar : string  
+197	    prepayment_treatment : string  
+198	## ThresholdResult | req: ['threshold_id', 'label', 'scope', 'formula', 'inputs', 'result', 'interpretation', 'limitations'] | enum: None
+199	    threshold_id : string  
+200	    label : string  
+201	    scope : None ['cumulative_period_necessary_condition', 'contractual_channel_receipts_threshold', 'historical_metric_normalization'] 
+202	    formula : string  
+203	    inputs : array  #/$defs/Parameter
+204	    result : #/$defs/EvidenceValue  
+205	    interpretation : string  
+206	    limitations : array  
+207	{"$schema": "https://json-schema.org/draft/2020-12/schema", "title": "Analytical proposal fixtures", "type": "object", "required": ["schema_version", "case_id", "mission_id", "artifact_status", "currency", "timing_basis", "actual_existing_loan_id", "calendar_date_rule", "pricing_rule", "rounding_rule", "cross_year_calendar_rule", "existing_debt_rule", "offers"], "additionalProperties": false, "properties": {"schema_version": {"type": "string"}, "case_id": {"type": "string"}, "mission_id": {"type": "string"}, "artifact_status": {"const": "analytical_proposals_not_historical_applications_or_slope_quotes"}, "currency": {"const": "USD"}, "timing_basis": {"type": "string"}, "actual_existing_loan_id": {"type": "string"}, "calendar_date_rule": {"type": "string"}, "pricing_rule": {"type": "string"}, "rounding_rule": {"type": "string"}, "cross_year_calendar_rule": {"type": "string"}, "existing_debt_rule": {"type": "string"}, "offers": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["proposal_id", "basis", "advance_cents", "term_months", "fixed_total_fee_fraction", "fixed_total_fee_cents", "total_repayment_cents", "funding_month_index", "capacity_condition", "operating_plan_condition", "payment_rows"], "additionalProperties": false, "properties": {"proposal_id": {"type": "string"}, "basis": {"const": "operator_assumption"}, "advance_cents": {"type": "integer", "minimum": 1}, "term_months": {"type": "integer", "minimum": 1}, "fixed_total_fee_fraction": {"type":
+208	"""Offline reference arithmetic. No model calls, network, or borrower forecasts."""
+209	
+210	from dataclasses import dataclass
+211	from decimal import Decimal, localcontext, ROUND_HALF_UP
+212	from pathlib import Path
+213	import json
+214	
+215	D = Decimal
+216	CENT = D("0.01")
+217	ZERO = D("0")
+218	
+219	SOURCES = {
+220	    "synergy_merchant_agreement_20240501": {
+221	        "url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024056991/ea020832401ex10-32_synergy.htm",
+222	        "locator": "Exhibit 10.32; cover, definitions, Sections 4.1.1, 4.1.2 and 4.2.1(b)",
+223	        "description": "May 1, 2024 WebBank / Synergy CHC merchant loan agreement",
+224	    },
+225	    "synergy_s1a_20240813": {
+226	        "url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390024068424/ea0208324-04.htm",
+227	        "locator": "Liquidity discussion; Note 11, F-24 to F-25; legal proceedings pp. 59-60",
+228	        "description": "Filed August 13, 2024; June 30 financials and approximately $2m cash on August 12",
+229	    },
+230	}
+231	
+232	
+233	def decimal(value):
+234	    """Reject binary floating point and non-finite monetary inputs."""
+235	    if isinstance(value, bool) or isinstance(value, float):
+236	        raise TypeError("Use Decimal, decimal string, or integer, never float/bool")
+237	    result = value if isinstance(value, D) else D(value)
+238	    if not result.is_finite():
+239	        raise ValueError("Input must be finite")
+240	    return result
+241	
+242	
+243	def nonnegative(value, name):
+244	    result = decimal(value)
+245	    if result < ZERO:
+246	        raise ValueError(f"{name} must be nonnegative")
+247	    return result
+248	
+249	
+250	def money(value):
+251	    return format(decimal(value).quantize(CENT, rounding=ROUND_HALF_UP), ".2f")
+252	
+253	
+254	@dataclass(frozen=True)
+255	class MerchantTerms:
+256	    advance: D = D("370000")
+257	    fixed_cost: D = D("48100")
+258	    total_payment: D = D("418100")
+259	    remittance_rate: D = D("0.25")
+260	
+261	    def __post_init__(self):
+262	        for key in ("advance", "fixed_cost", "total_payment", "remittance_rate"):
+263	            object.__setattr__(self, key, nonnegative(getattr(self, key), key))
+264	        if self.advance + self.fixed_cost != self.total_payment:
+265	            raise ValueError("Advance plus fixed cost must equal total payment")
+266	        if not ZERO < self.remittance_rate <= D("1"):
+267	            raise ValueError("Remittance rate must be in (0,1]")
+268	
+269	    def cumulative_floor(self, month):
+270	        fractions = {6: D("0.30"), 12: D("0.60"), 18: D("1")}
+271	        if month not in fractions:
+272	            raise ValueError("Only contract checkpoints 6, 12 and 18 months are defined")
+273	        return self.total_payment * fractions[month]
+274	
+275	    def qualifying_credit_threshold(self, month):
+276	        """Credits needed if the floor is met entirely by the 25% remittance."""
+277	        return self.cumulative_floor(month) / self.remittance_rate
+278	
+279	    def cumulative_shortfall_only(self, month, remittances_received, manual_payments_received):
+280	        """Necessary cumulative check only; NOT sufficient for the 12-month test."""
+281	        daily = nonnegative(remittances_received, "remittances_received")
+282	        manual = nonnegative(manual_payments_received, "manual_payments_received")
+283	        if daily + manual > self.total_payment:
+284	            raise ValueError("Payments cannot exceed the contractual total in this calculator")
+285	        return max(ZERO, self.cumulative_floor(month) - daily - manual)
+286	
+287	    def window_top_up(self, month, daily_payments_in_window,
+288	                      accepted_manual_credit_for_window, total_received_to_date):
+289	        """Six-month window shortfall, capped at remaining total obligation.
+290	
+291	        Section 4.2.1(b) measures Daily Payments within each six-month window.
+292	        Manual credit must be confirmed for this window; no automatic carry of
+293	        first-window overpayments or unverified/reversed manual payments.
+294	        Earlier unmet obligations are not erased by this current-window test.
+295	        """
+296	        if month not in (6, 12):
+297	            raise ValueError("Window test is defined only for months 6 and 12")
+298	        daily = nonnegative(daily_payments_in_window, "daily_payments_in_window")
+299	        manual = nonnegative(accepted_manual_credit_for_window, "accepted_manual_credit_for_window")
+300	        received = nonnegative(total_received_to_date, "total_received_to_date")
+301	        if daily + manual > received or received > self.total_payment:
+302	            raise ValueError("Window credits must fit within total lender receipts and contractual total")
+303	        shortfall = max(ZERO, self.total_payment * D("0.30") - daily - manual)
+304	        return min(self.total_payment - received, shortfall)
+305	
+306	
+307	@dataclass(frozen=True)
+308	class ConditionalBudget:
+309	    """Single-horizon identity; None means unknown, never an assumed zero.
+310	
+311	    Opening cash is the August 12 closing cash anchor. Future flows start after
+312	    that date. Operating outflows EXCLUDE supplier settlements, debt service and
+313	    reserve. Debt service EXCLUDES the supplier settlements already in H2 dues.
+314	    Cash collections are before separately modeled debt remittances. Inflows
+315	    must exclude any hypothetical new facility being evaluated.
+316	    """
+317	    opening_cash: D = D("2000000")  # Approximate management-disclosed amount.
+318	    h2_settlements_remaining_at_june30: D = D("2600000")
+319	    unavailable_portion_of_opening_cash: D | None = None
+320	    settlements_paid_july1_through_august12: D | None = None
+321	    future_customer_cash_collections: D | None = None
+322	    future_committed_financing_draws: D | None = None
+323	    future_other_confirmed_cash_inflows: D | None = None
+324	    future_operating_cash_outflows_excluding_settlements_and_debt: D | None = None
+325	    future_other_debt_service_excluding_settlements: D | None = None
+326	    required_cash_reserve: D | None = None
+327	
+328	    def __post_init__(self):
+329	        for name, value in vars(self).items():
+330	            if value is not None:
+331	                object.__setattr__(self, name, nonnegative(value, name))
+332	        paid = self.settlements_paid_july1_through_august12
+333	        if paid is not None and paid > self.h2_settlements_remaining_at_june30:
+334	            raise ValueError("Already-paid amount exceeds this specific H2 settlement bucket")
+335	        unavailable = self.unavailable_portion_of_opening_cash
+336	        if unavailable is not None and unavailable > self.opening_cash:
+337	            raise ValueError("Unavailable portion exceeds reported opening cash")
+338	
+339	    def unknown_fields(self):
+340	        return [name for name, value in vars(self).items() if value is None]
+341	
+342	    def remaining_settlement_cash(self):
+343	        if self.settlements_paid_july1_through_august12 is None:
+344	            return None
+345	        return (self.h2_settlements_remaining_at_june30
+346	                - self.settlements_paid_july1_through_august12)
+347	
+348	    def horizon_residual_before_new_facility(self):
+349	        """Conditional cash residual, NOT a maximum loan or an observed gap."""
+350	        if self.unknown_fields():
+351	            return None
+352	        return (
+353	            self.opening_cash
+354	            - self.unavailable_portion_of_opening_cash
+355	            + self.future_customer_cash_collections
+356	            + self.future_committed_financing_draws
+357	            + self.future_other_confirmed_cash_inflows
+358	            - self.remaining_settlement_cash()
+359	            - self.future_operating_cash_outflows_excluding_settlements_and_debt
+360	            - self.future_other_debt_service_excluding_settlements
+361	            - self.required_cash_reserve
+362	        )
+363	
+364	
+365	@dataclass(frozen=True)
+366	class CashReceipt:
+367	    day: int
+368	    amount: D
+369	
+370	    def __post_init__(self):
+371	        if isinstance(self.day, bool) or not isinstance(self.day, int) or self.day < 0:
+372	            raise ValueError("Receipt day must be a nonnegative integer")
+373	        object.__setattr__(self, "amount", nonnegative(self.amount, "receipt amount"))
+374	
+375	
+376	def delay_receipts(receipts, days):
+377	    if isinstance(days, bool) or not isinstance(days, int) or days < 0:
+378	        raise ValueError("Delay must be a nonnegative integer")
+379	    return tuple(CashReceipt(r.day + days, r.amount) for r in receipts)
+380	
+381	
+382	def present_value(receipts, effective_annual_discount_rate):
+383	    """Discount from day zero, effective annual rate, ACT/365 convention."""
+384	    rate = nonnegative(effective_annual_discount_rate, "discount rate")
+385	    with localcontext() as ctx:
+386	        ctx.prec = 40
+387	        return sum((r.amount / ctx.power(D("1") + rate, D(r.day) / D("365"))
+388	                    for r in receipts), ZERO)
+389	
+390	
+391	def principal_exposure_dollar_days(principal_only_receipts):
+392	    """Principal-only fixture: integral of outstanding principal until repaid.
+393	
+394	    All principal is advanced at day zero and completely returned in the given
+395	    receipts. Do not apply this to mixed principal/fee payments without an
+396	    explicit allocation rule. No such rule is inferred for the Synergy loan.
+397	    """
+398	    return sum((r.amount * D(r.day) for r in principal_only_receipts), ZERO)
+399	
+400	
+401	def build_outputs():
+402	    terms = MerchantTerms()
+403	    budget = ConditionalBudget()
+404	    original = (CashReceipt(90, D("100000")),)
+405	    delayed = delay_receipts(original, 30)
+406	    pv_original = present_value(original, D("0.12"))
+407	    pv_delayed = present_value(delayed, D("0.12"))
+408	    checkpoints = []
+409	    for month in (6, 12, 18):
+410	        checkpoints.append({
+411	            "month_from_effective_funding_date": month,
+412	            "cumulative_lender_payment_floor_usd": money(terms.cumulative_floor(month)),
+413	            "cumulative_qualifying_shopify_credits_if_no_manual_top_ups_usd":
+414	                money(terms.qualifying_credit_threshold(month)),
+415	            "check_scope": "necessary cumulative threshold only; separate six-month window test also applies" if month == 12 else "cumulative threshold",
+416	        })
+417	    return {
+418	        "scope": "Offline deterministic reference arithmetic; no actual borrower forecast or credit decision",
+419	        "currency": "USD",
+420	        "numeric_encoding": "Decimal-derived base-10 strings; displayed monetary values rounded to cents",
+421	        "sources": SOURCES,
+422	        "synergy_contract_thresholds": {
+423	            "source_id": "synergy_merchant_agreement_20240501",
+424	            "evidence_class": "source-derived contractual arithmetic",
+425	            "advance_usd": money(terms.advance),
+426	            "fixed_cost_usd": money(terms.fixed_cost),
+427	            "total_payment_usd": money(terms.total_payment),
+428	            "remittance_fraction": str(terms.remittance_rate),
+429	            "fixed_cost_as_fraction_of_advance_not_apr": str(terms.fixed_cost / terms.advance),
+430	            "checkpoints": checkpoints,
+431	            "six_month_window_requirement": {
+432	                "windows": ["effective funding through month 6", "beginning of month 7 through month 12"],
+433	                "payment_floor_each_window_usd": "125430.00",
+434	                "qualifying_shopify_credits_each_window_without_manual_top_ups_usd": "501720.00",
+435	                "mechanics": "Compute current-window daily payments plus confirmed applicable manual credit; do not carry first-window excess automatically; cap top-up at remaining total payment obligation.",
+436	            },
+437	            "window_counterexample": {
+438	                "evidence_class": "contract arithmetic fixture, not observed payments",
+439	                "first_window_daily_payments_usd": "209050.00",
+440	                "second_window_daily_payments_usd": "41810.00",
+441	                "confirmed_second_window_manual_credit_usd": "0.00",
+442	                "cumulative_fraction_received": "0.60",
+443	                "cumulative_shortfall_only_usd": money(terms.cumulative_shortfall_only(12, "250860", "0")),
+444	                "second_window_top_up_required_usd": money(terms.window_top_up(12, "41810", "0", "250860")),
+445	                "explanation": "50% paid in the first six months and 10% in months 7-12 reaches 60% cumulatively, but the second window still needs another 20% ($83,620).",
+446	            },
+447	            "qualifiers": [
+448	                "Apply 25% to the contract-defined Shopify Account Credits, not company-wide sales or net cash receipts.",
+449	                "These credit thresholds assume full collection of remittances by checkpoint and no manual top-ups.",
+450	                "Manual payment can satisfy a floor when remittances are insufficient; threshold shortfall alone is not observed default.",
+451	                "60% cumulative at month 12 is necessary but insufficient: each six-month window has its own 30% payment requirement.",
+452	                "Manual-credit treatment must be confirmed for the applicable window; receipt, reversal and anti-duplication rules apply.",
+453	                "Calendar months run from effective funding date, which is not assumed equal to the agreement date.",
+454	                "No fee/principal allocation, APR, prepayment rebate, actual payment calendar or actual sales is inferred.",
+455	                "The separate May 22 loan is excluded; overlapping channel sweeps need account mapping.",
+456	            ],
+457	        },
+458	        "synergy_conditional_cash_budget": {
+459	            "source_id": "synergy_s1a_20240813",
+460	            "evidence_class": "conditional identity using dated source anchors and unresolved operator inputs",
+461	            "information_cutoff": "2024-08-13",
+462	            "opening_cash_measurement_date": "2024-08-12",
+463	            "opening_cash_usd_approximate": money(budget.opening_cash),
+464	            "opening_cash_availability": "not verified fully unrestricted or available; unavailable portion is an explicit unknown input",
+465	            "horizon_end": "2024-12-31",
+466	            "settlement_schedule_measurement_date": "2024-06-30",
+467	            "h2_settlements_remaining_at_june30_usd": money(budget.h2_settlements_remaining_at_june30),
+468	            "settlement_components_usd": {"HVL_Atrium": "2000000.00", "second_supplier_name_unknown_at_cutoff": "600000.00"},
+469	            "unknown_inputs": {name: None for name in budget.unknown_fields()},
+470	            "horizon_residual_before_new_facility_usd": None,
+471	            "status": "unresolved_required_inputs; no actual August 13 funding gap asserted",
+472	            "identity": "residual = ~2000000 - unavailable_opening_cash + future_customer_cash + future_committed_financing + future_other_confirmed_inflows - (2600000 - settlement_payments_Jul1_Aug12) - future_other_operating_outflows - future_other_debt_service - reserve",
+473	            "conditional_break_even": "settlement_payments_Jul1_Aug12 + future_customer_cash + future_committed_financing + future_other_confirmed_inflows >= ~600000 + unavailable_opening_cash + future_other_operating_outflows + future_other_debt_service + reserve",
+474	            "qualifiers": [
+475	                "The ~600000 algebraic difference is not an observed cash shortfall.",
+476	                "Existing settlement liabilities are scheduled once; do not add them again to balance-sheet debt.",
+477	                "Cash collected and costs paid after August 12 must be separately supplied; EBITDA is not a substitute.",
+478	                "Exclude the hypothetical new facility from committed financing; 2025 refinancing was not committed at this cutoff.",
+479	                "A nonnegative year-end residual does not establish interim liquidity or eligibility; dated cash flows are needed.",
+480	            ],
+481	        },
+482	        "timing_mechanics_fixture": {
+483	            "evidence_class": "explicit arithmetic fixture, not Synergy or any borrower's payment schedule",
+484	            "principal_only_usd": "100000.00",
+485	            "original_receipt_day": 90,
+486	            "delayed_receipt_day": 120,
+487	            "effective_annual_discount_rate_assumption": "0.12",
+488	            "discount_day_count_assumption": "ACT/365",
+489	            "principal_received_original_usd": money(sum((r.amount for r in original), ZERO)),
+490	            "principal_received_delayed_usd": money(sum((r.amount for r in delayed), ZERO)),
+491	            "principal_loss_usd": "0.00",
+492	            "pv_original_usd": money(pv_original),
+493	            "pv_delayed_usd": money(pv_delayed),
+494	            "pv_change_usd": money(pv_delayed - pv_original),
+495	            "extra_principal_exposure_days": 30,
+496	            "extra_principal_exposure_dollar_days": str(
+497	                principal_exposure_dollar_days(delayed) - principal_exposure_dollar_days(original)),
+498	            "note": "A pure delay changes PV and exposure duration without creating a principal loss. No extra interest or late fee is added. PV change is computed before cent rounding, so displayed PV subtraction can differ by one cent.",
+499	        },
+500	    }
+501	
+502	
+503	if __name__ == "__main__":
+504	    path = Path(__file__).with_name("calculation_outputs.json")
+505	    path.write_text(json.dumps(build_outputs(), indent=2) + "\n", encoding="utf-8")
+506	    print(f"Wrote {path}")
+507	

@@ -1,0 +1,1 @@
+{"command": "date +%H:%M; top -l 1 -o mem -n 10 -stats pid,command,mem,cmprs,cpu,time | tail -11; ps -o pid,ppid,etime,rss,command -p 26240,26856,26857,26858,26859 | cut -c1-120; pgrep -P 26240 | tr '\\n' ' '; echo; sysctl -n vm.swapusage; memory_pressure | tail -1; df -h / | tail -1; tail -4 ~/.hermes/profiles/connor/cache/scratch/9f2/analyze.log | cut -c1-140"}

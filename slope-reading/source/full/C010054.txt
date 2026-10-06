@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"aws ec2 delete-security-group --profile default --region us-east-2 --group-id sg-0ad0d18be7e3fdda8; aws rds delete-db-subnet-group --profile default --region us-east-2 --db-subnet-group-name rds-ec2-db-subnet-group-1",max_output_tokens:700}));
+text(await tools.write_stdin({session_id:94368,chars:"",yield_time_ms:1000,max_output_tokens:500}));

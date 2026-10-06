@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-record && git log --oneline -5 | cut -c1-90 && git status --short | head && env -u CLAUDE_CODE_OAUTH_TOKEN uv run pytest -p no:warnings tests/test_evidence_snapshots.py -k \"outcome_facts\" 2>&1 | grep -v \"npmrc\\|nvm\\|globalconfig\\|fontTools\" | tail -30", "timeout": 300}

@@ -1,0 +1,1 @@
+{"subject": "5b: recorded ChromaDex run, viewer, tests, PR", "description": "Agent prompt/tools for the lead case; record live ChromaDex run; slope compare output; minimal viewer section; financial-correctness and isolation tests; spec/config updates; PR + independent review.", "activeForm": "Recording the ChromaDex run"}

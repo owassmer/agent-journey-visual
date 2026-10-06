@@ -1,0 +1,7 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor root in [Path('/Users/owenwassmer/.hermes/profiles/connor'),Path('/Users/owenwassmer/.hermes/profiles/connor/sessions'),Path('/Users/owenwassmer/.hermes/profiles/connor/memories'),Path('/Users/owenwassmer/.hermes/profiles/connor/skills'),Path('/Users/owenwassmer/dev/Slope_Sparse_Events')]:\n print('\\nDIRECTORY',root)\n if root.exists():\n  for p in sorted(root.iterdir()):\n   print(('DIR ' if p.is_dir() else 'FILE'),p.name,('' if p.is_dir() else p.stat().st_size))\nPY",max_output_tokens:7500}),
+  tools.exec_command({cmd:"git worktree list --porcelain",max_output_tokens:5000}),
+  tools.exec_command({cmd:"git log origin/main -20 --date=iso-strict --format='%h %ad %s'",max_output_tokens:6500}),
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nfor name in ['CLAUDE.md','README.md','Slope_Coding_Agent_Context_and_Alignment.md','Jev_Pivot.md','pyproject.toml']:\n p=Path(name)\n print('\\nFILE',name)\n print(p.read_text())\nPY",max_output_tokens:15000})
+]);
+for (let i=0;i<results.length;i++) {store("initial3_"+i,results[i]);text({index:i,...results[i]});}

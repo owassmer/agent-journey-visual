@@ -1,0 +1,1 @@
+{"command": "T=recent_cases/synergy_chc/2024_s1a.txt; grep -n -iE \"approximately \\\\\\$2|august.{0,3}12|March.{0,3}27, 2024|418,100|2,920,824|4,802,445\" $T | head -20; echo; sed -n '/March.27, 2024 Loan/,+25p' $T | sed -n '1,60p' | cut -c1-400 | head -60", "description": "Check Aug 12 cash and Note 11 settlement tables"}

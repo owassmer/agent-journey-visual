@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-09b42b44a8d35909a --document-name AWS-RunShellScript --parameters '{\"commands\":[\"tail -12 /var/log/slope-finish.log\",\"ps -eo pid,ppid,args\",\"df -h /opt\",\"free -m\"]}' --query Command.CommandId --output text","max_output_tokens":300}));

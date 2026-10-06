@@ -1,0 +1,5 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"cat /Users/owenwassmer/.hermes/profiles/connor/skills/software-development/slope-sparse-events-build/SKILL.md",max_output_tokens:6200}),
+  tools.exec_command({cmd:"cat /Users/owenwassmer/.hermes/profiles/connor/SOUL.md",max_output_tokens:2400})
+]);
+results.forEach((r,i)=>text({i,...(r.status==="fulfilled"?{result:r.value}:{error:String(r.reason)})}));

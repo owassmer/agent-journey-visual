@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ec2 modify-volume --volume-id vol-0a3c8957961cc9c01 --throughput 1000 --iops 4000 --profile slope --region us-east-2 --query 'VolumeModification.{State:ModificationState,OriginalThroughput:OriginalThroughput,TargetThroughput:TargetThroughput,TargetIops:TargetIops}'","max_output_tokens":1000}));

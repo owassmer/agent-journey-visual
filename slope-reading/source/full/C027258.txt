@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/slope_prod.py && git rm -rq app/decisions cases/slope_terms.json && uv run ruff check app/finance app/analysis app/disputes app/agent --output-format concise | tail -3 && grep -n \"def \\|class \" app/finance/slope_products.py", "description": "Slim slope_products; remove decisions and price card"}

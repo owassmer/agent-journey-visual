@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -n \"TILES\\|tile\\|\\\"label\\\"\" app/analysis/page.py | head -40; grep -n \"2\\.[0-9]\u20132\\.[0-9]\\|2\\.[0-9]-2\\.[0-9]\\|ChromaDex\\|Synergy\\|Elysium\" app/web/static/*.js app/web/templates/*.html app/analysis/page.py 2>/dev/null | head"}

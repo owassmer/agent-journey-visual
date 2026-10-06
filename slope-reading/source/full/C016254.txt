@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"python3 /tmp/open-step2-aws-login.py","max_output_tokens":300}));
+text(await tools.exec_command({cmd:"osascript -e 'tell application \"Google Chrome\" to execute active tab of window 1 javascript \"JSON.stringify({title:document.title,text:document.body.innerText.slice(0,9000)})\"'","max_output_tokens":2600}));

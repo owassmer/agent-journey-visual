@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && grep -n \"class DisputeProfile\" -A60 app/agent/jev_profiles.py | grep -n \"def \\|registry_entry\\|ask(\\|await self.jev\\|build_question\\|state=\" | head -20; grep -n \"    async def ask\\|    def build_question\\|async def judge\\|def build_question\" -A12 app/agent/jev.py | head -60"}

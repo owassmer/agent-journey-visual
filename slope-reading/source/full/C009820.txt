@@ -1,0 +1,2 @@
+text(ALL_TOOLS.filter(x=>/node_repl.*js|browser|playwright/i.test(x.name+" "+x.description)).map(x=>({name:x.name,description:x.description.slice(0,100)})).slice(0,20));
+text(await tools.exec_command({cmd:"cat /Users/owenwassmer/.codex/plugins/cache/openai-bundled/browser-use/0.1.0-alpha1/skills/browser/SKILL.md","max_output_tokens":6000}));

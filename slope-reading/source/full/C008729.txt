@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n 3076,3110p app/analysis/events.py; grep -n \"_STATE_SKIP\\|NOT_STATE\\|MEMO\\b\\|^    KEYS\\|^    SHARED\\|^    REPLACED\\|^    CONTAINERS\\|^    UNSEEN\\|^    DATED\" app/analysis/events.py | head", "timeout": 30}

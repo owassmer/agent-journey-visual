@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"/Users/owenwassmer/.codex/skills/playwright/scripts/playwright_cli.sh list",max_output_tokens:2000}));
+text(await tools.exec_command({cmd:"osascript -e 'tell application \"System Events\" to get {unix id, name, title of windows} of every application process whose name is \"Google Chrome\"'",max_output_tokens:2000}));

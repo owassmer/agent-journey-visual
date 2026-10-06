@@ -1,0 +1,25 @@
+# TypeSafe Jev API Patterns: A Concrete Summary
+
+## Core Question Primitives
+
+**Choice** selects one label from defined criteria and returns probabilities for every option. **Noul** returns a single probability (0–1) that a statement is true, where "0.5 means undecided, not medium." **Score** places state on an ordered rubric, returning the probability-weighted level, allowing answers to land between discrete levels.
+
+## Confidence and Calibration
+
+Confidence is a computed statistic: `(count × peak_probability - 1) / (count - 1)`. TypeSafe documents this formula explicitly. For Scores, the expected value is calculated as `sum(level × probability)`. Critically, "a Noul has no confidence field at all, since its value already is the probability of yes."
+
+The tutorial validates calibration by recomputing published confidence from returned probability distributions and comparing against API-reported values, confirming alignment.
+
+## Speculative Fan-Out
+
+All questions in one request are "evaluated in parallel and in isolation from one another." The tutorial demonstrates that batching ten questions into one call achieves `1.7x faster` and `9.1x fewer tokens` versus sequential calls. Crucially: "questions never see each other," so answers remain identical whether asked alone or batched.
+
+## Decision Chaining and Weighting
+
+The framework keeps "atomic judgments from the model, weights from code." Composite scoring normalizes each Score by its top level, stores results separately, then applies weight vectors as plain Python arithmetic—enabling instant re-ranking without re-inference.
+
+Confidence-gated routing uses thresholds "live in code," allowing risk tolerance to be "reviewed, versioned and tested like any other code."
+
+## Caveats on Calibration
+
+"Jev does not count reliably in one question"—the workaround is asking one Noul per item and summing in code. The docs reference "known rough edges" including "literal reading, arithmetic, counting, date comparison, large irrelevant state."

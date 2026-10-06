@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && R=runs/recorded/akoustis_20240620-agent_plus_jev-20260926T212137Z; grep conclusion_checked $R/events.jsonl | cut -c1-300; grep -n \"INCOMPLETE_REVIEW\\|status ==\\|status !=\\|\\.status in\" app/analysis/build.py app/cli.py app/*.py 2>/dev/null | head"}

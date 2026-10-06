@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int/app/disputes/forecast.py", "old_string": "    REUSE = True  # exact subtree reuse (`_served`)", "new_string": "    REUSE = False  # exact subtree reuse (`_served`): off; its kept traces cost ~0.75 MB a path and saved no time"}

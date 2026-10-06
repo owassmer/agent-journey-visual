@@ -1,0 +1,20 @@
+The lawsuit itself does not supply a generic default-probability increment. It supplies evidence about an economic mechanism. Jev’s confidence is not the probability of that mechanism occurring and never becomes a loan-loss assumption.
+CLAUDE.md:4:A proof-of-concept demo for Russell (Slope). A credit reviewer is deciding on a new discretionary working-capital draw. An agent (Claude Agent SDK) 
+Slope_Coding_Agent_Context_and_Alignment.md:111:The lead decision date is **3 September 2024**. ChromaDex is a consumer supplement brand that buys finished good
+Slope_Credit_Scenario_Build_Specification.md:3:Prepared 24 September 2026. Revision 2 replaced the Trinity/A10 implementation direction. **Revision 3 (25 Septem
+Slope_Credit_Scenario_Build_Specification.md:29:**Lead: ChromaDex Corporation, using information available by the end of 3 September 2024.** A consumer suppleme
+Slope_Credit_Scenario_Build_Specification.md:53:> As of 3 September 2024, assess Slope financing of a USD 2.5 million contract-manufacturer invoice for ChromaDe
+Slope_Credit_Scenario_Build_Specification.md:65:### ChromaDex: two live disputes, money moving both ways (as of 3 September 2024)
+    }
+  },
+  "role_instruction": "Investigate an external event only to the extent needed to evaluate the financing request. Record the decision-relevant unknowns, search and read admissible evidence, and propose atomic findings that quote the evidence exactly. Jev screens retrieved evidence and checks narrow semantic claims; you reconcile its judgments with the evidence and may disagree with a failed check 
+  "invariants": [
+    "Start with the same baseline profile, existing obligations, decision date and candidate financing request for the before/after comparison.",
+    "Keep borrower cash flows, contractual loan payments, scenario collections and funding-facility cash flows distinct.",
+    "Use only evidence admitted by the host's snapshot rules. Do not use remembered future outcomes.",
+    "All amounts, dates and parameter values have reported, derived or operator-assumption basis; unknown remains unknown.",
+    "Use source-supported ranges or named scenario parameters where exact values are unavailable. Never silently interpolate financial statements into daily historical facts.",
+    "Do not turn Jev confidence or lawsuit severity into default probabilities or dollar adjustments.",
+    "Track legal-entity, asset, product, channel and period scope for every adjustment.",
+    "Reconcile every patch with baseline entries to prevent double counting; preserve associated avoided costs, recoveries and delayed receipts.",
+    "Do not automatically rewrite existing contractual payments, assume new creditor seniority, or freeze committed credit.",

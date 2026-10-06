@@ -1,0 +1,7 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"git status --short --branch",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:1200}),
+  tools.exec_command({cmd:"sed -n '1,240p' tests/test_investigation_tools.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:6200}),
+  tools.exec_command({cmd:"sed -n '1,190p' tests/test_finance.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:4700}),
+  tools.exec_command({cmd:"python - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events--claude-worktrees-step-5b-decision-model/1ebb1026-a1f0-4809-9321-bc3d6f875530.jsonl')\nlines=p.read_text().splitlines()\nprint('Transcript records:', len(lines))\nfor i,line in enumerate(lines[10249:],10250):\n d=json.loads(line)\n if d.get('type') not in ('user','assistant'):continue\n message=d.get('message',{})\n content=message.get('content',[])\n if isinstance(content,str): content=[{'type':'text','text':content}]\n for c in content:\n  if c.get('type')=='text':\n   t=c.get('text','')\n   print(f'RECORD {i} {d.get(\"type\")} {d.get(\"timestamp\")}\\n{t}')\nPY","max_output_tokens":4700})
+]);
+results.forEach((r,i)=>text({i,...r}));

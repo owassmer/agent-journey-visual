@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n '_raise_more|_raise_at|raised|_raise_regions' app/disputes/forecast.py app/disputes/parallel.py app/disputes/pool.py | head -35; sed -n '2160,2235p' app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3000}));

@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"cat /tmp/notes-class-support.log",max_output_tokens:2500}));
+text(await tools.exec_command({cmd:"uv run --no-project --with appscript python - <<'PY'\nfrom appscript import app\nc=app(pid=34693);t=c.windows[1].active_tab\nprint(t.execute(javascript='document.querySelector(\"#check-step-header-title\").innerText'))\nprint(t.execute(javascript='Array.from(document.querySelectorAll(\".js-check-line-content\")).map(e=>e.textContent).slice(-8).join(\"\\\\n\")'))\nPY",max_output_tokens:1000}));

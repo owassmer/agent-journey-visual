@@ -1,0 +1,1 @@
+{"command": "ps -Ao pid,command | grep -E \"rows.py|par_check\" | grep -v grep | cut -c1-120; rm -f ~/.hermes/profiles/connor/cache/scratch/memo/rowsF_new.pkl ~/.hermes/profiles/connor/cache/scratch/memo/rows_step-9-*.pkl; sleep 2; df -h / | tail -1; head -30 ~/.hermes/profiles/connor/cache/scratch/memo/rows.py"}

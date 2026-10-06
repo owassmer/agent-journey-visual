@@ -1,0 +1,284 @@
+"Broad personal-property security under section 5. Priority requires lien/intercreditor review; no assumed first lien."
+["Effective funding date", "Actual receipts and remittances for this account", "Application of receipts among overlapping merchant advances and payment components"]
+===== effects
+[
+ {
+  "effect_id": "E_HVL_settlement_calendar",
+  "event_id": "hvl_maine_litigation",
+  "borrower_id": "synergy_chc_corp",
+  "mechanism": "existing_liability_payment_timing",
+  "finding": "HVL / Atrium: June 30 remaining 2024 contractual payment bucket. Amount is already part of settlement debt; exact installment dates and payments since June 30 require a bridge.",
+  "target_stream_ids": [
+   "synergy_explicit_threshold_inputs_v1:E_HVL_settlement_calendar:existing_debt_cash"
+  ],
+  "source_fact_ids": [
+   "synergy_hvl_h2_2024_payment"
+  ],
+  "parameters": [
+   {
+    "name": "remaining_2024_at_june30",
+    "role": "source_anchor",
+    "value": "EV(exact,200000000,USD_cents,documented_evidence)"
+   },
+   {
+    "name": "payments_since_june30_observed",
+    "role": "model_input",
+    "value": "EV(unknown,None,USD_cents,unknown)"
+   },
+   {
+    "name": "A_post_june_hvl_paid_cents",
+    "role": "sensitivity_input",
+    "value": "EV(exact,0,USD_cents,operator_assumption)"
+   },
+   {
+    "name": "exact_installment_date",
+    "role": "model_input",
+    "value": "EV(unknown,None,date,unknown)"
+   }
+  ],
+  "baseline_reflection": "already_in_historical_balance",
+  "proposed_operation": "reclassify_timing",
+  "application_status": "requires_parameters",
+  "activation_condition": "Compute remaining_at_decision = June30 remaining2024 bucket minus actual subsequent payments; for sensitivities use explicit payment assumptions and timing bands.",
+  "cash_direction": "outflow",
+  "double_count_guard": "Map the existing debt once; do not add it again as new leverage. Updated cash already reflects whatever intervening payments actually occurred.",
+  "missing_inputs": [
+   "Observed intervening payments",
+   "Exact installment dates or operator-declared timing scenario"
+  ]
+ },
+ {
+  "effect_id": "E_unnamed_supplier_calendar",
+  "event_id": "march_supplier_settlement",
+  "borrower_id": "synergy_chc_corp",
+  "mechanism": "existing_liability_payment_timing",
+  "finding": "March 2024 settlement supplier (labelled \"VitBest\" in the June 30 notes-payable table; linking that label to this settlement is a balance-match inference, and the full legal entity is not in the August information set): June 30 remaining 2024 contractual payment bucket. Amount is already part of settlement debt; exact installment dates and payments since June 30 require a bridge.",
+  "target_stream_ids": [
+   "synergy_explicit_threshold_inputs_v1:E_unnamed_supplier_calendar:existing_debt_cash"
+  ],
+  "source_fact_ids": [
+   "synergy_supplier_march_h2_2024_payment"
+  ],
+  "parameters": [
+   {
+    "name": "remaining_2024_at_june30",
+    "role": "source_anchor",
+    "value": "EV(exact,60000000,USD_cents,documented_evidence)"
+   },
+   {
+    "name": "payments_since_june30_observed",
+    "role": "model_input",
+    "value": "EV(unknown,None,USD_cents,unknown)"
+   },
+   {
+    "name": "A_post_june_supplier_paid_cents",
+    "role": "sensitivity_input",
+    "value": "EV(exact,0,USD_cents,operator_assumption)"
+   },
+   {
+    "name": "exact_installment_date",
+    "role": "model_input",
+    "value": "EV(unknown,None,date,unknown)"
+   }
+  ],
+  "baseline_reflection": "already_in_historical_balance",
+  "proposed_operation": "reclassify_timing",
+  "application_status": "requires_parameters",
+  "activation_condition": "Compute remaining_at_decision = June30 remaining2024 bucket minus actual subsequent payments; for sensitivities use explicit payment assumptions and timing bands.",
+  "cash_direction": "outflow
+===== scenarios
+[
+ {
+  "scenario_id": "S_explicit_settlement_threshold",
+  "decision_id": "synergy_2024-08-13_external_event_review",
+  "baseline_id": "synergy_explicit_threshold_inputs_v1",
+  "analysis_scope": "economic_thresholds",
+  "label": "Conditional H2 settlement-liquidity threshold",
+  "conditions": [
+   "No intervening settlement payments assumed solely for this worked sensitivity.",
+   "Opening cash and reserve are the explicitly identified rounded/operator inputs.",
+   "Operating cash available after other debt service is a variable to compare with the computed threshold."
+  ],
+  "effect_ids": [
+   "E_HVL_settlement_calendar",
+   "E_unnamed_supplier_calendar",
+   "E_normalize_2023_gain",
+   "E_LODC_no_future_charge"
+  ],
+  "parameter_overrides": [
+   {
+    "name": "A_post_june_hvl_paid_cents",
+    "role": "sensitivity_input",
+    "value": "EV(exact,0,USD_cents,operator_assumption)"
+   },
+   {
+    "name": "A_post_june_supplier_paid_cents",
+    "role": "sensitivity_input",
+    "value": "EV(exact,0,USD_cents,operator_assumption)"
+   },
+   {
+    "name": "A_policy_cash_reserve_cents",
+    "role": "sensitivity_input",
+    "value": "EV(exact,20000000,USD_cents,operator_assumption)"
+   },
+   {
+    "name": "A_opening_cash_for_threshold_cents",
+    "role": "sensitivity_input",
+    "value": "EV(exact,200000000,USD_cents,operator_assumption)"
+   }
+  ],
+  "probability": "EV(unknown,None,decimal_fraction,unknown)",
+  "payment_behavior": "operator_assumption",
+  "forecast_status": "ready",
+  "is_realized_outcome": false
+ }
+]
+===== decision_result
+{
+ "decision_id": "synergy_2024-08-13_external_event_review",
+ "result_status": "decision_boundary",
+ "preferred_action_id": null,
+ "action_results": [],
+ "policy_basis": "operator_demo_policy",
+ "policy_id": "conditional_reserve_threshold_example",
+ "required_conditions": [
+  "Compare supported remaining-period free cash with the threshold; choose actual or explicit scenario payment dates to test interim liquidity.",
+  "Add a proposed new loan's net cash schedule and changed purchase plan before recommending an amount or term."
+ ],
+ "decisive_missing_inputs": [
+  "Settlement payments actually made July 1 through August 13",
+  "Updated unrestricted cash and other debt-service calendar",
+  "Daily credits and remittances for the specific Shopify account",
+  "Actual May merchant-loan effective funding date",
+  "Proposed incremental amount, pricing, term and funded operating plan"
+ ],
+ "summary": "Useful outputs are $800k conditional remaining-period free-cash requirement under the named assumptions and contract-derived merchant-channel receipt thresholds of $501,720 in each separate six-month window and $1,672,400 over the full term, before manual-payment credits and outstanding-total caps. They do not claim a historical shortfall, a calibrated default probability, or an actual Slope lending decision.",
+ "threshold_results": [
+  {
+   "threshold_id": "T_H2_incremental_free_cash",
+   "label": "Remaining-H2 free cash required under explicit assumptions",
+   "scope": "cumulative_period_necessary_condition",
+   "formula": "required_net_cash = max(0, 200000000 + 60000000 - P_HVL - P_supplier + reserve - opening_cash)",
+   "inputs": [
+    {
+     "name": "HVL_H2_bucket_at_June30",
+     "role": "source_anchor",
+     "value": "EV(exact,200000000,USD_cents,documented_evidence)"
+    },
+    {
+     "name": "supplier_H2_bucket_at_June30",
+     "role": "source_anchor",
+     "value": "EV(exact,60000000,USD_cents,documented_evidence)"
+    },
+    {
+     "name": "A_post_june_hvl_paid_cents",
+     "role": "sensitivity_input",
+     "value": "EV(exact,0,USD_cents,operator_assumption)"
+    },
+    {
+     "name": "A_post_june_supplier_paid_cents",
+     "role": "sensitivity_input",
+     "value": "EV(exact,0,USD_cents,operator_assumption)"
+    },
+    {
+     "name": "A_policy_cash_reserve_cents",
+     "role": "sensitivity_input",
+     "value": "EV(exact,20000000,USD_cents,operator_assumption)"
+    },
+    {
+     "name": "A_opening_cash_for_threshold_cents",
+     "role": "sensitivity_input",
+     "value": "EV(exact,200000000,USD_cents,operator_assumption)"
+    }
+   ],
+   "result": "EV(exact,80000000,USD_cents,model_derived)",
+   "interpretation": "Over the remaining period, the business needs $800k of net cash after operating spending and other existing debt service, or additional committed external capital, under these assumptions. Every $1 already paid on these settlements reduces the remaining requirement by $1 when paired with the correct updated cash observation.",
+   "limitations": [
+    "The aggregate-period condition is necessary, not sufficient: a payment can fall due before receipts arrive.",
+    "No exact installment dates, prior-payment bridge, or actual daily bank forecast are fabricated.",
+    "This is not a new-loan approval amount; new-loan cash disbursement, repayments and the funded operating plan must be added consistently.",
+    "The opening amount is management's approximate cash adopted as an operator sensitivity input, not verified unrestricted ca
+===== loan_cashflow_export
+{
+ "export_id": "synergy_dated_export_awaiting_scenario_ledger",
+ "loan_id": "synergy_webbank_shopify_2024-05-01",
+ "borrower_id": "synergy_chc_corp",
+ "decision_id": "synergy_2024-08-13_external_event_review",
+ "as_of": "2024-08-13T23:59:59-04:00",
+ "currency": "USD",
+ "cashflow_type": "conditional",
+ "status": "not_computable",
+ "scenario_id": "S_explicit_settlement_threshold",
+ "baseline_id": "synergy_explicit_threshold_inputs_v1",
+ "scenario_weights": [],
+ "rows": [],
+ "terminal_unresolved_principal": "EV(unknown,None,USD_cents,unknown)",
+ "missing_inputs": [
+  "Actual or explicitly assumed funding date, channel receipt path, settlement dates and payment allocation"
+ ],
+ "stakeholder_scope": "loan_asset_holder"
+}
+===== decision_context
+{
+ "decision_id": "synergy_2024-08-13_external_event_review",
+ "mission_id": "synergy_20240813",
+ "borrower_id": "synergy_chc_corp",
+ "borrower_name": "Synergy CHC Corp.",
+ "as_of": "2024-08-13T23:59:59-04:00",
+ "decision_timezone": "America/New_York",
+ "decision_type": "new_draw",
+ "transaction_basis": "analytical_candidate",
+ "slope_relationship": "not_established",
+ "stakeholder_scope": "loan_asset_holder",
+ "currency": "USD",
+ "requested_amount": "EV(unknown,None,USD_cents,unknown)",
+ "requested_term_months": null,
+ "use_of_proceeds": "Evaluate incremental inventory or working-capital financing alongside an actual merchant loan and dated supplier-settlement obligations.",
+ "baseline_id": "synergy_explicit_threshold_inputs_v1",
+ "baseline_status": "explicit_assumption_model",
+ "available_actions": [
+  "requested_offer",
+  "smaller_feasible_purchase",
+  "alternative_term",
+  "conditional_offer",
+  "decline_new_exposure"
+ ],
+ "missing_inputs": [
+  "Settlement payments actually made July 1 through August 13",
+  "Updated unrestricted cash and other debt-service calendar",
+  "Daily credits and remittances for the specific Shopify account",
+  "Actual May merchant-loan effective funding date",
+  "Proposed incremental amount, pricing, term and funded operating plan"
+ ],
+ "note": "The example computes useful conditional thresholds from real obligations plus named assumptions. It does not fabricate historical bank transactions, channel receipts, a complete borrower forecast, or a Slope relationship."
+}
+===== historical_observations
+[
+ {
+  "observation_id": "synergy_chc_corp:2024-06-30:unrestricted_cash",
+  "metric": "unrestricted_cash",
+  "value": "EV(exact,8729300,USD_cents,documented_evidence)",
+  "period_start": null,
+  "period_end": "2024-06-30",
+  "available_at": "2024-08-13T23:59:59-04:00",
+  "is_current_bank_observation": false
+ },
+ {
+  "observation_id": "synergy_chc_corp:2024-06-30:restricted_cash",
+  "metric": "restricted_cash",
+  "value": "EV(exact,10000000,USD_cents,documented_evidence)",
+  "period_start": null,
+  "period_end": "2024-06-30",
+  "available_at": "2024-08-13T23:59:59-04:00",
+  "is_current_bank_observation": false
+ },
+ {
+  "observation_id": "synergy_chc_corp:2024-08-12:management_approximate_cash",
+  "metric": "management_approximate_cash",
+  "value": "EV(exact,200000000,USD_cents,documented_evidence)",
+  "period_start": null,
+  "period_end": "2024-08-12",
+  "available_at": "2024-08-13T23:59:59-04:00",
+  "is_current_bank_observation": false
+ }
+]

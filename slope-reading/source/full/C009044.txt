@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 15500}
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"cat .claude/worktrees/step-9-memo/Slope_Coding_Agent_Context_and_Alignment.md",max_output_tokens:7000}),
+tools.exec_command({cmd:"cat .claude/worktrees/step-9-memo/Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/QUESTIONS_20240514.md",max_output_tokens:11500})
+]);for(let i=0;i<r.length;i++)text({index:i,...r[i]});

@@ -1,0 +1,1 @@
+{"command": "uv run python /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/show_tables.py synergy_20240813 \"stockholders deficit balance accumulated\" \"notes payable Atrium Knight Sanders\" \"required to make future payments 802,445\" \"Cash and cash equivalents Restricted cash Accounts receivable\""}

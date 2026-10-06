@@ -1,0 +1,56 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_8f8fcbc6]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 01:38:45 (22m26s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1346.34s
+
+--- ✓ TASK 1/1: Page data, part 2, for the step-9 build of owassmer/Slope_Sparse_Events: bring step-9-page up to step-9-core and make the analysis carry what the page reads (daily arrears by class; at-the-market and offering proceeds per path). Branch step-9-page. Commit and push; open no PR.  (status=completed, api_calls=55, 1346.05s) ---
+I've merged step-9-core into step-9-page and wired both missing items (daily arrears by class, proceeds by channel) through the analysis. Everything is pushed. The one-path checks on the full tree are still open: `9s/full14.pkl` hasn't landed yet, so they haven't run.
+
+Separately, free disk on `/` is down to **1.1 GB**, below the 1.5 GB floor. None of my processes are running and my scratch files are small, so I don't know what used the space.
+
+**SHAs (branch step-9-page)**
+- `8ed3808`: merge of origin/step-9-core (35ba9b1). It went in with no conflicts, and no page file changed.
+- `7d8adcc`: the page data change plus a new test. HEAD equals origin/step-9-page.
+
+**What changed in `events.py`**
+- `EventCash` gets a `proceeds` field that holds, per draw, the net cents from each equity channel (named in a new `PROCEEDS` tuple).
+- `Chain.finish` fills it from where A books the money, with nothing re-derived:
+  - at-the-market: the sales in `Chain._atm` that settled before a petition;
+  - offering: the `net` of each offering in `Chain._offers` that closed before a petition.
+- `EventCash.__add__` and `_copied` carry the new field along.
+
+**What changed in `core.py`**
+- `Reduction.add(i, t, ev)` takes the path's event cash and writes:
+  - `means['atm_proceeds']` and `means['offering_proceeds']`, one scalar per path;
+  - under daily processing, `per_day['arrears_<class>']` for each processor class (slope, settlement, notes interest, judgment, operating), summed over draws from `t.processed.arrears`.
+- `_pack`/`_unpack` carry the proceeds, and `Analysis` passes the event cash into `add`.
+- Memory profile is the same as before: per-path scalars and per-day sums only.
+- `page.py` and `page.js` are unchanged; they already read these keys.
+
+**Checks**
+- **Hand checks, no tree** (`scratch/9p/proceeds_hand.py`, now pinned in `tests/test_page_data_20240514.py`, 3 tests passing). These use A's two paths from `test_equity_20240514`, run through `core.Analysis`:
+  - **At-the-market proceeds:** I counted by hand from the 2024 calendar that 124 sales settle by 10 Nov. On the no-award path, all 512 draws get 124 × $65,391.30 = $8,108,521.20.
+  - **Offering path:** 497 draws get the full 124 sales. On the other 15, sale 124 would exceed the 58,957,268-share ledger, and I checked that by hand.
+  - **Offering proceeds:** $10.4M wherever the offering closed.
+  - **Channels vs receipts:** at-the-market plus offering proceeds equal the path's booked receipts on every draw.
+  - **Arrears:** the per-day arrears sums equal the processor's arrears summed over trajectories, for every class. Operating arrears are nonzero, so the check actually exercises them.
+  - **Reweighting:** `chart_view` renormalises the weights and returns all five arrears classes.
+- **Probabilities summing to 1 on the reweighted full tree: not tested yet.** It needs the tree.
+- **20 Jun dump:** equal to `9h/dump20_final.json` on every key except `seconds` (13,821 paths).
+- **ruff and `node --check page.js`:** both pass.
+- **`render_check.py`:** no page errors, both on the synthetic payload and with `LEGACY=1`.
+- **test_viewer, test_views, test_assumptions and test_equity:** 35 passed, 1 skipped, 1 failed. The failure is `test_assumptions::test_each_saved_variant_records_only_its_knob`, with `KeyError: 'atm_pace_10'`. The merged `scenario.json` declares that variant, but the recorded run's `assumptions.json` doesn't have it. It appeared with the merge and is unrelated to my change, but I haven't confirmed it also fails on step-9-core itself.
+
+**Still to run**
+- `scratch/9p/tree_paths_check.py` now points at `9s/full14.pkl`. When the file exists, run it from the step-9-page worktree with `env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 uv run --frozen python …`. It builds no tree. It checks that probabilities sum to 1 over the full tree and the bank view under random answers, then repeats the arrears and proceeds checks on 5 paths from that tree. The 1-of-5 answer sets use a fixed seed.
+
+**Files**
+- Changed: `app/analysis/core.py`, `app/analysis/events.py`
+- New test: `tests/test_page_data_20240514.py`
+- Scratch scripts in `scratch/9p/`: `proceeds_hand.py`, `tree_paths_check.py`, `dump20_page2.json`
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_8f8fcbc6/task-0.log
+Child's process proc_9eac25f022ea `cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-page && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_J` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

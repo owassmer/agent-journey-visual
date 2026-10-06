@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && env -u CLAUDE_CODE_OAUTH_TOKEN uv run slope investigate --snapshot akoustis_20240620 --arm agent_plus_jev > /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/6c/investigate.log 2>&1", "background": true, "notify": true}

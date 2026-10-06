@@ -1,0 +1,38 @@
+synergy_s1a_20240813#t0079  [table]  SYNERGY CHC CORP. NOTES TO CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+    The Company is [required] [to] [make] [future] [payments] as follows: :: | 2024 | $2,000,000 |
+| 2025 | 2,000,000 |
+| 2026 | [802,445] |
+synergy_s1a_20240813#t0047  [table]  SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 11 — Notes Payable
+    The Company is [required] [to] [make] [future] [payments] as follows: :: | 2024 | $2,000,000 |
+| 2025 | 2,000,000 |
+| 2026 | [802,445] |
+{
+  "table_id": "synergy_s1a_20240813#t0047",
+  "source_id": "synergy_s1a_20240813",
+  "section_id": "synergy_s1a_20240813#s0207",
+  "ordinal": 47,
+  "caption": "The Company is required to make future payments as follows:",
+  "context_before": "On December 28, 2023, the Company entered into a confidential settlement agreement and mutual general release with a former supplier. The loan bears interest at 5% per annum and is payable in full with the last payment. This settlement resulted in a gain to the Company of $2,235,986 and is reflected as a reduction of cost of sales (See Note 13).\nDuring 2023, the Company made payments of $1,000,000 toward this loan. The outstanding loan balance at both June 30, 2024 and December 31, 2023 was $4,802,445, including interest of $352,445.\nThe Company is required to make future payments as follows:",
+  "context_after": "$141,250 January 29, 2024 Loan:",
+  "header_rows": 0,
+  "rows": [
+    [
+      "2024",
+      "$2,000,000"
+    ],
+    [
+      "2025",
+      "2,000,000"
+    ],
+    [
+      "2026",
+      "802,445"
+    ]
+  ],
+  "rendered": "| 2024 | $2,000,000 |\n| 2025 | 2,000,000 |\n| 2026 | 802,445 |",
+  "units_hint": "$",
+  "heading_path": [
+    "SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS",
+    "Note 11 \u2014 Notes Payable"
+  ],
+  "page": null,

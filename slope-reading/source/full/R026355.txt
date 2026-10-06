@@ -1,0 +1,37 @@
+ok
+{
+ "case_id": "chromadex_elysium_2024",
+ "mission_id": "chromadex_2024_supplier_bill_financing",
+ "borrower": "ChromaDex Corporation",
+ "as_of": "2024-09-03T23:59:59-04:00",
+ "decision_timezone": "America/New_York",
+ "mission_type": "supplier_bill_financing",
+ "loan_terms_basis": "reconstructed_slope_terms",
+ "relationship_claim": "Reconstructed as if ChromaDex applied to Slope on this date to finance a supplier invoice. No claim that ChromaDex is or was a Slope customer.",
+ "product_selection": "Slope bill-pay financing: Slope pays the supplier and ChromaDex repays on net terms or in monthly installments of up to 120 days, priced by risk tier (the menu and price card are in the run inputs).",
+ "financing_basis": "Existing Western Alliance Bank revolving credit line of up to USD 10.0 million, with covenants.",
+ "requested_use": {
+  "value": "Pay a contract manufacturer's invoice for Tru Niagen finished goods",
+  "basis": "operator_request"
+ },
+ "requested_amount": {
+  "value": 250000000,
+  "unit": "USD_cents",
+  "basis": "operator_request"
+ },
+ "requested_term": {
+  "value": "120 days, monthly installments",
+  "basis": "operator_request"
+ },
+ "requested_pricing": {
+  "value": "Slope price card for the borrower's risk tier (step 5b)",
+  "basis": "operator_request"
+ },
+ "baseline_profile_id": "chromadex_ordinary_baseline_v1",
+ "existing_loan_record_ids": [
+  "chromadex_western_alliance_revolver"
+ ],
+ "permitted_offer_set_id": "slope_menu_v1",
+ "policy_config_id": "slope_policy_
+ .../research/revision_v2/contracts/agent_config.json     | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)

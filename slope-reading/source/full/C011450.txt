@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"osascript <<'APPLESCRIPT'\ntell application \"System Events\"\nset p to first application process whose unix id is 34693\nset frontmost of p to true\nset value of attribute \"AXEnhancedUserInterface\" of p to true\nreturn entire contents of front window of p\nend tell\nAPPLESCRIPT",max_output_tokens:3000}));

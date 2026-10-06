@@ -1,0 +1,35 @@
+300	                if s is not None:
+301	                    row["collections"] = [{"date": d.isoformat(), "amount_cents": c} for d, c in o.collections]
+302	                    row["economics"] = economics(s, comp, o.collections, terms)
+303	                v["scenarios"].append(row)
+304	            if s is not None:
+305	                v["contractual"] = [{"due": p.due.isoformat(), "amount_cents": p.amount_cents,
+306	                                     "principal_cents": p.principal_cents, "fee_cents": p.fee_cents}
+307	                                    for p in s.schedule(comp.request.funding)]
+308	                v["expected_collections"] = _expected_series(outs)
+309	            entry["views"][view] = v
+310	        out["structures"][name] = entry
+311	    return out
+312	
+313	
+314	def recommend(comp: Comparison, terms: dict, view: str) -> dict:
+315	    """Declared objective, per view: the requested structure if it passes policy in every scenario and placement;
+316	    otherwise the largest amount on the requested term that passes (sized on its own cash paths); otherwise decline.
+317	    The explanation names what binds: the requested structure's failing reasons and where cash is lowest."""
+318	    req = comp.request
+319	    requested = f"{req.requested_term_id}_{req.amount_cents // 100}"
+320	    req_check = policy_checks(comp, terms, requested, view)
+321	    if req_check["passes"]:
+322	        chosen = requested
+323	    else:
+324	        sized = _supported_amount(comp, terms, view)
+325	        chosen = sized.offer_id if sized else "decline"
+326	    chosen_check = policy_checks(comp, terms, chosen, view)
+327	    return {"structure": chosen, "requested": requested, "requested_passes": chosen == requested,
+328	            "requested_reasons": req_check["reasons"],
+329	            "limit_cents": chosen_check["limit_cents"], "order_limit_cents": chosen_check["order_limit_cents"],
+330	            "limit_set_by": chosen_check["limit_set_by"],
+331	            "binding": {"lowest_projected_cash_cents": req_check["lowest_projected_cash_cents"],
+332	                        "on": req_check["lowest_cash_on"], "scenario": req_check["lowest_cash_scenario"],
+333	                        "placement": req_check["lowest_cash_placement"]}}
+334	

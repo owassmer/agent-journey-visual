@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor/cache/scratch/9d && python3 extract_core.py Q6 Q9 Q10 Q12 Q13 Q17 Q18 2>&1 | grep -v '^   date\\|^   assumes\\|^   offered\\|^   Jev:\\|^[0-9]*\\. \\[\\|^Question:$\\|^Answers and what\\|^### What Jev reads\\|^### Every situation\\|^$\\|^---\\|^=====' | cut -c1-450"}

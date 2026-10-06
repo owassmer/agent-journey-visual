@@ -1,0 +1,1 @@
+{"command": "curl -s -A \"Slope sparse-events research owassmer1@gmail.com\" https://www.sec.gov/Archives/edgar/data/1386570/000162828023041428/index.json | uv run python -c \"import json,sys; d=json.load(sys.stdin); [print(i['name'], i.get('type',''), i.get('size','')) for i in d['directory']['item']]\"", "description": "List the Dec 2023 8-K filing documents"}

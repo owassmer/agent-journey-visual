@@ -1,0 +1,5 @@
+const r = await Promise.allSettled([
+tools.exec_command({cmd:".venv/bin/python /tmp/run_bounded_units.py 23 132 > /tmp/bounded-heavy.log 2>&1","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":300}),
+tools.exec_command({cmd:".venv/bin/python /tmp/run_bounded_units.py 59 63 > /tmp/bounded-other.log 2>&1","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","yield_time_ms":1000,"max_output_tokens":300}),
+tools.exec_command({cmd:"tail -n 6 /tmp/bounded-tests.log /tmp/bounded-2206.log /tmp/settle-heavy.log; rg --files /tmp | rg 'assemble.*notes|recovery.*assembl|integrat.*notes|launch_exact' | head -25; sed -n '1,130p' .github/workflows/notes-recovery.yml; git diff -- app/disputes/forecast.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3100})
+]);r.forEach(text);

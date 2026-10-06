@@ -1,0 +1,58 @@
+=== contracts/build_contracts.py
+1:"""Generate prototype JSON Schema and an evidence-only Barfresh research packet.
+4:"""
+8:ROOT = Path(__file__).resolve().parent
+11:def obj(properties, required=None, description=None):
+20:def arr(items, minimum=0):
+24:def enum(*values):
+28:def ref(name):
+32:S = {"type": "string", "minLength": 1}
+33:DATE = {"type": "string", "format": "date"}
+34:DT = {"type": "string", "format": "date-time"}
+35:NS = {"type": ["string", "null"]}
+36:DEC = {"type": "string", "pattern": r"^-?(0|[1-9][0-9]*)(\.[0-9]+)?$"}
+37:I = {"type": "integer"}
+38:B = {"type": "boolean"}
+207:def value(unit, number=None, observed=None, facts=None, note="Not publicly established.", basis=None, derivation=None):
+215:def p(name, unit, number=None, observed=None, facts=None, note="Not publicly established.", role="source_anchor"):
+219:F = {
+229:ASOF = "2024-10-25T23:59:59-04:00"
+230:DID = "brfh_2024-10-25_external_event_review"
+231:BID = "barfresh_food_group_inc"
+232:LID = "barfresh_receivables_facility_2024"
+=== contracts/build_synergy_example.py
+1:"""Extend the prototype contracts and generate the main Synergy threshold example.
+4:"""
+9:ROOT = base.ROOT
+49:F = {
+58:DID = "synergy_2024-08-13_external_event_review"
+59:BID = "synergy_chc_corp"
+60:LID = "synergy_webbank_shopify_2024-05-01"
+61:ASOF = "2024-08-13T23:59:59-04:00"
+62:BASELINE = "synergy_explicit_threshold_inputs_v1"
+65:def assumption(name, unit, amount, note):
+71:def derived(unit, amount, facts, formula, note):
+=== contracts/build_proposal_fixtures.py
+1:"""Three analytical proposal fixtures; not historical or actual Slope quotes."""
+6:ROOT = Path(__file__).resolve().parent
+=== contracts/validate_contracts.py
+1:"""Validate prototype contract shapes and a small set of economic data invariants.
+4:"""
+13:ROOT = Path(__file__).resolve().parent
+14:SCHEMA = json.loads((ROOT / "build-contracts.schema.json").read_text())
+15:VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
+18:def stamp(s):
+22:def walk(obj):
+32:def validate(packet):
+102:def must_reject(packet, label):
+=== package_kit.py
+1:"""Package the reviewed design and acquired sources. No network or model calls."""
+7:ROOT = Path(__file__).resolve().parents[2]
+8:DESIGN = ROOT / "research/revision_v2"
+9:OUT = DESIGN / "deliverables/Slope_Credit_Scenario_Research_and_Design_Kit.zip"
+=== reference/test_calculator.py
+1:"""Boundary and conservation tests for the small reference calculator."""
+11:class ContractTests(unittest.TestCase):
+45:class BudgetTests(unittest.TestCase):
+77:class TimingTests(unittest.TestCase):
+{"evidence_class": "explicit arithmetic fixture, not Synergy or any borrower's payment schedule", "principal_only_usd": "100000.00", "original_receipt_day": 90, "delayed_receipt_day": 120, "effective_annual_discount_rate_assumption": "0.12", "discount_day_count_assumption": "ACT/365", "principal_received_original_usd": "100000.00", "principal_received_delayed_usd": "100000.00", "principal_loss_usd": "0.00", "pv_original_usd": "97244.28", "pv_delayed_usd": "96342.68", "pv_change_usd": "-901.59", "extra_principal_exposure_days": 30, "extra_principal_exposure_dollar_days": "3000000", "note": "A pure delay changes PV and exposure duration without creating a principal loss. No extra interest or late fee is added. PV change is computed before cent rounding, so displayed PV subtraction can differ by one cent."}

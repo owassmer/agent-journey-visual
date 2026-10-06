@@ -1,0 +1,7 @@
+// @exec: {"max_output_tokens": 27000}
+const d=load("digestDir");
+const r=await Promise.allSettled([
+  tools.exec_command({cmd:"python3 read.py code 471493 50000",workdir:d,max_output_tokens:15000}),
+  tools.exec_command({cmd:"python3 read.py context 8356 50000",workdir:d,max_output_tokens:15000})
+]);
+for(let i=0;i<r.length;i++)text({bundle:i,...r[i]});

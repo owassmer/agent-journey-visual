@@ -1,0 +1,8 @@
+{
+  "assignment_id": "initial-03",
+  "source_range_read": [60, 78],
+  "context_source_lines_read": [9, 37],
+  "unread_material": [],
+  "compaction_occurred": false,
+  "recovery_note": "Read the complete 571-line persisted result embedded at source line 70. Source line 61's tool-facing preview and stored stdout prefix were reconciled against that full result. Identical numbered and unnumbered payloads were read once; context line 37's duplicate was also verified identical."
+}

@@ -1,0 +1,1 @@
+{"command": "grep -rn \"registry_version\\|\\\"3.12\\|kit_manifest\\|manifest\" app --include=*.py | head; ls Slope_Credit_Scenario_Research_and_Design_Kit/ ; sed -n 215,235p Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json", "description": "Find version checks and manifest"}

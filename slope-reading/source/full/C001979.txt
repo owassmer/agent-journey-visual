@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && sed -n 111,128p app/web/app.py; U=http://127.0.0.1:8000/runs/akoustis_20240620-agent_plus_jev-20260926T212137Z/reweight; for i in 1 2 3; do curl -s -o /dev/null -w \"%{time_total}s %{http_code}\\n\" -X POST -H 'Content-Type: application/json' -d '{\"overrides\": {}}' $U; done"}

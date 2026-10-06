@@ -1,0 +1,8 @@
+[1;32mAll checks passed![0m
+E       assert not ('How final the amount is: The amount has been fully briefed or submitted to the court for decision (de1: “The issue i...eal this decision, management has assessed that it is reasonably possible a contingent liability will be incurred.”)',)
+E        +  where ('How final the amount is: The amount has been fully briefed or submitted to the court for decision (de1: “The issue i...eal this decision, management has assessed that it is reasonably possible a contingent liability will be incurred.”)',) = DisputePath(path_id='dispute_de_p2', transitions=('amount_fixed', 'appeal_secured', 'appeal_continues'), labels=('The ...ecision, management has assessed that it is reasonably possible a contingent liability will be incurred.”)",), also=()).points_here
+tests/test_decision_model.py:210: AssertionError
+uv run pytest -q -p no:cacheprovider --color=no -W ignore  2>&1  5.65s user 0.17s system 93% cpu 6.223 total
+grep -E "^E |passed|failed|Error"  0.00s user 0.01s system 0% cpu 6.223 total
+head -30  0.00s user 0.00s system 0% cpu 6.221 total
+[This command modified 1 file you've previously read: tests/test_decision_model.py. Call Read before editing.]

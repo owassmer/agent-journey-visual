@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-contracts/runs/recorded/akoustis_20240514-agent_plus_jev-20260929T030814Z && python3 ~/.hermes/profiles/connor/cache/scratch/9l/connor_ctx.py run.json max_tokens 700 | cut -c1-1200; python3 ~/.hermes/profiles/connor/cache/scratch/9l/connor_ctx.py events.jsonl max_tokens_exceeded 1200 | head -c 2500"}

@@ -1,0 +1,1 @@
+{"command": "touch app/analysis/__init__.py && sed -n 200,240p app/agent/tools.py && grep -rn \"slope_terms\\|load_terms\\|tier_for\\|limits(\\|menu(\" app tests cases --include=*.py | grep -v \"^app/decisions\\|^app/finance/slope_products\" | cut -c1-140", "description": "Create package; find old terms/tier users"}

@@ -1,0 +1,26 @@
+Web search results for query: "Slope B2B payments financing working capital pricing underwriting slope.so"
+
+Links: [{"title":"Slope | Union Square Ventures","url":"https://www.usv.com/writing/2022/04/slope/"},{"title":"Slope Reviews 2026: Features and Alternatives","url":"https://resolvepay.com/blog/slope-reviews"},{"title":"Slope - Partner Integration | J.P. Morgan","url":"https://partners.jpmorgan.com/slope.html"},{"title":"Slope | B2B payments simplified - About us","url":"https://slopepay.com/company"},{"title":"ShipBob Offers Access to Financing Program Powered by Slope | PYMNTS.com","url":"https://www.pymnts.com/news/b2b-payments/2025/shipbob-offers-access-to-financing-program-powered-by-slope/"},{"title":"Slope, AI-Led B2B Payments Platform, Secures $65 Million Strategic Equity and Debt Funding Provided by J.P. Morgan and Others","url":"https://businesswire.com/news/home/20240717100691/en"},{"title":"Slope funding, news & analysis | Sacra","url":"https://sacra.com/c/slope/"},{"title":"Slope: Funding, Team & Investors","url":"https://startupintros.com/orgs/slope"},{"title":"Slope Tech - Working Capital Forum","url":"https://www.workingcapitalforum.com/winner/slope-tech"}]
+
+Based on the search results, here's what I found about Slope's B2B payments financing, working capital, pricing, and underwriting:
+
+## Overview
+
+Slope is a B2B payments platform for enterprise companies that offers order-to-cash automation using leading AI tools that power checkout, customer and vendor risk assessment, embedded short-term financing, and payment reconciliation.
+
+## Underwriting & Pricing Model
+
+Slope provides automated, 0-question, instantaneous underwriting for B2B installment payments. The company generates revenue through transaction fees on payment volume and recurring fees for its order-to-cash automation platform.
+
+The embedded financing component functions by Slope paying merchants immediately when buyers select net-terms options, then collecting payments from buyers with interest over 30-90 day periods.
+
+## Working Capital Solutions
+
+Slope's embedded finance solution enables enterprise to mid-market companies to receive payments at point of purchase while giving their business buyers the flexibility to defer payment terms via instalments or net terms. Slope's fully automated embedded finance solution and innovative underwriting capabilities are disrupting the B2B payments industry and helping under-served small and medium-sized enterprise (SMEs) access within seconds the capital they need.
+
+## Key Features
+
+SlopeScore is the first cash flow underwriting score purpose-built for SMBs. Slope operates as an API-first order-to-cash automation platform that integrates directly into B2B marketplaces, ERPs, and checkout flows.
+
+
+REMINDER: You MUST include the sources above in your response to the user using markdown hyperlinks.

@@ -1,0 +1,75 @@
+{
+  "run_id": "synergy_20240813-agent_plus_jev-20260925T014016Z",
+  "status": "CANDIDATE_READY",
+  "failure": null,
+  "incomplete_reasons": [],
+  "returned_models": [
+    "claude-opus-5-5"
+  ],
+  "tool_calls": {
+    "get_mission": 1,
+    "read_baseline_profile": 1,
+    "read_loan_terms": 1,
+    "record_dependency": 3,
+    "search_evidence": 4,
+    "read_evidence": 14,
+    "judge": 3,
+    "propose_finding": 10,
+    "resolve_finding": 10,
+    "propose_effect": 2,
+    "run_sensitivity": 3,
+    "request_missing_fact": 2,
+    "submit_packet": 1,
+    "StructuredOutput": 1
+  },
+  "graph_counts": {
+    "dependencies": 3,
+    "candidates": 20,
+    "jev_calls": 34,
+    "observations": 126,
+    "findings": 10,
+    "reconciliations": 0,
+    "effects": 2
+  },
+  "jev": {
+    "provider": "openrouter",
+    "requests": 31,
+    "cache_hits": 3,
+    "physical_attempts": 31,
+    "attempt_ceiling": 150,
+    "spent_usd": "0.003287172",
+    "spend_cap_usd": "0.10"
+  },
+  "recorded_at": "runs/recorded/synergy_20240813-agent_plus_jev-20260925T014016Z"
+}
+exit 0
+  SEARCH Atrium loan payable $5,450,000 installments Note 11
+  SEARCH Atrium settlement agreement monthly payments promissory
+  FIND= fnd_001 rejected Synergy CHC Corp.'s December 2023 settlement with HVL, LLC d/b/a Atrium Innovations created a $5,450
+  FIND= fnd_002 accepted The December 2023 settlement of Synergy CHC Corp. v. HVL, LLC d/b/a Atrium Innovations left Synergy 
+  FIND= fnd_003 accepted The settlement loan payable to the former supplier (Atrium) has $2,000,000 of payments scheduled for
+  FIND? fnd_004 The Atrium settlement loan balance was unchanged at $4,802,445 between December 31, 2023 and June 30, 2024, so none of t
+  FIND= fnd_004 rejected The Atrium settlement loan balance was unchanged at $4,802,445 between December 31, 2023 and June 30
+  FIND? fnd_005 The reported outstanding balance of the Atrium settlement loan was $4,802,445 at June 30, 2024, the same as at December 
+  FIND= fnd_005 accepted The reported outstanding balance of the Atrium settlement loan was $4,802,445 at June 30, 2024, the 
+  FIND? fnd_006 Management reported approximately $2.0 million of cash as of August 12, 2024.
+  FIND= fnd_006 accepted Management reported approximately $2.0 million of cash as of August 12, 2024.
+  FIND? fnd_007 The interim (June 30, 2024) Note 13 states that the Atrium case was settled during December 2023 with a $5,450,000 loan 
+  FIND= fnd_007 accepted The interim (June 30, 2024) Note 13 states that the Atrium case was settled during December 2023 wit
+DEP dep_002 | What cash does Synergy CHC Corp. owe in the rest of 2024 under the May 2024 confidential settlement with a cur | target: Synergy CHC Corp. — May 2024 supplier settlement obligation (VitBest note payabl
+  FIND? fnd_008 The March 27, 2024 supplier settlement loan (VitBest, balance $2,920,824 at June 30, 2024) requires future payments of $
+  FIND= fnd_008 rejected The March 27, 2024 supplier settlement loan (VitBest, balance $2,920,824 at June 30, 2024) requires 
+  FIND? fnd_009 The $3,020,824 March 27, 2024 supplier settlement loan has $600,000 of future payments required in 2024 under the schedu
+  FIND= fnd_009 accepted The $3,020,824 March 27, 2024 supplier settlement loan has $600,000 of future payments required in 2
+DEP dep_003 | Under the executed WebBank Merchant Loan Agreement (May 1, 2024), are Synergy's repayments purely 25% of daily | target: Synergy CHC Corp. — WebBank/Shopify $418,100 merchant loan (May 1, 2024): repaym
+  SEARCH minimum payment period repayment rate daily sales
+  FIND? fnd_010 Under the WebBank Merchant Loan Agreement, Synergy must pay a Minimum Payment equal to 30 percent of the $418,100 Total 
+  FIND= fnd_010 accepted Under the WebBank Merchant Loan Agreement, Synergy must pay a Minimum Payment equal to 30 percent of
+  EFFECT eff_001 validated settlement_payment_timing | Synergy CHC Corp. — Atrium (HVL, LLC d/b/a Atrium Innovation | Between Aug 13 and Dec 31, 2024 Synergy may owe up to $2.0M to Atrium against ~$2.0M repor []
+  EFFECT eff_002 validated settlement_payment_timing | Synergy CHC Corp. — $3,020,824 March 27, 2024 supplier settl | Adds up to $0.6M of H2-2024 outflow ahead of or alongside the advance installments; combin []
+  SENS [('0', None), ('0.25', None), ('0.5', None), ('0.75', None), ('1', None)] unknown
+  SENS [('0', 90000000), ('0.5', 0), ('1', 0)] 10000000
+  SENS [('0', 80000000), ('0.25', 15000000), ('0.35', 0), ('0.5', 0)] 0
+  MISSING How much of the $2,000,000 Atrium 2024 settlement bucket and of the $600,000 March 2024 supplier (VitBest) settlement 20
+  MISSING Does management's approximately $2.0 million cash as of August 12, 2024 include the $100,000 of restricted cash, and wha
+PACKET {"summary": "Event: Synergy CHC Corp.'s litigation with its former contract manufacturer HVL, LLC d/b/a Atrium Innovations (D. Me. 2:22-cv-00301) was settled in December 2023, leaving a $5,450,000 settlement loan payable (5%, payable in full with the last payment). The interim note's wording 'remains pending' sits in the same paragraph as the settlement sentence and is outweighed by it (the statement_relation check found the two statements agree). The Atrium balance was $4,802,445 at both Dec 31, 2023 and June 30, 2024. The future schedule ($2,000,000 in 2024, $2,000,000 in 2025, $802,445 in 2026) adds up to the June 30 balance, so the full $2.0M 2024 amount was still owed after June 30. A second supplier settlement (March 27, 2024; VitBest; $2,920,824 at June 30) has $600,000 remaining for 2024. The LODC settlement was paid in full in May 2024 and no longer matters. The existing WebBank/Shopify $418,100 merchant loan is repaid from 25% of daily Shopify sales, with a contractual minimum of 30% of the total ($125,430) due within the first six months. It is kept under its own contract logic and not rewritten. Baseline: about $2.0M cash (management figure, Aug 12, 2024), $100k restricted cash at June 30, about $4.1M of debt due in 2024 (not itemized), and an illustrative $200k reserve. Effects eff_001 (Atrium, $2.0M) and eff_002 (VitBest, $0.6M) are timing reclassifications of existing liabilities and are counted once. Sensitivity: if none of the 2024 settlement amounts were pai

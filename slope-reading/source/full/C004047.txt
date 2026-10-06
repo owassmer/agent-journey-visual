@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int && git status --short | grep -v '^??'; git log --oneline -2 | cut -c1-70; grep -E \"\\-> (patch|write_file)|git commit|slope analyze\" ~/.hermes/profiles/connor/cache/delegation/live/deleg_38ab26b4/task-0.log | cut -c1-160 | head"}

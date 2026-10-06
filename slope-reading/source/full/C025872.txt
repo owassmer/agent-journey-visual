@@ -1,0 +1,1 @@
+{"command": "sed -n 1,8p Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json; sed -n 196,212p Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json; grep -n \"4c\\|recorded reason\\|override\" Slope_Credit_Scenario_Build_Specification.md | head -30"}

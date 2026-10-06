@@ -1,0 +1,22 @@
+1140	     obj({"effect_ids": {"type": "array", "items": S}, "paid_fractions": {"type": "array", "items": S},
+1141	          "unavailable_opening_cash_cents": {"type": "integer"}}, ["effect_ids"]), run_sensitivity),
+1142	    ("instantiate_dispute", "Place one live dispute (a money judgment, or a liability ruling whose amount is still open) "
+1143	     "onto the host's post-judgment dispute model. Cite the accepted findings about it; say whether the borrower is the "
+1144	     "debtor (owes) or the creditor (is owed); name the counterparty; give the amount (value_cents, or "
+1145	     "lower_cents/upper_cents; state `basis` if it is not quoted in the findings) and the judgment's entry date if one "
+1146	     "has been entered (it must appear in the cited quotes). Say if the amount already includes post-judgment interest. "
+1147	     "A dispute is modelled once; to correct one, pass `supersedes` with its instance ID. The host places the stage, judges each transition with Jev "
+1148	     "and sets every date and amount from the model's rules. You may give your own `stage` reading and a "
+1149	     "`proposed_extension` if the model lacks a step the record shows; an extension is flagged, not used.",
+1150	     obj({"dependency_id": S, "title": S, "finding_ids": {"type": "array", "items": S},
+1151	          "borrower_role": {"type": "string", "enum": ["debtor", "creditor"]}, "counterparty": S,
+1152	          "amount": obj({"value_cents": {"type": "integer"}, "lower_cents": {"type": "integer"},
+1153	                         "upper_cents": {"type": "integer"}, "basis": S,
+1154	                         "includes_post_judgment_interest": {"type": "boolean"}}, []),
+1155	          "supersedes": S,
+1156	          "judgment_date": S, "stage": {"type": "string", "enum": ["amount_pending", "judgment_entered",
+1157	                                                                     "appeal_pending", "enforcement"]},
+1158	          "proposed_extension": S},
+1159	         ["dependency_id", "title", "finding_ids", "borrower_role", "counterparty", "amount"]), instantiate_dispute),
+1160	    ("run_scenarios", "Run the deterministic cash engine for every Slope structure: the bank-only view and the "
+1161	     "event-adjusted view along every path of your instantiated disputes. Returns the recommendation and what binds it, "

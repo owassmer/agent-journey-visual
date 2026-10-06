@@ -1,0 +1,73 @@
+3.0.0
+{
+ "amount_finality": {
+  "label": "How final the amount is",
+  "kind": "graded",
+  "aggregate": "most_advanced",
+  "relevance": "Does the quoted text say how far this obligation's amount has progressed (claimed, briefed or submitted for decision, fixed)?",
+  "levels": [
+   "No amount has been stated",
+   "An amount is claimed or requested by a party",
+   "The amount has been fully briefed or submitted to the court for decision",
+   "The court has fixed the amount"
+  ]
+ },
+ "appeal_intent": {
+  "label": "The payer's appeal intent",
+  "kind": "graded",
+  "aggregate": "latest",
+  "relevance": "Does the quoted text say whether the payer will appeal this obligation?",
+  "levels": [
+   "The payer accepts the judgment or says it will not appeal",
+   "The passage states no position on an appeal",
+   "The payer is considering or reserves the right to appeal",
+   "The payer states it intends to appeal",
+   "The payer has filed a notice of appeal"
+  ]
+ },
+ "appeal_barred": {
+  "label": "An appeal of this obligation is waived or barred",
+  "kind": "present",
+  "aggregate": "any",
+  "relevance": "Does the quoted text state that the payer waived, or is barred from, appealing this obligation itself (not some other claim or order)?"
+ },
+ "debtor_resistance": {
+  "label": "The payer's conduct on this obligation",
+  "kind": "graded",
+  "aggregate": "latest",
+  "relevance": "Does the quoted text describe how the payer has responded to this obligation or to the court's orders about it?",
+  "levels": [
+   "The payer has complied promptly",
+   "The passage describes no conduct by the payer on this obligation",
+   "The payer contested or delayed but complied in the end",
+   "The payer has refused, or contested enforcement of, this obligation"
+  ]
+ },
+ "debtor_liquidity": {
+  "label": "The payer's ability to pay",
+  "kind": "graded",
+  "aggregate": "latest",
+  "relevance": "Does the quoted text describe the payer's own cash, finances or ability to pay an amount of this size?",
+  "levels": [
+   "The payer reports it cannot pay or doubts it can continue as a going concern",
+   "The payer's resources look constrained relative to the amount",
+   "The payer's resources look adequate for the amount",
+   "The payer's resources are ample relative to the amount"
+  ]
+ },
+ "settlement_signals": {
+  "label": "Settlement signals",
+  "kind": "graded",
+  "aggregate": "latest",
+  "relevance": "Does the quoted text say anything about the parties settling this obligation?",
+  "levels": [
+   "The passage describes no settlement discussion",
+   "A party expresses general willingness to settle, or mediation is ordered",
+   "The parties disclose active settlement negotiations",
+   "The parties have an agreement in principle or a term sheet"
+  ]
+ }
+}
+Only an established fact changes the graph: an established payment ends the dispute; an established appeal waiver covering this obligation removes the appeal branch. Silence and stated intentions change nothing structurally; they are evidence for the forecasts.
+Hydrates evidence, asks the questions, applies stage and constraint rules, composes probabilities, simulates cash.
+{'settle_before_ruling': ['settlement_signals', 'amount_finality', 'debtor_resistance'], 'amount_fixed': ['amount_finality'], 'settle_after_judgment': ['settlement_signals', 'debtor_resistance'], 'appeal': ['appeal_intent', 'appeal_barred', 'debtor_resistance', 'debtor_liquidity'], 'secured_stay': ['debtor_liquidity', 'appeal_intent'], 'security_form': ['debtor_liquidity'], 'settle_during_appeal': ['settlement_signals'], 'voluntary_payment': ['debtor_resistance', 'debtor_liquidity', 'appeal_intent'], 'enforcement': ['debtor_liquidity', 'debtor_resistance']}

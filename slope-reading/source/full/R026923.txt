@@ -1,0 +1,19 @@
+1
+  condition: Confirm how ChromaDex Corporation would secure a stay pending appeal of the $9,800,000.00 owed to Elysium Health, Inc. (cash collateral or a letter of credit), and for how much.
+  condition: Ask the borrower whether settlement talks are under way on this matter (for the $9,800,000.00 owed to Elysium Health, Inc.).
+  condition: Count the $2,500,000.00 owed by Elysium Health, Inc. only once it is received.
+  condition: Confirm Western Alliance Bank's covenants permit this financing after the disputes' cash effects.
+200
+Financing decision Engine result
+Bank data only
+$2,000,000.00, 3 monthly installments (90 days)
+At the requested amount : limit $3,624,901.09 (monthly bank inflows) · order limit $2,718,675.82 · lowest projected cash $24,956,363.55 on 2025-02-15 · passes
+With the disputes&#39; paths
+$1,430,000.00, 3 monthly installments (90 days) below the request
+At the requested $2,000,000.00 : limit $1,905,954.53 (lowest projected cash) · order limit $1,429,465.90 · lowest projected cash $12,706,363.55 on 2025-02-15 in The court fixes the amount → The debtor appeals and posts a bond → The appeal continues / The debtor neither pays nor bonds → Not collected in the horizon (stress) · fails: amount above the order limit of $1,429,465.90
+At the recommended $1,430,000.00 : limit $1,909,118.03 (lowest projected cash) · order limit $1,431,838.52 · lowest projected cash $12,727,453.55 on 2025-02-15 in The court fixes the amount → The debtor appeals and posts a bond → The appeal continues / The debtor neither pays nor bonds → Not collected in the horizon (stress) · passes
+Next amount up, $1,440,000.00 : limit $1,909,062.53 (lowest projected cash) · order limit $1,431,796.90 · lowest projected cash $12,727,083.55 on 2025-02-15 in The court fixes the amount → The debtor appeals and posts a bond → The appeal continues / The debtor neither pays nor bonds → Not collected in the horizon (stress) · fails: amount above the order limit of $1,431,796.90
+Conditions Confirm how ChromaDex Corporation would secure a stay pending appeal of the $9,800,000.00 owed to Elysium Health, Inc. (cash collateral or a letter of credit), and for how much. If satisfied: The confirmed collateral replaces the modelled lock on the appeal paths. If not: The appeal paths keep 50% to 100% of a bond at 125% of the judgment locked (model rule). Ask the borrower whether settlement talks are under way on this matter (for the $9,800,000.00 owed to Elysium Health, Inc.). If satisfied: The settlement branch is re-weighted. If not: It stays weighted on the record as it is. Count the $2,500,000.00 owed by Elysium Health, Inc. only once it is received. If satisfied: Received cash enters the connected-bank data and the next review. If not: The decision already stands on the paths where it is not received. Confirm Western Alliance Bank&#39;s covenants permit this financing after the disputes&#39; cash effects. If satisfied: No further condition. If not: Decline until the lender consents.
+Elysium Health v. ChromaDex — D. Del. attorneys&#39; fee and cost award (liability granted, amount pending)
+The borrower owes Elysium Health, Inc. $9,800,000.00 · stage: Liability decided, amount open · refined by factors at: amount_pending
+51% The court fixes the amount → The debtor appeals and posts a bond → The appeal continues

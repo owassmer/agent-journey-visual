@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:".venv/bin/python - <<'PY'\nimport pickle\nr=pickle.load(open('/tmp/review-native-stay-boundary-raw.pkl','rb'));print(r.keys())\nfor i in [90,167]:\n p=r['paths'][i];print(i,p.steps,p.edges)\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":3000}))

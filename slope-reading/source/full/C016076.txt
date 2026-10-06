@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:6014,chars:"","yield_time_ms":1000,"max_output_tokens":1000}));
+text(await tools.exec_command({cmd:"PYTHONPATH=. .venv/bin/python - <<'PY'\nimport gzip,pickle\nfrom pathlib import Path\nfor p in Path('var/notes-assembly').glob('*.pkl.gz'):\n v=pickle.loads(gzip.decompress(p.read_bytes()));print(p.name,list(v));print([(len(o['paths']),len(o['parent'].steps)) for o in v['outputs']])\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}));

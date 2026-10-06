@@ -1,0 +1,3 @@
+// @exec: {"max_output_tokens": 28000}
+const reads = await Promise.allSettled([443000,488000].map(offset => tools.exec_command({cmd:`python3 read.py delegation ${offset} 45000`,workdir:load("digestDir"),max_output_tokens:13000})));
+for (const r of reads) text(r.status === "fulfilled" ? r.value.output : String(r.reason));

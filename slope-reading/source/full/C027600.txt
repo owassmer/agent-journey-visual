@@ -1,0 +1,1 @@
+{"command": "ls cases/chromadex_20240819/ && uv run python -c \"\nimport json;i=json.load(open('cases/chromadex_20240819/inputs.json'));print(json.dumps(i.get('financing_plan'),indent=1)[:3000])\" ; cat app/analysis/operating.py | head -60", "description": "Inspect case inputs and operating bootstrap"}

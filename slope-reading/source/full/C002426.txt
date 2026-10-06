@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/7_page/edit2.py", "old_string": "rep(\"\"\"text-anchor=\"end\">${v}</text>`; }\"\"\", \"\"\"text-anchor=\"end\">${v}%</text>`; }\"\"\")", "new_string": "rep(\"\"\"text-anchor=\"end\">${v}</text>`;\"\"\", \"\"\"text-anchor=\"end\">${v}%</text>`;\"\"\")"}

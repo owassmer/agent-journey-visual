@@ -1,0 +1,19 @@
+| `statement_relation` | Agent, when two findings or passages may conflict; host, on each accepted finding against the most recent accepted finding under the same dependency; host, when an effect may overlap a baseline item | `statement_relation`, `baseline_overlap` (Choice; overlap is a warning only) |
+| `snapshot_sweep` | Host, once per snapshot before any run (cached, own budget) | `matter_inventory` (Noul), `matter_kind` (Choice) |
+| `statement_support` | Host, on every effect's model consequence and on the packet conclusion | `claims_supported` (Choice) |
+| `inventory_coverage` | Host, on every inventory item the agent marks covered | `coverage_supported` (Choice) |
+
+Jev's advantages are cost, independence from the agent's framing and stable typed answers, so the host also uses it at scale and at the points where fluent reasoning is riskiest:
+
+- **Inventory sweep.** Every admissible section is screened once for specific legal matters, settlements, debt agreements, covenants, cash restrictions and matter-related accounting items. The flagged sections form an inventory the agent must account for (covered by accepted findings, or not decision-relevant with a reason) before the packet can be submitted; a claim that findings cover an item is itself checked. This replaces prompt rules about coverage.
+- **Category-error guard.** Every finding that supports an effect gets host-run posture and status checks, with the status question chosen by the effect's mechanism. Code-owned rules require, for example, a required (not claimed or disputed) obligation for a settlement payment effect and a reported-satisfied obligation for a resolved one; a mismatch or ambiguous answer blocks the effect unless the agent overrides it with a reason.
+- **Statement support.** Each effect's model consequence and the conclusion are checked against the cited findings and engine results; unsupported claims must be revised or overridden with a reason.
+- **Reliance attribution.** When a finding cites a screened passage, that passage's screen observations are recorded as used, so evaluation can show whether screening helped.
+
+Screening labels and orders evidence (direct evidence, conflict, context-only); it never hides a candidate, so a Jev false negative cannot bury the passage that answers the question. Routing thresholds live in code and are checked against labelled cases in `evals/`; no confidence cutoff converts a classification into a fact or a financial input.
+
+Acceptance is asymmetric: Jev observation → agent accepts, reconciles, or overrides with a stated reason → host structural validation (atomicity, verbatim source spans) → effect proposal → deterministic engine validation. Every semantic observation carries a `downstream_disposition` (used in finding, caused a further read, redirected research, flagged conflict, challenged the agent's draft, overridden with reason, unused), which forms the Jev contribution ledger used in evaluation.
+
+Slope_Credit_Scenario_Research_and_Design_Kit/README.md
+(eval):1: no matches found: worktrees/.*/worktrees
+(eval):1: no matches found: --include=*.md

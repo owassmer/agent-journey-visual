@@ -1,0 +1,9 @@
+{
+  "assignment_id": "initial-01",
+  "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+  "source_range_read": [1, 37],
+  "context": "The supplied context.txt is empty; shared instructions and assignment were read in full.",
+  "unread_material": [],
+  "compaction_occurred": false,
+  "reading_notes": "Read the full assigned material, including tool arguments/results and all 214 lines of the alignment document. Recovered the initially truncated combined display through smaller reads. Identical prompt and tool-description payloads were checked for equality and reused; duplicate tool-result representations were checked for equality. No source or project files were changed."
+}

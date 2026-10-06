@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n \"$(grep -n '    def clone' app/analysis/events.py | cut -d: -f1),+28p\" app/analysis/events.py; grep -n \"self.ev\\.[a-z_]* = \\|self\\.ev\\.[a-z_]*\\[.*\\] = \\|ev\\.proceeds\\b.*=\" app/analysis/events.py | head -20", "timeout": 30}

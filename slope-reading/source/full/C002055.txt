@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees && for w in step-6b-page fix-a4-milestone step-6c-record step-6b-chains step-6b-engine step-6a-cases step-5c-channels step-5b-probabilistic-analysis step-5b-decision-model step-4c-jev-at-scale; do [ -d $w/.venv ] && rm -rf $w/.venv && echo \"rm $w/.venv\"; done; df -h / | tail -1"}

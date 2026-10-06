@@ -1,0 +1,4 @@
+await Promise.allSettled([
+tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-09b42b44a8d35909a --command-id d3192ddc-35e7-47e7-8105-5d0a4b807ba5 --query '{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}'",max_output_tokens:1700}),
+tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-09b42b44a8d35909a --command-id 3d474715-18df-4208-9a7d-3e61723244c8 --query '{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}'",max_output_tokens:1700})
+]).then(r=>r.forEach(text));

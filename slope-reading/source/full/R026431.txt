@@ -1,0 +1,7 @@
+repaired
+Slope_Credit_Scenario_Build_Specification.md:72:**Later outcomes, hidden until the decision is locked:** on 20 August 2024 the Delaware court ruled on the fee-amount dispute (Dkt. 415); ChromaDex move
+Slope_Credit_Scenario_Build_Specification.md:361:  chromadex_20240903/ # lead case: admissible manifest and scenario inputs
+Slope_Credit_Scenario_Build_Specification.md:376:| 5a. Lead case evidence | ChromaDex sources registered (mission `chromadex_20240903`), dated snapshot with federal court filings and SEC filings, lock
+cases/chromadex_20240819/run_inputs.json:4:  "snapshot_id": "chromadex_20240903",
+cases/chromadex_20240819/run_inputs.json:6:  "note": "Operator request and ordinary baseline for the 3 September 2024 review, reconstructed as if ChromaDex applied to Slope to finance a contract-manuf
+cases/chromadex_20240819/run_inputs.json:32:    "initial_event_seed": "As of 3 September 2024, assess Slope financing of a USD 2.5 million contract-manufacturer invoice for ChromaDex Corporation. Chro

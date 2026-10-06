@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ssm get-command-invocation --profile slope --region us-east-2 --instance-id i-09b42b44a8d35909a --command-id 906bdf4e-c004-4210-af32-6393ac142f0a --query '{Status:Status,Out:StandardOutputContent,Err:StandardErrorContent}'\ncat /tmp/slope-launch-pool.log | tail -4","max_output_tokens":1000}));

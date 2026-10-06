@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"cat CLAUDE.md; cat .github/workflows/notes-recovery.yml; sed -n '1,240p' tools/notes_recover.py; cat /tmp/probe_terminal_distress.py; ls /tmp/notes-recovery-reports","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":12000}));
+text(ALL_TOOLS.filter(x=> /exec|terminal|github|browser/i.test(x.name+" "+x.description)).map(x=>({name:x.name,description:x.description.slice(0,100)})).slice(0,100));

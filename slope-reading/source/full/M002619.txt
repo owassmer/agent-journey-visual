@@ -1,0 +1,53 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_6bd8006e]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 23:16:10 (15m42s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 943.14s
+
+--- ✓ TASK 1/1: Worker B2: implement the 14 May pending-claim event model, per `Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/akoustis/design/DECOMPOSITION_20240514.md` §7, in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD 456cf1f). First merge origin/step-8-case (the case worker's 14 May feed, run inputs and scenario controls). Follow §7.11's order of work; each step ends in targeted tests, a commit of named files and a push. Finish by building the 14 May forecast tree (no Jev calls) and report the path count, the Jev question count, the per-question state size, and the §5.3 threshold shares. Do not open a PR, call Jev or run the full analysis.  (status=completed, api_calls=69, 942.79s) ---
+I've committed and pushed the first checkpoint (§7.11 steps 1–2 and the Chain half of step 3) as **513f260** on step-8-model. I haven't started Owen's three items yet; they come next.
+
+**What's in 513f260**
+- **Contract 4.1.0, additive:**
+  - the `pending_money_claim` template and its label templates;
+  - `listing_kept` and `listing_route`;
+  - four new rules and `compatible_versions: ["4.0.0"]`;
+  - `branch_bookings`, so the response and cash-floor branches now book from contract data.
+- **Case inputs** in `cases/akoustis_20240514/`:
+  - `scenario.json`: the verdict window, O1's amounts, the enhancements, the coupon paid in shares with all cash as the sensitivity, and the §1961 rate of 5.13% (week ending 10 May, FRED WGS1YR);
+  - `fixture_dispute.json`.
+- **Chain (`events.py`):**
+  - the verdict date drawn per trajectory, with entry the next business day after it (O4);
+  - the verdict, post-trial motions and ruling steps;
+  - I0 settlement capped at the claimed amount;
+  - ⚑ cash facts taken from a forward run of the loan, which reads the `Line` on `Basis`, so it will pick up the existing-line start state once that merges.
+- **Checks:**
+  - the 20 Jun tree rebuilt on the new code matches the old one exactly: 13,821 paths, 337 node keys, and every question and bank-view state hash, so its Jev cache still hits;
+  - 40 targeted tests pass;
+  - branch amounts come out at $67,526,412 on the claimant's theory, $1,426,412 without the head-start measure, and $9,999,999 in the sensitivity.
+
+**One fix you should know about.** The new fields on the claim components broke the recorded 20 Jun run's packet check. They are now left out of the saved record when at their defaults, which is how the run loads again.
+
+**Next, in this order:**
+1. **Raising equity at the cash floor (item 1).**
+   - A new 4.1.0 node at the cash floor with branches raise equity / file / continue, and a `raise` booking: equal daily amounts over 30 days.
+   - The raise amount depends on the situation, as case inputs: $9.7M with no adverse judgment, or $0 after the claimant's-theory judgment, each with a $5.0M sensitivity. D8 stays as the zero-cash fallback.
+   - The shared financing scenario becomes a sensitivity only.
+   - The 4.0.0 cash-floor question stays as it is.
+2. **J1 from the verdict form (item 2).** Fetch D.I. 580, read it with D.I. 535, and make one jury node per money-bearing question, asked in order. J1's three branches then become computed composites, so the cash tree doesn't change.
+3. **The rest of §7.11:** the walker, registry 4.1.0 and tests 1–9.
+4. **The 14 May tree build and the report figures:**
+   - the path count;
+   - the Jev question count by type;
+   - the state sizes and estimated Jev cost;
+   - the §5.3 shares, including O2's share of trajectories with more than $10.0M above the reserve.
+5. **The design document:** record O1–O4 and items 1–3.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_6bd8006e/task-0.log
+Child's process proc_de0018b64cbf `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model && B=~/.hermes/profiles` finished (exit code 0) but the child never read its result; output tail:
+es/profiles/connor/cache/scratch/8/b2/base
+env -u CLAUDE_CODE_OAUTH_TOKEN PYTHONPATH=$B  -c   0.02s user 0.01s system 60% cpu 0.046 total
+Traceback (most recent call last):
+  File "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/8/b2/base/../dump_20jun.py", line 12, in <module>
+    from app.evidence.store import evidence_state  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'evidence_state' from 'app.evidence.store' (/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/8/b2/base/app/evidence/store.py). Did you mean: 'EvidenceStore'?

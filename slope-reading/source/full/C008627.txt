@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events && wc -c Slope_Coding_Agent_Context_and_Alignment.md Slope_Model_Extensions_Spec.md README.md; gh pr view 21 --json body --jq .body | head -c 6000; echo; echo ==== 20; gh pr view 20 --json body --jq .body | head -c 2500; echo ==== 19; gh pr view 19 --json body --jq .body | head -c 2500", "timeout": 60}

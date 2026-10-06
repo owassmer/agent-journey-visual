@@ -1,0 +1,33 @@
+[2mInstalled [1m5 packages[0m [2min 21ms[0m[0m
+ok
+3:Prepared 24 September 2026. Revision 2 replaced the Trinity/A10 implementation direction. **Revision 3 (25 September 2026):** the lead case is ChromaDex at 19
+11:The product stops at scenario and sensitivity analysis that a lending or capital-markets model can consume. It does not recommend, size, tier or condition a 
+21:For this demonstration, **reconstruct Slope's actual product as closely as public information allows**: bill-pay financing, where Slope pays the supplier and
+27:**Why the lead changed.** A lawsuit carries the most lender-relevant signal while it is unresolved: bank data shows nothing about a pending ruling, an appeal
+29:**Lead: ChromaDex Corporation, using information available by the end of 19 August 2024.** A consumer supplement brand (Tru Niagen) that buys finished goods 
+37:The dispute is older than the underwriting snapshot: supplier litigation began in 2022, the main settlement occurred in December 2023, and the relevant payme
+41:| **ChromaDex** | Consumer supplement brand buying from contract manufacturers; live fee award and judgment receivable on the decision date; two federal dock
+47:| Trinity/A10 | Rich contracts but old and poor borrower fit | Retire as headline cases; do not reuse their decision labels |
+61:There is no claim Synergy applied to Slope. The proposed request is a **scenario input attached to a real borrower**, not a fabricated historical loan. The a
+72:**Later outcomes, hidden until the decision is locked:** on 20 August 2024 the Delaware court ruled on the fee-amount dispute (Dkt. 415); ChromaDex moved for
+83:Source: C1; court context C2. The supplier's identity at the August cutoff is limited to the table label and the balance-matched inference above. Evidence in
+87:This date bridge is part of the product: an agent should identify a bank/debt-statement reconciliation as decision-relevant, not silently treat differently d
+103:### Later outcomes, hidden until the decision is locked
+119:The operator opens **one analysis page** for the run. It carries the causal chain **evidence → Jev judgment → financial mechanism → financial impact** and n
+131:Slope underwrites on **connected bank data**. The demonstration supplies a synthetic connected-bank feed for the borrower up to the decision date, anchored 
+217:These fixtures remain as reference arithmetic for the Synergy case; the lead case uses its supplied terms ($2.0M, three monthly installments, 3.7% fee). Def
+225:`NPV = sum(asset_cash_flow[t] / (1 + required_return) ** (days_from_decision / 365))`
+237:### Runtime decision
+241:This is a local personal demonstration. Public sharing uses recorded runs with credentials removed. A shared live backend is a separate deployment and accou
+263:The agent receives the mission and baseline, then decides which gap could change the financing choice. Its loop is: select a material uncertainty and record
+294:- **Category-error guard.** Every finding that supports an effect gets host-run posture and status checks, with the status question chosen by the effect's m
+307:The investigation is recorded as one append-only graph that the packet, reviewer, viewer and evaluator all consume: decision dependencies → searches and evi
+315:Scope findings to `(run_id, version, finding_id)`. Lock source hashes, findings, calculations, assumptions and decision together in immutable result packets
+319:The package includes original primary documents for Synergy and Barfresh, extracted text where available, source hashes, structured case facts and decision-
+331:| Synergy settlement installments within annual buckets | Timing scenarios and decision sensitivity | Executed payment schedule/amendments |
+352:  decisions/          # candidate actions, policy, sensitivity
+369:| 4b. Investigation | Scoped MCP tools, adaptive runner, recorded Synergy run, thin read-only investigation viewer | From only the admissible dated snapshot
+370:| 4c. Jev at scale | Snapshot sweep reading list of atomic units, cited-paragraph gate, category-error guard on effects, statement-support checks, automatic
+371:| 5a. Lead case evidence | ChromaDex sources registered (mission `chromadex_20240819`), dated snapshot with federal court filings and SEC filings, locked ru
+374:| 7. Transfer/evaluation | Same engine on Synergy (secondary); agent-with-Jev vs agent-alone runs measured on critical semantic errors, finding and effect q
+402:Evaluate agent-alone and agent-plus-Jev using the same corpus, mission, primary model, research/financial tools and budgets. The agent-alone arm omits the `

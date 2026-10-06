@@ -1,0 +1,1 @@
+{"command": "cd ~/.hermes/profiles/connor && sqlite3 state.db \"pragma table_info(messages)\" | cut -d'|' -f2 | tr '\\n' ' '; echo; sqlite3 state.db \"select session_id, datetime(timestamp,'unixepoch'), substr(content,1,900) from messages where role='user' and content like '%holistic%' and session_id like '2026092%' order by timestamp\" 2>&1 | head -60"}

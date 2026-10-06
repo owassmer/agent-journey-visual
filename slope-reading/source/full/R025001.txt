@@ -1,0 +1,84 @@
+Exit code 1
+Traceback (most recent call last):
+  File [35m"<string>"[0m, line [35m4[0m, in [35m<module>[0m
+    print('---- loan_terms keys', [ ([1;31mlt.get[0m('loan_id'), list(lt)) for lt in d['loan_terms']])
+                                     [1;31m^^^^^^[0m
+[1;35mAttributeError[0m: [35m'str' object has no attribute 'get'[0m
+[
+{
+"name": "A_post_june_hvl_paid_cents",
+"role": "sensitivity_input",
+"value": {
+"status": "exact",
+"unit": "USD_cents",
+"value": 0,
+"lower": null,
+"upper": null,
+"observed_on": null,
+"provenance": {
+"basis": "operator_assumption",
+"source_fact_ids": [],
+"assumption_id": "A_post_june_hvl_paid_cents",
+"derivation": null,
+"note": "Worked sensitivity only: assume no HVL payment between July 1 and August 13. Actual payments in that interval are unknown. Replace with ledger evidence."
+}
+}
+},
+{
+"name": "A_post_june_supplier_paid_cents",
+"role": "sensitivity_input",
+"value": {
+"status": "exact",
+"unit": "USD_cents",
+"value": 0,
+"lower": null,
+"upper": null,
+"observed_on": null,
+"provenance": {
+"basis": "operator_assumption",
+"source_fact_ids": [],
+"assumption_id": "A_post_june_supplier_paid_cents",
+"derivation": null,
+"note": "Worked sensitivity only: assume no payment on the March supplier settlement after June 30 through decision date. Actual payments are unknown."
+}
+}
+},
+{
+"name": "A_policy_cash_reserve_cents",
+"role": "sensitivity_input",
+"value": {
+"status": "exact",
+"unit": "USD_cents",
+"value": 20000000,
+"lower": null,
+"upper": null,
+"observed_on": null,
+"provenance": {
+"basis": "operator_assumption",
+"source_fact_ids": [],
+"assumption_id": "A_policy_cash_reserve_cents",
+"derivation": null,
+"note": "Illustrative $200,000 liquidity reserve, not Slope policy or a reported contractual requirement."
+}
+}
+},
+{
+"name": "A_opening_cash_for_threshold_cents",
+"role": "sensitivity_input",
+"value": {
+"status": "exact",
+"unit": "USD_cents",
+"value": 200000000,
+"lower": null,
+"upper": null,
+"observed_on": null,
+"provenance": {
+"basis": "operator_assumption",
+"source_fact_ids": [],
+"assumption_id": "A_opening_cash_for_threshold_cents",
+"derivation": null,
+"note": "Use management's approximately $2 million August 12 cash as a rounded sensitivity input. Not verified unrestricted bank cash at August 13; vary it or supply bank evidence."
+}
+}
+}
+]

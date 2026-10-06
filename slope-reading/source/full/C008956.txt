@@ -1,0 +1,5 @@
+// @exec: {"max_output_tokens": 13000}
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"python - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts')\nr=json.loads((p/'question_registry.json').read_text())\nfor k,v in r.items():\n if k!='questions': print(k,json.dumps(v))\nfor q in r['questions']:\n print('\\nQUESTION',q['id'],q.get('primitive'),q.get('version'))\n print(json.dumps(q,ensure_ascii=False))\nPY",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:9500}),
+tools.exec_command({cmd:"cat Slope_Credit_Scenario_Research_and_Design_Kit/README.md Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/README.md Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/README.md Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/reference/README.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:5000})
+]);results.forEach((r,i)=>text({i,...r}));

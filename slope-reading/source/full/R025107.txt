@@ -1,0 +1,882 @@
+1	# Jev Should Become Slope Sparse Events’ Semantic Judgment Plane, Not a Sidecar
+2	
+3	## Executive judgment
+4	
+5	The repository is in a strong place to open Module Four. The first three implementation steps have established the right hard boundaries: a scoped and auditable runtime, historically isolated evidence retrieval, and deterministic financial mechanics. The central design problem now is **not** “where can we call Jev?” It is:
+6	
+7	> **How should semantic judgment flow through the system so the agent, Jev, and deterministic engine each do the kind of work they are best at—and so a credit reviewer can see exactly how evidence changed the financing decision?**
+8	
+9	The answer is to make Module Four a **semantic judgment layer** between evidence retrieval and the financial engine.
+10	
+11	The desired architecture is:
+12	
+13	```text
+14	                      ┌──────────────────────────┐
+15	                      │       CREDIT REVIEWER    │
+16	                      │  understands + decides   │
+17	                      └────────────┬─────────────┘
+18	                                   │
+19	                                   ▼
+20	┌──────────────────────────────────────────────────────────────┐
+21	│                     AGENT / RESEARCH DIRECTOR                │
+22	│                                                              │
+23	│ Frames decision-relevant unknowns                            │
+24	│ Searches intelligently                                      │
+25	│ Proposes atomic findings                                     │
+26	│ Reconciles contradictions                                    │
+27	│ Connects supported facts to economic mechanisms              │
+28	│ Chooses what to investigate next                             │
+29	└───────────────┬─────────────────────────────┬────────────────┘
+30	                │                             │
+31	                ▼                             ▼
+32	┌──────────────────────────┐       ┌───────────────────────────┐
+33	│ JEV / SEMANTIC JUDGMENT  │       │ HOST / CONTROL PLANE      │
+34	│                          │       │                           │
+35	│ Is this relevant?        │       │ Snapshot isolation        │
+36	│ Who does it apply to?    │       │ Provenance + hashes       │
+37	│ Alleged or completed?    │       │ Question selection        │
+38	│ Required or disputed?    │       │ Minimal state building    │
+39	│ Does evidence support it?│       │ Cache + budgets           │
+40	│ Is context sufficient?   │       │ Versioning + event log    │
+41	│ Do statements conflict?  │       │ Security boundaries       │
+42	└───────────────┬──────────┘       └─────────────┬─────────────┘
+43	                │                                │
+44	                └──────────────┬─────────────────┘
+45	                               ▼
+46	                 ┌─────────────────────────────┐
+47	                 │ DETERMINISTIC FINANCE ENGINE│
+48	                 │                             │
+49	                 │ Dates                       │
+50	                 │ Dollars                     │
+51	                 │ Contract schedules          │
+52	                 │ Double-count protection     │
+53	                 │ Cash conservation           │
+54	                 │ Scenario sensitivities      │
+55	                 │ Offer feasibility           │
+56	                 │ Loan cash flows             │
+57	                 │ Capital requirement         │
+58	                 └─────────────────────────────┘
+59	```
+60	
+61	That separation is unusually well aligned with both the repository’s existing design and Slope’s own published architecture. The repo explicitly says the deliverable is **a financing decision plus the loan’s dated cash flows, not a litigation summary**; it assigns interpretation to the agent/Jev and arithmetic to deterministic code. fileciteturn17file0L2-L2 Slope’s own 2026 description of its internal agents platform similarly says its credit-review agent prepares the work while humans make the lending decision, that agents are read-only observers, that execution is traceable, and that the harness—not the model—controls tools, context, guardrails, and observability. citeturn12search0
+62	
+63	The most important recommendation is therefore:
+64	
+65	> **Do not implement Module Four as “Claude occasionally calls `judge_evidence` when it feels useful.”**
+66	>
+67	> Implement it as a structured investigation graph in which Jev systematically sits at the semantic boundaries where retrieved text becomes a finding, a finding becomes an economic effect, or conflicting evidence forces further research.
+68	
+69	This gets materially more value from Jev **without giving Jev more authority than it should have**.
+70	
+71	That distinction matters. “Use Jev more” should **not** mean making it determine dollar adjustments, litigation probabilities, default probabilities, payment dates, or final credit actions. TypeSafe explicitly positions Jev as a System One model for focused judgments and recommends splitting complex reasoning into atomic questions whose outputs are composed in code. Its current documentation warns that Jev 1.13 is weak at mathematical precision, date comparisons, long irrelevant state, multi-hop indirection, and generation. citeturn13view0turn13view2
+72	
+73	The best Module Four is therefore one in which:
+74	
+75	**Claude thinks broadly. Jev judges narrowly. Code computes exactly. The host controls everything. The reviewer can see the causal chain.**
+76	
+77	## What the repository already establishes—and where the current Jev design falls short
+78	
+79	### The first three modules created the right substrate
+80	
+81	The repository’s builder instructions are clear about the product: this is a Russell/Slope proof of concept for a credit reviewer considering incremental working-capital exposure. The unusual lawsuit or external event is valuable only insofar as it changes borrower cash capacity, loan collections, feasible financing structures, or capital impact. The repo also explicitly defines several unacceptable failure modes: wrong entity, future-information leakage, fabricated payment dates, treating demanded amounts as paid, overstating cash, double-counting obligations, converting unknowns to zero, and using Jev confidence as a probability. fileciteturn17file0L2-L2
+82	
+83	That is exactly the right philosophy.
+84	
+85	The current `main` repository contains implemented `app/agent`, `app/evidence`, `app/domain`, and `app/finance` layers, while the later decision/export/web layers from the intended layout have not yet been built. fileciteturn2file0L2-L2 This is useful because Module Four can still establish the data model that later decision and UI modules consume rather than having to retrofit semantic traceability after decisions have already been implemented.
+86	
+87	The merged work also gives Module Four unusually good foundations:
+88	
+89	**Runtime and isolation.** The live smoke test established subscription-authenticated Claude execution, a scoped custom tool path, structured output, and a real Jev call. The PR record candidly notes that the exact Jev build-identity discrepancy, direct TypeSafe route, and final reviewer isolation were not fully resolved in Step One. fileciteturn14file0L5-L5
+90	
+91	**Evidence.** `EvidenceStore` now exposes a read-only, snapshot-bound search/read interface. The model cannot pick an arbitrary database path or historical cutoff, out-of-snapshot IDs receive a non-revealing unavailable error, FTS search is bounded, and full sections/tables can be read after retrieval. fileciteturn23file0L2-L2 The independent Step Two review caught and repaired material parser and metadata-leakage issues before passing, which is exactly the sort of discipline Module Four should retain. fileciteturn15file0L5-L5
+92	
+93	**Finance.** The financial core already enforces critical invariants that should never be delegated to an LLM: dated opening cash, unknown-vs-zero handling, recurring-stream coverage, unique obligation handling, non-cash exclusion, funding routes, reserve breaches, and deterministic cash arithmetic. fileciteturn24file0L2-L2 The Step Three review also surfaced and repaired four material errors—including missing Account Credits silently becoming zero and duplicate obligations—and specifically left the operating-receipts/Account-Credits linkage and pre-debt payment-capacity allocation for the next financial integration step. fileciteturn16file0L48-L49
+94	
+95	This means the hard part of Module Four should **not** be another round of financial logic. It should establish the bridge from sparse evidence to validated economic effects.
+96	
+97	### The current question registry is thoughtful but too “sidecar-shaped”
+98	
+99	The existing `question_registry.json` already has good judgment boundaries. It distinguishes entity scope, claim posture, proposed-finding support, cash restrictions, activity restrictions, obligation status, offset support, next-source routing, and candidate relevance. It also contains excellent global rules: atomic claims, no remembered facts, source authority separated from claim posture, no automatic conversion of confidence to facts or credit decisions, and code ownership of dates and arithmetic. fileciteturn9file0L2-L2
+100	
+101	The problem is not that those questions are bad.
+102	
+103	The problem is that **the architecture around them makes Jev look like an optional tool the agent visits rather than a first-class semantic layer**.
+104	
+105	The current contract describes `judge_evidence` as an analysis tool alongside `record_finding`, `record_gap`, `propose_patch`, `run_scenarios`, and `compare_offers`; the agent is allowed to choose when to call it. fileciteturn13file0L2-L2 That is flexible, but it makes several weaknesses likely:
+106	
+107	1. **Jev usage can become opportunistic.** Two otherwise identical agent runs can use it on very different claims, which weakens both product consistency and the later agent-plus-Jev versus agent-only experiment.
+108	
+109	2. **The most valuable place for Jev is earlier than the current emphasis suggests.** Jev can improve the step between FTS retrieval and the agent reading evidence—not merely validate a proposition after the agent has already found and understood it.
+110	
+111	3. **All current registry questions are categorical Choice judgments.** Choice is appropriate for many of them, but TypeSafe also exposes Noul specifically for absolute yes/no judgments where the returned probability is itself useful. citeturn13view0 The retrieval-triage problem is almost tailor-made for it.
+112	
+113	4. **The current design lacks explicit semantic quality gates on the agent itself.** There is no strong, first-class concept of “is this finding atomic?”, “is enough context present to interpret this passage?”, or “are these two apparent contradictions really about the same entity/period/obligation?”
+114	
+115	5. **The evidence-to-decision causal chain is not yet a data model.** We have sources, Jev judgments, findings, gaps, patches, and future scenarios, but the UI and evaluator will be much stronger if these become edges in one immutable graph.
+116	
+117	The TypeSafe documentation points directly toward this richer use. Its official RAG cookbook recommends inserting Jev **between retrieval and generation**, asking several narrow questions about each retrieved passage—relevance, usable evidence, contradiction of a premise, and instruction-like/adversarial text—and then letting code route the result. citeturn16view0 That pattern maps almost perfectly onto `EvidenceStore.search()` → agent research in this repo.
+118	
+119	### The private evaluator confirms what Module Four really needs to prove
+120	
+121	The host-only Synergy evaluator does not principally care whether the agent can write a good lawsuit summary. It checks whether the system correctly connects HVL/Atrium to an already-recorded settlement-payment mechanism, bridges the June 30 versus August dates rather than assuming the whole H2 bucket remains unpaid, treats the separate supplier settlement independently, recognizes L.O.D.C. as already paid, treats the $2.235986 million gain as noncash, distinguishes approximate August cash from unrestricted cash and collateral, respects the specific Shopify Account Credits contract base, and models operating consequences of different financing sizes. fileciteturn26file0L2-L2
+122	
+123	That is the key design clue:
+124	
+125	> **Jev is most valuable when it helps prevent a semantic mistake before that mistake becomes a financial input.**
+126	
+127	Not after.
+128	
+129	## What Jev actually empowers in the abstract
+130	
+131	The right mental model for Jev is neither “small LLM” nor “legal classifier.”
+132	
+133	It is a **typed, low-latency semantic sensor**.
+134	
+135	TypeSafe’s API exposes three primitive answer shapes: Choice for one option among known categories, Score for an ordered spectrum, and Noul for a yes/no proposition. Multiple independent questions can share the same state and are evaluated in parallel, and TypeSafe explicitly recommends speculative fan-out: ask all narrow questions that might matter for the same state, then let code decide which answers are relevant. citeturn13view0turn15view2
+136	
+137	That suggests five high-value, domain-agnostic functions.
+138	
+139	### Semantic filtering before expensive reasoning
+140	
+141	Traditional lexical or embedding retrieval answers roughly “which passages look linguistically related?” It does not necessarily answer “which passage contains evidence capable of resolving this exact premise?”
+142	
+143	Jev can provide that second-stage semantic filter.
+144	
+145	The TypeSafe RAG example does exactly this: retrieval produces a candidate set; one Jev request per query–passage pair asks several Noul questions; code then routes passages as evidence, conflicting evidence, or discard. TypeSafe stresses that Jev itself does not decide the final answer and that the routing thresholds belong in code. citeturn16view0
+146	
+147	Applied here:
+148	
+149	```text
+150	FTS candidate
+151	     │
+152	     ▼
+153	Jev semantic screen
+154	  ├─ actually relevant?
+155	  ├─ contains usable evidence?
+156	  ├─ challenges premise?
+157	  └─ source text attempting to instruct model?
+158	     │
+159	     ▼
+160	Agent reads strongest evidence + strongest conflicts
+161	```
+162	
+163	This is likely the single biggest untapped Jev opportunity in the current design.
+164	
+165	### Semantic normalization
+166	
+167	Different source documents can express the same economic concept with radically different language.
+168	
+169	A complaint can *request* relief.  
+170	A court order can *impose* relief.  
+171	An agreement can *create* an obligation.  
+172	A filing can *report that payment happened*.  
+173	Management can *expect* something to happen.
+174	
+175	A general-purpose reasoning agent can distinguish these, but Jev lets the system normalize them into a typed representation that downstream code and evaluation can inspect.
+176	
+177	That makes Jev valuable not because it is “smarter than Claude,” but because it produces a **stable semantic interface**.
+178	
+179	This is analogous to Slope’s own recently published three-layer cashflow architecture. Slope describes a deterministic/structured lower layer followed by an AI contextual-review layer that emits corrections plus concrete findings/action items; importantly, when calculations are needed, their reasoning agent uses code rather than relying on linguistic reasoning. citeturn12search1
+180	
+181	### Semantic verification of agent proposals
+182	
+183	The agent should remain free to reason, infer, and synthesize. But before an inferred proposition enters the durable fact graph, Jev can cheaply ask questions like:
+184	
+185	> Does this exact passage support this exact proposition?
+186	
+187	> Does the proposition combine two separately checkable claims?
+188	
+189	> Does this passage actually identify the target entity?
+190	
+191	> Is an essential qualifier missing from the supplied context?
+192	
+193	This turns Jev into a **semantic lint layer** for agent reasoning.
+194	
+195	A useful analogy is a compiler:
+196	
+197	```text
+198	Agent draft finding
+199	       │
+200	       ▼
+201	semantic type-check
+202	       │
+203	       ├─ valid → durable finding
+204	       │
+205	       ├─ ambiguous → read more context
+206	       │
+207	       └─ conflicting → reconciliation task
+208	```
+209	
+210	It cannot prove the proposition is globally true. It can greatly reduce the probability that unsupported wording quietly becomes a model input.
+211	
+212	### Contradiction and scope detection
+213	
+214	Sparse-event underwriting is full of apparent contradictions that are not really contradictions:
+215	
+216	- one statement concerns a subsidiary, another the parent;
+217	- one is June 30, one August 12;
+218	- one describes a requested freeze, another an imposed restriction;
+219	- one describes an outstanding claim, another a later satisfied obligation;
+220	- one concerns manufacturing capacity, another actual realized sales.
+221	
+222	Jev is well suited to identify the **semantic relation** between narrow statements, while code owns chronology and amounts.
+223	
+224	That distinction is important because TypeSafe warns that Jev 1.13 should not be trusted for date ordering and recommends putting date arithmetic and comparisons in code. citeturn15view0
+225	
+226	### Ambiguity sensing
+227	
+228	Choice outputs include their full option distribution and a derived confidence value; TypeSafe describes a flatter distribution as a sign that no option is clearly dominant and recommends calibrating any behavior thresholds on the application’s own data. citeturn15view1
+229	
+230	For Slope Sparse Events, this uncertainty signal is useful—but in a very specific way.
+231	
+232	It should mean:
+233	
+234	> “This semantic interpretation is ambiguous; perhaps retrieve more context, reconcile another source, or surface a human question.”
+235	
+236	It must **not** mean:
+237	
+238	> “There is a 72% chance the lawsuit causes a payment.”
+239	
+240	And it must never mean:
+241	
+242	> “Apply a 72% cash-flow haircut.”
+243	
+244	The repo already prohibits that conversion. fileciteturn11file0L2-L2
+245	
+246	A powerful later routing heuristic is therefore:
+247	
+248	```text
+249	research priority
+250	    ≈ deterministic decision sensitivity
+251	      × semantic ambiguity
+252	      × feasible resolvability
+253	```
+254	
+255	Here, **decision sensitivity comes from the financial engine**, semantic ambiguity can come from Jev, and feasible resolvability comes from the known evidence/action set. The expression is a queue heuristic, not a lending score and not a probability model.
+256	
+257	### More Jev does not mean every Jev primitive
+258	
+259	I would **not** force Score into Module Four merely to demonstrate the full TypeSafe API.
+260	
+261	Score is best when there is a genuinely ordered semantic spectrum. The key sparse-event judgments here are mostly binary or categorical. TypeSafe itself says to select the primitive whose output shape matches the decision, and Jev 1.13’s documentation specifically cautions against using Score interpolation for numeric magnitude. citeturn13view0turn15view0
+262	
+263	The intelligent expansion is therefore:
+264	
+265	- **Choice** for categorical semantic state;
+266	- **Noul** for absolute filters and proposition tests;
+267	- **Score** only when a later, well-labeled ordered judgment genuinely emerges.
+268	
+269	That is “getting more out of Jev” by using it more correctly, not ornamentally.
+270	
+271	## The Module Four architecture I recommend
+272	
+273	### Make the investigation itself a typed graph
+274	
+275	Module Four should establish a durable graph:
+276	
+277	```text
+278	Mission
+279	  │
+280	  ├── DecisionDependency / Gap
+281	  │       │
+282	  │       ├── Search
+283	  │       │     └── EvidenceCandidate
+284	  │       │              │
+285	  │       │              └── Jev semantic screen
+286	  │       │
+287	  │       ├── SourceRead
+288	  │       │     └── Jev interpretation
+289	  │       │
+290	  │       └── AtomicFinding
+291	  │               │
+292	  │               ├── semantic observations
+293	  │               ├── source spans
+294	  │               └── reconciliation links
+295	  │
+296	  └── EconomicEffectProposal
+297	          │
+298	          ├── target stream
+299	          ├── mechanism
+300	          ├── parameter requirements
+301	          ├── baseline overlap
+302	          ├── linked effects
+303	          └── unresolved parameters
+304	                  │
+305	                  ▼
+306	             Finance engine
+307	```
+308	
+309	This graph should be the same thing consumed by the final packet, independent reviewer, UI, and evaluator. Slope’s own internal platform philosophy is notably similar: its thread captures messages, tool calls, cost metadata, active versions, and other execution events in one source of truth used for debugging and quality control. citeturn12search0
+310	
+311	The key new domain models should be conceptually:
+312	
+313	| Model | Purpose |
+314	|---|---|
+315	| `DecisionDependency` | One unknown premise tied to a specific financial quantity or action that might change. |
+316	| `EvidenceCandidate` | One snapshot-admissible retrieved passage/table associated with a dependency. |
+317	| `JevCallRecord` | One physical provider request: version, state hash, source hashes, usage, raw response. |
+318	| `SemanticObservation` | One answer within that call, tied to a versioned question. |
+319	| `AtomicFinding` | One agent-authored proposition with exact evidence and semantic-observation references. |
+320	| `ReconciliationTask` | An explicit unresolved relationship among findings. |
+321	| `EconomicEffectProposal` | The bridge from accepted finding to target financial stream and required parameters. |
+322	| `InvestigationEvent` | The append-only event that powers UI/debugging: search, read, judgment, finding, effect, calculation, decision impact. |
+323	
+324	That last object is important: do **not** wait until the final UI module and then attempt to reconstruct an investigation trace from logs.
+325	
+326	Record the trace correctly now.
+327	
+328	### Change `judge_evidence` from “pick questions” to “request a judgment profile”
+329	
+330	The agent should not normally supply arbitrary question IDs and handcrafted Jev state.
+331	
+332	Instead, its call should look conceptually like:
+333	
+334	```json
+335	{
+336	  "profile": "claim_interpretation",
+337	  "finding_id": "finding_017",
+338	  "evidence_id": "synergy_s1a_20240813#s...."
+339	}
+340	```
+341	
+342	or:
+343	
+344	```json
+345	{
+346	  "profile": "candidate_screen",
+347	  "gap_id": "gap_settlement_bridge",
+348	  "candidate_ids": ["...", "...", "..."]
+349	}
+350	```
+351	
+352	The **host** should then:
+353	
+354	1. resolve the referenced immutable objects;
+355	2. construct the smallest semantically necessary state;
+356	3. select the correct versioned questions;
+357	4. call Jev;
+358	5. log the physical call once;
+359	6. materialize separate semantic observations;
+360	7. return a concise typed result.
+361	
+362	That change has four benefits.
+363	
+364	First, it prevents the primary agent from accidentally stuffing irrelevant context into Jev. TypeSafe explicitly warns that unrelated state degrades Jev accuracy and recommends retrieving/filtering first. citeturn15view0
+365	
+366	Second, it makes Jev usage reproducible across agent runs.
+367	
+368	Third, it makes agent-plus-Jev versus agent-only evaluation much cleaner.
+369	
+370	Fourth, it lets question engineering evolve without changing the agent’s conceptual tool interface.
+371	
+372	### Use several purpose-specific judgment profiles
+373	
+374	I recommend four profiles.
+375	
+376	**`candidate_screen`** runs over each FTS candidate and is where the biggest new Jev usage occurs.
+377	
+378	**`claim_interpretation`** runs after the agent reads a passage and proposes one atomic claim.
+379	
+380	**`finding_check`** validates a proposed durable finding before acceptance.
+381	
+382	**`statement_relation`** handles evidence reconciliation.
+383	
+384	This is better than a single giant semantic request because TypeSafe’s own guidance says to minimize irrelevant state and make each judgment a quick, focused System One decision. citeturn13view0turn15view0
+385	
+386	Within one profile, however, **fan out aggressively**: if five independent questions use the same passage and claim state, send all five in the same request rather than making the coding-agent-style mistake of one request per question. TypeSafe explicitly recommends that pattern. citeturn15view2
+387	
+388	### Let the host pick the next *semantic operation*; let the agent pick the research strategy
+389	
+390	There is an important boundary here.
+391	
+392	I would **demote `next_source` from being a centerpiece of the Jev demo**.
+393	
+394	In this fixed historical corpus, “court order vs executed agreement vs financial statement” is often something the agent can route easily from the known source catalog, and it risks making Jev look like a glorified switch statement.
+395	
+396	The more impressive and genuinely useful demonstration is:
+397	
+398	> “The search returned eight passages. Jev identified two as direct evidence, one as contradicting the premise, and five as context-only. The agent then read the direct evidence and conflict, proposed a narrower finding, and the finance layer discovered that one missing bridge amount remains decision-pivotal.”
+399	
+400	That is a coherent collaboration among retrieval, Jev, Claude, and deterministic code.
+401	
+402	### Make every Jev answer earn its existence
+403	
+404	Add a `downstream_disposition` to semantic observations:
+405	
+406	```text
+407	used_in_finding
+408	caused_more_context_read
+409	caused_research_redirect
+410	flagged_conflict
+411	challenged_agent_draft
+412	overridden_by_agent_with_reason
+413	unused
+414	```
+415	
+416	This creates what I would call a **Jev contribution ledger**.
+417	
+418	By Module Seven, you can answer Russell’s implicit question—“what did Jev actually add?”—with evidence:
+419	
+420	- prevented an allegation from becoming a liability;
+421	- filtered irrelevant passages;
+422	- caught a scope mismatch;
+423	- triggered a second read;
+424	- disagreed with an agent proposal;
+425	- did nothing material on this case.
+426	
+427	That is vastly more credible than showing an aggregate count of Jev calls.
+428	
+429	### Keep authority asymmetric
+430	
+431	The acceptance flow should be:
+432	
+433	```text
+434	Jev judgment
+435	     ↓
+436	semantic observation
+437	     ↓
+438	agent accepts / reconciles / rejects with reason
+439	     ↓
+440	finding
+441	     ↓
+442	host structural validation
+443	     ↓
+444	effect proposal
+445	     ↓
+446	deterministic engine validation
+447	```
+448	
+449	A high-confidence Jev answer should **never automatically activate a cash-flow adjustment**.
+450	
+451	That would violate both the repo’s invariants and the model’s intended role. fileciteturn11file0L2-L2 citeturn15view1
+452	
+453	### Fix provider provenance before using Jev in an evaluation claim
+454	
+455	There is one Module-One debt worth closing now.
+456	
+457	The repo’s config pins canonical `jev-1.13.0`, but the current provider abstraction defaults to OpenRouter while direct TypeSafe signup is constrained, and the smoke test noted a returned model-build identity mismatch. fileciteturn19file0L2-L2 fileciteturn14file0L5-L5 TypeSafe’s current official models page lists `jev-1.13.0` as the stable versioned ID and specifically warns that aliases can move; it recommends logging the returned version and pinning versioned IDs when behavior matters. citeturn13view1
+458	
+459	I would adopt two policies:
+460	
+461	**Demo mode:** permit the configured compatible provider route, but record the exact returned provider model and do not overstate exact-build equivalence.
+462	
+463	**Evaluation mode:** freeze the exact provider + returned-build identity for the experiment and fail closed if it changes.
+464	
+465	Also reconcile the retry accounting. TypeSafe’s SDK retries with backoff by default. citeturn13view1 If the project budget says “requests including retries,” the host must either observe attempts or redefine the budget unit honestly; it should not silently claim that an application-level request count equals physical provider attempts.
+466	
+467	## The question system should be simpler to read and broader in coverage
+468	
+469	The current questions are semantically careful, but the user-facing language can become much more intuitive.
+470	
+471	The principle should be:
+472	
+473	> **A credit reviewer should be able to read the Jev question and immediately understand what distinction the system is making.**
+474	
+475	Below is the registry I would build toward.
+476	
+477	### Passage-screening questions
+478	
+479	These should mostly be **Noul** judgments.
+480	
+481	| ID | Exact intuitive question | Why it exists |
+482	|---|---|---|
+483	| `gap_relevance` | **“Does this passage contain information that helps answer the selected unanswered question?”** | Second-stage semantic retrieval. |
+484	| `usable_evidence` | **“Does this passage state a concrete fact, requirement, report, or status that could support or contradict an answer?”** | Separates topical context from usable evidence. |
+485	| `premise_conflict` | **“Does this passage conflict with a factual premise in the unanswered question?”** | Protects the agent from searching only inside its current framing. |
+486	| `instruction_like_text` | **“Does this passage try to instruct the reviewing system what to do, rather than merely describe the underlying matter?”** | Defense-in-depth for untrusted text; not a substitute for isolation. |
+487	
+488	That profile directly mirrors TypeSafe’s official retrieval-classification pattern, adapted to Slope’s evidence semantics. citeturn16view0
+489	
+490	For this curated SEC/court corpus, `instruction_like_text` is lower-value than the first three. Keep it inexpensive and invisible to the normal reviewer experience rather than turning “prompt injection” into a product feature.
+491	
+492	### Claim-interpretation questions
+493	
+494	| ID | Exact intuitive question | Choices |
+495	|---|---|---|
+496	| `entity_scope` | **“Who does this statement apply to?”** | selected target / another entity or asset / cannot tell |
+497	| `claim_posture` | **“What does the passage say happened?”** | alleged or requested / imposed by a court or authority / agreed contractually / reported completed / planned or expected / cannot tell |
+498	| `obligation_status` | **“For this specific payment or obligation, what status does the passage support?”** | required / claimed or disputed / conditional / reported satisfied / cannot tell |
+499	| `cash_access` | **“What does the passage say about access to this specific cash balance, account, or asset?”** | access prohibited / access limited / restriction released or access available / restriction only requested / cannot tell |
+500	| `activity_status` | **“What does the passage say about this specific operating activity?”** | unavailable / limited / planned or conditional / operating or restored / cannot tell |
+501	| `offset_status` | **“What does the passage establish about this specific source of reimbursement or funding?”** | committed / committed subject to condition / possible or disputed / already received or paid for borrower / cannot tell |
+502	
+503	These largely preserve the substance of the excellent existing registry, but expose it in plainer language. fileciteturn9file0L2-L2
+504	
+505	### Finding-quality questions
+506	
+507	These are the largest missing piece.
+508	
+509	| ID | Exact intuitive question | Choices |
+510	|---|---|---|
+511	| `finding_support` | **“Does this passage support the complete proposed finding as written?”** | supports / contradicts / does not resolve |
+512	| `finding_atomicity` | **“Does the proposed finding make one independently checkable factual claim?”** | one claim / combines multiple claims / unclear |
+513	| `context_sufficiency` | **“Is there enough surrounding text here to interpret the statement without guessing?”** | enough / missing target context / missing definition / missing condition or timing context / unclear |
+514	| `economic_role` | **“What financial role, if any, does this supported statement describe?”** | existing cash obligation / cash-access constraint / operating change / financing or reimbursement / noncash accounting item / no direct financial premise / unclear |
+515	
+516	`economic_role` is the one deliberately finance-aware question I would add. It does **not** ask Jev to calculate an amount. It asks a semantic classification that can prevent precisely the errors the Synergy evaluator is designed to catch: a noncash gain becoming cash, a disputed claim becoming debt service, or an offset being treated as unrestricted liquidity. The private evaluator makes those distinctions explicitly important. fileciteturn26file0L2-L2
+517	
+518	### Reconciliation questions
+519	
+520	| ID | Exact intuitive question | Choices |
+521	|---|---|---|
+522	| `statement_relation` | **“How do these two statements relate to the same proposed fact?”** | agree / conflict / concern different entities, assets, periods, or obligations / cannot tell |
+523	| `baseline_overlap` | **“Do this proposed economic effect and this baseline item describe the same underlying cash obligation or event?”** | same / distinct / cannot tell |
+524	
+525	`baseline_overlap` should be a **warning signal only**. Deterministic IDs and host validation retain final authority over double counting. Jev 1.13’s own documentation says structural invariants belong in code. citeturn15view0
+526	
+527	### What the Synergy hero flow should look like
+528	
+529	The lead demo should visibly produce several moments where the components complement rather than duplicate one another.
+530	
+531	**HVL/Atrium.** The agent searches the dispute and settlement. Jev helps establish that the relevant passage concerns the right entity/obligation and reports an existing contractual payment mechanism rather than a new hypothetical liability. The finance layer knows the H2 2024 payment bucket is $2 million, but the system preserves the missing July-to-August payment bridge instead of treating the entire June 30 bucket as unpaid on August 13. That date/amount discipline is already required by the design contracts. fileciteturn18file0L2-L2
+532	
+533	**March supplier settlement.** The same architecture identifies a distinct $600,000 H2 payment bucket and keeps it separate from HVL. Again, any intervening payments remain unknown rather than silently zero. fileciteturn18file0L2-L2
+534	
+535	**Court-language trap.** A passage describing requested relief should visibly become **“allegation/request—not an imposed payment obligation.”** This is an ideal Jev demonstration because it is exactly a fast semantic distinction, and it prevents a potentially catastrophic downstream error.
+536	
+537	**L.O.D.C.** A source reports the separate settlement as paid in May 2024. Jev’s obligation-status judgment should classify that specific obligation as reported satisfied; the agent can then propose “no new future cash outflow for this already-paid matter.” The private evaluator expressly checks for this. fileciteturn26file0L2-L2
+538	
+539	**The $2.235986 million gain.** Jev can classify its economic role as a noncash accounting item; code therefore never inserts it into a borrower cash stream. The contract design already says it may be removed from relevant normalized FY2023 metrics but not charged against cash or removed again from H1 2024. fileciteturn18file0L2-L2
+540	
+541	**Approximate August cash.** The agent finds management’s approximately $2 million August 12 cash statement. The host preserves the approximation and does not silently equate it with verified unrestricted bank cash. fileciteturn20file0L2-L2
+542	
+543	**WebBank/Shopify.** Jev correctly recognizes contractual requirements in the executed agreement; the deterministic engine applies the 25% Account Credits logic and the two separate six-month minimum-payment windows. The actual effective funding date and actual Account Credits/remittances remain missing inputs, so no one invents a calendar schedule. fileciteturn21file0L2-L2
+544	
+545	That is a compelling demo because the viewer sees that Jev did not “predict lawsuit risk.” It repeatedly prevented **category errors** at the exact points where category errors would distort finance.
+546	
+547	## The frontend should be a credit workbench, not a chat transcript or lawsuit dashboard
+548	
+549	The frontend hierarchy should reflect the actual job:
+550	
+551	> **What should I fund, why, and what cash comes back?**
+552	
+553	The repo already says that is the product. fileciteturn17file0L2-L2
+554	
+555	I would bring a **thin investigation viewer forward into Module Four** rather than waiting until the later review/UI module. Module Six can still own the polished final credit-decision experience. Module Four needs enough interface to make the semantic pipeline observable and debuggable now.
+556	
+557	That is also consistent with Slope’s own platform philosophy: structured UI artifacts, traceable execution, and an agent that prepares evidence and analysis for human review rather than taking lending actions itself. citeturn12search0
+558	
+559	### Primary screen hierarchy
+560	
+561	Conceptually:
+562	
+563	```text
+564	┌────────────────────────────────────────────────────────────────────┐
+565	│ Synergy CHC Corp.      Review date Aug 13, 2024      Investigating │
+566	│ Incremental working-capital financing                              │
+567	└────────────────────────────────────────────────────────────────────┘
+568	
+569	┌──────────────────────────────┐ ┌────────────────────────────────────┐
+570	│ CURRENT DECISION STATE       │ │ PIVOTAL UNRESOLVED INPUT           │
+571	│ Not yet determined           │ │ Post-June settlement payments      │
+572	│ 3 structures to compare      │ │ Could change available cash        │
+573	└──────────────────────────────┘ └────────────────────────────────────┘
+574	
+575	┌────────────────────────────────────────────────────────────────────┐
+576	│ WHAT CHANGED FROM THE BASELINE                                     │
+577	│                                                                    │
+578	│ Existing HVL settlement payments       Existing obligation         │
+579	│ Separate supplier settlement           Existing obligation         │
+580	│ L.O.D.C. settlement                    Reported satisfied           │
+581	│ 2023 settlement gain                   Noncash; no cash impact      │
+582	│ Shopify/WebBank loan                   Account-credit-linked debt   │
+583	└────────────────────────────────────────────────────────────────────┘
+584	
+585	┌────────────────────────────────────────────────────────────────────┐
+586	│ BORROWER CASH CAPACITY                                             │
+587	│ [dated chart — baseline / event-adjusted / selected structure]      │
+588	└────────────────────────────────────────────────────────────────────┘
+589	
+590	┌────────────────────────────────────────────────────────────────────┐
+591	│ LOAN CASH FLOWS                                                    │
+592	│ [contractual vs conditional collections — deliberately separate]   │
+593	└────────────────────────────────────────────────────────────────────┘
+594	
+595	┌──────────────────────────── Investigation ──────────────────────────┐
+596	│ Why are we checking July–August settlement payments?               │
+597	│   Search → evidence → Jev interpretation → finding → model effect  │
+598	└────────────────────────────────────────────────────────────────────┘
+599	```
+600	
+601	The investigation should be **secondary but one click away**, because the principal user is deciding a financing action, not auditing a model execution log.
+602	
+603	### Make Jev visible through meaning, not model mechanics
+604	
+605	A normal credit reviewer should see:
+606	
+607	> **Jev interpretation: Contractual obligation**
+608	
+609	> “The passage describes a payment obligation agreed by the parties.”
+610	
+611	or:
+612	
+613	> **Jev interpretation: Allegation only**
+614	
+615	> “The passage describes requested relief, not an imposed payment requirement.”
+616	
+617	They should **not** be confronted first with:
+618	
+619	> `claim_posture = allegation_or_request, p=.937, confidence=.884`
+620	
+621	The raw distribution, model ID, question version, request hash, cache state, and cost should be under an expandable “Judgment details” panel.
+622	
+623	This is not hiding uncertainty. It is putting the information at the right cognitive layer.
+624	
+625	Microsoft Research’s human-AI interaction guidance specifically recommends making clear what the AI can and cannot do, exposing contextually relevant information, supporting efficient correction, scoping the system when uncertain, and making clear why the system behaved as it did. citeturn17search5
+626	
+627	### Do not turn Jev confidence into a traffic-light risk score
+628	
+629	There should be no big red/amber/green “Jev confidence” indicator next to a borrower.
+630	
+631	The distinction to communicate is:
+632	
+633	```text
+634	Source fact          → what the document states
+635	Jev interpretation   → how a narrow semantic question was classified
+636	Agent finding        → the proposition accepted for analysis
+637	Assumption           → an operator-supplied value, not a sourced fact
+638	Engine result        → deterministic consequence under those inputs
+639	```
+640	
+641	Those should have different visual tokens and text labels.
+642	
+643	Color may reinforce the state, but it should never be the only distinction. WCAG 2.2 explicitly requires that color not be the sole means of conveying information or status. citeturn17search2turn17search8
+644	
+645	### Every effect card should answer “so what?”
+646	
+647	A finding card should not end at:
+648	
+649	> “The court document is an allegation.”
+650	
+651	It should connect through to:
+652	
+653	> **Model consequence:** No cash payment added from this passage.
+654	
+655	Likewise:
+656	
+657	> “L.O.D.C. is reported satisfied.”  
+658	> **Model consequence:** No future L.O.D.C. settlement stream.
+659	
+660	> “HVL has $2.0m in the H2 schedule as of June 30.”  
+661	> **Model consequence:** Potential existing-debt cash outflow; remaining Aug–Dec amount unresolved until post-June payments are bridged.
+662	
+663	> “$2.235986m is a noncash settlement gain.”  
+664	> **Model consequence:** May alter normalized historical operating metrics; never enters cash ledger.
+665	
+666	This makes the semantic layer legible to Russell.
+667	
+668	### Operator correction should be first-class
+669	
+670	For any material proposition, the reviewer should be able to choose among a very small set of actions:
+671	
+672	**Accept for analysis**  
+673	**Keep unresolved**  
+674	**Provide fact or assumption**
+675	
+676	An override should require a concise note and become another immutable investigation event.
+677	
+678	This is better than an unrestricted “edit AI answer” textbox because it preserves provenance and makes the evaluation legible.
+679	
+680	### Do not expose private chain-of-thought
+681	
+682	“Traceability” should mean structured observable actions:
+683	
+684	- question being investigated;
+685	- query made;
+686	- evidence returned;
+687	- Jev question and result;
+688	- finding recorded;
+689	- effect proposed;
+690	- calculation changed;
+691	- decision impact.
+692	
+693	It should not mean rendering internal model reasoning tokens.
+694	
+695	That is also closer to Slope’s own described execution-log approach, which records tool calls, configuration versions, cost, and other observable execution events. citeturn12search0
+696	
+697	## The remaining modules should be re-planned around this graph
+698	
+699	### Module Five should become the decision engine, not just “more scenario math”
+700	
+701	Module Five should consume the immutable findings/effects graph from Module Four.
+702	
+703	Its core abstraction should be a **matched scenario pair**:
+704	
+705	```text
+706	same base profile
+707	same opening observation
+708	same policy
+709	same requested use
+710	same common assumptions
+711	             │
+712	             ├── baseline scenario
+713	             │
+714	             └── event-adjusted scenario
+715	                    only explicit effect IDs differ
+716	```
+717	
+718	That makes “before versus after” auditable rather than merely visually comparable.
+719	
+720	The module must also finish the two material integration items explicitly deferred by the Step Three review: link the Account Credits that drive the merchant sweep to the same economic receipts model used by the borrower ledger, and calculate payment capacity **before** debt service under an explicit allocation rule. fileciteturn16file0L48-L49
+721	
+722	I would require each scenario result to expose distinct series for:
+723	
+724	```text
+725	Borrower operating cash
+726	Existing contractual debt service
+727	Existing conditional merchant collections
+728	New-loan contractual payments
+729	Conditional new-loan collections, if any
+730	Fees
+731	Reserve
+732	Available payment capacity
+733	Closing cash
+734	```
+735	
+736	Do not conflate them into one “cashflow.”
+737	
+738	A candidate financing action must also modify the operating plan when appropriate. The private Synergy evaluator explicitly says that declining or shrinking inventory funding can change future receipts; therefore “smaller loan = mechanically safer” is not a valid general rule. fileciteturn26file0L2-L2
+739	
+740	The action comparison should therefore support causal action-conditioned streams:
+741	
+742	```text
+743	$250k purchase
+744	    → more inventory
+745	    → corresponding modeled receipts/costs
+746	    → financing payment schedule
+747	
+748	$100k purchase
+749	    → smaller inventory plan
+750	    → different receipts/costs
+751	    → smaller financing payment schedule
+752	```
+753	
+754	This is one of the most important insights in the whole project.
+755	
+756	A conditional offer should not say “approve subject to monitoring.” It should say:
+757	
+758	> **Missing fact:** amount of HVL settlement payments made July 1–August 12.  
+759	> **Acceptable evidence:** bank statement or creditor statement covering that interval.  
+760	> **If remaining obligation ≤ X:** structure A remains feasible.  
+761	> **If remaining obligation > X:** structure B or no new exposure.  
+762	
+763	That turns uncertainty into an actionable lending workflow.
+764	
+765	### Module Six should review the graph, not just the memo
+766	
+767	The independent reviewer should receive an immutable packet containing:
+768	
+769	```text
+770	sources
+771	  → semantic observations
+772	    → findings
+773	      → effects
+774	        → assumptions
+775	          → scenario calculations
+776	            → compared actions
+777	              → proposed decision
+778	```
+779	
+780	A review issue should point to a node or edge:
+781	
+782	- unsupported finding;
+783	- wrong entity scope;
+784	- incorrect posture;
+785	- missing contradictory source;
+786	- duplicate economic effect;
+787	- baseline-overlap error;
+788	- unjustified parameter;
+789	- calculation mismatch;
+790	- decision inconsistent with scenario results.
+791	
+792	That is far more useful than “the memo seems wrong.”
+793	
+794	The current config already envisions an immutable final packet, blind reviewer isolation, one repair cycle, and an `UNDETERMINED` outcome when a pivotal input remains unresolved rather than treating infrastructure failure or uncertainty as a decline. fileciteturn12file0L2-L2 fileciteturn13file0L2-L2
+795	
+796	Module Six should also finish the polished interface:
+797	
+798	```text
+799	Decision
+800	↓
+801	Binding constraint / pivotal missing fact
+802	↓
+803	Offer comparison
+804	↓
+805	Borrower cash
+806	↓
+807	Loan collections
+808	↓
+809	Capital / marginal funding need
+810	↓
+811	Economic changes from baseline
+812	↓
+813	Investigation trace
+814	↓
+815	Independent review
+816	↓
+817	Outcome reveal after lock
+818	```
+819	
+820	The outcome reveal must remain physically inaccessible until the candidate packet is locked; this is not just an interface convention. The repo’s evaluator file explicitly says it is host-only and must never be mounted or serialized to either the investigator or blind reviewer. fileciteturn26file0L2-L2
+821	
+822	### Module Seven should evaluate Jev’s contribution, not merely whether final answers differ
+823	
+824	The existing agent-plus-Jev versus agent-only design is good: the same main model, evidence, finance tools, reviewer treatment, and comparable budgets should be preserved, while the Jev tool and registry are removed from the control arm. fileciteturn12file0L2-L2
+825	
+826	But final lending decision agreement is an insufficient metric.
+827	
+828	The comparison should measure at least:
+829	
+830	| Dimension | What it reveals |
+831	|---|---|
+832	| Critical semantic errors | Wrong entity, allegation→liability, paid→future payment, noncash→cash. |
+833	| Supported-finding quality | Are durable findings actually supported by admissible evidence? |
+834	| Effect quality | Correct mechanism, stream, baseline treatment, parameter requirements. |
+835	| Pivotal-gap discovery | Did the agent identify the unknown that can actually change the action? |
+836	| Research efficiency | Evidence reads, agent turns, redundant searches, time. |
+837	| Jev intervention utility | Which judgments changed research, corrected a finding, or flagged conflict? |
+838	| Agent/Jev disagreement | How often did Claude override Jev, and was that override justified? |
+839	| Cost | Jev requests, tokens, latency, provider cost. |
+840	| Decision consistency | Does the final recommendation follow the modeled cash results? |
+841	
+842	The **Jev contribution ledger** proposed above is what makes this evaluation possible.
+843	
+844	It also protects the project against a perfectly legitimate outcome:
+845	
+846	> Jev may not change the final financing recommendation on a given borrower, while still materially improving evidence discipline, reducing semantic errors, or shortening research.
+847	
+848	That is an honest and valuable result.
+849	
+850	With only Synergy and Barfresh, the demo should not claim statistical superiority. It should show mechanism-level evidence of contribution and transfer. The Barfresh evaluator is deliberately different: it tests production/inventory effects, replacement capacity versus completed production, litigation-funding semantics, and avoiding duplicate payables/facility effects. fileciteturn26file0L2-L2 That is a good transfer test for whether the architecture is genuinely sparse-event general rather than Synergy-specific.
+851	
+852	### Concrete handoff for the coding agent
+853	
+854	I would give the implementation agent the following target—not as an invitation to rebuild everything, but as the minimum architecture that makes the later modules coherent.
+855	
+856	| Area | Recommended change |
+857	|---|---|
+858	| `app/domain/` | Add investigation models: dependency, candidate, semantic observation, atomic finding, reconciliation task, effect proposal, event. |
+859	| `app/agent/jev.py` | Support `Choice` **and `Noul`;** split physical call records from per-question answers; harden provider/model provenance; preserve raw response once per request. |
+860	| `app/agent/jev_profiles.py` | New host-owned mapping from judgment profile → questions + minimal-state builder. |
+861	| `question_registry.json` | Version to a new registry with passage-screen, interpretation, finding-quality, and reconciliation questions. |
+862	| `app/agent/tools.py` | Scoped MCP handlers resolve object IDs against the run; agent never supplies filesystem path, snapshot path, cutoff, or arbitrary Jev state. |
+863	| `app/agent/investigation.py` | Main adaptive research loop and progress accounting. |
+864	| `app/evidence/` | Keep existing FTS; add the semantic-screen adapter above search results rather than replacing retrieval. |
+865	| `app/finance/` | Expose effect validation and existing limited sensitivity hooks; do not move arithmetic into Module Four. |
+866	| `app/web/` | Add a **thin** investigation/debug viewer now; keep full decision workbench for Module Six. |
+867	| `evals/` | Add hand-labeled Jev semantic boundary cases from both borrowers plus small synthetic edge cases. |
+868	| tests | Protect isolation, exact state construction, question-version/cache behavior, source→finding provenance, and “Jev never determines arithmetic/date ordering.” |
+869	
+870	The semantic eval file is especially important. TypeSafe explicitly says confidence thresholds are use-case dependent and should be tested on the system’s own data. citeturn15view1 Before any automatic confidence gate exists, the repository should contain labeled examples for entity mismatch, ambiguous entity, allegation versus agreement, disputed demand versus required payment, satisfied obligation, noncash item, combined claim, missing qualification, and same-versus-distinct obligation.
+871	
+872	I would revise the practical Module Four exit condition to:
+873	
+874	> **From only the admissible dated snapshot and locked baseline, the agent identifies decision-relevant gaps; Jev systematically screens retrieved evidence and checks narrow semantic claims; every accepted finding is atomic and traceable to source spans and semantic observations; every proposed economic effect names its mechanism, target, parameter requirements, and baseline treatment; dates and arithmetic remain deterministic; pivotal unresolved facts remain typed unknowns; the full investigation is observable; and no answer-bearing document order or evaluator information reaches the run.**
+875	
+876	That is a substantially stronger milestone than “Jev is callable.”
+877	
+878	It also creates the demo Russell actually needs to see:
+879	
+880	> **An unusual external event enters as messy text. The system progressively turns it into clean, auditable economic facts. Those facts change explicit cash streams. Those streams change loan collections and feasible structures. The reviewer sees exactly where AI judgment was used, where deterministic math took over, what remains unknown, and why the proposed financing action follows.**
+881	
+882	That is the architecture in which Jev is maximally utilized **and correctly bounded**—and it is much closer to Slope’s own emerging philosophy of structured context, specialized reasoning, deterministic analysis, traceability, and human decision authority than a generic “agent with an AI judge” demo. citeturn12search0turn12search1

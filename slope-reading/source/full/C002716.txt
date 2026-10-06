@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/8/asym.py", "old_string": "    ctx = (st.get(\"question\") or {}).get(\"context\", \"\")", "new_string": "    ctx = (st.get(\"question\") or {}).get(\"context\", \"\")\n    ctx = \"; \".join(map(str, ctx)) if isinstance(ctx, list) else str(ctx)"}

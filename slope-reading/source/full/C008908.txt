@@ -1,0 +1,5 @@
+const results=await Promise.allSettled([
+ tools.exec_command({cmd:"git diff main..step-5b-decision-model -- Slope_Credit_Scenario_Build_Specification.md Slope_Coding_Agent_Context_and_Alignment.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:7500}),
+ tools.exec_command({cmd:"rg --files --hidden /Users/owenwassmer/.claude/projects/-Users-owenwassmer-dev-Slope-Sparse-Events/memory",max_output_tokens:1500}),
+ tools.exec_command({cmd:"gh pr view 8 --json url,state,headRefName,headRefOid,baseRefName,labels,reviewDecision,statusCheckRollup,updatedAt --jq '{url,state,headRefName,headRefOid,baseRefName,labels,reviewDecision,statusCheckRollup,updatedAt}'",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:1500})
+]);for(let i=0;i<results.length;i++)text({i,...results[i]});

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && gh pr create --base main --head step-8-model --title \"Step 8: Akoustis reviewed on 14 May 2024, as one forecast of Slope's existing line\" --body-file ~/.hermes/profiles/connor/cache/scratch/8/pr18_body.md 2>&1 | tail -1 && gh pr view step-8-model --json number,body -q '\"\\(.number) \\(.body | contains(\"3b21187\"))\"'"}

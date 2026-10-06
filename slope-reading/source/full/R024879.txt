@@ -1,0 +1,35 @@
+patched
+[1;32mAll checks passed![0m
+synergy_20240813: cutoff 2024-08-13T23:59:59-04:00  manifest 88ff7fe6f1f2
+  + synergy_s1a_20240813: 269 sections, 88 tables
+  + synergy_merchant_agreement_20240501: 12 sections, 0 tables
+  + synergy_court_20230227: 16 sections, 0 tables
+barfresh_20241025: cutoff 2024-10-25T23:59:59-04:00  manifest 3b06dfd592a7
+  + brfh_2024q2_10q: 39 sections, 18 tables
+  + brfh_2024q2_index: 0 sections, 0 tables
+  + brfh_2024q2_release: 12 sections, 1 tables
+  + brfh_2024q1_10q: 38 sections, 17 tables
+  + brfh_2023_10k: 112 sections, 26 tables
+  + brfh_2024q3_10q: 39 sections, 19 tables
+  + brfh_2024q3_release: 13 sections, 2 tables
+  + brfh_2024_08_13_litigation_funding: 3 sections, 0 tables
+brfh_2023_10k#s0099  [section]  Barfresh food Group Inc. > Notes to Consolidated Financial Statements > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract manufacturers. One of the Company’s contract manufacturers (the “Manufacturer”) provided approximately 52 % and 42 % of the Company … 
+brfh_2024q1_10q#s0011  [section]  Barfresh Food Group Inc. > Notes to Condensed Consolidated Financial Statements > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract manufacturers. One of the Company’s contract manufacturers (the “Manufacturer”) provided approximately 52 % and 42 % of the Company … 
+brfh_2024q2_10q#s0010  [section]  Barfresh Food Group Inc. > Notes to Condensed Consolidated Financial Statements > Legal Proceedings
+    [Schreiber] [Dispute]
+
+The Company’s products are produced to its specifications through several contract manufacturers. One of the Company’s contract manufacturers (the “Manufacturer”) provided approximately 52 % and 42 % of the Company … 
+synergy_s1a_20240813#s0130  [section]  MANAGEMENT > Board Committees
+     … other services [of] our [independent] [registered] [public] [accounting] [firm] and be directly responsible for the appointment, [independence], qualifications, compensation and oversight [of] the [independent] [registered] [public] [accounting] [firm], which [reports] directly to … 
+synergy_s1a_20240813#s0215  [section]  Report of Independent Registered Public Accounting Firm
+    To the Board [of] Directors and Shareholders [of] Synergy CHC Corp. and subsidiaries
+synergy_s1a_20240813#s0121  [section]  BUSINESS > Legal Proceedings
+     … During May 2024, the Company [paid] [in] [full] the settlement to [L.O.D.C] Group, Ltd.
+synergy_s1a_20240813#s0210  [section]  SYNERGY CHC CORP. NOTES TO UNAUDITED CONDENSED CONSOLIDATED FINANCIAL STATEMENTS > Note 13 — Commitments & Contingencies
+     … During May 2024, the Company [paid] [in] [full] the settlement to [L.O.D.C] Group, Ltd.

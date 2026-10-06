@@ -1,0 +1,17 @@
+bank_only       lender PV $47,225.54  full by maturity 100.0%  min cash mean $24,704,437.58  P5 $23,846,311.28  shortfall 0.0%
+event_adjusted  lender PV $47,225.54  full by maturity 100.0%  min cash mean $21,565,620.22  P5 $15,113,267.41  shortfall 0.0%
+  driver: Elysium attorney fee and cost award in Delaware patent case: the parties settle this obligation before the court fixes the amount (Jev {'yes': 0.24, 'no': 0.76})
+  driver: Elysium attorney fee and cost award in Delaware patent case: the court fixes the amount of this obligation (Jev {'yes': 0.56, 'no': 0.43999999999999995})
+  driver: Elysium attorney fee and cost award in Delaware patent case: the payer obtains a stay of this obligation secured by a bond or other security (Jev {'yes': 0.58, 'no': 0.42000000000000004})
+135 joint paths; Jev {'provider': 'openrouter', 'requests': 14, 'cache_hits': 13, 'physical_attempts': 14, 'attempt_ceiling': 400, 'spent_usd': '0.001502844', 'spend_cap_usd': '0.10'}; wrote analysis.json, collections.csv, cashflows.csv
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/dispute_model.json
+ M Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/question_registry.json
+ M app/agent/run_store.py
+ M app/agent/tools.py
+ M app/analysis/build.py
+ M app/disputes/forecast.py
+ M app/disputes/interpret.py
+ M app/domain/investigation.py
+ M runs/recorded/chromadex_20240819-agent_plus_jev-20260925T205024Z/analysis.json
+ M runs/recorded/chromadex_20240819-agent_plus_jev-20260925T205024Z/cashflows.csv
+?? tests/test_dispute_reading.py

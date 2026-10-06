@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/cthr && grep -n -i -E \"judgment|attachment|garnish|material adverse|impair|cross.default|going concern|financial statements.{0,40}(within|days)|audit(ed)? opinion|qualified|annual (financial )?statements\" jpm_credit_2021.txt jpm_note_2024.txt | cut -c1-260 | head -30"}

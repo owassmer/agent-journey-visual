@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; git stash list | head -2; git worktree list | grep step-9-int; cd ../step-9-int && git log --oneline -1 && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 timeout 200 .venv/bin/pytest -p no:warnings tests/test_pending_claim.py::test_6_coupon_base_shares_sensitivity_cash 2>&1 | tail -2", "timeout": 240}

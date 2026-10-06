@@ -1,0 +1,1 @@
+{"command": "P=.venv/lib/python3.12/site-packages/claude_agent_sdk; cat $P/_version.py $P/_cli_version.py; sed -n 2095,2260p $P/types.py | grep -nE \"^    [a-z_]+:\" ; grep -n \"PermissionMode = \\|SettingSource = \\|EffortLevel\\|class ResultMessage\" -A 3 $P/types.py | head -40; grep -n \"^def \\|^async def \\|^class \" $P/__init__.py | head -30"}

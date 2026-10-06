@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && uv run ruff check app/disputes/pool.py; sed -n '1,22p' tests/akoustis_20240514_fixture.py; grep -n \"HORIZON_DAYS\" app/analysis/setup.py | head -3; grep -n \"^class Setup\\|BaseModel\\|@dataclass\" app/analysis/setup.py | head -5"}

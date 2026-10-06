@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"cat /Users/owenwassmer/.codex/skills/code-review/SKILL.md; sed -n '1,240p' tools/notes_scope.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":5500}));
+text(await tools.exec_command({cmd:"sed -n '1,230p' tools/notes_resume.py; git diff --stat; rg --files tools | rg 'scope|refresh|repair|adopt'","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":6000}));

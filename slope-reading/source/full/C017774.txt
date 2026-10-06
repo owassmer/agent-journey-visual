@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:2108,chars:"","yield_time_ms":1000,"max_output_tokens":400}));
+text(await tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-09b42b44a8d35909a --document-name AWS-RunShellScript --parameters '{\"commands\":[\"date -u; systemctl is-active slope-pool-finish slope-analysis-continuation; tail -4 /var/log/slope-finish.log; tail -3 /var/log/slope-analysis.log\"]}' --query Command.CommandId --output text\ncat /tmp/slope-launch-merge.log","max_output_tokens":400}));

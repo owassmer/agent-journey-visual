@@ -1,0 +1,44 @@
+You are doing builder-side case research (not the historical investigator), so you may read outcomes and later filings. Deliver a ranked shortlist of real US lawsuit cases to become the new lead demonstration case for a proof-of-concept built for Russell at Slope (a B2B payments/financing company: Slope pays a business's supplier invoices and the business repays in monthly installments; Slope underwrites on connected bank data).
+
+## What the product does (why the criteria)
+Thesis: domain-informed probabilistic judgments turn unusual qualitative evidence into a useful, measurable financial signal. At a decision date D, an agent investigates the borrower's live legal dispute(s) from public filings and court records available by D; an LLM judgment model reads the evidence and gives conditional probabilities for future developments (ruling, appeal, bond, payment, settlement, enforcement), and also for consequences BEYOND the courtroom (credit-facility covenants/defaults, litigation spend, customer or supplier relationships, operational restrictions). Code turns those into dated cash paths and simulates the borrower's cash and the lender's dated collections on Slope-style financing of the borrower's supplier invoices over ~180 days. The current case (ChromaDex, 19 Aug 2024; fee award ~$9.8M vs $27.7M cash) failed one key test: the borrower is so liquid that no path reaches the loan, and its non-courtroom channels are thin within 180 days. We need a case where the signal can plausibly reach a realistic loan and where beyond-courtroom channels are evidenced.
+
+## Criteria
+Hard requirements (all):
+1. **Borrower fit:** US public company (SEC filer, so quarterly financials exist) that buys inventory/finished goods/services from suppliers on invoice terms, the kind of business Slope finances: consumer products, food & beverage, supplements, DTC/e-commerce brands, apparel, distribution, light manufacturing. Roughly $10M–$500M annual revenue. Not a bank, biotech with no sales, REIT or mega-cap.
+2. **A live dispute at D with cash consequences likely inside ~180 days after D:** e.g. a pending damages or fee award amount, a judgment subject to appeal and bonding, enforcement, a settlement payable in installments, an injunction or recall affecting sales, a key customer/supplier dispute withholding payments or supply. D should be chosen so the dispute is genuinely unresolved on D (the next development is days to months away) and the evidence up to D is public.
+3. **Court record available before D:** federal docket with free RECAP documents on CourtListener (orders, judgments, key motions) or an accessible state docket. Check actual availability (CourtListener API: https://www.courtlistener.com/api/rest/v4/search/?q=...&type=r works anonymously via curl, ~50 req/hour; documents at storage.courtlistener.com).
+4. **The signal can reach the lender:** the dispute exposure (amount at stake, bond, lost revenue) is material relative to the borrower's liquidity, e.g. at least ~25-50% of unrestricted cash, or the borrower discloses tight liquidity (going-concern doubt, covenant pressure, dependence on a credit line or equity raise). A plausible Slope exposure (recurring supplier invoices of ~$100k-$5M) could be affected.
+5. **Beyond-courtroom channels evidenced in pre-D filings** (at least two): a credit facility with financial covenants, cross-default or judgment-default terms (ideally with the agreement filed as an exhibit); material litigation spend; the counterparty is a customer, supplier, licensor or competitor whose relationship affects receipts or supply; an injunction/recall/operational restriction; restricted cash, escrow or bonding requirements; dependence on financing that the dispute could impair.
+6. **Known outcome within ~12 months after D** in later public filings or the docket (for a later reveal).
+7. **Evidence acquirable:** SEC filings on EDGAR (including exhibits) and court documents from RECAP.
+Preferences: recent (2021-2025); decision date inside a live phase; a counterparty that is also a trade partner; several channels that interact (e.g. a judgment that also trips a covenant and strains supplier terms); a less-famous case (widely reported mega-cases raise the risk the model remembers the outcome).
+Exclusions: already in bankruptcy at D; securities class actions/derivative suits with no near-term cash consequence; disputes resolved before D; cases whose key facts only appear in sealed filings.
+
+## Method
+Start broad (EDGAR full-text search https://efts.sec.gov/LATEST/search-index?q=... and the EDGAR FTS UI, news, CourtListener searches for judgments/verdicts/injunctions against small public consumer companies), then verify each candidate's filings and docket. Score ChromaDex (19 Aug 2024) against the same criteria as a baseline. Use a descriptive User-Agent with owassmer1@gmail.com for SEC requests and respect rate limits. Do not download bulk files into the repo; you may save notes under /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/case_search/.
+
+## Output
+Write /Users/owenwassmer/.claude/jobs/1ebb1026/tmp/case_search/shortlist.md and return a summary. For each of 4-8 candidates: company (ticker, CIK), proposed decision date D and why, the dispute(s) (court, docket number, status on D, amounts), RECAP availability of the key pre-D documents (with URLs), liquidity at D (cash, debt, facility, going-concern language) with filing citations, the beyond-courtroom channels with citations, the plausible Slope financing (supplier/invoice scale), what happened after D (with sources), how each criterion scores, and risks (thin docket, sealed filings, fame/recall). End with a clear recommendation of the top 1-2 and why, plus ChromaDex's baseline score. Be concrete and verify; flag anything unverified.
+# Working notes (light manufacturing, verified by lead researcher)
+
+## Akoustis Technologies (AKTS, CIK 1584754) — Qorvo v. Akoustis, D. Del. 1:21-cv-01417 (CourtListener docket 60622376)
+- Verdict 17 May 2024: $38.6M ($31.5M compensatory + $7M punitive); D.I. 601 JURY VERDICT available on RECAP; D.I. 602 Judgment 20 May 2024 available.
+- 17 Jun 2024: post-trial motions: D.I. 608 permanent injunction (proposed order avail), 613 new trial, 615 prejudgment interest (decl sealed), 618 attorney fees motion (avail; opening brief 619 sealed).
+- 27-30 Aug 2024: redacted opposition/reply briefs available (682, 684, 685, 686, 678).
+- 9 Sep 2024: D.I. 690 fees order $11.7M (avail). 10 Sep 2024: D.I. 699 interest order $7.3M (avail).
+- 10-K FY Jun-2024 filed 2 Oct 2024: cash $24.4M; current liabilities $84.4M; $44M 6% conv notes due 2027; EoD = final judgment > $10M unpaid/unstayed 60 days, or Nasdaq delisting; going concern; ATM; strategic alternatives; "may be forced to seek protection" under Bankruptcy Code. Revenue FY24 ~ $27.4M.
+  https://www.sec.gov/Archives/edgar/data/1584754/000121390024085984/ea0209774-10k_akoustis.htm
+- 11 Oct 2024: D.I. 709 order on permanent injunction; 15 Oct D.I. 710 PERMANENT INJUNCTION (avail). 31 Oct D.I. 715 JMOL/new trial denied. 21 Nov D.I. 717 amended final judgment. 29 Nov D.I. 719 notice of appeal (Fed. Cir. 25-1250). No bond.
+- 16 Dec 2024: Chapter 11 (D. Del. Bankr.); stalking horse Gordon Brothers; assets sold to SpaceX sub (Tune Holdings) ~$30.2M (2025); Qorvo $59.1M unsecured claim allowed per settlement.
+
+## Kopin (KOPN, CIK 771266) — BlueRadios v. Kopin, D. Colo. 1:16-cv-02052 (CourtListener docket 7234826)
+- Verdict 22 Apr 2024: ~$5.1M damages + advisory $19.7M disgorgement/exemplary; accrued $24.8M. BlueRadios seeks $10.8M PJI + $10.2M fees + injunction.
+- Post-trial motions filed 22 May 2024, fully briefed 29 Oct 2024; supplemental authorities Mar 2025 (783, 784 avail).
+- Q2-2025 10-Q (filed 12 Aug 2025): cash $24.4M, securities $2.4M, restricted $1.1M; no debt; going concern citing the accrual. Theon $15M strategic investment 8 Aug 2025.
+  https://www.sec.gov/Archives/edgar/data/771266/000149315225011854/form10-q.htm
+- 10-K FY2024 (17 Apr 2025): DRS 65% of revenue, Collins 11%; defense 82%; foundries in Taiwan etc.; going concern because of the $24.8M accrual.
+- 4 Sep 2025 D.I. 785 JMOL/new trial denied (avail); 5 Sep 2025 D.I. 786 Final Judgment ~$19.7M, no PJI, no injunction (avail).
+- 2 Oct 2025: D.I. 789 notice of appeal (Fed. Cir. 26-1009); D.I. 790 motion for bond and stay (avail). Rockland Trust loan agreement 2 Oct 2025 cash-collateralising a US Bank LC backing a ~$23M appeal bond (8-K 10 Oct 2025 ex10-1).
+- RECAP thin before D: only 756 (BlueRadios opp to JNOV), 783, 784 available in 2024-mid-2025; verdict form and motion 745 not on RECAP (would need PACER purchase).
+Shell cwd was reset to /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5c-channels

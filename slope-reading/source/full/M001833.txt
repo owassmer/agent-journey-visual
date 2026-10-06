@@ -1,0 +1,113 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_f28895ea]
+A background fan-out unit you dispatched earlier — 2 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-27 01:04:42 (1h6m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3964.96s
+
+--- ✓ TASK 1/2: Worker A (engine and chains) for owassmer/Slope_Sparse_Events PR #17: implement the approved engine and chain corrections on branch step-6c-engine in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-engine, in the seven numbered steps below, each ending in targeted tests, a commit and a push. Report the commit SHA per step, what changed, and test counts. Do not open a PR, call Jev, run an investigation, or run the full Akoustis Analysis; the orchestrator (Connor) merges and reruns.  (status=completed, api_calls=186, 3964.68s) ---
+All seven steps are committed and pushed to `step-6c-engine`, and the full suite passes (163). One problem for your rerun: the tree now asks Jev 343 questions on the dispute plus 1 in the bank view, up from 109. At ~17k characters each that is more than the analysis adapter's $0.10 reservation cap allows. I did not raise the cap; Owen decides the budget.
+
+```
+Step               | SHA     | What changed                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Tests                                                                                                                                                                                                                                                                                          |            
+-------------------+---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------
+1 Common baseline  | a777eab | The bank view now runs the cash-floor and cash-out decisions on its own simulation, as a weighted distribution. Its Jev questions are keyed `bank:…\                                                                                                                                                                                                                                                                                                              | bank` and use a separate state builder, `bank_state`, which carries only the company, the decision, its dates, cash and the 30-day need. Attribution is: bank view with Jev → augmented view with residuals neutral → augmented view with Jev. `_Prefix` has the three interface fields for B. | 23, then 17
+2 Notes coupon     | 42bfa9d | `coupon_terms` computes $44.0M × 6.0% ÷ 2 = $1.32M from fnd_011's quote, due 15 Dec and paid 16 Dec, in both views. A coupon the quote doesn't give stays unknown, and the run raises an error rather than booking $0. Base split: $570k in shares (3.0M shares at 95% of $0.20) and $750k cash; sensitivities all cash / all shares. No reverse-split ratio is in the pre-D record. The feed's 17 Jun coupon is not replayed by the bootstrap.                   | 28                                                                                                                                                                                                                                                                                             |            
+3 Judgment default | 6837079 | New parameter `judgment_default_reading` (base both; entered; post_ruling). The entered-judgment default ripens 19 Aug. Where the holders don't act, it can ripen again at A + 60 with its own node context, and no second acceleration happens on the same trajectory. When no ruling step has run, the entered amount is used. Includes the stay-before-ripe test, the open-question rule text, the FRAP wording in spec §4.2 and the DECOMPOSITION L11 edits.  | 39                                                                                                                                                                                                                                                                                             |            
+4 Stay security    | 535aa44 | Where cash covers the bond collateral, behaviour is unchanged. Otherwise the company offers its cash above need on the motion day, and that amount is locked on approval. A zero offer gives an effective stay only under `stay_security = noncash`.                                                                                                                                                                                                              | 36 + 10                                                                                                                                                                                                                                                                                        |            
+5 Settlement       | ed86758 | A settlement exists only where its amount is positive. Monthly installments stop at a petition and the claim is released on the last one. I3 starts at max(EF, appeal deadline).                                                                                                                                                                                                                                                                                  | 44                                                                                                                                                                                                                                                                                             |            
+6 Chain order      | 5cb1ae4 | (a) The post-ruling A4 is asked on the levy day, before the levy is booked, and again at the ripe date after "seek". (b) New parameter `holder_petition_route`: holders' petition at acceleration + 60 days (§7.06), sensitivity immediate. (c) Listing is switched off only where acceleration comes before the vote call, and there is no delisting default where the notes are already due. (d) Each listing question gets the facts of its own decision date. | 62                                                                                                                                                                                                                                                                                             |            
+7 Triggers         | decc7fb | `trigger_days` fills all six trigger names. Holders'-petition branches that fall after 17 Dec are merged into the no-filing class, which cut the tree from 18,869 to 12,653 paths.                                                                                                                                                                                                                                                                                | 16, 39, 36; full suite 163                                                                                                                                                                                                                                                                     |            
+```
+
+**Issues:**
+- **Tree size:** the Akoustis fixture now has about 12,650 paths (was ~5,260) and takes about 150 s to build. The full Analysis will be roughly 2–3× slower and heavier than before. Of the 343 questions, 148 are the cash-out question split by situation tags (notes due, delisted, levied, appealed and so on), which now combine on more paths. I raised the path-count bound in `test_chains` from 10,000 to 20,000.
+- **Bank view:** it has 2 paths and 1 Jev node. Cash never falls below zero on the bank data, so the cash-out question never arises there.
+- **Outside my listed files:** I made small edits to `app/analysis/page.py`: bank tiles and chart weighted by the bank probabilities, the dev model builds the bank tree, labels for the coupon options and the new holders-filing branches, and `PAGE_FORMAT` bumped to 5. I also added the step-5 wording to `settlement_scenarios` in `dispute_model.json`, which isn't in either worker's list.
+- **Existing tests I changed:** in `test_chains.py`, the coupon, chips, legal-spend, FRAP, judgment-default and filing-path tests, to match the new behaviour.
+- **Manifest:** `PACKAGE_MANIFEST.json` was refreshed for `dispute_model.json` only; DECOMPOSITION isn't in the manifest.
+- **Branch:** local `step-6c-engine` now tracks `origin/step-6c-engine`. I opened no PR, made no Jev calls and ran no full Analysis.
+
+**Files changed:** `app/analysis/{events,core,build,page}.py`, `app/disputes/forecast.py`, `tests/test_views.py` (new), `tests/test_chains.py`, `dispute_model.json`, `PACKAGE_MANIFEST.json`, `DECOMPOSITION.md`, `Slope_Model_Extensions_Spec.md` (§4.2).
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_f28895ea/task-0.log
+Child's process proc_0ca877d22da0 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-engine && memory_pressure -Q` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+System-wide memory free percentage: 31%
+Using CPython 3.12.13
+Creating virtual environment at: .venv
+   Building slope-sparse-events @ file:///Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-engine
+      Built slope-sparse-events @ file:///Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-engine
+Installed 53 packages in 67ms
+
+
+--- ✓ TASK 2/2: Worker B (Jev inputs) for owassmer/Slope_Sparse_Events PR #17: implement the approved corrections to what Jev reads on branch step-6c-jev in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-jev, in the six numbered steps below, each ending in targeted tests, a commit and a push. Report the commit SHA per step, every changed Jev-facing text as before -> after, and the list of record items whose wording changed (the orchestrator reruns the Jev record-item screen). Do not open a PR, call Jev, run an investigation, or run the full Akoustis Analysis.  (status=completed, api_calls=123, 1862.89s) ---
+The six steps are done and pushed to `origin/step-6c-jev`. The full suite passes (147 passed), and I dumped the states twice without calling Jev. The dollar amounts and contract dates for A3/Q4/J8 won't show until A's `_Prefix` fields are merged.
+
+**Commits**
+```
+Step                         | SHA                                                       
+-----------------------------+-----------------------------------------------------------
+1 Rules per forecast profile | 6876ec0                                                   
+2 Court standards            | 8e33744                                                   
+3 Record items               | de3621c                                                   
+4 Pooling                    | 39e3003                                                   
+5 Facts from A's interface   | 677ac4f                                                   
+6 Framing                    | d3d69dc, then 7756ced (a fix found while reading the dump)
+```
+
+**Jev-facing text, before → after**
+- **Rules (step 1):** forecast questions got the five global rules → they now get only "Answer from the supplied state alone", "Amounts and dates are given in the state; take them as stated" and the identifier rule, under the heading "Rules:". The checking profiles, including `record_item_supplied`, keep all five unchanged. This needed a small change in `app/agent/jev.py` `build_question`.
+- **J2 standard:** remittitur rule + Rule 50(b) → Rule 59(a) (Roebuck, Williamson, Gumbs) + the remittitur rule.
+  - I checked every quote against the full opinions on law.resource.org, and the D.I. 590 quotes against the RECAP PDF.
+- **J3 standard:** Rule 50(b) → Rule 50(b) + Rule 59(a). I read "beside the remittitur rule" as describing J2, so J3 did not get the remittitur rule.
+- **J1:** had no motion facts → a `pending_motions` fact names D.I. 607, a renewed motion for judgment as a matter of law under Rule 50(b), briefing closing 8 Aug 2024. Every merits node now lists the motions it decides.
+- **J4 standard:** §75-16 only → §75-16 plus the authorities each side relies on:
+  - Against: D.I. 590, Winant, Drouillard and Legacy Data, and Unitherm.
+  - For: Hardy v. Toler, Ridgway (quoted), and Grout Doctor as cited by Qorvo in D.I. 587.
+- **Amount-finality reading:** "The court has fixed the amount 1.0" → "Amount fixed by the court: $38,595,023.00, in the judgment entered 20 May 2024" on J2. It is left out on Q2.
+- **Components:**
+  - `remitted_amount $23.1M` on every node → `remittitur_scenario` with its label and D.I. 616-1 basis, shown only on J2, Q2 and classes where every outcome is remitted. Akoustis has no such class, so in practice it appears only on J2 and Q2.
+  - Interest: "…; amount not in admissible evidence" / "unknown" → "sealed; amount not public".
+- **Other state fields:**
+  - `case.borrower` → `case.company`.
+  - `cash_balance_at_decision` → `projected_available_cash_at_decision_date`.
+  - A merged class now shows `amount_owed_at_decision` P50 and max, a basis ("the lowest judgment in that range, with post-judgment interest, less any amount collected"), and `judgment_after_ruling` "$X to $Y".
+  - The notes' default: "…unpaid or unstayed…, after notice" → "…that remain unpaid, undischarged and unstayed for 60 days, after notice by the trustee or holders of 25% of the notes".
+- **New facts (step 5):**
+  - A3/Q4 get `settlement_offer`: amount P5/P50, 30-day operating need, basis, and payment ("one payment of the full amount on the settlement date, 30 days after the decision").
+  - J8 gets `reduced_security_offered` P5/P50.
+  - Settlement, cash-floor, cash-out and noteholder questions get `contract_dates`, only dates on or after the decision and inside the analysis period.
+- **Registry instructions (27 questions):** "…cash on this path" → "…cash computed for this situation".
+- **Situation bases:**
+  - The two `stay_moved` settlement bases now read "Rule 62(b): the stay takes effect when the court approves the bond or other security; a pending stay motion does not suspend execution".
+  - H1 `appealed` now treats the appeal as bearing on the holders' incentive; §7.01(i) turns on payment, discharge or an effective stay.
+  - H1 `stay_moved` now states the 60-day unpaid/undischarged/unstayed condition and that a stay takes effect on approval.
+  - H2 and H3 now read "the issuer's other liabilities and resources bear on what the holders can recover and on the value of acting now", with no citation.
+  - "on this path" is removed from all bases.
+- **Pooling (step 4):** path facts now count only cases where the decision falls inside the analysis period, before any petition, and, for the nine questions about an unpaid judgment, with an amount still owed.
+
+**Record items changed, for the rescreen (44)**
+- **J1:** the renewed JMOL motion's public grounds; the verdict form's answers on trade-secret misappropriation; public trial exhibits on trade-secret liability.
+- **J2:** the public grounds of the new-trial or remittitur motion; the trial evidence on the amount of damages that the motion cites.
+- **Q2:** the judgment creditor's public statements on the damages award.
+- **J3:** the public grounds for setting aside the patent verdict or its damages.
+- **J4 (all 3):** the creditor's motion to treble; the jury's answer on the unfair-trade-practices claim "as the verdict form or a motion to amend the verdict states it" (so the rescreen should match fnd_003); the court's earlier orders on unfair-trade-practices damages.
+- **J5:** the creditor's fee motion and its grounds; "the statement of the jury's finding that the trade-secret misappropriation was willful and malicious" (should match fnd_001/fnd_017 and not fnd_008/fnd_009).
+- **J6 (2), J7 (2):** reworded to name the interest motion, the verdict's designation, the proposed order and the motion's grounds.
+- **Q1 (2), Q3:** the creditor's statements on collecting or enforcing; the company's statements on contesting, paying or settling.
+- **A1, J8 (2), J9, A4, A2 (2):** reworded to name "the company".
+- **A3 and Q4:** "the company's statements on reaching a settlement with the judgment creditor" (should match fnd_009); mediation orders; the creditor's public statements on the judgment and the verdict.
+- **H1 (2), H2, A5, H3, A7 (2), ST1, A8, N1, A6, A6b:** reworded to what each document is.
+
+The exact before → after strings are in `scratch/6d_jev/s3_changed.json` and `s2_standards.py`. For the dump I remapped the recorded `slots.json` to the new names so I could view the states; the committed `slots.json` still has the old names, so the new items read as not in the record until the rescreen runs.
+
+**Files outside my list:** `app/agent/jev.py` (profile rules); `app/analysis/page.py` `_fact_lines` (lists and nested facts print as text, not Python dicts); `Forecaster.ruling_classes` (collects `remit_classes`); `PACKAGE_MANIFEST.json` (hashes for the two contracts); and tests in `test_chains.py`, `test_dispute_reading.py` and `test_semantic_layer.py`.
+
+**For A or the orchestrator**
+- The walk's assumption strings still say "debtor" ("the debtor moves for a stay", "the judgment debtor offers to settle…"). They are in A's region, so I left them.
+- The four listing questions still share one set of path facts (review facet 3, item 6); that is also in the walk.
+- My settle and stay offer figures leave out rows where A's arrays are all zero (the branch that declines), so the declined branch doesn't pull the P5 down to $0. If A's arrays are nonzero on the declined branch as well, this changes nothing.
+- The state key is still `path_facts`. Renaming it touches the Judgment model, the page and the tests, so I didn't.
+- DECOMPOSITION L5 has not been updated to add the Rule 59(a) standard; that file wasn't mine.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_f28895ea/task-1.log

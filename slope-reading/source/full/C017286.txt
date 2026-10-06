@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"gh run cancel 37055618850 --repo owassmer/Slope_Sparse_Events\ngh api repos/owassmer/Slope_Sparse_Events/actions/runs/37055733221/jobs --paginate --jq '[.jobs[] | {name,status,conclusion,step: ([.steps[] | select(.status==\"in_progress\") | .name][0])}]'","max_output_tokens":2200}));

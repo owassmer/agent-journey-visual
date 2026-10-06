@@ -1,0 +1,30 @@
+                assert fact.lower() in later, f"probe {fact!r} is not in an outcome source"
+>           assert fact.lower().encode() not in raw
+E           assert b'appeal bond' not in b'sqlite format 3\x00\x10\x00\x01\x01\x00@  \x00\x00\x00\x07\x00\x00\x04}\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\...\n\x01\x02\x81\x14\x04\x02\x04ield!\x06\x01\x03"\x01\x03zip3\x06\x01\x03!!\x06\x01\x03!41\x14\n\x0b\x0b$/\x13\x83w\x0b'
+E            +  where b'appeal bond' = <built-in method encode of str object at 0x10cc0a230>()
+E            +    where <built-in method encode of str object at 0x10cc0a230> = 'appeal bond'.encode
+E            +      where 'appeal bond' = <built-in method lower of str object at 0x108fdff70>()
+E            +        where <built-in method lower of str object at 0x108fdff70> = 'Appeal Bond'.lower
+92:def test_chromadex_outcome_facts_are_absent(built):
+93-    out, _, stores = built
+94-    catalog = [s for s in json.loads(snapshot.SOURCES_JSON.read_text())["sources"]
+95-               if s["mission_membership"].get("chromadex_20240819") == "outcome"]
+96-    later = " ".join(" ".join((snapshot.KIT / s["package_relative_path"]).read_bytes().decode("latin-1").split())
+97-                     for s in catalog if s["package_relative_path"].endswith(".html")).lower()
+98-    raw = (out / "chromadex_20240819.sqlite").read_bytes().lower()
+99-    for fact in CHROMADEX_FUTURE_FACTS:
+100-        if fact != "Stipulated Amended Judgment":  # that one is a PDF caption; its absence is still checked below
+101-            assert fact.lower() in later, f"probe {fact!r} is not in an outcome source"
+102-        assert fact.lower().encode() not in raw
+103-    # The decision-date judgment itself is admissible: Elysium ordered to pay USD 2.5 million.
+104-    assert "$2,500,000" in stores["chromadex_20240819"].read("cacd_16cv2277_d618_judgment#s0002")["text"]
+105-
+106-
+107-def test_settlement_schedule_table_keeps_its_original_context(built):
+108-    _, _, stores = built
+109-    store = stores["synergy_20240813"]
+110-    # The S-1/A repeats this schedule in the FY2023 audited notes; take the June 30, 2024 interim note.
+111-    hits = [h for h in store.search("required to make future payments 802,445")
+112-            if h["kind"] == "table" and "UNAUDITED" in h["heading_path"][0]]
+113-    table = store.read(hits[0]["id"])
+114-    assert ["2026", "802,445"] in table["rows"]

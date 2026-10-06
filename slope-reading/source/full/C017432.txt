@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"aws ec2 describe-instances --profile slope --region us-east-2 --instance-ids i-09b42b44a8d35909a --query 'Reservations[0].Instances[0].State.Name' --output text\ngh run view 37059670033 --repo owassmer/Slope_Sparse_Events --json status,conclusion","max_output_tokens":400}));

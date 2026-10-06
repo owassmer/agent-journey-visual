@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && git status --short | grep -v '^??' | head; git fetch -q && git switch -c step-7-page origin/main 2>&1 | tail -1 && cd .. && mv step-6c-run step-7-page 2>/dev/null; cd ~/dev/Slope_Sparse_Events && git worktree repair 2>&1 | tail -1; git worktree list | grep step-7; df -h / | tail -1"}

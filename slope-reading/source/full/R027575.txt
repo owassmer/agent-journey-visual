@@ -1,0 +1,140 @@
+"""Probabilistic analysis: probability composition, the signal reaching finance, no scenario deletion, cash
+conservation, paired simulation and weighted statistics. No network: judgments are supplied directly."""
+
+from dataclasses import replace
+from datetime import date, timedelta
+
+import numpy as np
+import pytest
+
+from app.agent.tools import ToolError, _date_in_text, _neutral_reference
+from app.analysis.core import Analysis, EventModel, stress
+from app.analysis.engine import run, schedule_arrays
+from app.analysis.events import Draws, EventCash, event_cash
+from app.analysis.setup import DRAWS, Setup
+from app.analysis.stats import weighted_quantiles
+from app.disputes.forecast import Forecaster, Judgment, combo_probability, distributions, joint_paths
+from app.disputes.rules import load_model
+from app.domain.investigation import Decisive, DisputeInstance
+from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit
+from app.finance.bank import load_feed
+
+SNAP = "chromadex_20240819"
+REVIEW = date(2024, 8, 19)
+SETUP = Setup(review=REVIEW, horizon=REVIEW + timedelta(days=180), funding=date(2024, 8, 20),
+              invoice_due=date(2024, 9, 19), invoice_cents=200_000_000, amount_cents=200_000_000, fee_bps=370,
+              installments=3, days=90, discount_rate_bps=800)
+
+
+def ev(cents: int) -> EvidenceValue:
+    return EvidenceValue(status=Status.EXACT, unit=Unit.CENTS, value=cents, provenance=Provenance(basis=Basis.DOCUMENTED))
+
+
+def dispute(iid: str, role: str, stage: str, amount: int, judgment: date | None = None) -> DisputeInstance:
+    dec = Decisive(finding_id="f", source_date="2024-08-07", quote="q")
+    return DisputeInstance(instance_id=iid, dependency_id="dep", model_id="m", model_version="3", title=iid,
+                           order_reference="D. Del. 1:18-cv-01434", nature="fee_and_cost_award",
+                           counterparty="Elysium Health, Inc.", finding_ids=("f",), amount=ev(amount),
+                           judgment_date=judgment, borrower_role=role, stage=stage, amount_status="sought",
+                           amount_includes_interest=True, established={"entitlement_decided": dec})
+
+
+def model_with(disputes: list[DisputeInstance], p: float = 0.5, form: dict | None = None) -> EventModel:
+    """Every node answered with probability p (security form: `form`), built through the real Forecaster."""
+    fc = Forecaster(disputes, {}, borrower="ChromaDex Corporation", review=REVIEW, horizon=SETUP.horizon,
+                    hydrate=lambda f: {})
+    per = fc.all_paths()
+    judgments = {}
+    for n in fc.nodes.values():
+        dist = dict(form or {"cash_deposit": 0.2, "surety_bond": 0.5, "letter_of_credit": 0.3}) if len(n.branches) == 3 \
+            else {"yes": p, "no": 1 - p}
+        judgments[n.key] = Judgment(key=n.key, instance_id=n.instance_id, node=n.node, question_id=n.question_id,
+                                    event=n.event, assumptions=n.assumptions, window=n.window, distribution=dist)
+    return EventModel({d.instance_id: d for d in fc.disputes}, judgments, per, fc.ordered())
+
+
+DE = dispute("de", "debtor", "amount_pending", 980_000_000)
+CA = dispute("ca", "creditor", "judgment_entered", 250_000_000, date(2024, 8, 13))
+
+
+# 1. Probability composition ----------------------------------------------------------------------------
+
+def test_conditional_probabilities_compose_and_conserve_mass():
+117:class SemanticObservation(Frozen):
+118-    observation_id: str
+119-    call_id: str
+120-    profile: str
+121-    question_id: str
+122-    question_version: str
+123-    primitive: Literal["choice", "noul", "score"]
+124-    answer: str | bool | None  # Score: the most supported rubric level, as its index
+125-    probabilities: dict[str, float] | None = None  # Choice/Score distribution; a judgment, never an event probability
+126-    noul_value: float | None = None  # Noul score in [0, 1]
+127-    score_value: float | None = None  # Score: expected rubric level
+128-    confidence: float | None = None
+129-    subject_ids: tuple[str, ...] = ()
+130-    downstream_disposition: Disposition = "unused"
+131-    disposition_note: str = ""
+132-
+133-
+134-class AtomicFinding(Frozen):
+135-    finding_id: str
+136-    dependency_id: str
+137-    proposition: str
+138-    target: str
+139-    subject_kind: SubjectKind = "other"
+140-    subject: str = ""
+141-    is_inference: bool = False  # the agent's own linkage of cited premises, labelled as such
+142-    spans: tuple[SourceSpan, ...] = Field(min_length=1)  # every finding rests on verbatim snapshot text
+143-    observation_ids: tuple[str, ...] = ()
+144-    status: Literal["proposed", "accepted", "rejected"] = "proposed"
+145-    resolution_note: str = ""
+146-
+147-
+56:class SourceSpan(Frozen):
+57-    """An exact, verified quotation from the admissible snapshot."""
+58-
+59-    source_id: str
+60-    section_id: str  # spans resolve against section text (tables appear inline in their section)
+61-    item_id: str  # the section or table the agent cited
+62-    start: int
+63-    end: int
+64-    quote: str
+65-
+66-
+67-class DecisionDependency(Frozen):
+68-    dependency_id: str
+69-    question: str  # the unanswered question, in plain words
+70-    premises: tuple[str, ...] = ()  # assumptions embedded in the question (screened for conflict)
+--
+134:class AtomicFinding(Frozen):
+135-    finding_id: str
+136-    dependency_id: str
+137-    proposition: str
+138-    target: str
+139-    subject_kind: SubjectKind = "other"
+140-    subject: str = ""
+141-    is_inference: bool = False  # the agent's own linkage of cited premises, labelled as such
+142-    spans: tuple[SourceSpan, ...] = Field(min_length=1)  # every finding rests on verbatim snapshot text
+143-    observation_ids: tuple[str, ...] = ()
+144-    status: Literal["proposed", "accepted", "rejected"] = "proposed"
+145-    resolution_note: str = ""
+146-
+147-
+148-class ReconciliationTask(Frozen):
+--
+222:class FindingReading(Frozen):
+223-    """Jev's present-state reading of one cited finding, judged against one obligation with the passage's surrounding
+224-    evidence (never a forecast). Full distributions are kept; code derives structural facts from them."""
+225-
+226-    finding_id: str
+227-    source_date: str
+228-    payer: dict[str, float] = Field(default_factory=dict)  # borrower | counterparty | not_stated -> probability
+229-    amount_status: dict[str, float] = Field(default_factory=dict)  # sought | estimated | fixed | paid | not_stated
+230-    includes_interest: float | None = None  # Noul value
+231-    events: dict[str, float | None] = Field(default_factory=dict)  # procedural event -> Noul value
+232-    bears_on: dict[str, float | None] = Field(default_factory=dict)  # factor -> Noul value (presence, for a present factor)
+233-    levels: dict[str, dict[str, float]] = Field(default_factory=dict)  # graded factor -> rubric level -> probability
+234-    observation_ids: tuple[str, ...] = ()
+235-
+236-

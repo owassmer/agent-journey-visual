@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('/tmp/slope-pr-essence')\na=json.loads((p/'results.json').read_text())\nprint({s:sum(x['status']==s for x in a) for s in ['updated','concurrent_change']})\nfor x in a:\n if x['status']=='concurrent_change': print(x['kind'],x['id'])\nPY","max_output_tokens":1000}));

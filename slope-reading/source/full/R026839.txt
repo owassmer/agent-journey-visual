@@ -1,0 +1,36 @@
+bank_only       -> inst_90_2000000 (limit 3,624,901, order limit 2,718,676)
+event_adjusted  -> inst_90_1430000 (limit 1,909,118, order limit 1,431,839)
+  condition: Count the $2,500,000.00 owed by Elysium Health, Inc. only once it is received.
+  condition: Confirm how ChromaDex Corporation would secure a stay pending appeal of the $9,800,000.00 owed to Elysium Health, Inc. (cash collateral or a letter of credit), and for how much.
+  condition: Confirm Western Alliance Bank's covenants permit this financing after the disputes' cash effects.
+wrote scenarios.json and collections.csv
+{
+ "structure": "inst_90_1430000",
+ "requested": "inst_90_2000000",
+ "requested_passes": false,
+ "requested_reasons": [
+  "amount above the order limit of $1,429,465.90"
+ ],
+ "limit_cents": 190911803,
+ "order_limit_cents": 143183852,
+ "limit_set_by": "lowest projected cash",
+ "binding": {
+  "lowest_projected_cash_cents": 1270636355,
+  "on": "2025-02-15",
+  "scenario": [
+   "The debtor neither pays nor bonds \u2192 Not collected in the horizon",
+   "The court fixes the amount \u2192 The debtor appeals and posts a bond \u2192 The appeal continues"
+  ],
+  "placement": "stress"
+ }
+}
+True [{'due': '2024-09-20', 'amount_cents': 49430333, 'principal_cents': 47666666, 'fee_cents': 1763667}, {'due': '2024-10-21', 'amount_cents': 49430333, 'principal_cents': 47666666, 'fee_cents': 1763667}, {'due': '2024-11-20', 'amount_cents': 49430334, 'principal_cents': 47666668, 'fee_cents': 1763666}]
+expected [{'date': '2024-09-20', 'amount_cents': 49445162}, {'date': '2024-10-21', 'amount_cents': 49445162}, {'date': '2024-11-20', 'amount_cents': 49445163}]
+38 [(['The debtor pays', 'The court fixes the amount → The debtor pays'], 265, 'stress', 3376626, 0), (['The debtor pays', 'The court fixes the amount → The debtor pays'], 265, 'central', 3376626, 0), (['The debtor pays', 'The court fixes the amount → The debtor appeals and posts a bond → The appeal continues'], 4905, 'stress', 3376626, 0), (['The debtor pays', 'The court fixes the amount → The debtor appeals and posts a bond → The appeal continues'], 4905, 'central', 3376626, 0)]
+['amount above the order limit of $1,429,465.90']
+structure,view,series,paths,placement,weight_bps,date,amount_cents
+net_30_2000000,bank_only,disbursement,,,,2024-08-20,-200000000
+net_30_2000000,bank_only,contractual,,,,2024-09-19,203200000
+net_30_2000000,bank_only,conditional,bank_only,central,10000,2024-09-19,203200000
+net_30_2000000,bank_only,expected,,central,,2024-09-19,203200000
+    1227 runs/recorded/chromadex_20240819-agent_plus_jev-20260925T163410Z/collections.csv

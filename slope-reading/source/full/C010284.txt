@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"tail -3 /tmp/refined-pool-check.log\naws s3api list-objects-v2 --profile default --bucket slope-walk-381492272971-20260930 --prefix walk-36781427817/refine-v1/done/ --query 'Contents[].Key' --output json\naws s3 cp s3://slope-walk-381492272971-20260930/walk-36781427817/refine-v1/live/44-16.log - --profile default","max_output_tokens":1500}));

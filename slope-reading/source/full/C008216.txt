@@ -1,0 +1,1 @@
+{"command": "A=/opt/homebrew/bin/aws; Q=s3://slope-walk-462947327980-20261001/walk-36781427817/fresh-corrected/refine-v1; date -u +%H:%M; $A --profile slope s3 ls $Q/failed/; f=$($A --profile slope s3 ls $Q/failed/ | head -1 | awk '{print $4}'); $A --profile slope s3 cp --quiet $Q/failed/$f - | grep -v '^refined\\| paths [0-9]' | tail -40 | cut -c1-260", "timeout": 90}

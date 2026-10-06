@@ -1,0 +1,1 @@
+{"command": "P=.venv/lib/python3.12/site-packages/claude_agent_sdk; sed -n 2240,2420p $P/types.py | grep -nE \"^    [a-z_]+:\" ; sed -n 1340,1380p $P/types.py; grep -n \"class AssistantMessage\\|class SystemMessage\" -A 14 $P/types.py | head -50; grep -n \"output_format\" $P/_internal/transport/*.py | head"}

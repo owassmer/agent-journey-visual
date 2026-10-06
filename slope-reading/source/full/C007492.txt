@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && D=$(ls -dt $TMPDIR/pipe_* | head -1); echo $D; ls $D | head; echo ---; ls $D/split/control | head; echo ---; find $D -name \"part*.pkl\" | grep -v \"part[0-9]*\\.pkl$\" | head -3; find $D -name \"part*.pkl\" | grep -v \"part[0-9]*\\.pkl$\" | wc -l"}

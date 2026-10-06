@@ -1,0 +1,6 @@
+// @exec: {"max_output_tokens": 11000}
+const d=load("digestDir");
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"python3 read.py context 22500 7000",workdir:d,max_output_tokens:3000}),
+tools.exec_command({cmd:"python3 read.py context 40356 28500",workdir:d,max_output_tokens:9000})
+]);for(const x of r){if(x.status==="fulfilled")text(x.value.output);else text(String(x.reason));}

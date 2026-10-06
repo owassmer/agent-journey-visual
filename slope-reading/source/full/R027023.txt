@@ -1,0 +1,17 @@
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:107:          "mcp__credit__instantiate_dispute",
+Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json:281:      "instantiate_dispute": "Place a live dispute onto the host-owned post-judgment dispute model: cited accepted findings, the borrower's side, the counterparty, the amount (documented, or derived with a stated basis) and any judgment date (must appear in the quotes). The host places the stage and judges each transition with Jev (Choice, refined by Noul/Score factor judgments where uncertain and decision-relevant); code sets every date and amount from the model's rules and composes the weighted paths (labelled model judgment).",
+app/agent/investigation.py:63:  is still open), place it on the host's dispute model with instantiate_dispute: the accepted findings about it, whether
+- If you connect a name, label or table row to an obligation by matching amounts or dates, mark that finding is_inference and
+  describe the link as an inference in your conclusion.
+- When a dispute is still live on the review date (a money judgment not yet paid, or a liability ruling whose amount
+  is still open), place it on the host's dispute model with instantiate_dispute: the accepted findings about it, whether
+  the borrower owes or is owed, the counterparty, the amount and any judgment date. The host sets the stages, dates and
+  amounts from rules; do not invent branches. Then run_scenarios to see how each financing structure performs
+  bank-only and along the disputes' paths, and what binds the recommendation.
+- run_sensitivity on validated settlement effects (fixed-installment cases) to see which unknown changes the cash
+  requirement.
+CLAUDE.md:24:Wrong entity. Future-information leakage. A fabricated payment date. A demanded amount treated as paid. Overstated cash. A duplicated obligation. Unknown values silently becoming 0 or 1. 
+Slope_Credit_Scenario_Build_Specification.md:119:The operator opens a **financing decision**, not a lawsuit dashboard. **Show the right answer, not the machinery.** The front page states one decision 
+Slope_Credit_Scenario_Build_Specification.md:159:The lawsuit itself does not supply a generic default-probability increment. It supplies evidence about an economic mechanism. Jev’s confidence never be
+Slope_Credit_Scenario_Build_Specification.md:228:Keep three series separate: contractual amounts owed, conditional cash collected and probability-weighted expected collections. V1 requires the first t
+Slope_Credit_Scenario_Build_Specification.md:404:Critical errors—wrong entity, future leakage, fabricated payment date, demanded amount treated as paid, a Jev branch weight presented as an observed fr

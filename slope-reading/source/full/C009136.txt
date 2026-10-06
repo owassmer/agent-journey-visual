@@ -1,0 +1,2 @@
+// @exec: {"max_output_tokens": 14000}
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json\nfrom pathlib import Path\nh=json.loads(Path('human.json').read_text())\nfor x in h:\n if x['id'] in (787377,788313): print('USER',x['id']);print(x['content'])\nPY",workdir:load("digestDir"),max_output_tokens:14000}));

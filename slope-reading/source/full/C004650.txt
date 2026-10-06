@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; python3 - <<'X'\nimport json\nd = json.load(open(\"runs/recorded/akoustis_20240514-agent_plus_jev-20260928T052641Z/page.json\"))\nA = d[\"assumptions\"]\nprint(type(A), len(A))\na0 = A[0] if isinstance(A, list) else None\nprint(list(a0.keys()) if a0 else list(A)[:5])\nX"}

@@ -1,0 +1,41 @@
+Exit code 1
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+  [1m[94m--> [0mtests/test_finance.py:3:1
+   [1m[94m|[0m
+[1m[94m 1[0m [1m[94m|[0m   """Financial correctness: the kit's reference arithmetic and the spec §10 invariants for step 3."""
+[1m[94m 2[0m [1m[94m|[0m
+[1m[94m 3[0m [1m[94m|[0m [1m[91m/[0m from datetime import date, timedelta
+[1m[94m 4[0m [1m[94m|[0m [1m[91m|[0m from decimal import Decimal
+[1m[94m 5[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m 6[0m [1m[94m|[0m [1m[91m|[0m import pytest
+[1m[94m 7[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m 8[0m [1m[94m|[0m [1m[91m|[0m from app.domain.values import Basis, Unit, UnknownInput, assumed, documented, unknown
+[1m[94m 9[0m [1m[94m|[0m [1m[91m|[0m from app.finance import ledger, settlements
+[1m[94m10[0m [1m[94m|[0m [1m[91m|[0m from app.finance.calendar import add_months, next_business_day
+[1m[94m11[0m [1m[94m|[0m [1m[91m|[0m from app.finance.fixed_installment import FixedInstallmentOffer
+[1m[94m12[0m [1m[94m|[0m [1m[91m|[0m from app.finance.ledger import BorrowerCashBase, CashStream, DoubleCountError, LedgerError
+[1m[94m13[0m [1m[94m|[0m [1m[91m|[0m from app.finance.merchant import AccountCredits, ConsolidatedRevenue, MerchantLoanState, MerchantTerms, project
+[1m[94m14[0m [1m[94m|[0m [1m[91m|[0m from app.finance.reference_check import checks
+[1m[94m15[0m [1m[94m|[0m [1m[91m|[0m from app.finance.streams import new_draw_streams, settlement_stream
+[1m[94m16[0m [1m[94m|[0m [1m[91m|[0m from app.finance.thresholds import horizon_residual, remaining_period_required_net_cash
+[1m[94m17[0m [1m[94m|[0m [1m[91m|[0m from app.finance.valuation import present_value_cents, principal_dollar_days
+   [1m[94m|[0m [1m[91m|____________________________________________________________________________^[0m
+[1m[94m18[0m [1m[94m|[0m
+[1m[94m19[0m [1m[94m|[0m   AUG12, AUG13, JUN30 = date(2024, 8, 12), date(2024, 8, 13), date(2024, 6, 30)
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m  [0m [1m[94m|[0m
+[1m[94m12[0m [1m[94m|[0m from app.finance.ledger import BorrowerCashBase, CashStream, DoubleCountError, LedgerError
+[1m[94m  [0m [1m[31m-[0m [31mfrom app.finance.merchant import AccountCredits, ConsolidatedRevenue, MerchantLoanState, MerchantTerms, project
+[0m[1m[94m13[0m [1m[32m+[0m [32mfrom app.finance.merchant import (
+[0m[1m[94m14[0m [1m[32m+[0m [32m    AccountCredits,
+[0m[1m[94m15[0m [1m[32m+[0m [32m    ConsolidatedRevenue,
+[0m[1m[94m16[0m [1m[32m+[0m [32m    MerchantLoanState,
+[0m[1m[94m17[0m [1m[32m+[0m [32m    MerchantTerms,
+[0m[1m[94m18[0m [1m[32m+[0m [32m    project,
+[0m[1m[94m19[0m [1m[32m+[0m [32m)
+[0m[1m[94m20[0m [1m[94m|[0m from app.finance.reference_check import checks
+[1m[94m  [0m [1m[94m|[0m
+
+Found 1 error.
+[[36m*[0m] 1 fixable with the `--fix` option.

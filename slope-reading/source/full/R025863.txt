@@ -1,0 +1,12 @@
+5:  <h2>{{ v.borrower }}</h2>
+27:    {% if v.submitted.incomplete_reasons %}<p><span class="tag warn">Incomplete</span> {{ v.submitted.incomplete_reasons | join("; ") }}</p>{% endif %}
+32:<h3>Pivotal unresolved inputs</h3>
+40:<h3>What changed from the baseline</h3>
+44:  <span class="tag finding">Agent effect</span>{% if e.status == "validated" %}<span class="tag engine">Validated</span>{% else %}<span class="tag warn">{{ e.status }}</span>{% endif %}
+56:    {% for k, r in e.overrides.items() %}<p class="muted"><span class="tag warn">Override</span> {{ k.replace("_", " ") }}: {{ r }}</p>{% endfor %}
+65:<h3>Sensitivity <span class="tag engine">Engine result</span></h3>
+77:{% if v.inventory %}
+78:<h3>Inventory <span class="tag jev">Host sweep</span></h3>
+81:{% for i in v.inventory %}<tr><td>{{ i.source }}<br><span class="muted">{{ i.heading }} ({{ i.sections }} section{{ "s" if i.sections != 1 }})</span></td>
+83:    {% for c in i.coverage_checks %}<br><span class="tag jev">Coverage</span><span class="muted">{{ c.meaning }}{% if c.ambiguous %} (ambiguous){% endif %} · {{ c.findings | join(", ") }} · {{ c.disposition }}{% if c.note and c.disposition == "overridden by agent with reason" %}: {{ c.note }}{% endif %}</span>{% endfor %}</td></tr>{% endfor %}
+87:<h3>Investigation</h3>

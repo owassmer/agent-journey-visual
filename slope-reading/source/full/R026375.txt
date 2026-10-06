@@ -1,0 +1,41 @@
+5:## 1. The product to build
+15:### Where it fits at Slope
+25:## 2. Case selection: Synergy CHC first, Barfresh second
+42:### Exact lead mission
+48:## 3. What the evidence actually establishes
+50:### Synergy: three obligations that must remain separate
+65:### Actual merchant contract
+79:### Later outcomes, hidden until the decision is locked
+85:### Barfresh transfer case
+93:## 4. The demonstration experience
+110:6. **Loan cash flows:** contractual payments, baseline modeled collections and event-conditioned collections on the same dates. Conditional curves are not labeled exp
+118:For the public-data demonstration, default to **conditional thresholds and an editable assumptions panel**, not fabricated daily bank transactions. A fuller borrower 
+120:## 5. From evidence to a modeled adjustment
+137:### A useful worked threshold without fictional accounts
+153:## 6. Financial engine specification
+155:### Representation and dates
+164:- **Proposed fixed-installment draw:** import an explicit schedule or generate from a declared pricing convention. For the demo, a stated fixed total fee can be alloc
+168:### Cash and collections
+182:### Candidate actions and choice
+190:### Concrete proposal fixtures
+200:Start with month indices, not invented historical funding dates. Activate dated schedules when the user chooses funding date and business-day convention. These fixed-
+202:### Loan economics and portfolio output
+204:Keep three series separate: contractual amounts owed, conditional cash collected and probability-weighted expected collections. V1 requires the first two. Expected co
+218:## 7. Agent and Jev foundation
+220:### Runtime decision
+244:### Actual adaptive workflow
+254:### Jev as the semantic judgment layer
+286:### Investigation graph
+290:### Isolation and state
+298:## 8. Evidence acquisition and historical controls
+308:### Gaps with concrete treatment
+323:## 9. Implementation modules and sequence
+338:  barfresh_20241025/  # transfer case
+351:| 5. Decision comparison | Matched baseline/event-adjusted scenario pairs (only effect IDs differ), Account Credits linked to operating receipts, payment capacity wit
+352:| 6. Review gate and decision-first workbench | Independent review of the locked graph packet as a quality gate, starting from the packet's reviewer checklist (escala
+353:| 7. Transfer/evaluation | Same engine on Barfresh; agent-with-Jev vs agent-alone runs measured on critical semantic errors, finding and effect quality, pivotal-gap d
+357:## 10. Acceptance criteria and evaluation
+370:10. Unknown timing, recovery, priority and scenario weights do not become zero, one or a silent default.
+378:Critical errors—wrong entity, future leakage, fabricated payment date, demanded amount treated as paid, invented Slope policy, cash overstated or duplicate obligation
+382:## 11. What would make this compelling to Russell
+388:## Sources

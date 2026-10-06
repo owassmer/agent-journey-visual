@@ -1,0 +1,17 @@
+152:            sweep = build_sweep(snapshot_id, inputs["baseline_profile"]["borrower"])
+app/agent/mission.py:16:def project_mission(case_id: str, run_inputs: dict[str, Any] | None = None) -> dict[str, Any]:
+app/agent/mission.py-17-    cfg = agent_config()
+app/agent/mission.py-18-    projection = cfg["mission_projection"]
+app/agent/mission.py-19-    if case_id not in MISSION_KEYS:
+app/agent/mission.py-20-        raise ConfigurationError(f"Unknown case {case_id!r}")
+app/agent/mission.py-21-    template = cfg[MISSION_KEYS[case_id]]
+app/agent/mission.py-22-
+app/agent/mission.py-23-    mission = {k: template[k] for k in projection["allowed_case_fields"] if k in template}
+app/agent/mission.py-24-    run_inputs = run_inputs or {}
+app/agent/mission.py-25-    extra = set(run_inputs) - set(projection["allowed_run_input_fields"])
+app/agent/mission.py-26-    if extra:
+app/agent/mission.py-27-        raise ConfigurationError(f"Run inputs outside the mission whitelist: {sorted(extra)}")
+app/agent/mission.py-28-    if "mission_id" in run_inputs and run_inputs["mission_id"] != mission.get("mission_id"):
+app/agent/mission.py-29-        raise ConfigurationError("Run input mission_id does not match the case template")
+app/agent/mission.py-30-    # Missing run inputs stay explicitly unknown rather than absent or defaulted.
+app/agent/mission.py-31-    for field in projection["allowed_run_input_fields"]:

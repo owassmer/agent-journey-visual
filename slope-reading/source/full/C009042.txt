@@ -1,0 +1,7 @@
+// @exec: {"max_output_tokens": 12000}
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nimport subprocess\nroot=Path('.claude/worktrees/step-9-memo')\nfiles=subprocess.check_output(['git','ls-files'],cwd=root,text=True).splitlines()\nfor f in files:\n p=root/f\n if p.exists() and (f.startswith(('app/','tests/')) or f.endswith('.md') or f.startswith('.github/')):\n  print(p.stat().st_size,len(p.read_text(errors='replace').splitlines()),f)\nPY",max_output_tokens:4500}),
+tools.exec_command({cmd:"git log origin/main..step-9-memo --date=iso-strict --format='%h %ad %s'",max_output_tokens:6000}),
+tools.exec_command({cmd:"gh pr list --state all --limit 15 --json number,title,state,headRefName,baseRefName,updatedAt,mergedAt,url",max_output_tokens:2200}),
+tools.exec_command({cmd:"gh run list --limit 8 --json databaseId,name,headBranch,headSha,status,conclusion,createdAt,updatedAt,url",max_output_tokens:1800})
+]);for(let i=0;i<r.length;i++){store("state_"+i,r[i]);text({index:i,...r[i]});}

@@ -1,0 +1,6 @@
+const d=load("digestDir");
+const rs=await Promise.allSettled([
+  tools.exec_command({cmd:"python3 read.py contracts_compact 327000 33000",workdir:d,max_output_tokens:13000}),
+  tools.exec_command({cmd:"ls -l",workdir:d,max_output_tokens:2000}),
+  tools.exec_command({cmd:"git status --short --branch",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:1000})
+]);for(let i=0;i<rs.length;i++)text({i,result:rs[i].status==="fulfilled"?rs[i].value.output:rs[i].reason});

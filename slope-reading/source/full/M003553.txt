@@ -1,0 +1,40 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_d76ec3cd]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 23:14:15 (1h13m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 4426.05s
+
+--- ✓ TASK 1/1: Worker C of the step-9 parallel build for owassmer/Slope_Sparse_Events: the 14 May question state (situation keys from a representative trajectory plus the group's range, grouping splits, typed values, the five content kinds, attribution, labels). Branch step-9-c off step-9-core. Commit and push; open no PR.  (status=completed, api_calls=150, 4425.75s) ---
+I made the `situation_keys` rename in its own commit and pushed it. Four tests in `tests/test_pending_claim.py` still fail because they expect the old question-state layout.
+
+**Rename (e6937d9, on its own):**
+- In `dispute_model.json`, the field is now `situation_keys` in all 23 places: every `pending_money_claim` block and every top-level 5.0.0 node. The walker's `situation` still means the conditions an actor weighs.
+- `state14` now reads `situation_keys` when it fills a question's state.
+- I refreshed the byte count and hash for `dispute_model.json` in `PACKAGE_MANIFEST.json`.
+
+**Accessor names (7bdff04):**
+- B's names (`judgment_amount_entered`, `judgment_standing(day)`, `default_available_day`, `holder_route_days_path`, `band`, `band_range`, `remitted_amount`) are the ones my code already reads. `standing_amount` isn't read.
+- On step-9-a, A's `offering_terms(day)` returns one value per trajectory and there is a dated `offering_pending_on(day)`. My reads now match both.
+- The stubs stay at the end of `Chain`, marked `INTEGRATOR`. They only apply where A's or B's real method is missing, so they never override one.
+
+**Regression fix (39afffa):** C2 had made a node take its answers from the contract block. The base walker still books `repurchase_only`, so test_1 failed with a KeyError. A node now takes its question text from the block but keeps the walker's answer set. A and B still need to move the walker onto the contract's answer sets.
+
+**Test status:** after the fixes, 4 tests in `tests/test_pending_claim.py` fail:
+- `test_verdict_questions_ask_no_amount_and_no_cash` expects `question.form_question`, which the new state keeps under `situation`.
+- `test_questions_marked_cash_receive_cash_facts` expects `path_facts`.
+- `test_7i` and `test_7j` expect the no-lawsuit view's state to carry `path_facts` and `assumptions`. The new state uses `situation` and `assumed_events`.
+
+These tests need rewriting to the new layout. The no-lawsuit view's rows also have no state snapshot yet; that has to come from the shared distress chain A is building. The 20 Jun dump equals the baseline (13,821 paths, 337 nodes).
+
+**Checks from before these changes (6a6a23d):** fixture tree of 2,938 paths, 18 question types. STATES.md shows 19; the jury questions have no cash, so they get no cash check. `STATES.md` has not been re-rendered since the rename.
+- **Cash against the loan engine:**
+  - Equal on the decision day for 15 of the 17 cash questions.
+  - The two that differ, `financing_at_floor` and `judgment_response`, state the cash before that day's own event and the engine gives the end-of-day figure; the engine also books the day's offering money (+$323k).
+  - Every group's range spans its group.
+- **Wording scan:** 0 hits.
+- **Split signatures:** the stay groups mix "no security" with "reduced security", and the notes and holders groups mix "can pay" with "cannot pay". The walk gives one answer per path to all its trajectories, so splitting inside a path needs per-trajectory answers — a walker change for A and B. Nothing in my files can build that.
+
+**Files:**
+- STATES.md: `~/.hermes/profiles/connor/cache/scratch/9m/C/STATES.md`, with the check results in `checks.txt` beside it.
+- Scripts: `states.py`, `diff_probe.py` and `e*.py` in the same folder.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_d76ec3cd/task-0.log

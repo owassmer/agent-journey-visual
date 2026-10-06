@@ -1,0 +1,29 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_409f1f66]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-29 01:51:08 (1h5m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 3925.41s
+
+--- ✓ TASK 1/1: Finish the step-9 speed-up for owassmer/Slope_Sparse_Events on branch step-9-speed: remove the per-call rehashing in Chain.processed/line_net, then prove paths and trajectories identical by replay against the integrator's saved tree, and report the tree build time. Commit and push; open no PR.  (status=completed, api_calls=77, 3925.22s) ---
+Everything is committed and pushed, so step-9-int can merge step-9-speed now. The tip is ab26ee7, which matches origin, and the working tree is clean. At that tip, the three tests pass (`test_cash_processing`, `test_collection_modes`, `test_opening_exposure`: 11 passed) and `ruff check app tests` is clean.
+
+**Commits on step-9-speed**
+- ed953fd, 634738a, 0ec7b16: the numba kernels, already on the branch.
+- c0b6250: merge of step-9-core 35ba9b1.
+- 5465aa1: memoization in `events.py`, kept to the functions you named. `processed()` and `line_net()` are now cached like `cum()`, and each array tracks its own version, so a booking rehashes only the arrays it wrote. The cache key is still built from the full event state, so equal states still share one engine run. Every write to the event arrays is followed by `_touch`, and the incurred-day write only counts when its value actually changes. `_arrears` now uses the same content key instead of `(version, id(ev))`: the old key could be the same for two chain states cloned from one parent that then diverge.
+- ab26ee7: merge of step-9-core d3aa929.
+
+**One engine run:** about 4.5 ms, from 1,340 runs in 6.0 s on the 200-path slice profile. Before the memoization it was 1,325 runs in 7.1 s.
+
+**Slice walk time:** the 200-path profiled slice went from 63 s to 18 s. Unprofiled, it takes 14 s.
+
+**Checks already run before your stop:**
+- **Old vs new on the first 300 paths:** bit for bit against 35ba9b1. The path steps, edges, outcomes and all 481 node keys are equal. The replays give 16,800 outputs (56 per path) and none differ. The 300-path walk took 102 s on the old code and 21 s on the new.
+- **20 Jun dump:** equals `9h/dump20_final.json` on every key except `seconds`.
+
+**Full-tree walk:** there is no `full14.pkl`. The walk reached 17,000 paths at 2,649 s and macOS killed it for memory. Free disk had dropped to about 0.7 GB, below the 1.5 GB floor, while swap climbed to 9.5 GB. I removed my scratch worktree of 35ba9b1 to free space.
+
+**Where the walk's memory goes:** most of it is the saved chain states. After 300 paths the walk holds about 658 MB of cloned states (`events.py:2243`) and 186 MB at `processor.py:149`; at 600 paths the clones alone reach 1.2 GB. The states pile up in the Forecaster's cache of traced prefixes (`fc._traces`, 1,442 entries at 300 paths, 2,783 at 600). That is worth passing to whoever redesigns the grouping.
+
+Scripts are in `scratch/9s/`: `edit1.py`, `walk14.py`, `replay.py`, `cmp.py`, `mem14.py`.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_409f1f66/task-0.log

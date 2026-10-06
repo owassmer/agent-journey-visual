@@ -1,0 +1,1 @@
+{"command": "sed -n 120,200p cases/slope_terms.json && cat cases/chromadex_20240819/run_inputs.json | head -60 && grep -rn \"inst_120\\|net_90\\|default_interest\\|requested_term\" --include=*.py --include=*.json --include=*.html app cases tests | grep -v \"slope_terms.json\" | head", "description": "Read rest of Slope terms and run inputs"}

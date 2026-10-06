@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/fix-a4-milestone && uv run ruff check . | tail -1 && env -u CLAUDE_CODE_OAUTH_TOKEN uv run pytest -q -p no:warnings 2>&1 | grep -E \"passed|failed\" | tail -2 && git push -q --force-with-lease origin fix-a4-milestone 2>&1 | tail -1; gh pr edit 14 --add-label merge-ready | tail -1", "timeout": 600}

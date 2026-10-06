@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && python3 ~/.hermes/profiles/connor/cache/scratch/6c/edit_forecast_a.py && grep -n \"NO_NEW_MONEY\\|COMPANY_ACTORS\\|court_record\" app/disputes/forecast.py && uv run ruff check app/disputes/forecast.py | tail -3"}

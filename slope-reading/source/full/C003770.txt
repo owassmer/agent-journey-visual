@@ -1,0 +1,1 @@
+{"command": "sysctl -n hw.ncpu hw.perflevel0.physicalcpu; lsof -a -p 50688 -d cwd -Fn | tail -1; lsof -a -p 59400 -d cwd -Fn | tail -1; head -30 ~/.hermes/profiles/connor/cache/scratch/9h/prof14.py; echo ----; head -40 ~/.hermes/profiles/connor/cache/scratch/9p/pick_paths.py; grep -l \"prof14\" ~/.hermes/profiles/connor/cache/delegation/live/*/task-*.log 2>/dev/null | tail -3"}

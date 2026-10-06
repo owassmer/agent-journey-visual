@@ -1,0 +1,67 @@
+Exit code 1
+ok
+18:import asyncio
+19:import hashlib
+20:import json
+21:import re
+23:from decimal import Decimal
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+  [1m[94m--> [0mapp/agent/tools.py:16:1
+   [1m[94m|[0m
+[1m[94m14[0m [1m[94m|[0m   """
+[1m[94m15[0m [1m[94m|[0m
+[1m[94m16[0m [1m[94m|[0m [1m[91m/[0m from __future__ import annotations
+[1m[94m17[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m18[0m [1m[94m|[0m [1m[91m|[0m import asyncio
+[1m[94m19[0m [1m[94m|[0m [1m[91m|[0m import hashlib
+[1m[94m20[0m [1m[94m|[0m [1m[91m|[0m import json
+[1m[94m21[0m [1m[94m|[0m [1m[91m|[0m import re
+[1m[94m22[0m [1m[94m|[0m [1m[91m|[0m from dataclasses import dataclass, field
+[1m[94m23[0m [1m[94m|[0m [1m[91m|[0m from decimal import Decimal
+[1m[94m24[0m [1m[94m|[0m [1m[91m|[0m from typing import Any
+[1m[94m25[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m26[0m [1m[94m|[0m [1m[91m|[0m from claude_agent_sdk import create_sdk_mcp_server, tool
+[1m[94m27[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m28[0m [1m[94m|[0m [1m[91m|[0m from app.agent.jev import registry_question
+[1m[94m29[0m [1m[94m|[0m [1m[91m|[0m from app.agent.jev_profiles import AMBIGUITY_MARGIN, Semantics, is_ambiguous
+[1m[94m30[0m [1m[94m|[0m [1m[91m|[0m from app.agent.meanings import NOT_SETTLED, meaning
+[1m[94m31[0m [1m[94m|[0m [1m[91m|[0m from app.agent.mission import project_mission
+[1m[94m32[0m [1m[94m|[0m [1m[91m|[0m from app.agent.run_store import RunStore
+[1m[94m33[0m [1m[94m|[0m [1m[91m|[0m from app.agent.sweep import units_touching
+[1m[94m34[0m [1m[94m|[0m [1m[91m|[0m from app.config import ConfigurationError
+[1m[94m35[0m [1m[94m|[0m [1m[91m|[0m from app.domain.investigation import (
+[1m[94m36[0m [1m[94m|[0m [1m[91m|[0m     CASH_FREE_MECHANISMS,
+[1m[94m37[0m [1m[94m|[0m [1m[91m|[0m     AtomicFinding,
+[1m[94m38[0m [1m[94m|[0m [1m[91m|[0m     BranchCash,
+[1m[94m39[0m [1m[94m|[0m [1m[91m|[0m     DecisionDependency,
+[1m[94m40[0m [1m[94m|[0m [1m[91m|[0m     DisputeBranch,
+[1m[94m41[0m [1m[94m|[0m [1m[91m|[0m     DisputeNode,
+[1m[94m42[0m [1m[94m|[0m [1m[91m|[0m     Disposition,
+[1m[94m43[0m [1m[94m|[0m [1m[91m|[0m     EconomicEffectProposal,
+[1m[94m44[0m [1m[94m|[0m [1m[91m|[0m     EvidenceCandidate,
+[1m[94m45[0m [1m[94m|[0m [1m[91m|[0m     ParameterRequirement,
+[1m[94m46[0m [1m[94m|[0m [1m[91m|[0m     ReconciliationTask,
+[1m[94m47[0m [1m[94m|[0m [1m[91m|[0m     SemanticObservation,
+[1m[94m48[0m [1m[94m|[0m [1m[91m|[0m     validate_effect,
+[1m[94m49[0m [1m[94m|[0m [1m[91m|[0m )
+[1m[94m50[0m [1m[94m|[0m [1m[91m|[0m from app.domain.values import Basis, EvidenceValue, Provenance, Status, Unit, assumed, documented, unknown
+[1m[94m51[0m [1m[94m|[0m [1m[91m|[0m from app.evidence.spans import SpanError, locate, verify
+[1m[94m52[0m [1m[94m|[0m [1m[91m|[0m from app.evidence.store import EvidenceAccessError, EvidenceStore
+[1m[94m53[0m [1m[94m|[0m [1m[91m|[0m from app.finance.fixed_installment import FixedInstallmentOffer
+[1m[94m54[0m [1m[94m|[0m [1m[91m|[0m from app.finance.thresholds import remaining_period_required_net_cash
+   [1m[94m|[0m [1m[91m|_____________________________________________________________________^[0m
+[1m[94m55[0m [1m[94m|[0m
+[1m[94m56[0m [1m[94m|[0m   MAX_SEARCH_RESULTS = 12
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m  [0m [1m[94m|[0m
+[1m[94m39[0m [1m[94m|[0m     DecisionDependency,
+[1m[94m40[0m [1m[32m+[0m [32m    Disposition,
+[0m[1m[94m41[0m [1m[94m|[0m     DisputeBranch,
+[1m[94m42[0m [1m[94m|[0m     DisputeNode,
+[1m[94m  [0m [1m[31m-[0m [31m    Disposition,
+[0m[1m[94m43[0m [1m[94m|[0m     EconomicEffectProposal,
+[1m[94m  [0m [1m[94m|[0m
+
+Found 1 error.
+[[36m*[0m] 1 fixable with the `--fix` option.

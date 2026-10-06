@@ -1,0 +1,24 @@
+[1mapp/agent/tools.py[0m[36m:[0m23[36m:[0m28[36m:[0m [1m[31mF401[0m [[36m*[0m] `datetime.timedelta` imported but unused
+Found 1 error.
+[[36m*[0m] 1 fixable with the `--fix` option.
+  and give a reason whenever you disagree with one.
+- propose_effect for each supported economic mechanism, stating its baseline treatment, parameters (unknown stays unknown) and the
+  plain-language model consequence. Existing liabilities are scheduled once, never added again.
+- When a matter has no future cash effect, record that as a cited finding and an effect with cash_direction none, so the
+  reviewer can see why it does not change cash.
+- If you connect a name, label or table row to an obligation by matching amounts or dates, mark that finding is_inference and
+  describe the link as an inference in your conclusion.
+- Compile every dispute that is still live on the review date (a money judgment not yet paid, or a liability ruling
+  whose amount is still open), whichever side the borrower is on: an amount owed to the borrower matters as much as
+  one it owes. Compile each with instantiate_dispute: the accepted findings about one obligation (cite the passages
+  that show what the court has decided, the amount and any appeal position), the obligation, the counterparty, the
+  amount figure and any judgment date. Jev reads each finding (who pays, the amount's status, the procedural events);
+  the host keeps every cash path the evidence permits. Then run_scenarios: it sizes each structure against all of them
+  and computes what the requested amount would need. Base your conclusion on those computed results.
+- run_sensitivity on validated settlement effects (fixed-installment cases) to see which unknown changes the cash
+  requirement.
+- request_missing_fact for each pivotal fact the evidence cannot supply, then submit_packet.
+- Use only the evidence returned by the tools; do not rely on remembered facts about this company or later events.
+- Work efficiently: the run stops at {turn_budget} turns; submit before then."""
+
+JEV_METHOD = """- read_inventory early: the host screened the admissible evidence paragraph by paragraph and table row by table

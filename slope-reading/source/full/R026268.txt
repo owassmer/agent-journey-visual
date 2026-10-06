@@ -1,0 +1,22 @@
+# TypeSafe's Stated Use Cases and Jev's Capabilities
+
+## Intended Use Cases
+
+TypeSafe identifies several applications for Jev:
+
+- **"AI-Powered Workflows / smart if-statements"** - structured outputs functioning as fuzzy decision rules for classification, routing, scoring, extraction, or branching
+- **Map-reducing over big data** to generate features and insights
+- **Real-time applications** where 100ms latency enables AI integration without compromising user experience
+- **Verification tasks** including scoring, judging, guardrailing, and detecting jailbreaks
+
+## Probabilities and Calibration
+
+Jev outputs accompany answers with calibrated probabilities and confidence scores. The company emphasizes that "higher confidence means higher accuracy" and that responses are "more consistent: returns similar answers for similar inputs."
+
+Regarding calibration measurement, TypeSafe states their workflow evaluations use "the average of the smartest models...as reference probabilities" rather than ground truth labels—an approach they designed to reflect production workload authenticity.
+
+## Limitations
+
+The documentation notes Jev "**gives up string generation**, it's optimized for structured outputs." The model supports cardinality up to 255 for choices, requiring two-stage scoring for higher-cardinality decisions.
+
+**Note:** The document doesn't explicitly mention "Choice" and "Noul" primitives or detailed recommended patterns beyond workflow decomposition.

@@ -1,0 +1,1 @@
+{"image_url": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/7_page/shots3/p5_3_when.png", "question": "In this tight crop, is there a dotted vertical line passing through any letters of the text? Answer yes or no and describe exactly what you see at the text.", "region": [640, 70, 880, 140]}

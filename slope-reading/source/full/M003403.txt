@@ -1,0 +1,55 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_0b0f083b]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 21:58:42 (30m43s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 1843.88s
+
+--- ✓ TASK 1/1: Build step 5 of step 9 for owassmer/Slope_Sparse_Events: write the 14 May question contracts (registry entries, the event_forecast profile with the shared instruction, per-node record items, situation keys, standards and answer meanings) from QUESTIONS_20240514.md under the binding wording posture, keeping the recorded 20 Jun run unchanged. Follow the brief at /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9h/BRIEF_step5.md exactly. Commit and push to branch step-9-contracts; open no PR.  (status=completed, api_calls=109, 1843.78s) ---
+All 23 questions in spec §4 now have contracts on `step-9-contracts`, and the recorded 20 Jun run reads exactly what it read before. The suite passes (220 passed, 1 skipped with the cache-only flag; the two stubbed-Jev files pass separately, 32 tests), ruff is clean, and all four JSON files are valid. No Jev calls; no PR opened.
+
+**Commits** (all pushed; each one also refreshes `PACKAGE_MANIFEST.json`):
+- `8ccc38f`: the `event_forecast` profile in the registry and `agent_config.json`, the five-kind state contract, five new rules, and the mechanism line.
+- `33f4679`: J1, J1b, D1, J2, C3, D5.
+- `046f50d`: D3, C2, C1 (both nodes), J4, D4, J3.
+- `534168c`: D2, D7, N1, D8, D9.
+- `c3dbda5`: H1, H2, H3, D6a, D6b, and the pending template's `asks`.
+
+**How 20 Jun stays unchanged.** Recorded as `templates.pending_money_claim.node_texts`:
+- Every node the 14 May case shares with the 20 Jun template carries a `pending_money_claim` block with the new texts; its other fields are left alone.
+- Those blocks point at new registry ids (`forecast_claim_<node>`). The 20 Jun registry entries are untouched.
+- The new nodes (`verdict_amount`, `remittitur_elected`, `offering_closes`, `bid_compliance`, `hearing_request`) sit at the top level and carry `since: 5.0.0`.
+- Two checks confirm it: the 20 Jun dump equals the baseline taken at 0297f41 (13,821 paths, 337 node states, 1 bank state). A second script, `check20.py`, confirms the registry entries, profiles and node specs the 20 Jun run reads are unchanged; the dump doesn't cover registry text.
+
+**The two standards.** CourtListener's pages returned a bot challenge and its API needs a token, so I read the courts' own PDFs instead.
+1. **Rule 50(b) limited to the Rule 50(a) grounds** (`frcp_50b_renewal`): the text of Rules 50(a)(2) and 50(b), *Lightning Lube, Inc. v. Witco Corp.*, 4 F.3d 1153, 1172–73 (3d Cir. 1993), *Williams v. Runyon*, 130 F.3d 568, 571–72 (3d Cir. 1997), and *Unitherm Food Sys. v. Swift-Eckrich*, 546 U.S. 394 (2006).
+2. **Stay on less than a full bond** (`stay_reduced_security`): the text of Rule 62(b).
+   - *In re Diet Drugs*, 582 F.3d 524, 552 (3d Cir. 2009): courts "may forego" the bond "when there are other means to secure the judgment creditor's interests". This was said in passing in a fee appeal, and one D.N.J. court has noted the Third Circuit "has not squarely addressed" waiver.
+   - *Praxis Energy Agents v. M/V Pebble Beach*, C.A. No. 17-559-LPS (D. Del. Dec. 6, 2021): a full bond may be waived in "extraordinary circumstances" where "posting a full bond is impossible or impracticable". The court cites an E.D. Pa. case for this, and the citation says so. No other circuit's test is used.
+
+**Wording scan.** No problems in the new texts; the J3 "stay" hit was the noun, not a next action. Every "no", "none" and "neither" meaning is the plain complement.
+- **Open conflict:** the shared instruction uses "scenario" twice. The brief requires it verbatim, and the scan bans the word. I kept it verbatim; this needs your ruling.
+- **Reused rules, outside the scan's scope:** four existing rules the 20 Jun run also reads contain scan words ("do not stay execution", "JMOL only where", "fees only where", and the indenture's "do not give"). They are legal content, not guard sentences, and can't be edited without changing 20 Jun.
+
+**Review file:** `~/.hermes/profiles/connor/cache/scratch/9k/QUESTION_TEXTS.md`, rendered from the contracts. It also checks that each question matches its prompt and decision, that branches match answers, and that every placeholder is a situation key.
+
+**What the current code doesn't pick up yet (for the walker worker):**
+- The walker and `slots.py` still read the nodes' top-level fields. Until they read the blocks, the agent sees the 20 Jun record items for shared nodes.
+- Three existing entries were rewritten in place: `forecast_post_trial_ruling`, `forecast_judgment_response`, `forecast_financing_at_floor`. Their answer keys changed (for example `stands` became `unchanged`, and `continue` became `initiate_offering`/`none`). A live 14 May run on today's walker would fail on those questions; no test calls Jev on them.
+- The `verdict_measure` and `listing_kept` nodes and entries, and `scenario.json`'s `verdict_form` (q1b and q2c still point at `verdict_measure`), are left as they are because today's walker and one test need them. They should be removed or switched when the walker moves over.
+
+**Other decisions you may want to check:**
+- N1 has no standard, because the spec gives none.
+- D6a's Nasdaq bid-price rule and DGCL §242 are paraphrased. The Nasdaq rulebook blocked access, and the current Delaware Code could include amendments after 14 May, so I didn't quote it.
+- Record items are written generically (no D.I. numbers, no party names), matching the existing items; the agent's findings supply the docket references.
+
+I also added the mechanism, the registry test constraints and the court-PDF sources to the `slope-sparse-events-build` skill.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_0b0f083b/task-0.log
+Child's process proc_75ca0562d846 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-contracts && L=~/.hermes/prof` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+..............s......................................................... [ 32%]
+........................................................................ [ 65%]
+........................................................................ [ 97%]
+.....                                                                    [100%]
+220 passed, 1 skipped in 401.62s (0:06:41)

@@ -1,0 +1,1 @@
+{"command": "grep -rn \"lending_recommendation\\|recommendation\\|UNDETERMINED\" app --include=*.py | cut -c1-200 | head -20; grep -n \"run_scenarios\\|instantiate_dispute\" Slope_Credit_Scenario_Research_and_Design_Kit/research/revision_v2/contracts/agent_config.json | cut -c1-120", "description": "Find recommendation fields in the app"}

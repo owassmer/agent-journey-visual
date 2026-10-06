@@ -1,0 +1,48 @@
+bank_only       -> inst_90_2000000 (limit 3,624,901, order limit 2,718,676)
+event_adjusted  -> inst_90_1430000 (limit 1,909,118, order limit 1,431,839)
+  condition: The requested amount needs at least $17,777,777.78 of lowest projected cash on every path; 35 tested combinations fall short. Paths that fall short whatever else happens: Elysium attorneys' fees and costs award against ChromaDex (D. Del.): The court fixes the amount → The payer pays (short by at least $850,770.18); Elysium attorneys' fees and costs award against ChromaDex (D. Del.): The court fixes the amount → The payer appeals and secures a stay → The appeal continues (short by at least $3,300,770.18); Elysium attorneys' fees and costs award against ChromaDex (D. Del.): The court fixes the amount → The payer appeals and secures a stay → The parties settle during the appeal (short by at least $2,539,173.23); Elysium attorneys' fees and costs award against ChromaDex (D. Del.): The court fixes the amount → The parties settle (short by at least $850,770.18); Elysium attorneys' fees and costs award against ChromaDex (D. Del.): The court fixes the amount → Unpaid, no secured stay → The creditor collects (short by at least $850,770.18); Elysium attorneys' fees and costs award against ChromaDex (D. Del.): The court fixes the amount → Unpaid, no secured stay → The parties settle (short by at least $850,770.18); Elysium attorneys' fees and costs award against ChromaDex (D. Del.): The parties settle before the ruling (short by at least $850,770.18).
+  condition: Count $2,500,000 payable by Elysium Health to ChromaDex under C.D. Cal. 8:16-cv-02277 final judgment (Dkt. 618): Elysium Health, Inc. to ChromaDex Corporation, $2,500,000.00 (fixed by the court) only once it is received.
+  condition: Confirm how ChromaDex Corporation would secure a stay pending appeal of Attorneys' fees and costs payable by ChromaDex to Elysium Health under D. Del. 1:18-cv-01434 fee order (Dkt. 399): ChromaDex Corporation to Elysium Health, Inc., $9,800,000.00 (sought by a party, not fixed): cash collateral locks cash; a letter of credit uses credit-line capacity instead.
+  condition: Obtain the court's ruling on the amount of Attorneys' fees and costs payable by ChromaDex to Elysium Health under D. Del. 1:18-cv-01434 fee order (Dkt. 399) (now sought by a party, not fixed).
+  condition: Confirm Western Alliance Bank's covenants permit this financing after the disputes' cash effects.
+wrote scenarios.json and collections.csv
+== dispute_001 compiled | Elysium payment to ChromaDex under C.D. Cal. final judgment
+   obligation: $2,500,000 payable by Elysium Health to ChromaDex under C.D. Cal. 8:16-cv-02277 final judgment (Dkt. 618) | role creditor | amount 250000000 fixed | interest False | stage judgment_entered | judgment 2024-08-13
+   finding fnd_001 The C.D. Cal. final judgment (Dkt. 618), dated August 13, 2024, orders Elysium to pay ChromaDex $2,500,000 to resolve outstanding Jury Claims issues (
+   finding fnd_003 The Dkt. 618 judgment bars the parties from filing post-trial motions or appeals related to the Jury Claims.
+   finding fnd_006 The C.D. Cal. court retains jurisdiction to enforce the Dkt. 618 final judgment for 120 days, or until further order.
+   R fnd_001 2024-08-13 counterparty fixed False ['entitlement_decided', 'amount_fixed', 'judgment_entered'] {'amount_finality': 3, 'settlement_signals': 3}
+   R fnd_003 2024-08-13 not_stated not_stated False [] {}
+   R fnd_006 2024-08-13 not_stated not_stated False [] {}
+   established {'entitlement_decided': 'fnd_001', 'amount_fixed': 'fnd_001', 'judgment_entered': 'fnd_001'}
+   factors [('amount_finality', 'The court has fixed the amount', 'fnd_001', False), ('appeal_barred', 'not established', None, False), ('settlement_signals', 'The parties have an agreement in principle or a term sheet', 'fnd_001', False)]
+   closed {}
+   P pay [('inflow', 250821918, 252054795, '2024-09-12', '2024-10-12')] | also () | points 0
+   P appeal_secured -> appeal_continues [] | also ('Unpaid, no secured stay → Not collected in the horizon',) | points 0
+   P appeal_secured -> settle [('inflow', 150000000, 250000000, '2024-09-12', '2024-12-11')] | also ('Unpaid, no secured stay → The parties settle',) | points 1
+   P settle [('inflow', 150000000, 250000000, '2024-08-20', '2024-11-11')] | also () | points 1
+   P unpaid_no_secured_stay -> collected [('inflow', 250000000, 253082192, '2024-09-12', '2024-12-11')] | also () | points 0
+   requests []
+== dispute_003 compiled | Elysium attorneys' fees and costs award against ChromaDex (D. Del.)
+   obligation: Attorneys' fees and costs payable by ChromaDex to Elysium Health under D. Del. 1:18-cv-01434 fee order (Dkt. 399) | role debtor | amount 980000000 sought | interest True | stage amount_pending | judgment None
+   finding fnd_007 On March 25, 2024 the D. Del. court granted Elysium's motion for attorneys' fees and costs against ChromaDex (liability for fees decided) and directed
+   finding fnd_008 As of the Q2 2024 10-Q, the amount of the Delaware fees and costs award was fully briefed (Elysium reply June 13, 2024) and awaiting the court's rulin
+   finding fnd_009 ChromaDex intends to appeal the Delaware fee ruling; management assesses a contingent liability as reasonably possible (not accrued as probable): no l
+   R fnd_007 2024-03-25 borrower sought False ['entitlement_decided'] {'amount_finality': 0}
+   R fnd_008 2024-08-07 borrower sought False [] {'amount_finality': 2, 'debtor_resistance': 3}
+   R fnd_009 2024-08-07 not_stated sought True [] {'appeal_intent': 3, 'debtor_resistance': 3}
+   established {'entitlement_decided': 'fnd_007'}
+   factors [('amount_finality', 'The amount has been fully briefed or submitted to the court for decision', 'fnd_008', False), ('appeal_intent', 'The payer states it intends to appeal', 'fnd_009', False), ('appeal_barred', 'not established', None, False), ('debtor_resistance', 'The payer has refused, or contested enforcement of, this obligation', 'fnd_008', False)]
+   closed {}
+   P amount_fixed -> pay [('outflow', 980000000, None, '2024-09-19', '2025-02-15')] | also () | points 1
+   P amount_fixed -> appeal_secured -> appeal_continues [('lock', 612500000, 1225000000, '2024-08-20', '2025-01-16')] | also () | points 2
+   P amount_fixed -> appeal_secured -> settle [('lock', 612500000, 1225000000, '2024-08-20', '2025-01-16'), ('outflow', 588000000, 980000000, '2024-09-19', '2025-04-16'), ('release', 612500000, 1225000000, '2024-09-19', '2025-04-16')] | also () | points 2
+   P amount_fixed -> settle [('outflow', 588000000, 980000000, '2024-08-20', '2025-03-17')] | also () | points 1
+   P amount_fixed -> unpaid_no_secured_stay -> collected [('outflow', 980000000, None, '2024-09-19', '2025-04-16')] | also () | points 2
+   P amount_fixed -> unpaid_no_secured_stay -> settle [('outflow', 588000000, 980000000, '2024-09-19', '2025-04-16')] | also () | points 2
+   P amount_fixed -> unpaid_no_secured_stay -> uncollected [] | also ('No ruling within the horizon',) | points 2
+   P settle [('outflow', 588000000, 980000000, '2024-08-20', '2024-11-17')] | also () | points 0
+   requests ["Obtain the court's ruling on the amount of Attorneys' fees and costs payable by ChromaDex to Elysium Health under D. Del. 1:18-cv-01434 fee order (Dkt. 399) (now sought by a party, not fixed)."]
+"Based on run_scenarios, the requested $2.0M, 90-day installment financing passes on the bank-only view but not on the event-adjusted view. The engine's recommended structure is inst_90 at $1,430,000 (3 monthly installments). Under the model's cash-collateral assumption, the lowest projected cash is about $12.7M, on the paths where the Delaware fee award is fixed and ChromaDex appeals with a cash-collateralised bond. The $2.0M request needs at least $17.78M of lowest projected cash on every path. Every fee-award path is short by at least $0.85M, whatever happens on the Elysium receivable.\nThe approval rests on three pivotal unknowns:\n(a) the amount the D. Del. court fixes, which currently runs up to about $9.8M (the amount Elysium seeks plus estimated interest);\n(b) whether a stay pending appeal would be secured with cash collateral or with a non-cash bond or letter of credit;\n(c) whether the Western Alliance covenant on additional indebtedness permits the Slope financing without lender consent.\nThe $2.5M that Elysium owes ChromaDex under the 13 Aug 2024 judgment is counted only once received. The approval does not rely on it.\nMaterial litigation is an exception-review trigger under Slope policy, so this case goes to human exception review. No offer is made and no account is changed."
+mcp__credit__instantiate_dispute | {"dependency_id": "dep_001", "title": "D. Del. 1:18-cv-01434 attorney fee award to Elysium: liability granted, amount pending", "finding_ids": ["fnd_002", "fnd_003"], "borrower_role": "debtor", "counterparty": "Elysium Health, Inc.", "amount": {"lower_cents": 0, "upper_cents": 980000000, "basis": "U 
+   -> Rejected: Give value_cents, or positive lower_cents and upper_cents

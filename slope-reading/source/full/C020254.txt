@@ -1,0 +1,6 @@
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"aws freetier get-account-plan --profile slope --region us-east-1 --output json","max_output_tokens":1200}),
+tools.exec_command({cmd:"aws ec2 describe-instances --profile slope --region us-east-1 --query 'Reservations[].Instances[].{Id:InstanceId,State:State.Name}' --output json","max_output_tokens":500}),
+tools.exec_command({cmd:"aws cloudtrail lookup-events --profile slope --region us-east-2 --lookup-attributes AttributeKey=EventName,AttributeValue=DeleteVolume --max-results 5 --query 'Events[].{Time:EventTime,User:Username,Resources:Resources}' --output json","max_output_tokens":1200}),
+tools.exec_command({cmd:"aws s3api list-objects-v2 --profile slope --region us-east-2 --bucket slope-walk-462947327980-20261001 --prefix walk-36781427817/question-refresh/batches/275e9b92f31b33d8/54fe24eb2cc1fbeb087a6703/ --delimiter / --query '{Prefixes:CommonPrefixes[].Prefix,Objects:Contents[].{Key:Key,Size:Size}}' --output json","max_output_tokens":1200})
+]);r.forEach(text);

@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && python3 -c \"\nimport gzip, json, collections\nd = json.load(gzip.open('$HOME/.hermes/profiles/connor/cache/scratch/9z/poolchk/states/states0.json.gz','rt'))\nprint(collections.Counter(v[:150] for v in d['errors'].values()).most_common(4))\"", "timeout": 30}

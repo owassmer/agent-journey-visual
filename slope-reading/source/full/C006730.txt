@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"^def pack_row\" -A 16 app/disputes/forecast.py; grep -n \"def unpack_row\\|_ROW_BLOBS\\b\" app/disputes/forecast.py | head; grep -rn \"\\.blob(\\|blob_hash\\|append_blob\" app --include=*.py | grep -v \"def \\|parallel.py\" | cut -c1-140", "timeout": 30}

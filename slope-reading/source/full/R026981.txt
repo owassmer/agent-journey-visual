@@ -1,0 +1,78 @@
+app/config.py:124:def allowed_tools(arm: str = "agent_plus_jev") -> list[str]:
+app/config.py:126:    tools = list(main_agent_settings()["native_sdk_options"]["allowed_tools"])
+app/config.py:128:        removed = set(agent_config()["comparison_mode_overrides"]["agent_only"]["remove_allowed_and_exposed_tools"])
+app/evidence/parse.py:295:            # A heading directly followed by another heading stays in the path, not discarded.
+app/web/viewmodel.py:177:            row[view] = {"passes": v["policy"]["passes"], "lowest": usd(v["policy"]["lowest_projected_cash_cents"]),
+app/web/viewmodel.py:187:                "order_limit": usd(f["order_limit_cents"]), "lowest": usd(f["lowest_projected_cash_cents"])}
+app/web/viewmodel.py:194:            "bank_feed": s["bank_feed"], "slope_terms": s["slope_terms"], "weights_label": s["weights_label"],
+app/web/viewmodel.py:212:            "refined": [j.stage for j in d.transitions if j.refined],
+app/web/viewmodel.py:214:                       "weight": "not judged" if p.weight_bps is None else f"{p.weight_bps / 100:.0f}%",
+app/web/viewmodel.py:217:                                for c in p.cash]} for p in sorted(d.paths, key=lambda p: -(p.weight_bps or 0))],
+app/web/viewmodel.py:218:            "pruned": f"{d.pruned_weight_bps / 100:.1f}%" if d.pruned_weight_bps else "",
+app/agent/mission.py:3:get_mission builds a fresh object from `mission_projection.allowed_*_fields`. It never serializes
+app/agent/mission.py:24:    mission = {k: template[k] for k in projection["allowed_case_fields"] if k in template}
+app/agent/mission.py:26:    extra = set(run_inputs) - set(projection["allowed_run_input_fields"])
+app/agent/mission.py:32:    for field in projection["allowed_run_input_fields"]:
+app/agent/investigation.py:41:    allowed_tools,
+app/agent/investigation.py:64:  the borrower owes or is owed, the counterparty, the amount and any judgment date. The host sets the stages, dates and
+app/agent/investigation.py:180:    allowed = allowed_tools(arm)
+app/agent/investigation.py:182:        model=settings["model"], effort=settings["effort"], tools=[], allowed_tools=allowed,
+app/agent/investigation.py:183:        mcp_servers={"credit": build_server(ctx, allowed)}, strict_mcp_config=True, setting_sources=[],
+app/web/templates/run.html:39:    {% macro figs(f, head) %}<br><strong>{{ head }}</strong>: limit {{ f.limit }} ({{ f.limit_set_by }}) · order limit {{ f.order_limit }} · lowest projected cash {{ f.lowest }} on {{ f.lowest_cash_on }}{% if f.lowest_cash_scenario %} in {{ f.lowest_cash_scenario | join(" / ") }} ({{ f.lowest_cash_placement }}){% endif %}{% if f.reasons %} · fails: {{ f.reasons | join("; ") }}{% else %} · passes{% endif %}{% endmacro %}
+app/web/templates/run.html:48:  <p class="muted">{% if x.debtor %}The borrower owes {{ x.counterparty }} {{ x.amount }}{% else %}{{ x.counterparty }} owes the borrower {{ x.amount }}{% endif %} · stage: {{ x.stage }}{% if x.refined %} · refined by factors at: {{ x.refined | join(", ") }}{% endif %}</p>
+app/web/templates/run.html:55:{% if v.disputes %}<p class="muted">{{ d.weights_label }}</p>{% endif %}
+app/web/templates/run.html:59:    <span class="muted">lowest cash {{ c.lowest }}{% if c.collected %} · {{ c.collected }}{% endif %}{% if c.reasons %}<br>{{ c.reasons | join("; ") }}{% endif %}</span></td>{% endfor %}</tr>{% endfor %}
+app/agent/tools.py:60:    # mechanism: (subject_kind, status question, allowed statuses, allowed postures)
+app/agent/tools.py:366:    allowed = set(Disposition.__args__)
+app/agent/tools.py:367:    bad = [d for d in given.values() if d.get("disposition") not in allowed]
+app/agent/tools.py:369:        raise ToolError(f"Unknown disposition(s) {[d.get('disposition') for d in bad]}; use one of {sorted(allowed)}")
+app/agent/tools.py:607:        raise ToolError("Give the dispute a short title, the obligation (what is owed, under which order or judgment) "
+app/agent/tools.py:686:           "disputes": s["disputes"], "weights_label": s["weights_label"]}
+app/agent/tools.py:989:        allowed_postures = rule[3] if rule else {"agreed_contractually", "imposed_by_court_or_authority", "reported_completed"}
+app/agent/tools.py:990:        if posture is None or is_ambiguous(posture) or posture.answer not in allowed_postures:
+app/agent/tools.py:993:                            f"{sorted(allowed_postures)}")
+app/agent/tools.py:1144:     "title, the obligation (what is owed, under which order or judgment) and the counterparty; quote the amount "
+app/agent/tools.py:1195:def build_server(ctx: RunContext, allowed: list[str]):
+app/agent/tools.py:1196:    """An in-process MCP server exposing only the allowed tools, each bound to this run."""
+app/agent/tools.py:1197:    names = {a.removeprefix("mcp__credit__") for a in allowed}
+app/agent/smoke.py:99:        allowed_tools=[SMOKE_TOOL],
+app/decisions/scenarios.py:50:    weight_bps: int | None
+app/decisions/scenarios.py:85:    if any(p.weight_bps is None for combo in combos for p in combo):
+app/decisions/scenarios.py:87:    raw = [_product([p.weight_bps for p in combo]) * BPS for combo in combos]
+app/decisions/scenarios.py:125:    cash, path, collected, owed, pays = feed.available_cents, {}, [], 0, []
+app/decisions/scenarios.py:129:        owed += due.get(d, 0)
+app/decisions/scenarios.py:131:        if owed and (d in due or month_end):
+app/decisions/scenarios.py:132:            take = min(owed, max(cash, 0))
+app/decisions/scenarios.py:135:                owed -= take
+app/decisions/scenarios.py:141:    return path, collected, owed, pays
+app/decisions/scenarios.py:170:    of the share of monthly inflows and the share of the lowest projected cash), the order limit, tenor, and the
+app/decisions/scenarios.py:175:    lowest = min(outs, key=lambda o: o.min_cash_cents)
+app/decisions/scenarios.py:176:    cash_limit = cents_round(Decimal(max(lowest.min_cash_cents, 0)) * pol["limit_share_of_min_projected_cash_bps"] / BPS)
+app/decisions/scenarios.py:178:    binding_limit = "lowest projected cash" if cash_limit < comp.base_limits["limit_cents"] else "monthly bank inflows"
+app/decisions/scenarios.py:181:              "lowest_projected_cash_cents": lowest.min_cash_cents, "lowest_cash_on": lowest.min_cash_on.isoformat(),
+app/decisions/scenarios.py:182:              "lowest_cash_scenario": list(lowest.scenario.labels), "lowest_cash_placement": lowest.scenario.placement}
+app/decisions/scenarios.py:274:    if not central or any(o.scenario.weight_bps is None for o in central):
+app/decisions/scenarios.py:279:            by_day[d] = by_day.get(d, Decimal(0)) + Decimal(o.scenario.weight_bps) / BPS * c
+app/decisions/scenarios.py:298:                       "weight_bps": o.scenario.weight_bps, "placement": o.scenario.placement,
+app/decisions/scenarios.py:299:                       "lowest_cash_cents": o.min_cash_cents, "lowest_cash_on": o.min_cash_on.isoformat()}
+app/decisions/scenarios.py:317:    The explanation keeps each amount's own figures (its limit, order limit and lowest cash, which fall as the amount
+app/decisions/scenarios.py:334:                "limit_set_by": c["limit_set_by"], "lowest_projected_cash_cents": c["lowest_projected_cash_cents"],
+app/decisions/scenarios.py:335:                "lowest_cash_on": c["lowest_cash_on"], "lowest_cash_scenario": c["lowest_cash_scenario"],
+app/decisions/scenarios.py:336:                "lowest_cash_placement": c["lowest_cash_placement"]}
+app/finance/merchant.py:170:    """Contractual payments owed from the day after `state.as_of` through `horizon`.
+app/finance/merchant.py:242:            owed = terms.window_top_up_cents(k, daily_w[k], manual_w[k], received)
+app/finance/merchant.py:243:            pay(d, "window_top_up", owed, k)
+app/finance/merchant.py:244:            manual_w[k] += owed  # the make-up payment cures its own window, not the next one
+app/finance/settlements.py:56:    """Buckets still owed after the payments made between measurement and the opening-cash date."""
+app/finance/settlements.py:87:            raise ValueError(f"{obligation.obligation_id}: {year} bucket still owed but its year has passed")
+app/finance/ledger.py:154:        raise DoubleCountError("Only one aggregate other-debt-service stream is allowed: "
+app/decisions/case.py:49:            out.append({"action": f"Confirm how {borrower} would secure a stay pending appeal of the {usd(amount)} owed "
+app/decisions/case.py:55:            out.append({"action": f"Count the {usd(amount)} owed by {d.counterparty} only once it is received.",
+app/decisions/case.py:59:        subject = f"the {usd(amount)} {'owed to' if d.borrower_role == 'debtor' else 'owed by'} {d.counterparty}"
+app/decisions/case.py:89:                      "paths": [{"path_id": p.path_id, "labels": list(p.labels), "weight_bps": p.weight_bps}
+app/decisions/case.py:90:                                for p in d.paths], "pruned_weight_bps": d.pruned_weight_bps} for d in live(disputes)],
+app/decisions/case.py:94:        "weights_label": model["weights_label"] + (" Distinct disputes are combined as independent." if len(used) > 1
+app/decisions/case.py:106:    rows = ["structure,view,series,paths,placement,weight_bps,weight_basis,date,amount_cents"]
+app/decisions/case.py:117:                central = sc["placement"] == "central" and sc["weight_bps"] is not None
+app/decisions/case.py:118:                weight, wb = (sc["weight_bps"], basis if sc["paths"] else "") if central else ("", "")
+app/domain/investigation.py:273:    weight_bps: int | None = None  # always None for compiled paths: the offer is tested on every path

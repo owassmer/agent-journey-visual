@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && for w in step-7-page step-8-model step-9-record; do d=.claude/worktrees/$w; b=$(git -C $d branch --show-current); echo \"$w dirty=$(git -C $d status --short | grep -v '^??' | wc -l | tr -d ' ') unpushed=$(git -C $d log --oneline origin/$b..HEAD 2>/dev/null | wc -l | tr -d ' ')\"; done; kill 26176 2>/dev/null; echo killed 8011"}

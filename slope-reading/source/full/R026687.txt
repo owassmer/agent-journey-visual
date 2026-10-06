@@ -1,0 +1,48 @@
+212	
+213	
+214	class BranchCash(Frozen):
+215	    """One dated cash consequence of a branch: an outflow, an inflow, or cash locked (and later released).
+216	
+217	    The amount is an EvidenceValue: documented when it is quoted in the node's findings, otherwise derived with its
+218	    derivation stated. The window bounds when it can happen; scenarios place it early and late in the window."""
+219	
+220	    kind: Literal["outflow", "inflow", "lock"]
+221	    label: str
+222	    amount: EvidenceValue
+223	    window_start: date
+224	    window_end: date
+225	    finding_ids: tuple[str, ...] = ()
+226	
+227	
+228	class DisputeBranch(Frozen):
+229	    branch_id: str
+230	    label: str  # plain words, e.g. "ChromaDex appeals and posts a bond"
+231	    description: str  # what happens, as Jev's answer option
+232	    cash: tuple[BranchCash, ...] = ()
+233	
+234	
+235	class DisputeNode(Frozen):
+236	    """A pending decision in a live dispute, split into mutually exclusive branches. Jev judges which branch the record
+237	    supports; its distribution weights the branches (labelled model judgment). Code sets every amount and date."""
+238	
+239	    node_id: str
+240	    dependency_id: str
+241	    decision_point: str
+242	    finding_ids: tuple[str, ...] = Field(min_length=1)
+243	    branches: tuple[DisputeBranch, ...] = Field(min_length=2, max_length=5)
+244	    observation_ids: tuple[str, ...] = ()
+245	    weights_bps: dict[str, int] = Field(default_factory=dict)  # branch_id -> weight; empty if not judged
+246	    status: Literal["proposed", "accepted", "rejected"] = "proposed"
+247	    validation_messages: tuple[str, ...] = ()
+248	
+249	
+250	EventKind = Literal[
+251	    "run_started", "dependency_recorded", "search", "candidate_screened", "evidence_read", "jev_call",
+252	    "observation_recorded", "observation_disposition", "finding_proposed", "finding_resolved",
+253	    "reconciliation_opened", "reconciliation_resolved", "effect_proposed", "effect_validated",
+254	    "sensitivity_run", "missing_fact_requested", "packet_submitted", "run_failed",
+255	    "inventory_loaded", "inventory_accounted", "conclusion_checked", "effect_disputed", "cited_units_checked",
+256	    "dispute_node_recorded", "scenarios_run",
+257	]
+258	
+259	

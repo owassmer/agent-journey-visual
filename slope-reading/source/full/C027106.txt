@@ -1,0 +1,1 @@
+{"subject": "3. Financial distribution: bootstrap, weighted paths, lender metrics, sensitivities, stress", "description": "app/analysis: operating bootstrap (NumPy, 512, seed), event draws, vectorised collections, weighted stats, 0/Jev/100 sensitivities, parameter sensitivities, stress; slope analyze; artifacts"}

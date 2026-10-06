@@ -1,0 +1,1 @@
+{"path": "/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/9m2/slice_rows.py", "old_string": "fc, d = T.forecaster()", "new_string": "if os.environ.get(\"CAP\"):\n    F.Forecaster.REUSE_CAP = int(os.environ[\"CAP\"])\nif os.environ.get(\"NOREUSE\"):\n    F.Forecaster.REUSE = False\nfc, d = T.forecaster()"}

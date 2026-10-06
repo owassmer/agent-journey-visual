@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; grep -rln \"\\\"stipulation\\\"\" cases/ Slope_Credit_Scenario_Research_and_Design_Kit/research 2>/dev/null | head; grep -rn \"\\\"stipulation\\\"\" cases/ Slope_Credit_Scenario_Research_and_Design_Kit/research 2>/dev/null | cut -c1-260 | head -5; sed -n 724,760p app/disputes/state14.py", "timeout": 30}

@@ -1,0 +1,253 @@
+{
+  "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+  "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+  "assignments": [
+    {
+      "id": "initial-01",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        1,
+        37
+      ],
+      "subject": "Initial assignment, environment context, inventory, and complete organizing-purpose document",
+      "context_source_lines": [],
+      "input_tokens_estimate": 64445,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-01/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-01/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-01",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-02",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        38,
+        59
+      ],
+      "subject": "Build specification and kit structure",
+      "context_source_lines": [
+        9,
+        37
+      ],
+      "input_tokens_estimate": 47954,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-02/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-02/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-02",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-03",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        60,
+        78
+      ],
+      "subject": "Contract reading and recovery of the full persisted result",
+      "context_source_lines": [
+        9,
+        37
+      ],
+      "input_tokens_estimate": 46216,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-03/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-03/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-03",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-04",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        79,
+        114
+      ],
+      "subject": "Question registry and economic effects, including full-result recovery",
+      "context_source_lines": [
+        9,
+        37,
+        78
+      ],
+      "input_tokens_estimate": 79800,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-04/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-04/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-04",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-05",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        115,
+        144
+      ],
+      "subject": "Case facts, acquired sources, and Barfresh effects",
+      "context_source_lines": [
+        9,
+        37,
+        78
+      ],
+      "input_tokens_estimate": 65866,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-05/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-05/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-05",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-06",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        145,
+        173
+      ],
+      "subject": "Schemas, reference code, case-index builder and contract validation code",
+      "context_source_lines": [
+        9,
+        37,
+        134
+      ],
+      "input_tokens_estimate": 64908,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-06/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-06/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-06",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-07",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        174,
+        202
+      ],
+      "subject": "Toolchain inspection, primary-source checks and claim of completed grounding",
+      "context_source_lines": [
+        9,
+        37,
+        134
+      ],
+      "input_tokens_estimate": 41038,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-07/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-07/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-07",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-08",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        203,
+        271
+      ],
+      "subject": "Repository, runtime, CI and delivery setup through the user-facing status",
+      "context_source_lines": [
+        9,
+        37,
+        202
+      ],
+      "input_tokens_estimate": 65875,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-08/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-08/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-08",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-09",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        272,
+        325
+      ],
+      "subject": "User changes Jev provider, runtime implementation, live probe and interruption",
+      "context_source_lines": [
+        9,
+        37,
+        230,
+        269
+      ],
+      "input_tokens_estimate": 68852,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-09/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-09/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-09",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    },
+    {
+      "id": "initial-10",
+      "source": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/audit/raw-source/claudecode-2e338e7b-b5a4-476b-a810-3f7556007f4a.jsonl",
+      "source_lines": [
+        326,
+        353
+      ],
+      "subject": "Resume events and later loaded context",
+      "context_source_lines": [
+        9,
+        37,
+        230,
+        272,
+        325
+      ],
+      "input_tokens_estimate": 59440,
+      "tokenizer": "o200k_base; sizing estimate, excludes runtime overhead and reasoning",
+      "instructions": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/instructions.txt",
+      "instructions_sha256": "013985c8996d45b8fe2c9ee7e487a4719d7f79474262424d5c360fe9021785fe",
+      "input": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-10/input.txt",
+      "context": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/assignments/initial-v3/initial-10/context.txt",
+      "output": "/Users/owenwassmer/dev/agent-journey-visual/slope-reading/readers/course-10",
+      "requested_outputs": [
+        "trace.txt",
+        "reading.json"
+      ]
+    }
+  ]
+}

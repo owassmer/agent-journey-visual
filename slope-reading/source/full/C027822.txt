@@ -1,0 +1,1 @@
+{"command": "uv run --no-project python /private/tmp/claude-501/-Users-owenwassmer-dev-Slope-Sparse-Events/1ebb1026-a1f0-4809-9321-bc3d6f875530/scratchpad/fix_ranges.py && sed -n 381p Slope_Model_Extensions_Spec.md | grep -o \"amount as a code-owned share[^;.]*\"", "description": "Align range references with D4/D5"}

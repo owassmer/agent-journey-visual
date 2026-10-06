@@ -1,0 +1,41 @@
+{
+  "run_id": "synergy_20240813-agent_plus_jev-20260925T020424Z",
+  "status": "INCOMPLETE_REVIEW",
+  "failure": "agent session ended with an error: error_during_execution ",
+  "incomplete_reasons": [],
+  "returned_models": [
+    "claude-opus-5-5"
+  ],
+  "tool_calls": {
+    "get_mission": 1,
+    "read_baseline_profile": 1,
+    "read_loan_terms": 1,
+    "record_dependency": 5,
+    "search_evidence": 7,
+    "read_evidence": 18,
+    "judge": 1,
+    "propose_finding": 13,
+    "resolve_finding": 13
+  },
+  "graph_counts": {
+    "dependencies": 5,
+    "candidates": 32,
+    "jev_calls": 59,
+    "observations": 196,
+    "findings": 13,
+    "reconciliations": 0,
+    "effects": 0
+  },
+  "jev": {
+    "provider": "openrouter",
+    "requests": 58,
+    "cache_hits": 1,
+    "physical_attempts": 58,
+    "attempt_ceiling": 150,
+    "spent_usd": "0.006329610",
+    "spend_cap_usd": "0.10"
+  },
+  "recorded_at": "runs/recorded/synergy_20240813-agent_plus_jev-20260925T020424Z"
+}
+exit 1
+synergy_20240813-agent_plus_jev-20260925T020424Z

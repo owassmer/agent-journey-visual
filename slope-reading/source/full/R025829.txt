@@ -1,0 +1,82 @@
+1	{
+2	  "registry_id": "slope_external_event_cashflow",
+3	  "registry_version": "3.2.0",
+4	  "status": "design_contract_live_checked_against_labelled_cases_in_evals",
+5	  "model_id": "jev-1.13.0",
+6	  "sdk_requirement": "typesafe-sdk==0.7.1",
+7	  "sdk_mapping": "For each question, prefix prompt.instructions with the global_rules text and construct typesafe_sdk.Noul(instructions, criteria) or typesafe_sdk.Choice(instructions, criteria) according to primitive. Questions in one profile that share a state are sent in one request. Other entry metadata is enforced by the host and not forwarded.",
+8	  "purpose": "Narrow semantic judgments at the boundaries where retrieved text becomes a finding, a finding becomes an economic effect, or evidence conflicts. No question estimates a default probability, produces an amount or date, or makes the lending decision.",
+9	  "global_rules": [
+10	    "Answer only from the supplied state. Do not use remembered facts about this company, dispute or later events.",
+11	    "Each question concerns one statement, one target and the supplied passage. If the input combines claims, choose the unknown or unclear option rather than an arbitrary category.",
+12	    "Source authority and claim posture are separate: a regulatory filing can report an allegation or an expectation.",
+13	    "Do not compute or compare amounts or dates; code does that separately.",
+14	    "No confidence value turns a judgment into an accepted fact, a probability or a financial input.",
+15	    "The question identifier is metadata; the complete question is in the instructions."
+16	  ],
+17	  "profiles": {
+18	    "candidate_screen": {
+19	      "primitive": "noul",
+20	      "trigger": "host, on every search result",
+21	      "questions": [
+22	        "gap_relevance",
+23	        "usable_evidence",
+24	        "premise_conflict",
+25	        "instruction_like_text"
+26	      ]
+27	    },
+28	    "claim_interpretation": {
+29	      "primitive": "choice",
+30	      "trigger": "agent request",
+31	      "questions": [
+32	        "entity_scope",
+33	        "claim_posture",
+34	        "obligation_status",
+35	        "cash_access",
+36	        "activity_status",
+37	        "offset_status"
+38	      ],
+39	      "selection": "entity_scope and claim_posture always; plus the status question matching the claim's declared subject kind"
+40	    },
+41	    "finding_check": {
+42	      "primitive": "choice",
+43	      "trigger": "host, on every proposed finding",
+44	      "questions": [
+45	        "finding_support",
+46	        "finding_atomicity",
+47	        "context_sufficiency",
+48	        "economic_role"
+49	      ]
+50	    },
+51	    "statement_relation": {
+52	      "primitive": "choice",
+53	      "trigger": "agent request; host on possible baseline overlap",
+54	      "questions": [
+55	        "statement_relation",
+56	        "baseline_overlap"
+57	      ]
+58	    },
+59	    "snapshot_sweep": {
+60	      "primitive": "noul+choice",
+61	      "trigger": "host, once per snapshot before investigation",
+62	      "questions": [
+63	        "matter_inventory",
+64	        "matter_kind"
+65	      ]
+66	    },
+67	    "statement_support": {
+68	      "primitive": "choice",
+69	      "trigger": "host, on every effect consequence and on the conclusion",
+70	      "questions": [
+71	        "claims_supported"
+72	      ]
+73	    },
+74	    "inventory_coverage": {
+75	      "primitive": "choice",
+76	      "trigger": "host, on every inventory item marked covered",
+77	      "questions": [
+78	        "coverage_supported"
+79	      ]
+80	    }
+81	  },
+82	  "state_contract": {

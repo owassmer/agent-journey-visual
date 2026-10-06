@@ -1,0 +1,25 @@
+simulate 0.18s views 0.66s combos 60 probsum 1.000000
+bank_only {'lender_pv_cents': 47226, 'dollar_days': 123333333.94, 'full_collection_by_maturity_p': 1.0, 'uncollected_maturity_cents': 0, 'uncollected_horizon_cents': 0, 'min_cash_mean_cents': 24704438, 'min_cash_p5_cents': 23846311, 'shortfall_p': 0.0, 'shortfall_mean_cents': 0, 'peak_locked_cents': 0, 'peak_capacity_cents': 0, 'horizon_cash_mean_cents': 25485928}
+event_adjusted {'lender_pv_cents': 47226, 'dollar_days': 123333333.94, 'full_collection_by_maturity_p': 1.0, 'uncollected_maturity_cents': 0, 'uncollected_horizon_cents': 0, 'min_cash_mean_cents': 21368590, 'min_cash_p5_cents': 15194754, 'shortfall_p': 0.0, 'shortfall_mean_cents': 0, 'peak_locked_cents': 985977, 'peak_capacity_cents': 26626, 'horizon_cash_mean_cents': 22367564}
+judgment sensitivity 0.00s
+  dispute_003:amount_fixed {'lender_pv': 0.0, 'dollar_days': 0.0, 'uncollected_maturity': 0.0, 'min_cash': 4252554.19, 'shortfall_p': 0.0}
+  dispute_003:settle_before_ruling {'lender_pv': 0.0, 'dollar_days': 0.0, 'uncollected_maturity': 0.0, 'min_cash': 4200479.34, 'shortfall_p': 0.0}
+  dispute_003:secured_stay {'lender_pv': 0.0, 'dollar_days': 0.0, 'uncollected_maturity': 0.0, 'min_cash': 1039351.7, 'shortfall_p': 0.0}
+  dispute_003:security_form {'lender_pv': 0.0, 'dollar_days': 0.0, 'uncollected_maturity': 0.0, 'min_cash': 878083.29, 'shortfall_p': 0.0}
+  dispute_001:voluntary_payment|no_appeal|cls=counterparty_receives {'lender_pv': 0.0, 'dollar_days': 0.0, 'uncollected_maturity': 0.0, 'min_cash': 808306.04, 'shortfall_p': 0.0}
+  dispute_001:voluntary_payment|no_appeal|cls=no_cash {'lender_pv': 0.0, 'dollar_days': 0.0, 'uncollected_maturity': 0.0, 'min_cash': 663427.44, 'shortfall_p': 0.0}
+  0.110 ['settle before the ruling', 'paid'] 19.16 M
+  0.108 ['no ruling in the period', 'paid'] 26.78 M
+  0.095 ['no ruling in the period', 'uncollected'] 24.7 M
+  0.080 ['settle before the ruling', 'uncollected'] 16.82 M
+  0.053 ['no ruling in the period', 'settle'] 26.71 M
+  0.043 ['amount fixed → settle', 'paid'] 20.03 M
+param 8.49s
+collateral_share [('50%', 47226, 21.67), ('75%', 47226, 21.38), ('100%', 47226, 21.06)]
+exposure [('75%', 47226, 22.57), ('87.5%', 47226, 21.97), ('100%', 47226, 21.37)]
+operating_variability [('0.5x', 47226, 21.48), ('1x', 47226, 21.37), ('1.5x', 47226, 21.18)]
+stress 0.19s
+  p=0.030 ['amount fixed → appeal → secured stay → surety bond → appeal still pending', 'uncollected'] 11.6 M
+  p=0.012 ['amount fixed → appeal → secured stay → surety bond → appeal still pending', 'collected by enforcement'] 11.84 M
+  p=0.017 ['amount fixed → appeal → secured stay → surety bond → appeal still pending', 'settle'] 13.1 M
+  p=0.035 ['amount fixed → appeal → secured stay → surety bond → appeal still pending', 'paid'] 13.52 M

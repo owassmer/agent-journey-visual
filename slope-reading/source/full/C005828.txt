@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && git fetch -q origin && git log --oneline origin/main -25 && gh pr list --state all --limit 15 --json number,title,state,headRefName,mergedAt,labels --jq '.[] | \"\\(.number) \\(.state) \\(.headRefName) \\(.mergedAt) [\\(.labels|map(.name)|join(\",\"))] \\(.title[:120])\"'"}

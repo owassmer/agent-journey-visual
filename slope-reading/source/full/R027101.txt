@@ -1,0 +1,912 @@
+1	### USER
+2	Ground yourself exhaustively in the Slope_Sparse_Events repo, starting with '/Users/owenwassmer/dev/Slope_Sparse_Events/Slope_Coding_Agent_Context_and_Alignment.md' and '/Users/owenwassmer/dev/Slope_Sparse_Events/Slope_Credit_Scenario_Build_Specification.md'. Also digest all session correspondence and established principles+emphasized alignment from claude code session 1ebb1026-a1f0-4809-9321-bc3d6f875530 transcript. Confirm your holistic understanding and alignment in your return back to me.
+3	
+4	### ASSISTANT
+5	I’ll start with the two named documents, locate the Claude Code transcript, then trace the repository’s implementation, tests, and supporting notes. I’ll check where the code stands against the established decisions before confirming my understanding.
+6	
+7	
+8	### ASSISTANT
+9	The root checkout is 51 commits behind the locally recorded `origin/main`, and the latest work is in the `step-5b-decision-model` worktree. I also found the requested transcript and a later Jev pivot document. I’m following those developments so the alignment reflects the current direction, including changes to the original specification.
+10	
+11	
+12	### ASSISTANT
+13	The session changes the original brief in several important ways: ChromaDex becomes the lead case; Slope’s product, policy, and connected-bank inputs are reconstructed for the demo; and Jev’s role moves toward narrow readings of source passages. Your latest approved direction removes forecast weights and keeps every cash path the evidence permits. I’m checking those decisions against the code and recorded runs, including the unfinished work at the transcript’s end.
+14	
+15	
+16	### ASSISTANT
+17	A recurring correction is clear: the project drifted when Jev was asked to judge broad completeness or bundled future outcomes. The approved approach gives it small, well-scoped passages and questions, while code determines the financial consequences. I’m preserving that distinction, along with your instruction to show Russell the financing result and cash flows first, with the investigation available underneath.
+18	
+19	
+20	### ASSISTANT
+21	I’ve traced the approved changes through the full conversation. The latest compiler commits are local; GitHub PR #8 still points to the earlier weighted model, with no passing re-review. I’m now checking the case inputs, financial engine, and run artifacts so I can distinguish the agreed design from what is actually complete.
+22	
+23	
+24	### ASSISTANT
+25	The current design is clear: Jev interprets individual passages, code constructs feasible cash scenarios, and the financing recommendation follows from those scenarios. I also found that the Claude session is still active: it is re-recording ChromaDex because the previous run omitted the judgment payable to ChromaDex. I’m keeping that unfinished state separate from the agreed design as I finish reading the implementation and review history.
+26	
+27	### ASSISTANT
+28	The review history reinforces several recurring requirements: preserve the original loan terms, distinguish obligations from payments and collateral, keep unknowns explicit, and derive funding conditions from the calculations. Your later decisions also authorize reconstructed Slope pricing, policy, and synthetic bank inputs with clear provenance; older language that prohibited those inputs is superseded.
+29	
+30	### ASSISTANT
+31	I’ve checked the evidence, code, and tests behind both ChromaDex disputes and the Synergy financial rules. The newest recorded ChromaDex run now includes both disputes and shows $2.0M from bank data alone versus $1.43M after the event scenarios. That is a candidate result; the independent review and finished decision workbench are still separate completion gates.
+32	
+33	### ASSISTANT
+34	The latest compiler and ChromaDex run are now pushed to PR #8, and CI is green on that head. The Claude session has launched a fresh independent review; no verdict is recorded yet. I’m finishing the grounding with that distinction clear: the agreed design, the implemented candidate, and the reviewed deliverable are separate states.
+35	
+36	
+37	### ASSISTANT
+38	Yes. I’ve completed the grounding pass, starting with the two requested documents and following the project through its implementation and the substantive correspondence in Claude session `1ebb1026-a1f0-4809-9321-bc3d6f875530`: your corrections and approvals, review findings, repairs, case changes, and latest handoff.
+39	
+40	I also examined the active worktrees, research kit, evidence contracts and source records, agent/Jev integration, financial engine, tests, recorded runs, and PR state. The root checkout is behind the active implementation, so I reconciled both.
+41	
+42	## My understanding and alignment
+43	
+44	**The objective is an operational lending decision.** Russell’s problem is extracting useful credit information from sparse external events beyond connected bank data. Your demonstration connects:
+45	
+46	**Dated evidence → semantic judgments → economic scenarios → borrower cash → lender collections and capital exposure → financing decision.**
+47	
+48	The broader demonstration is your ability to formalize an unfamiliar domain, build a useful decision system, and evaluate the agent’s contribution. This is the organizing purpose of the [alignment brief](/Users/owenwassmer/dev/Slope_Sparse_Events/Slope_Coding_Agent_Context_and_Alignment.md).
+49	
+50	**The loan’s cash flows remain central.** The system must explain the financing amount, term, pricing, payment structure, and conditions through borrower affordability and lender economics. Principal returned is distinct from revenue. A useful result can reduce the supported amount even when every modeled path repays the loan fully. Funding conditions must come from calculations across the relevant paths.
+51	
+52	**The latest approved Jev design is a scenario compiler.** Your afternoon correction supersedes the earlier weighted transition forecasting:
+53	
+54	- The agent investigates, gathers atomic findings, and groups every live dispute, including money payable **to** the borrower.
+55	- Jev interprets narrowly scoped source passages. The agent must not pre-answer those questions through loaded descriptions or conclusions.
+56	- The host owns the reusable dispute model, evidence aggregation, procedural relationships, and scenario eligibility.
+57	- Deterministic code owns amounts, dates, cash effects, policy checks, and offer sizing.
+58	- Every distinct cash path still permitted by the evidence reaches the financial engine. Semantic confidence cannot discard a binding stress.
+59	- Any indication of where the record points remains separate from calibrated event probabilities.
+60	
+61	The [afternoon handoff](/Users/owenwassmer/Downloads/Slope_PR8_Afternoon_Demo_Handoff.md) and your subsequent approval establish that direction. UI polish remains assigned to step 6.
+62	
+63	**Evidence and financial distinctions are binding requirements.** Unknowns remain explicit. Allegations, established entitlement, requested amounts, fixed awards, payment, and collateral each have different consequences. Restricted cash affects availability; collateral is released when appropriate; letters of credit consume capacity differently. Interest and obligations must be counted once, and every dollar of the invoice—including the borrower-funded remainder—must be accounted for.
+64	
+65	I also understand the specific Synergy lessons: defined Shopify Account Credits differ from consolidated revenue; each six-month minimum stands independently; the funding date controls the loan clock; settlement schedules need a dated payment bridge; and accounting gains do not create cash.
+66	
+67	**Your later authorization of reconstructed inputs governs.** Synthetic bank data, reconstructed Slope policy, and risk-tier pricing are approved with clear provenance. Those inputs should support a coherent demonstration without being tuned to manufacture a desired answer. Unavailable information should become a sensitivity, threshold, or concrete evidence requirement.
+68	
+69	**Historical isolation and evaluation must remain credible.** Builder knowledge, expected findings, and later outcomes stay outside the historical investigator and blind reviewer inputs. The comparison uses common financing and baseline inputs. Jev’s value is demonstrated through useful research direction, corrections, reconciliations, and downstream effects. Call volume alone does not establish that value; transfer and agent-only comparisons remain unfinished evaluation work.
+70	
+71	**The operator experience should lead with the decision.** A clear recommendation, concise actionable conditions, borrower cash alongside dated lender collections, and a few material drivers should be immediately visible. Evidence and reasoning should be inspectable through those drivers. Independent review is a quality gate; an incomplete review is a system status, not a borrower credit verdict.
+72	
+73	## Current state I have grounded against
+74	
+75	- **ChromaDex, as of 19 August 2024, is the lead case.** Delaware presents fee exposure with the approximately $9.8M amount still sought; California presents a potential $2.5M receipt.
+76	- **Synergy remains a secondary case and financial regression foundation.** Barfresh is deferred.
+77	- **PR #8 is open at `0e8b2b5`, with CI passing.** The latest recorded compiler run includes both ChromaDex disputes and produces **$2.0M bank-only versus $1.43M with event scenarios**, on three monthly installments over 90 days.
+78	- That run is **`CANDIDATE_READY`**. The fresh PR review has no recorded verdict yet. The finished workbench, product review gate, outcome reveal, and remaining evaluation stages are still outstanding. [PR #8](https://github.com/owassmer/Slope_Sparse_Events/pull/8)
+79	
+80	I’m aligned with the project’s progression and your emphasized working posture: exercise judgment, resolve answerable questions, complete authorized work, communicate plainly, and preserve the connection from evidence to an actionable financing decision. This grounding was read-only; I made no repository changes.
+81	
+82	### USER
+83	I believe that the last revision was an overcorrection. I asked in a side conversation what was actually determining the final numbers, then pressed that stochastic operating cash flows/calibrated path probabilities are not scope creep and are actually central if we want to connect the decision informatics and Jev output modes to actual signal, computation, and financial scenario modeling. These were the side convo's responses: Your concern is largely right. The $1.43M is set almost entirely by fixed parameters and one documented figure, taking the worst case over the paths that stay open. Jev's readings decide which paths exist, but in ChromaDex's case they don't move the number. Here is the whole chain.
+84	
+85	## 1. How a decision travels into the numbers
+86	
+87	```
+88	Evidence (quotes) ──► Jev readings ──► paths the evidence permits ──► rules attach cash ──► engine ──► offer
+89	                     (who pays, status,   (stage + closed paths)       (amount, dates)      (bank projection,
+90	                      events, factors)                                                       Slope policy)
+91	```
+92	
+93	At each step, only a few things carry forward into the numbers:
+94	1. **Jev's readings** decide:
+95	   - **the sign:** whether the borrower pays or receives;
+96	   - **the stage:** which transitions are still possible, for example "amount open" leads into the ruling window;
+97	   - **closed paths:** only an established fact, such as a waiver, closes one;
+98	   - **interest:** whether § 1961 interest is added.
+99	
+100	   The "record points here" marks change nothing numerically; they are only labels.
+101	2. **The rules** turn each path into dated cash. The inputs are the documented amount (the agent quotes it and code checks it against the quote), the judgment date, and fixed rule parameters.
+102	3. **The engine** combines each path's cash with the bank projection and the financing, tests Slope's policy on every combination and placement, and sizes the offer against the worst one.
+103	
+104	## 2. Where every figure comes from
+105	
+106	| Figure | Value | Source | Varies between runs? |
+107	|---|---|---|---|
+108	| Opening cash | $27.73M at 19 Aug | Synthetic bank feed, anchored to 10-Q balances; seeded | No |
+109	| Operating drift | about −$92k/month | Average of the last 3 complete months of that feed | No |
+110	| Request | $2.0M, 3 installments over 90 days | Operator inputs | No |
+111	| Fees and APR | 3.7% for inst_90, tier A | Reconstructed price card (1.60% Net 30 anchor) | No |
+112	| Tier | A | Bank features compared with the tier rules | No |
+113	| Limit rule | 15% of the lowest projected cash | Reconstructed policy parameter | No |
+114	| Order limit | 75% of the limit | Reconstructed policy parameter | No |
+115	| Liquidity floor | 1 month of outflows ($7.34M) | Reconstructed policy parameter | No |
+116	| Delaware amount | $9.8M | Documented (10-Q); the agent quotes it | Only if the agent cites a different figure |
+117	| California amount and date | $2.5M, 13 Aug 2024 | Documented (Dkt. 618) | Only if the agent models it |
+118	| Bond size | 125% of the amount | Labelled rule parameter | No |
+119	| Cash collateral | 50–100% of the bond | Labelled rule parameter | No |
+120	| Settlement | 60–100% of the amount | Labelled rule parameter | No |
+121	| Interest | 4–5% a year | § 1961, labelled range | No |
+122	| Timing windows | 30-day stay, 120-day ruling window, 90-day enforcement | Rules and code-owned windows | No |
+123	
+124	## 3. The $1.43M, worked through
+125	
+126	- Lowest projected cash at $2.0M on bank data alone: **$24.96M**.
+127	- The worst open Delaware path: the court fixes the amount, then ChromaDex appeals with a bond. Collateral is $9.8M × 125% × 100% = **$12.25M**, locked at the start of its window.
+128	- The lowest cash on that path is about **$12.7M**. The limit is 15% of that, about **$1.91M**, and the order limit is 75% of the limit, about **$1.43M**.
+129	- California's receipt is irrelevant here, because the worst case for money owed to the borrower is that it never arrives.
+130	
+131	So the offer is: the synthetic bank projection, minus 125% × 100% × $9.8M, times 15%, times 75%. Every term is either a fixed parameter or the documented figure.
+132	
+133	## 4. Why the numbers match across runs
+134	
+135	- **The bank view is deterministic** by construction: a seeded feed and fixed terms.
+136	- **The event view uses the worst case over open paths.** Jev's weights no longer exist, and the Delaware bond path is always open, because nothing in the record rules it out and ChromaDex's stated intent to appeal points to it.
+137	- **The only real run-to-run variation is what the agent models**, such as whether it compiles California. That doesn't reach the offer.
+138	
+139	## 5. Your concern, answered honestly
+140	
+141	- **Reproducibility is intended.** Different numbers on the same evidence would be a defect.
+142	- **But the recommendation's sensitivity sits in labelled assumptions, not in the evidence:**
+143	  - **Collateral share.** At 50% collateral the bond path binds less, and the worst path becomes "court fixes the amount → ChromaDex pays $9.8M". Lowest cash is then $15.16M and the order limit about **$1.71M**, not $1.43M.
+144	  - **The amount.** The actual later judgment was about $9.2M. At that amount the pay path gives about **$1.77M**.
+145	  - **The policy shares.** 15% and 75% are reconstructed guesses. Change either and the offer moves proportionally.
+146	  - **The robust conclusion:** $2.0M fails as long as a Delaware payment of about $9M or more is possible within the horizon. That holds under any collateral assumption.
+147	- **What variability is represented:** ranges (collateral, settlement, interest), windows, and stress versus central placement. **The decision uses only the stress placement.** The central results are computed but don't drive anything.
+148	- **What isn't represented:**
+149	  - uncertainty in the borrower's own operating cash flow (the feed is one fixed path);
+150	  - uncertainty in the policy parameters;
+151	  - how likely each path is.
+152	
+153	  That last one is deliberate: we removed Jev's forecast weights.
+154	- **Where Jev actually moves numbers:** the sign, the stage and path eligibility. A wrong reading of who pays would flip the result entirely, which is why Jev's reading matters. But in this case the evidence doesn't close the binding path, so the qualitative signal shows up in the conditions and the explanation, not in the dollar figure.
+155	
+156	## 6. A proportionate fix, without growing the scope
+157	
+158	A small, deterministic **"what drives this number"** check: rerun the engine at the ends of the 3–4 labelled parameters that matter (collateral share, the Delaware amount, the policy's cash share) and report which ones flip or move the recommendation. For example: "At 50% collateral: $1.71M. At the $9.2M later ruled: $1.77M. $2.0M fails under all tested assumptions." That shows Russell real sensitivity without Monte Carlo or new modelling.
+159	
+160	Stochastic operating cash flows, or calibrated path probabilities, belong on the roadmap. I can't verify anything here beyond the conversation. Decide and build this in the main conversation, as part of PR #8 or step 6.
+161	
+162	Here is my understanding, written so you can paste it straight to the main agent.
+163	
+164	## What you're saying
+165	
+166	**1. The result is predetermined, and I understated that.** The compiler takes the worst case over every path the evidence leaves open. So the offer is a formula of labelled assumptions plus one documented figure: bank projection, minus 125% × 100% × $9.8M, times 15%, times 75%. The legal reasoning upstream barely reaches the number. Jev's readings only decide which paths exist, and the worst of those is almost always open, because silence and stated intentions close nothing. A sensitivity table doesn't fix that. It reports sensitivity to assumptions, not to evidence, so the informatics still doesn't drive the finance.
+167	
+168	**2. The last correction diagnosed the wrong problem.** The original model failed because it asked Jev holistic questions ("given the whole record, what happens next?"), not because Jev produced probabilities. The right fix was to make the probabilistic judgments atomic. Instead we removed the probabilities, collapsed Score and Noul outputs to thresholds and argmaxes, and replaced judgment with a worst-case rule. That discards exactly the uncertainty Jev is built to express.
+169	
+170	**3. "The agent shouldn't make the atomic judgments" meant Jev should make them, not that nobody should.** Right now nobody does: the agent was stripped of the judgments, Jev was reduced to yes/no gates, and code worst-cases the rest. The judgment has gone missing.
+171	
+172	**4. Stochastic operating cash flows and calibrated path probabilities are the point, not scope creep.** Without them, the chain from legal informatics to financial scenarios produces a single stress number, and nothing in it depends on what the evidence actually says.
+173	
+174	## What the design should be instead
+175	
+176	- **Keep Jev atomic, one finding and one factor at a time, and keep its full output.** A Score distribution over the rubric levels, not just the top level. A Noul probability, not a true/false. Carry that uncertainty forward rather than thresholding it away.
+177	- **Code turns atomic readings into transition probabilities using an explicit, inspectable mapping.** For example, factor weights or likelihood ratios per transition, stored in the model contract and labelled as parameters. There are no holistic Jev transition questions; a holistic answer could at most serve as a cross-check.
+178	- **Path probabilities are products along each path.** Nothing is pruned: every path is still tested, and the weights shape the distribution without removing any stress.
+179	- **Operating cash becomes stochastic, estimated from the connected-bank data.** For instance, resample or model the observed flows and their volatility, instead of one fixed projection.
+180	- **The engine outputs a distribution, and the decision tests Slope's policy against it.** Examples:
+181	  - the probability of breaching the liquidity floor;
+182	  - percentiles of the lowest cash;
+183	  - the distribution of collections;
+184	  - expected loss.
+185	
+186	  The worst-case stress view stays alongside it, not in place of it.
+187	- **The guardrails stay:**
+188	  - Jev never sets an amount or a date;
+189	  - code composes everything;
+190	  - probabilities are labelled as model judgment until calibrated against historical dockets;
+191	  - the dated cash flows and the "what the request needs" reasoning remain.
+192	
+193	## The honest caveat to keep
+194	
+195	The mapping from factors to transitions is itself an assumption until it's calibrated. But it's a transparent assumption that ties the evidence to the numbers, which the current worst-case design can't do. And I even think that the caveat is not actually valid. It seems like there is some missing intuition; the agent correctly describes "Keep Jev atomic, one finding and one factor at a time," "A Score distribution over the rubric levels, not just the top level. A Noul probability, not a true/false," and that the "weights shape the distribution," but then still asserts that the code manages the probabilities and factor weights. Contextualize all of this against not only Jev's documentation, but the real community use cases that leverage Jev in ways that aren't just described in the docs. Also contextualize against our actual thesis. I also think that we correctly aligned in terms of financial modeling, but the step further towards the lending decision itself is where the project loses clarity and where most of the assumptions are made. The proof-of-concept product should stop with the sensitivity/scenario financial  analysis given the synthesized signal. Jumping from that to a lending decision ignores all of the other modeling factors that come into play, and expand the build beyond it's actual intent. Confirm your real understanding of what I am actually saying, with all of the above contextualized.
+196	
+197	### ASSISTANT
+198	I’ll trace where the current model turns Jev’s outputs into financial results, then check Jev’s documentation and public implementations. I’ll also revisit the product boundary you’re drawing: the proof of concept ends at financial scenario analysis, with the lending decision belonging to a broader system.
+199	
+200	
+201	### ASSISTANT
+202	I’m using the telos-anchored-reasoning and failure-led-realignment skills to check both the product objective and the cause of the overcorrection. Your distinction matters: preserving uncertainty through financial analysis serves the thesis; choosing an approval amount adds policy judgments that the analysis itself does not establish.
+203	
+204	
+205	### ASSISTANT
+206	TypeSafe’s own examples support carrying probabilities into computation: its launch material describes workflows whose behavior depends on probabilities, and a newer cookbook turns Jev judgments into numeric features for a predictive model. I’m also checking community code. One distinction still needs care: uncertainty about what a passage establishes and uncertainty about what happens next are different quantities, even though both can enter the financial model.
+207	
+208	
+209	### ASSISTANT
+210	I found a closer community example: BTC–Jev Signal stores Jev’s full forecast distributions, freezes each prediction before its target time, and scores the outcomes with Brier score and log loss. That supports using Jev as a numeric signal source. I also confirmed the repo’s specific loss of information: it saves the raw probabilities, but the dispute compiler consumes thresholded or winning answers, and offer sizing then takes the minimum cash across scenarios.
+211	
+212	
+213	### ASSISTANT
+214	Yes. You are correcting two connected parts of the project:
+215	
+216	1. **The synthesized signal must retain its uncertainty and materially enter the financial computation.**
+217	2. **The proof of concept’s endpoint is financial scenario and sensitivity analysis.** Slope’s broader underwriting system would consume that analysis and make the lending decision.
+218	
+219	I agree that the latest revision overcorrected. My previous confirmation gave the financing recommendation too much authority as the project’s completion criterion.
+220	
+221	## Where the correction went wrong
+222	
+223	The current implementation supports your diagnosis. It preserves Jev’s raw distributions in the observation log, but converts Noul to a thresholded answer and Score to its highest-probability level. The dispute compiler consumes those simplified answers. Offer sizing subsequently uses the lowest cash across the scenarios. See the [Jev adapter](/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model/app/agent/jev.py:173) and [policy calculation](/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model/app/decisions/scenarios.py:153).
+224	
+225	Consequently, much of the information about **how strongly the evidence supports different interpretations or developments** stops before reaching the financial result. For ChromaDex, the open collateral stress and reconstructed policy dominate the headline amount.
+226	
+227	The atomic judgments still exist, but much of their quantitative content has become inactive. A parameter sensitivity table alone would leave that problem intact.
+228	
+229	Reproducibility is compatible with what you want: the same inputs can produce the same **distribution**. Run-to-run variation is unnecessary; responsiveness to economically meaningful evidence is essential.
+230	
+231	## What Jev’s outputs actually enable
+232	
+233	TypeSafe’s documentation supports substantially richer use than binary gates:
+234	
+235	| Output | Information available |
+236	|---|---|
+237	| **Noul** | A probability for the specified proposition. |
+238	| **Choice** | A distribution across the defined alternatives. |
+239	| **Score** | A distribution across rubric levels, plus its probability-weighted mean. |
+240	| **Confidence** | A summary of distribution concentration; it is distinct from the probabilities themselves. |
+241	
+242	These are numerical inputs that software can retain and compute with. TypeSafe explicitly describes workflows whose behavior depends on probabilities, and its documentation makes thresholding one available use of the output. [Primitives](https://docs.typesafe.ai/introduction), [Score](https://docs.typesafe.ai/primitives/score), [Confidence](https://docs.typesafe.ai/confidence), [launch explanation](https://typesafe.ai/blog/introducing-system-one-models-and-jev).
+243	
+244	A particularly relevant official example is **autoresearch feature discovery**: Jev converts text into Noul probabilities and Score-derived features, including distribution spread, which enter a supervised predictive model. That demonstrates a direct route from semantic judgments to quantitative prediction. [Cookbook and implementation](https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery).
+245	
+246	### The missing distinction about “code owns the weights”
+247	
+248	Several different things were being called *weights*:
+249	
+250	- **Probabilities supplied by Jev** over a precisely defined answer space.
+251	- **Mathematical composition** of those probabilities.
+252	- **Coefficients describing how one factor predicts another outcome.**
+253	- **Policy preferences** about which outcomes a lender accepts.
+254	
+255	Those are separate objects. Saying that code performs the computation does **not** require a developer to invent coefficients that replace Jev’s judgments.
+256	
+257	For example, if a well-defined Jev question produces probabilities over economically meaningful states, code can calculate the cash outcome under each state and preserve the resulting mixture:
+258	
+259	\[
+260	P(\text{cash outcome}\mid E)
+261	=
+262	\sum_s P(\text{cash outcome}\mid s)\,P(s\mid E).
+263	\]
+264	
+265	Here, \(E\) is the evidence and \(s\) is a modeled state. The probabilities can come from Jev; the cash consequences come from the financial model. No additional factor-importance coefficient is inherently necessary.
+266	
+267	Likewise, a sufficiently narrow, testable conditional forecast can obtain its probability directly from Jev. Atomicity means a clearly defined judgment with sufficient relevant context. It need not mean restricting Jev to recognizing words in an isolated sentence.
+268	
+269	**There remains a real distinction between targets:** the probability that a passage expresses an intention to appeal is different from the probability that an appeal will occur. If the model moves between those targets, that relationship needs to be supplied and evaluated—through a suitable Jev question, empirical modeling, or an explicit assumption.
+270	
+271	This is where I retain a narrower version of the caveat. Native probabilities are usable signals; their calibration for a particular forecasting task and their composition into a joint model remain empirical questions. That does not require arbitrary hand-written factor weights.
+272	
+273	## What the community evidence adds
+274	
+275	I checked public implementations, including their code, rather than relying only on descriptions of possible uses.
+276	
+277	| Example | What it demonstrates |
+278	|---|---|
+279	| **BTC–Jev Signal** | Jev supplies full distributions for defined price-direction forecasts. Predictions are frozen before their target times, then evaluated with Brier score and log loss. This directly supports treating Jev output as a predictive signal. [Repository](https://github.com/WebGrga/btc-jev-signal) |
+280	| **Jev Drone** | Jev makes bounded tactical judgments using Choice, Score, and Noul; ordinary code handles physical control and constraints. Its reported ablation illustrates that useful judgment can reside in Jev while computation remains in code. [Repository](https://github.com/RomanSlack/jev-drone) |
+281	| **Crash-narrative research** | An independent preprint applies Jev to 195,857 narratives, extracting probabilistic variables that affect subsequent analysis. It also measures calibration against human judgments and finds that recalibration matters. This is a close analogue to extracting information absent from ordinary structured features. [Study](https://arxiv.org/html/2609.24052v1) |
+282	
+283	These examples support your intuition about Jev’s role. They also give us a practical evaluation pattern: **retain the signal, propagate it, observe outcomes, and measure its quality.** The forecasting experiment demonstrates an implementation approach; it does not establish forecasting accuracy for litigation.
+284	
+285	For composition, separately evaluated questions do not imply statistically independent events. ChromaDex’s two disputes share a counterparty, and repeated passages may describe the same underlying fact. Conditional structure and evidence deduplication therefore remain necessary when calculating joint outcomes.
+286	
+287	## The financial model belongs inside the proof of concept
+288	
+289	I understand stochastic operating cash flows and probabilistic event development as core components of the intended analysis.
+290	
+291	The model should combine:
+292	
+293	- A baseline distribution of operating receipts and payments, informed by bank data and preserving relevant timing and dependence.
+294	- Evidence-conditioned event states and developments, retaining Jev’s useful probabilistic information.
+295	- Documented obligations, economic mechanisms, and explicit assumptions about amounts and timing.
+296	- Supplied loan structures, so the analysis reaches lender collections and capital exposure.
+297	
+298	With the present synthetic feed, the operating distribution would describe the reconstructed example. Its provenance should remain clear.
+299	
+300	The outputs should show how the researched signal changes:
+301	
+302	- Cash trajectories, liquidity shortfalls, and their timing.
+303	- Expected outcomes and downside percentiles.
+304	- Dated collections and collection shortfalls for specified loans.
+305	- Outstanding exposure, discounted cash flows, and capital tied up.
+306	- Sensitivity to unresolved facts and modeling assumptions.
+307	
+308	The stress view remains useful alongside that distribution. California’s potential receipt can then affect expected cash and downside probabilities even while a no-receipt stress remains possible.
+309	
+310	The before-and-after comparison should hold common assumptions and simulation draws constant, making the incremental effect of the researched signal visible. If the evidence leaves a particular financial output unchanged, that remains a legitimate result.
+311	
+312	## Where the product stops
+313	
+314	Your boundary is clear: **the product delivers financial analysis that a lending or capital-markets model can consume.**
+315	
+316	A specified $2M loan can remain an input for analyzing collections. Selecting a “correct” approval amount introduces risk appetite, pricing objectives, portfolio constraints, other credit signals, and institutional policy. The current reconstructed limit rules make those additional judgments appear to be conclusions of the sparse-event research.
+317	
+318	Accordingly, the headline demonstration should establish **how the external evidence changes the financial distribution, why it changes, and which uncertainties matter**. A final lending recommendation is outside the proof of concept’s required endpoint.
+319	
+320	That preserves Russell’s original connection among sparse external information, agent/Jev research, financial scenarios, and loan cash flows. **Your thesis is that domain-informed probabilistic judgments can turn unusual qualitative evidence into a useful, measurable financial signal.** I understand that as the governing direction, superseding my previous emphasis on producing a final financing recommendation.
+321	
+322	### USER
+323	Now synthesize the above insights elegantly, with specific mitigation of over-provenance, excessive verification, and other non-essential items for the proof of concept (I see you already leaning in the wrong direction with "Its provenance should remain clear"; this is literally just being built for Russell to show the concept, we will NOT waste time on caveating and hedging and it will actively hurt the build progress - confirm understanding why). Otherwise, you are aligned with my thesis: "domain-informed probabilistic judgments can turn unusual qualitative evidence into a useful, measurable financial signal." The plan should be decisive, specific, and granular down to the detail so I can review your exact planned changes before you start.
+324	
+325	### ASSISTANT
+326	Understood. Russell needs to see the mechanism work: unusual evidence becomes probabilistic signal, and that signal changes financial analysis. Repeated provenance labels, caveats, and verification gates consume build time and pull attention away from that demonstration. I’ll inspect the current code and artifacts, then make the plan explicit about what to replace, retain, and remove.
+327	
+328	
+329	### ASSISTANT
+330	The existing cash ledger, payment schedules, evidence retrieval, and saved Jev responses give us a usable foundation. The plan will replace the approval-sizing layer with distribution analysis, put the financial results first, and reuse source links without expanding the audit machinery.
+331	
+332	One choice materially changes the build: whether future-event probabilities come directly from narrowly scoped Jev judgments or from a separate model fitted to historical outcomes. I recommend direct Jev judgments for this demonstration.
+333	
+334	
+335	### ASSISTANT
+336	I’ll use direct Jev probabilities, as selected. The numerical design will combine conditional event paths with resampled operating cash flows, then show expected cash, downside ranges, collections, and capital exposure for a supplied loan. Approval sizing and the fixed PD/LGD loss charge will leave the demo.
+337	
+338	I’m also bounding the work: one ChromaDex case, replayable results, a few interactive sensitivities, and source passages on demand. No new calibration dataset, audit framework, in-app reviewer, or repeated investigation runs during interface work.
+339	
+340	
+341	### ASSISTANT
+342	<proposed_plan>
+343	# Probabilistic financial scenario analysis for Russell
+344	
+345	## 1. Product boundary and build posture
+346	
+347	**Thesis:** Domain-informed probabilistic judgments turn unusual qualitative evidence into a useful, measurable financial signal.
+348	
+349	The demonstration will show how researching ChromaDex’s disputes changes distributions of available cash, loan collections, and capital exposure. The supplied financing structure is an input. Approval, credit limits, risk tiers, and recommended financing amounts leave the product.
+350	
+351	**Why the reduction matters:** Russell needs to understand the mechanism and its financial significance. Repeated provenance explanations, qualification banners, and verification workflows consume development time and screen space while weakening that demonstration. We will retain the existing source connections needed to explain a result and build no additional provenance machinery.
+352	
+353	### Retain
+354	
+355	- ChromaDex and the 19 August 2024 evidence cutoff.
+356	- The existing agent investigation, accepted findings, source passages, and Jev integration.
+357	- The post-judgment domain model and its separation of payments, receipts, collateral, and credit capacity.
+358	- Existing payment schedules, cash arithmetic, invoice accounting, collateral release, and valuation functions.
+359	- Recorded execution for a dependable demonstration.
+360	
+361	### Replace or remove from the active flow
+362	
+363	- Worst-case offer sizing, approve/decline outputs, order limits, risk-tier classification, and funding conditions.
+364	- Fixed PD/LGD charges presented as expected loss.
+365	- “The record points here” labels as the only downstream use of behavioral factors.
+366	- Agent-written financing recommendations.
+367	- Front-page provenance paragraphs, completeness flags, coverage inventories, reviewer checklists, and diagnostic logs.
+368	- The planned in-app independent reviewer and its repair workflow.
+369	
+370	Synergy’s existing financial tests remain. A second demonstration case, transfer study, agent-only benchmark, historical-outcome interface, and broader litigation lifecycle are outside this revision.
+371	
+372	Update the alignment brief, build specification, builder instructions, and active runtime/model descriptions together so future work follows this boundary.
+373	
+374	## 2. Jev supplies conditional probabilities; code composes them
+375	
+376	Use the selected approach: **direct Jev judgments about narrowly defined future events**, with no separate fitted forecasting model or hand-written factor coefficients.
+377	
+378	### Preserve the useful information
+379	
+380	- Retain Noul values and complete Choice/Score distributions in the analysis inputs.
+381	- Extend factor results to carry distributions and supporting finding references, rather than only the winning level.
+382	- Preserve established case anchors: parties, obligation, procedural position, quoted amount, and relevant dates.
+383	- Each forecasting question receives its explicit parent conditions, a small set of relevant passages, and the applicable factor distributions.
+384	- The agent gathers and groups evidence. It supplies neither probabilities nor an interpretation that pre-answers Jev’s question.
+385	- Keep the `confidence` statistic separate from event probabilities.
+386	
+387	### Replace composite branches with these judgments
+388	
+389	The model contract will define the following reusable questions. Windows and dates are supplied by code.
+390	
+391	| Judgment | Jev output | Relevant evidence |
+392	|---|---|---|
+393	| Will the parties settle before the next procedural step, within the settlement window? | Noul | Settlement discussions and agreement status |
+394	| Assuming no earlier settlement, will the court determine the amount within the analysis horizon? | Noul | Submission status, briefing, and procedural posture |
+395	| Given a fixed award, will the payer file an appeal within the notice period? | Noul | Appeal intention, conduct, and applicable waiver |
+396	| Given an appeal, will the payer obtain a secured stay? | Noul | Security arrangements and payer resources |
+397	| How will the stay be secured? | Choice: cash deposit, surety bond, letter of credit | Security terms and financing arrangements |
+398	| Without settlement or a secured stay, will the payer pay during the voluntary-payment window? | Noul | Payment intention, compliance history, and resources |
+399	| If still unpaid, will enforcement produce collection within the enforcement window? | Noul | Collectibility, resources, and enforcement posture |
+400	| During a secured appeal, will the parties settle within the modeled window? | Noul | Settlement signals and conduct |
+401	
+402	An appeal and its security arrangement are separate judgments. A statement of intent remains evidence for the appeal forecast; its interpretation probability is never copied into the appeal probability.
+403	
+404	The post-judgment slice ends in payment, settlement, unresolved amount, pending secured appeal, or uncollected balance. It does not expand into predicting appellate merits.
+405	
+406	### Probability composition
+407	
+408	- A binary node uses Jev’s returned probability and its complement.
+409	- A Choice node uses the returned distribution over its available alternatives.
+410	- Code multiplies **conditional** edge probabilities along each path.
+411	- Alternative paths with identical financial consequences can be merged by adding their probabilities.
+412	- Every structurally feasible path remains available for stress analysis, including paths assigned zero probability by Jev.
+413	- Established payment or an applicable legal restriction constrains the graph directly. Unsupported future developments remain probabilistic.
+414	- Invalid or failed probability responses produce a normal runtime error and retry action; there is no invented uniform distribution or approval workflow.
+415	
+416	### Dependence between the ChromaDex disputes
+417	
+418	Build the Delaware paths first. Evaluate California’s conditional questions for each distinct Delaware outcome that changes Elysium’s position.
+419	
+420	The resulting joint weights are:
+421	
+422	`P(Delaware path) × P(California path | Delaware outcome)`
+423	
+424	This makes Elysium’s potential Delaware receipt available to the California judgments. It avoids multiplying two unconditional dispute distributions.
+425	
+426	Cache each distinct question/context combination. Slider changes and financial recalculation reuse these judgments.
+427	
+428	### Minimum interface changes
+429	
+430	Introduce analysis records for:
+431	
+432	- **Conditional judgment:** question, parent conditions, full answer distribution, and finding references.
+433	- **Event path:** conditional judgments, joint probability, dated financial mechanisms.
+434	- **Analysis result:** setup, daily distributions, collection distributions, sensitivities, and scenario summaries.
+435	
+436	These are calculation inputs and outputs. They do not create a second audit-log framework.
+437	
+438	## 3. Stochastic cash model and financial outputs
+439	
+440	### Default demonstration inputs
+441	
+442	| Input | Default |
+443	|---|---|
+444	| Case date | 19 August 2024 |
+445	| Projection | 180 days, through 15 February 2025 |
+446	| Loan | $2M, funded 20 August |
+447	| Repayment | Three monthly installments; existing business-day adjustment |
+448	| Financing fee | 3.7% |
+449	| Discount rate | Existing 8% annual funding-cost input |
+450	| Delaware fee exposure | Existing $9.8M figure |
+451	| California receivable | Existing $2.5M judgment |
+452	| Operating simulations | 512 shared cash-flow draws |
+453	| Random seed | `20240819` |
+454	
+455	The loan, fee exposure, and financial parameters are ordinary analysis inputs. No policy engine selects them.
+456	
+457	### Operating cash flows
+458	
+459	Replace the single average daily projection with a calendar-month bootstrap:
+460	
+461	1. Use the last six complete months of the connected-bank feed: February–July 2024.
+462	2. Exclude the existing one-off equity-proceeds category.
+463	3. Sample an entire month’s transaction pattern together, preserving relationships among receipts, payroll, suppliers, and other payments.
+464	4. Rescale each category by its latest-three-month average divided by its six-month average. This retains the recent operating level while preserving observed variation.
+465	5. Map transactions to the corresponding business-day positions in each future month, clamping positions that exceed the target month’s length.
+466	6. Start from the existing 19 August available-cash balance.
+467	7. Use identical operating draws for bank-only and event-adjusted analysis.
+468	
+469	Add NumPy for efficient array calculations. No forecasting service, training pipeline, or new bank-feed generation is needed.
+470	
+471	### Event cash flows
+472	
+473	- Sample future dates within code-defined windows; sample a parent event once and derive child windows from that sampled date.
+474	- Use the analysis horizon for the pending-ruling window.
+475	- Preserve the existing notice, stay, payment, settlement, and enforcement windows.
+476	- Use the existing fee-exposure amount as the award input; expose it to sensitivity analysis.
+477	- Sample settlement amounts uniformly across the existing 60–100% range.
+478	- For surety bonds, retain the 125% bond multiple and sample cash collateral uniformly across 50–100%.
+479	- A cash deposit locks the judgment amount.
+480	- A letter of credit records required credit capacity separately from available cash.
+481	- Settlement releases the exact collateral or capacity encumbered on that path, on the payment date.
+482	- Retain the existing interest treatment and protection against counting interest twice.
+483	
+484	Keep amounts in integer cents. Probabilities and distribution calculations use floating-point values; monetary results are rounded at defined calculation/export boundaries.
+485	
+486	### Combining the uncertainty
+487	
+488	Evaluate each distinct joint event path against the shared 512 operating draws. Each trajectory receives weight:
+489	
+490	`joint path probability / 512`
+491	
+492	This retains small-probability paths without depending on whether ordinary random sampling happens to select them.
+493	
+494	The cash engine continues to:
+495	
+496	- Pay the invoice once, including any borrower-funded remainder.
+497	- Apply contractual installments and the existing available-cash collection/catch-up rule.
+498	- Report cash deficits without inserting an imaginary funding source.
+499	- Keep unpaid collections outstanding at the horizon.
+500	
+501	### Outputs
+502	
+503	Replace the recommendation object with:
+504	
+505	- Daily expected available cash and P5/P50/P95 cash curves.
+506	- Distribution of the lowest cash reached during the horizon.
+507	- Probability and amount of a cash shortfall.
+508	- Contractual payments beside expected and percentile collection curves.
+509	- Uncollected balance at maturity and at the projection horizon.
+510	- Expected discounted lender cash flows and principal-dollar-days.
+511	- Cash collateral locked and credit capacity required.
+512	- Bank-only versus event-adjusted changes in each measure.
+513	
+514	The product uses precise financial labels such as **uncollected balance**. It does not manufacture a permanent-loss estimate from a fixed PD/LGD table.
+515	
+516	### Sensitivity calculations
+517	
+518	Compute sensitivities using the same operating draws and event-date/amount draws:
+519	
+520	- Set each prospective binary judgment to 0 and 1 individually; recompute the joint weights and financial results.
+521	- Rank those changes by their effect on expected minimum cash; show the three strongest evidence-related drivers.
+522	- Compare collateral shares of 50%, 75%, and 100%.
+523	- Compare fee exposures of 75%, 87.5%, and 100% of the current input.
+524	- Compare operating variability at 0.5×, 1×, and 1.5×, scaling deviations around the simulated mean.
+525	
+526	This explicitly separates sensitivity to the synthesized signal from sensitivity to financial parameters.
+527	
+528	## 4. One focused, interactive demonstration
+529	
+530	Keep FastAPI and Jinja. Add small JavaScript interactions and SVG charts; introduce no frontend framework or external chart service.
+531	
+532	### Main page
+533	
+534	**Header:** ChromaDex, analysis date, supplied loan, and projection horizon.
+535	
+536	**Four summary measures:**
+537	
+538	- Expected change in available cash at the horizon.
+539	- Fifth percentile of minimum available cash.
+540	- Probability of a cash shortfall.
+541	- Expected uncollected loan balance at maturity.
+542	
+543	**Main chart:** Bank-only and event-adjusted available cash, with median lines and P5–P95 bands.
+544	
+545	**Second chart:** Contractual cumulative payments, expected collections, and collection bands.
+546	
+547	**Scenario table:** The leading event paths, their probabilities, and their financial effects. All remaining paths are accessible through expansion.
+548	
+549	**Three driver cards:** The evidence-related judgments with the greatest financial sensitivity.
+550	
+551	### Evidence interaction
+552	
+553	Clicking a driver opens a compact panel containing:
+554	
+555	1. The relevant source passage.
+556	2. Jev’s exact question and full distribution.
+557	3. The conditional event it affects.
+558	4. The resulting cash mechanism and financial change.
+559	
+560	Existing finding/source identifiers supply the links. No provenance prose is added to the main page.
+561	
+562	### Controls
+563	
+564	Provide:
+565	
+566	- Loan amount, up to the $2M invoice.
+567	- Financing fee.
+568	- Delaware fee exposure.
+569	- Collateral range.
+570	- Operating variability.
+571	- Probability override for a selected future-event node.
+572	
+573	A probability override applies to that selected conditional node and updates its complement. “Reset” restores Jev’s result.
+574	
+575	Recalculation updates the plots and metrics without an agent or Jev call. Full repayment across all scenarios is displayed normally; the demonstration does not force a collection shortfall to make the signal look valuable.
+576	
+577	### Commands, endpoints, and artifacts
+578	
+579	- Add `slope analyze --run <id>` to produce the new analysis from a recorded investigation.
+580	- Add `--refresh-probabilities` for an explicit refresh of Jev’s forecasts.
+581	- Retain `slope compare` as an alias to the new analysis command.
+582	- Add `GET /runs/{id}/analysis` and `POST /runs/{id}/analysis` for loading and recalculating the financial view.
+583	- Write `analysis.json` and a daily `cashflows.csv` containing both views’ cash and collection statistics.
+584	- Keep large simulation arrays in the existing scratch area; commit the compact demonstration artifacts.
+585	- Make the new analysis the default run page. Keep the existing investigation detail accessible behind a secondary link.
+586	
+587	The main page contains no `CANDIDATE_READY` badge, reviewer checklist, synthetic-data banner, calibration disclaimer, or approval recommendation.
+588	
+589	## 5. Implementation sequence and bounded acceptance
+590	
+591	### Build order
+592	
+593	1. **Align the active instructions and contracts.** Replace the lending-decision endpoint and blanket prohibition on Jev forecasting.
+594	2. **Implement conditional probabilities.** Reuse the latest recorded ChromaDex findings while developing the new model.
+595	3. **Implement stochastic financial analysis.** Replace policy sizing with the weighted trajectories, metrics, and sensitivities.
+596	4. **Build the demonstration page.** Iterate against saved analysis; no repeated investigations for interface changes.
+597	5. **Run one fresh investigation through the completed flow.** The agent submits its event findings and concise financial-relevance summary; the host produces the probabilistic analysis.
+598	6. **Package the recorded demonstration and deliver one cohesive PR revision.**
+599	
+600	Use an isolated worktree based on PR #8’s current implementation. Preserve the existing source material and historical recordings; the active demonstration uses the new analysis.
+601	
+602	### Focused tests
+603	
+604	Add or adapt tests for these concrete risks:
+605	
+606	1. **Probability composition:** a small conditional tree has the expected joint probabilities; merged paths preserve total mass.
+607	2. **Signal reaches finance:** changing a supplied node probability changes the calculated financial distribution by a hand-computable amount.
+608	3. **No scenario deletion:** a zero-probability path remains in the stress set.
+609	4. **Cash conservation:** invoice remainder, collections, collateral release, and credit-capacity encumbrance are handled once and on the correct dates.
+610	5. **Paired simulation:** without event effects, the two views match exactly under the same seed; a fixed cash event produces the expected change.
+611	6. **Weighted statistics:** expected values and quantiles match a small explicit fixture.
+612	
+613	Reuse the existing isolation and financial tests. Run the test suite and lint once after integration, then perform one browser walkthrough covering the charts, evidence panel, sensitivity control, and reset.
+614	
+615	Retain one focused implementation review for probability composition and financial correctness. Fix demonstrated defects and rerun affected checks. Do not add audit waves, coverage targets, repeated live semantic evaluations, a new calibration dataset, or an in-app reviewer.
+616	
+617	**Completion criterion:** Russell can follow a real passage into Jev’s probabilistic judgment, see that judgment enter the financial distribution, and interact with the resulting sensitivity. The demonstration ends with that analysis.
+618	</proposed_plan>
+619	
+620	### USER
+621	Define “atomic” as one judgment target, not minimal context. Give Jev enough surrounding evidence to reason intelligently. Sentence-level isolation can remove exactly the context needed for a good judgment.
+622	
+623	Separate present-state interpretation from future-event forecasting. “The company intends to appeal” and “the company will appeal” are different judgments. Establish the current state first; ask a separate, explicitly conditional question about what happens next.
+624	
+625	Keep the event model financially bounded. Model only developments that can materially affect cash, collections, collateral, or credit capacity within the analysis horizon. Don't build a general litigation lifecycle or forecast appellate merits.
+626	
+627	Maintain probability and stress as separate views. Jev-weighted paths drive the financial distribution. Structurally possible adverse paths remain available for stress analysis. Low probability does not mean impossible, while mere possibility should not receive equal probabilistic weight.
+628	
+629	Make dated lender cash flows the ultimate financial output. Borrower cash is the mechanism. Carry the signal through to collections, collection timing, outstanding exposure, discounted cash flows, and capital tied up.
+630	
+631	Keep operating-cash uncertainty simple. Use a credible distribution and identical draws before/after, but don't overengineer the forecasting method. Its job is to provide the background variability against which the sparse-event signal operates.
+632	
+633	Make Jev sensitivity explicitly financial. For each important prospective judgment, calculate results at 0% / Jev / 100% while holding everything else fixed. Rank judgments by their effect on meaningful financial outputs. This directly shows which synthesized signals matter.
+634	
+635	Reduce the interface to the useful causal chain:
+636	Evidence → Jev judgment → financial mechanism → financial impact.
+637	Keep screens, semantic IDs, coverage sweeps, gates, inventories, reviewer checklists, and execution diagnostics out of the primary experience.
+638	
+639	Stop expanding infrastructure that already works. Historical isolation, source links/spans, accepted findings, caching, replay, and deterministic financial guards are enough. Add verification or provenance machinery only when it prevents a demonstrated financial or semantic failure.
+640	
+641	Use the demo itself as the prioritization test. Russell should be able to move naturally through:
+642	   What did we learn? → What might happen? → How likely is it? → What does that do to cash? → What does that do to the loan? → Which uncertainty matters most?
+643	   If work doesn't materially strengthen that sequence, deprioritize it. These are not to be taken as absolute directives; I want you to reason intuitively on them and understand the rationale, then apply it to the plan. For example, #10 does not mean we structure a UI around those exact questions. Be intuitive.
+644	
+645	### ASSISTANT
+646	I’ll revise the plan around dated lender cash flows, using the demo sequence to guide priorities and treating “atomic” as one judgment target with enough context to reason well. I’ll check the current judgment and cash-flow interfaces so the changes stay concrete and bounded.
+647	
+648	### ASSISTANT
+649	The current dispute profile passes the cited text into its judgments, and the engine already computes dated collections and principal dollar-days. I’ll expand the judgment context and build on that cash-flow arithmetic. Two changes to my prior plan are central: collections become the main output, and sensitivity ranks judgments by their effect on the loan, with borrower liquidity explaining how that effect arises.
+650	
+651	### ASSISTANT
+652	<proposed_plan>
+653	# Probabilistic financial analysis for Russell
+654	
+655	## 1. What this revision will demonstrate
+656	
+657	**Domain-informed probabilistic judgments can turn unusual qualitative evidence into a useful, measurable financial signal.**
+658	
+659	The product will carry that signal through borrower liquidity into **dated lender cash flows, collection timing, outstanding exposure, discounted cash flows, and capital tied up**. Supplied financing terms are inputs; the output is scenario and sensitivity analysis.
+660	
+661	Your refinements change three important parts of my previous plan:
+662	
+663	- **Atomicity describes the judgment target.** Jev receives enough surrounding evidence to understand that target, including qualifications and conflicting evidence.
+664	- **Lender cash flows become the main financial output.** Borrower cash explains the mechanism.
+665	- **Sensitivity ranks judgments by their financial consequences for the loan.** Ranking only by minimum borrower cash would stop the analysis too early.
+666	
+667	A substantial borrower cash effect with unchanged loan collections is a valid result. The interface will make that distinction clear.
+668	
+669	The demo sequence is a prioritization test, rather than a prescribed set of screens. Additional provenance displays, review machinery, and verification campaigns would consume time and draw attention away from the mechanism Russell needs to see. Existing historical isolation, source connections, accepted findings, caching, replay, and financial guards provide the foundation.
+670	
+671	## 2. Judgment and event model
+672	
+673	### Context-rich, individually targeted judgments
+674	
+675	Revise the current dispute profile, which passes cited text into its questions, to assemble relevant context from the existing evidence store:
+676	
+677	- The cited passage and surrounding section.
+678	- Document date, parties, obligation, and procedural position.
+679	- Related accepted findings needed to interpret the target.
+680	- Relevant qualifications, contrary statements, and financial information.
+681	
+682	For example, interpreting an appeal waiver must include its scope and surrounding settlement language. Forecasting an appeal can also use the stated intention, subsequent conduct, procedural constraints, and resources.
+683	
+684	The agent selects and groups relevant evidence. Jev makes the judgments. Existing retrieval supplies additional context when needed; this revision adds no separate context-review subsystem.
+685	
+686	### Separate interpretation from forecasting
+687	
+688	Use two explicit stages:
+689	
+690	| Stage | Purpose | Example |
+691	|---|---|---|
+692	| Present-state interpretation | Establish what the evidence says and the current position | “Does the company currently express an intention to appeal this award?” |
+693	| Conditional forecasting | Estimate a defined future development under stated assumptions | “Assuming the amount is fixed and no settlement intervenes, will the company appeal within the applicable notice period?” |
+694	
+695	Preserve the complete Noul, Choice, and Score outputs. Relevant interpretation distributions accompany the underlying evidence in subsequent forecast questions.
+696	
+697	A Score level remains an interpretation of its rubric. An intention reading remains an interpretation of intent. Neither is automatically substituted for a future-event probability.
+698	
+699	**Jev supplies the prospective probabilities directly.** Code supplies conditions, applies complements, composes paths, and calculates financial consequences. No hand-written factor coefficients replace those judgments.
+700	
+701	### Bound the graph by financial consequences
+702	
+703	Keep the ChromaDex analysis anchored to 19 August 2024 and its two live matters. Include these prospective targets where applicable:
+704	
+705	| Target | Financial consequence |
+706	|---|---|
+707	| Settlement before the next modeled procedural step | Payment or receipt, with an amount and timing range |
+708	| Amount fixed within the analysis horizon | Exposure becomes capable of producing payment, enforcement, or security requirements |
+709	| Appeal within the applicable notice period | Changes the route and timing to payment or security |
+710	| Secured stay obtained following appeal | Changes immediate collection and collateral requirements |
+711	| Security arrangement: cash deposit, surety bond, or letter of credit | Cash locked or credit capacity committed |
+712	| Voluntary payment during the modeled payment window | Dated outflow or receipt |
+713	| Enforcement produces collection during its window | Dated outflow or receipt |
+714	| Settlement while security remains outstanding | Settlement cash flow and release of the associated security |
+715	
+716	Each question names its parent assumptions and time window. Developments with no possible financial effect inside the horizon collapse into the appropriate unresolved or pending state. Appellate merits and the broader litigation lifecycle stay outside this build.
+717	
+718	### Compose probability and preserve stress separately
+719	
+720	- Binary branches use Jev’s probability and its complement.
+721	- Categorical branches use the complete returned distribution.
+722	- Path probabilities are products of the relevant **conditional** probabilities.
+723	- Model the California receipt conditional on materially distinct Delaware outcomes affecting the common counterparty’s position. Reuse equivalent contexts.
+724	- Cash-equivalent paths may share simulation work while retaining their separate probability expressions for sensitivity.
+725	- Established facts and applicable constraints determine structural feasibility. A low or zero forecast probability does not remove an otherwise feasible stress path.
+726	
+727	The weighted distribution and adverse stress results remain separate outputs. Stress placements never acquire artificial probability mass or determine a financing recommendation.
+728	
+729	## 3. Financial computation and sensitivity
+730	
+731	### Fixed starting setup
+732	
+733	| Input | Default |
+734	|---|---|
+735	| Analysis date | 19 August 2024 |
+736	| Horizon | 180 days, ending 15 February 2025 |
+737	| Supplier invoice and financed amount | $2 million |
+738	| Funding date | 20 August 2024 |
+739	| Repayment | Three monthly installments, using the existing business-day convention |
+740	| Fee | 3.7%, supplied directly |
+741	| Annual discount rate | Existing 8% |
+742	| Delaware exposure | $9.8 million |
+743	| California receivable | $2.5 million |
+744	| Operating trajectories | 512 |
+745	| Random seed | `20240819` |
+746	
+747	Remove tier assignment, policy-based sizing, approval language, funding conditions, and the fixed PD/LGD charge from the active analysis. Preserve reusable schedule and valuation arithmetic.
+748	
+749	### Simple operating uncertainty
+750	
+751	Use one monthly block bootstrap:
+752	
+753	1. Take the six complete months from February through July 2024.
+754	2. Exclude the existing one-off equity-proceeds category.
+755	3. Sample whole transaction months, preserving relationships among receipts, payroll, suppliers, and other categories.
+756	4. Scale each category to its latest three-month average relative to its six-month average.
+757	5. Map transactions to corresponding business-day positions in the simulated month.
+758	6. Start from the existing available cash balance on 19 August.
+759	
+760	Use identical operating trajectories for bank-only and event-adjusted calculations. Add NumPy for the simulation and weighted summaries. This remains a small empirical background model.
+761	
+762	### Event cash and collections
+763	
+764	Reuse existing financial mechanisms, with these explicit behaviors:
+765	
+766	- Sample event dates inside their modeled windows. Sample a parent date once and derive dependent windows from it.
+767	- Keep cash flows occurring beyond the horizon outside the reported period.
+768	- Retain the existing settlement range of 60–100%, surety multiple of 125%, and cash-collateral range of 50–100%.
+769	- A cash deposit reduces available cash. A surety bond locks the sampled cash collateral. A letter of credit records required credit capacity separately.
+770	- Settlement releases the exact associated collateral or capacity on the settlement date.
+771	- Preserve interest treatment, invoice remainder handling, and double-count prevention.
+772	- Reuse the existing available-cash collection and catch-up rule. Carry unpaid amounts forward.
+773	- Allocate receipts between principal and fees, with final-cent reconciliation so full collection closes principal exactly.
+774	
+775	Evaluate every financially distinct joint path against the shared operating trajectories. Each trajectory receives weight:
+776	
+777	`joint path probability ÷ 512`
+778	
+779	This supports small-probability paths without depending on their appearance in a random sample of event paths.
+780	
+781	### Dated lender outputs
+782	
+783	For bank-only and event-adjusted views, calculate:
+784	
+785	- Funding outflow and contractual repayment schedule.
+786	- Expected dated principal and fee collections.
+787	- Cumulative collection distributions and P5/P50/P95 bands.
+788	- Probability of full collection by contractual maturity.
+789	- Uncollected contractual balance at maturity and at the horizon.
+790	- Daily outstanding principal and principal dollar-days through the horizon.
+791	- Discounted lender cash flows through the horizon, including funding.
+792	- Differences between the two views.
+793	
+794	Alongside those outputs, retain the explanatory borrower measures: available cash, minimum cash, cash deficits, collateral locked, and credit capacity required.
+795	
+796	Uncollected balances remain outstanding exposure. The model does not automatically write them off or assign a terminal recovery value.
+797	
+798	### Financial sensitivity to Jev judgments
+799	
+800	For every prospective binary judgment, calculate **0% / Jev / 100%**, holding fixed:
+801	
+802	- All other conditional judgments.
+803	- Operating trajectories.
+804	- Event date and amount draws.
+805	- Financing terms and financial parameters.
+806	
+807	Change only the selected probability and its complement, then recompute the path weights. These comparisons require no new Jev calls.
+808	
+809	For categorical security judgments, compare Jev’s mixture with each security arrangement held certain.
+810	
+811	Rank judgments by:
+812	
+813	1. Absolute change in expected discounted lender cash flows.
+814	2. Change in expected principal dollar-days.
+815	3. Change in expected uncollected balance at maturity.
+816	
+817	Show the corresponding borrower liquidity effects in each row. If the lender effects are unchanged, identify the leading liquidity drivers explicitly as having unchanged modeled collections.
+818	
+819	Keep financial-parameter sensitivity separate:
+820	
+821	- Cash collateral: 50%, 75%, and 100%.
+822	- Delaware exposure: 75%, 87.5%, and 100% of the entered amount.
+823	- Operating variability: 0.5×, 1×, and 1.5× deviations around the simulated mean.
+824	
+825	Stress uses the same financial engine with adverse, causally consistent event placements. Feasible paths remain available regardless of their Jev weight.
+826	
+827	## 4. One focused analysis experience
+828	
+829	Use the existing FastAPI/Jinja application with small JavaScript/SVG additions.
+830	
+831	### Main workspace
+832	
+833	Build one analysis page containing:
+834	
+835	- A compact summary of the material findings and supplied financing terms.
+836	- A lender-impact summary showing collections, outstanding exposure, discounted cash-flow changes, and capital tied up.
+837	- A collections timeline with the contractual schedule, expected collections, and cumulative distribution bands.
+838	- An aligned borrower-cash chart explaining changes in payment capacity.
+839	- A ranked financial sensitivity table.
+840	- A separate stress control and scenario detail.
+841	
+842	The page will show computed results plainly, including unchanged collections where that is the result.
+843	
+844	### Evidence-to-impact interaction
+845	
+846	Selecting a driver opens one expandable detail:
+847	
+848	**Relevant evidence → present-state reading → conditional Jev forecast → financial mechanism → measured financial effect**
+849	
+850	Show the exact forecast question and distribution. Expand source context on demand through existing source links and spans. Keep internal identifiers and execution records out of this interaction.
+851	
+852	The existing investigation viewer remains available as a secondary development view. Its inventories, coverage gates, reviewer checklists, statuses, and execution diagnostics do not enter the main analysis page.
+853	
+854	### Controls
+855	
+856	Provide controls for:
+857	
+858	- Financed amount, up to the $2 million invoice.
+859	- Fee.
+860	- Delaware exposure.
+861	- Collateral range.
+862	- Operating variability.
+863	- A selected prospective probability, with 0%, Jev, and 100% actions and reset.
+864	
+865	Probability changes reweight existing trajectories. Financial changes rerun the numerical calculation using the same random draws. Neither action launches an investigation or calls Jev.
+866	
+867	### Interfaces and artifacts
+868	
+869	- Add `slope analyze --run <id>`.
+870	- Retain `slope compare` as an alias to the new analysis.
+871	- Add `--refresh-probabilities` for explicit forecast refresh.
+872	- Provide `GET` and `POST /runs/{id}/analysis`.
+873	- Make analysis the default run experience.
+874	
+875	Extend the existing records only enough to retain judgment purpose, conditional context, window, complete distribution, source references, and path probability expressions.
+876	
+877	Write analysis as sidecar artifacts beside the immutable recorded investigation:
+878	
+879	- `analysis.json`: setup, judgments, path weights, summaries, sensitivities, and stress results.
+880	- `collections.csv`: dated lender flows, collections, and outstanding exposure.
+881	- `cashflows.csv`: borrower cash, collateral, and capacity summaries.
+882	
+883	Keep large simulation arrays in existing scratch storage. Reuse caching and replay.
+884	
+885	## 5. Delivery order and bounded verification
+886	
+887	### Implementation sequence
+888	
+889	1. **Align the active specification and prompts.** Update the alignment document, build specification, and builder instructions to establish the financial-analysis endpoint, context-rich atomicity, and separate forecast stage.
+890	2. **Implement the judgment layer.** Start with the latest accepted ChromaDex run, hydrate its findings with surrounding evidence, and run the revised interpretation and forecast profiles.
+891	3. **Implement the financial distribution.** Add the operating bootstrap, weighted paths, dated lender metrics, financial sensitivities, and separate stress calculation.
+892	4. **Build the analysis page.** Connect saved results, driver details, controls, and reset.
+893	5. **Record one fresh end-to-end investigation.** Confirm the same flow works from investigation through financial analysis.
+894	
+895	Build from the current PR #8 head in an isolated worktree and deliver one coherent revision for review.
+896	
+897	### Focused verification
+898	
+899	Reuse existing tests and add coverage for the specific new failure modes:
+900	
+901	- Context includes a material qualification; expressed intention is distinct from a completed action and a future forecast.
+902	- Conditional probabilities conserve mass, including merged cash-equivalent paths.
+903	- A hand-computable delayed-collection example produces the expected dated receipts, discounted cash flows, and capital exposure at 0% / Jev / 100%.
+904	- A feasible path with zero probability remains available for stress.
+905	- Matched bank/event calculations use identical draws; no event produces identical results.
+906	- Principal, fees, collateral release, and credit-capacity treatment conserve the relevant amounts.
+907	
+908	Finish with one suite and lint pass, one browser walkthrough, and one focused review of probability composition and financial arithmetic. Further checks address demonstrated defects.
+909	
+910	**Completion means Russell can follow a real piece of evidence into a probabilistic judgment, see its effect on dated loan cash flows, and identify which uncertainty matters financially.** Work that does not strengthen that experience is deferred.
+911	</proposed_plan>
+912	

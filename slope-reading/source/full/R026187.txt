@@ -1,0 +1,43 @@
+130:def _cents_in_text(cents: int, text: str) -> bool:
+131-    """Whether an amount appears in cited text, as written in filings ($2,000,000 / 2,000,000 / $2.0 million)."""
+132-    flat = " ".join(text.replace("$ ", "$").split())
+133-    dollars, rem = divmod(abs(cents), 100)
+134-    forms = {f"{dollars:,}.{rem:02d}"} if rem else {f"{dollars:,}", f"{dollars:,}.00"}
+135-    if rem == 0 and dollars >= 1_000_000:
+136-        forms |= {f"{dollars / 1_000_000:.1f} million", f"{dollars / 1_000_000:g} million"}
+137-    # A digit, comma or decimal point may not touch the match: "600,000" must not match "$2,600,000".
+138-    return any(re.search(rf"(?<![\d,.]){re.escape(f)}(?![\d,]|\.\d)", flat) for f in forms)
+139-
+140-
+67:def is_ambiguous(observation: SemanticObservation) -> bool:
+68-    """True when a Choice distribution is too flat to treat as settled (or an answer is missing)."""
+69-    if observation.primitive == "noul":
+70-        return observation.noul_value is None or abs(observation.noul_value - NOUL_THRESHOLD) < AMBIGUITY_MARGIN / 2
+71-    probs = sorted((observation.probabilities or {}).values(), reverse=True)
+72-    return len(probs) < 2 or probs[0] - probs[1] < AMBIGUITY_MARGIN
+73-
+74-
+75-class Semantics:
+-20260925T045921Z INCOMPLETE_REVIEW ['Jev unavailable (JevBudgetExceeded): Jev attempt ceiling reached (400 physical attempts)', 'disputed inventory item inv_007 (debt or financing agreement): MD&A liquidity windows desc'] 331 68 331
+-20260925T055525Z CANDIDATE_READY [] 154 14 154
+synergy_s1a_20240813#s0210:267-1099 covered False gap-cov -0.38
+synergy_s1a_20240813#s0207:3242-3263 covered False gap-cov -0.5
+synergy_s1a_20240813#s0207:2959-3150 covered False gap-cov -0.8
+synergy_s1a_20240813#s0208:829-848 covered False gap-cov -0.34
+synergy_s1a_20240813#s0208:607-737 covered False gap-cov -0.83
+merchant_agreement_20240501#s0004:23-878 covered False gap-cov -0.62
+chant_agreement_20240501#s0001:2564-2634 covered False gap-cov -0.94
+chant_agreement_20240501#s0001:6939-7348 partly_covered False gap-cov 0.88
+chant_agreement_20240501#s0001:7350-7467 covered False gap-cov -0.68
+chant_agreement_20240501#s0001:1462-1683 covered False gap-cov -0.68
+chant_agreement_20240501#s0008:1289-1434 covered False gap-cov -0.98
+_merchant_agreement_20240501#s0005:0-819 covered False gap-cov -0.44
+erchant_agreement_20240501#s0008:184-240 covered False gap-cov -0.98
+synergy_s1a_20240813#s0208:1455-1696 covered False gap-cov -0.7
+synergy_s1a_20240813#s0204:2364-2609 covered False gap-cov -0.96
+synergy_s1a_20240813#s0009:4196-4629 partly_covered True gap-cov 0.04
+synergy_s1a_20240813#s0084:10-132 covered False gap-cov -0.98
+synergy_s1a_20240813#s0214:334-555 covered False gap-cov -0.98
+synergy_s1a_20240813#s0214:557-768 covered False gap-cov -0.9
+chant_agreement_20240501#s0001:6939-7348 covered True gap-cov -0.08
+synergy_s1a_20240813#s0009:4196-4629 partly_covered True gap-cov 0.04

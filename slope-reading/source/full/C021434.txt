@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:".venv/bin/python - <<'PY'\nimport boto3\ns=boto3.Session(profile_name='slope',region_name='us-east-2').client('ssm');r=s.get_command_invocation(CommandId='ba29b704-fb90-4c94-bf5c-f6281f999486',InstanceId='i-00b6051aa298e85e2');print(r['Status'],r['StandardOutputContent'],r['StandardErrorContent'])\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2000}));
+text(await tools.write_stdin({session_id:26109,chars:"","yield_time_ms":1000,"max_output_tokens":2300}));

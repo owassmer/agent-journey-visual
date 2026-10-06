@@ -1,0 +1,100 @@
+578	
+579	
+580	def _path_view(p) -> dict:
+581	    return {"path": " -> ".join(p.labels), "ends": p.terminal,
+582	            "weight": "not judged" if p.weight_bps is None else f"{p.weight_bps / 100:.0f}%",
+583	            "cash": [{"kind": c.kind, "label": c.label, "amount": c.amount.model_dump(mode="json", exclude_none=True),
+584	                      "window": [c.window_start.isoformat(), c.window_end.isoformat()], "rule": c.rule} for c in p.cash]}
+585	
+586	
+587	async def instantiate_dispute(ctx: RunContext, args: dict) -> dict:
+588	    """Place one live dispute onto the host-owned post-judgment dispute model. The agent supplies the accepted findings,
+589	    the borrower's side, the counterparty, the amount and any judgment date (checked against the quotes). The host
+590	    traverses the model: Jev places the stage and judges each transition (refined by factors where uncertain and
+591	    decision-relevant); code sets every date and amount from the model's rules and composes the weighted paths."""
+592	    from app.agent.jev_profiles import DisputeProfile
+593	    from app.decisions.scenarios import HORIZON_DAYS
+594	    from app.disputes.evaluate import Evaluator
+595	    from app.disputes.rules import load_model
+596	
+597	    dep = ctx.run.get("dependencies", args["dependency_id"])
+598	    fids = tuple(dict.fromkeys(args.get("finding_ids") or []))
+599	    findings = [ctx.run.graph["findings"].get(f) for f in fids]
+600	    bad = [f for f, x in zip(fids, findings, strict=True) if x is None or x.status != "accepted"]
+601	    if not fids or bad:
+602	        raise ToolError(f"A dispute rests on accepted findings (not accepted: {bad or 'none given'})")
+603	    if args.get("borrower_role") not in ("debtor", "creditor"):
+604	        raise ToolError("borrower_role is debtor (the borrower owes) or creditor (the borrower is owed)")
+605	    title, counterparty = (args.get("title") or "").strip(), (args.get("counterparty") or "").strip()
+606	    if not title or not counterparty:
+607	        raise ToolError("Give the dispute a short title and name the counterparty")
+608	    live = {d.instance_id: d for d in ctx.run.graph["disputes"].values() if d.status != "superseded"}
+609	    replaced = args.get("supersedes")
+610	    if replaced and replaced not in live:
+611	        raise ToolError(f"{replaced} is not a live dispute instance")
+612	    overlap = [d.instance_id for d in live.values() if set(d.finding_ids) & set(fids) and d.instance_id != replaced]
+613	    if overlap:
+614	        raise ToolError(f"These findings are already instantiated as {overlap}; a dispute is modelled once. To "
+615	                        "correct it, pass supersedes with that instance ID.")
+616	    quotes = " ".join(s.quote for f in findings for s in f.spans)
+617	    review = _review_date(ctx)
+618	    judgment_date = None
+619	    if args.get("judgment_date"):
+620	        try:
+621	            judgment_date = date.fromisoformat(args["judgment_date"])
+622	        except ValueError as e:
+623	            raise ToolError("judgment_date is YYYY-MM-DD") from e
+624	        if judgment_date > review:
+625	            raise ToolError(f"judgment_date is after the review date {review}")
+626	        if not _date_in_text(judgment_date, quotes):
+627	            raise ToolError(f"{judgment_date} is not in the cited quotes; cite the finding that dates the judgment")
+628	    model = load_model()
+629	    draft = DisputeInstance(
+630	        instance_id=ctx.run.new_id("dispute"), dependency_id=dep.dependency_id, model_id=model["model_id"],
+631	        model_version=model["model_version"], title=title, borrower_role=args["borrower_role"],
+632	        counterparty=counterparty, finding_ids=fids, amount=_dispute_amount(args.get("amount") or {}, quotes),
+633	        amount_includes_interest=bool((args.get("amount") or {}).get("includes_post_judgment_interest")),
+634	        judgment_date=judgment_date, proposed_extension=(args.get("proposed_extension") or "").strip())
+635	    judge = None
+636	    if ctx.semantics is not None:
+637	        hashes = tuple(dict.fromkeys(ctx.evidence.read(f.spans[0].item_id)["source"]["sha256"] for f in findings))
+638	        judge = DisputeProfile(ctx.semantics, hashes)
+639	    sources = {s["source_id"]: s["available_at"][:10] for s in ctx.evidence.list_sources()}
+640	    evaluator = Evaluator(draft, findings, judge=judge, borrower=ctx.inputs["baseline_profile"]["borrower"],
+641	                          source_dates=sources, review=review, horizon=review + timedelta(days=HORIZON_DAYS),
+642	                          request_cents=ctx.inputs["run_inputs"]["requested_amount"]["value"],
+643	                          agent_stage=args.get("stage"), model=model)
+644	    try:
+645	        instance = await evaluator.run()
+646	    except Exception as e:
+647	        if judge is not None:
+648	            _record_jev_failure(ctx, e)
+649	        raise ToolError(f"The dispute could not be evaluated: {e}") from e
+650	    if instance.observation_ids:
+651	        used = [ctx.run.get("observations", o) for o in instance.observation_ids]
+652	        _dispose(ctx, used, "used_in_finding", f"dispute model for {instance.instance_id}")
+653	    if replaced:
+654	        ctx.run.put("dispute_instantiated", live[replaced].model_copy(update={"status": "superseded",
+655	                                                                              "superseded_by": instance.instance_id}))
+656	    ctx.run.put("dispute_instantiated", instance)
+657	    stages = model["stages"]
+658	    return {"instance_id": instance.instance_id, "status": instance.status,
+659	            "stage": stages[instance.stage]["label"] if instance.stage else None,
+660	            "paths": [_path_view(p) for p in instance.paths],
+661	            "pruned_weight": f"{instance.pruned_weight_bps / 100:.1f}%",
+662	            "refined_transitions": [j.stage for j in instance.transitions if j.refined],
+663	            "factors": [{"factor": f.label, "level": f.level_label} for f in instance.factors],
+664	            "evidence_requests": [r.action for r in instance.evidence_requests],
+665	            **({"proposed_extension": "recorded and flagged for the reviewer; the model is unchanged"}
+666	               if instance.proposed_extension else {}),
+667	            "note": model["weights_label"] + " run_scenarios shows every path's cash and the weighted view."}
+668	
+669	
+670	async def run_scenarios(ctx: RunContext, _args: dict) -> dict:
+671	    """Run the deterministic engine on the modelled disputes: each Slope structure, bank-only vs event-adjusted."""
+672	    from app.decisions.case import decide, is_slope_case
+673	
+674	    if not is_slope_case(ctx.inputs):
+675	        raise ToolError("run_scenarios applies to cases financed on Slope's terms; use run_sensitivity here")
+676	    disputes = list(ctx.run.graph["disputes"].values())
+677	    s = decide(ctx.evidence.snapshot_info()["snapshot_id"], ctx.inputs, disputes, _review_date(ctx))

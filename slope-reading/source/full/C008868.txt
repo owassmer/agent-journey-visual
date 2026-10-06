@@ -1,0 +1,7 @@
+const results = await Promise.allSettled([
+  tools.exec_command({cmd:"cat Slope_Coding_Agent_Context_and_Alignment.md",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:7000}),
+  tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\nroot=Path('/Users/owenwassmer/dev/Slope_Sparse_Events')\nfor d in [*reversed(root.parents),root]:\n for name in ['AGENTS.md','CLAUDE.md']:\n  p=d/name\n  if p.is_file(): print(f'{p}\\n{p.read_text()}')\nPY",max_output_tokens:5000}),
+  tools.exec_command({cmd:"rg --files --hidden -g '!\\.git/**' -g '!\\.venv/**' -g '!node_modules/**' -g '!__pycache__/**' -g '!\\.pytest_cache/**' -g '!\\.mypy_cache/**' -g '!\\.ruff_cache/**'",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events",max_output_tokens:6000}),
+  tools.exec_command({cmd:"rg --files --hidden /Users/owenwassmer/.claude/projects -g '*1ebb1026-a1f0-4809-9321-bc3d6f875530*'",max_output_tokens:1000})
+]);
+for (let i=0;i<results.length;i++) text({i,...results[i]});

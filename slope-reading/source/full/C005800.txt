@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo; wc -l app/analysis/processor.py app/analysis/engine.py app/analysis/events.py app/disputes/parallel.py app/disputes/pool.py app/analysis/reduce.py; grep -n \"^def \\|^@njit\\|^    def \" app/analysis/processor.py | head -40", "timeout": 30}

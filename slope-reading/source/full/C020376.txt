@@ -1,0 +1,4 @@
+const r=await Promise.allSettled([
+tools.exec_command({cmd:"curl -s http://127.0.0.1:18766/api/status | .venv/bin/python -c 'import sys,json; s=json.load(sys.stdin)[\"state\"]; print({k:s.get(k) for k in (\"phase\",\"done\",\"total\",\"stage_histories\",\"error\",\"inventory_error\")})'","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":1000}),
+tools.exec_command({cmd:"aws ssm send-command --profile slope --region us-east-2 --instance-ids i-00b6051aa298e85e2 --document-name AWS-RunShellScript --parameters '{\"commands\":[\"tail -3 /var/log/slope-restore.log; systemctl is-active slope-restore slope-recover-results slope-assembly-coordinator; df -h /\"]}' --query Command.CommandId --output text","max_output_tokens":500})
+]);r.forEach(text);

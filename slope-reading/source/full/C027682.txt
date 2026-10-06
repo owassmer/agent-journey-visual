@@ -1,0 +1,1 @@
+{"command": "sed -n 130,230p app/agent/jev.py; grep -n \"def jev_provider\" -A25 app/config.py | head -40; uv run python -c \"\nfrom app.config import question_registry as q; r=q(); print(r['global_rules']); print([x for x in r['questions'] if x['id']=='forecast_appeal'][0]['prompt']['instructions'][:1500])\"", "description": "Read Jev call path, provider and forecast prompt"}

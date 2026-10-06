@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"rg -n 'max-parallel|matrix|slots|procs|process|ThreadPool|claim|wait|join|Pool|range\\(' .github/workflows/walk*.yml tools/cloud_walk.py app/disputes/parallel.py; gh run list --limit 12 --json databaseId,status,name,headBranch","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":5000}));

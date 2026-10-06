@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"cat app/decisions/scenarios.py",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model",max_output_tokens:7400}),
+tools.exec_command({cmd:"python3 - <<'PY'\nfrom pathlib import Path\np=Path('/Users/owenwassmer/.claude/jobs/1ebb1026/tmp')\nfor f in sorted(p.glob('*compiler*'))+sorted(p.glob('*cdx*log')):\n print(f.name, f.stat().st_size)\n print('\\n'.join(f.read_text(errors='replace').splitlines()[-7:]))\nr=Path('/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-5b-decision-model/runs/recorded')\nprint('CURRENT CHROMADEX RECORDS',*[x.name for x in r.glob('chromadex*')],sep='\\n')\nPY",max_output_tokens:1500})
+]);for(let i=0;i<results.length;i++)text({i,...results[i]});

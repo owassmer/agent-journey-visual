@@ -1,0 +1,1 @@
+text((await tools.exec_command({cmd:"osascript <<'APPLESCRIPT'\ntell application \"Google Chrome\"\n tell tab id 796873298 of window id 796873190\n  return execute javascript \"document.body.innerText.slice(document.body.innerText.indexOf('Run nproc;'),document.body.innerText.indexOf('Run SLOPE_VARIANT'))\"\n end tell\nend tell\nAPPLESCRIPT","max_output_tokens":1100})).output);

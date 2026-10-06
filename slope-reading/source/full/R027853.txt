@@ -1,0 +1,479 @@
+1	{
+2	  "registry_id": "slope_external_event_cashflow",
+3	  "registry_version": "2.0.1-design",
+4	  "status": "design_template_not_live_validated",
+5	  "model_id": "jev-1.13.0",
+6	  "sdk_requirement": "typesafe-sdk==0.7.1",
+7	  "sdk_mapping": "For each selected entry, copy entry.question, prefix its instructions with the global_rules text, and construct typesafe_sdk.Choice(**copied_question). Other entry metadata is enforced by the host and is not forwarded as unsupported model instruction fields.",
+8	  "purpose": "Focused evidence and research-routing judgments inside an adaptive external-event investigation. No question estimates a borrower default probability, generates a dollar adjustment, or makes the final lending decision.",
+9	  "global_rules": [
+10	    "Evaluate only the supplied state. Do not use remembered facts about this company, dispute, or later events.",
+11	    "Each semantic call concerns one atomic claim, one target, and one source passage with necessary qualifications. Split multiple claims before evaluation.",
+12	    "If more than one substantive category fits because the input combines claims, select unknown instead of choosing an arbitrary category.",
+13	    "The instruction describes the statement in this evidence. Code applies dates, source eligibility, supersession and financial arithmetic separately.",
+14	    "Source authority and claim posture are separate. An SEC filing can report an allegation or expectation.",
+15	    "No confidence threshold automatically converts a judgment to an accepted fact or a credit decision. Retain all distributions and require the agent to reconcile material contradictions.",
+16	    "Independent questions using the same state may be batched. A question that depends on another answer receives a later request with that answer explicitly included in state.",
+17	    "Question identifiers are application metadata. The complete question must appear in instructions."
+18	  ],
+19	  "state_contract": {
+20	    "semantic": {
+21	      "required": [
+22	        "target",
+23	        "source",
+24	        "passage",
+25	        "atomic_claim"
+26	      ],
+27	      "optional": [
+28	        "definitions",
+29	        "proposed_finding",
+30	        "identified_obligation",
+31	        "identified_activity",
+32	        "identified_cash_pool",
+33	        "identified_offset"
+34	      ],
+35	      "target": "Resolved legal entity plus the specific affiliate, asset, operating activity, or obligation being evaluated.",
+36	      "source": "Source ID, content hash, publisher and document kind. The backend has already checked eligibility.",
+37	      "passage": "Source text and enough surrounding qualifications to preserve meaning.",
+38	      "atomic_claim": "One statement extracted by the reasoning agent; exact source spans remain available.",
+39	      "definitions": "Only the definitions needed for this judgment.",
+40	      "proposed_finding": "One proposition, including entity and asset scope, for supports/contradicts evaluation."
+41	    },
+42	    "routing": {
+43	      "required": [
+44	        "selected_gap",
+45	        "decision_dependency",
+46	        "available_source_categories"
+47	      ],
+48	      "optional": [
+49	        "candidate",
+50	        "known_evidence",
+51	        "previous_unsuccessful_actions"
+52	      ],
+53	      "selected_gap": "One unresolved factual question selected by the primary agent.",
+54	      "decision_dependency": "Which modeled premise or offer comparison would change when this gap is resolved. Any quantitative sensitivity was calculated by the financial engine.",
+55	      "available_source_categories": "Backend-allowed source categories and available document/action summaries. No arbitrary web or filesystem capability is implied.",
+56	      "candidate": "One candidate document or proposed retrieval/customer question with its available description."
+57	    }
+58	  },
+59	  "questions": [
+60	    {
+61	      "id": "entity_scope",
+62	      "version": "2.0.0",
+63	      "role": "semantic",
+64	      "applies_when": "The relationship between the passage and the target legal entity or specific asset/activity must be established.",
+65	      "question": {
+66	        "instructions": "Does the one claim in state.atomic_claim, read with state.passage and state.definitions, apply to state.target? Judge only identity and stated scope, not whether the claim is true. Do not infer that an affiliate's liabilities belong to the parent. If the evidence does not resolve identity or scope, choose unknown.",
+67	        "criteria": {
+68	          "target": "The claim explicitly concerns the specified target entity and, when specified, the target asset, activity or obligation.",
+69	          "different": "The claim explicitly concerns a different entity, asset, activity or obligation, and the supplied evidence does not extend it to the specified target.",
+70	          "unknown": "Identity or scope cannot be resolved, necessary definitions are missing, or multiple targets are combined without a clear application."
+71	        }
+72	      },
+73	      "application": "A target match permits further interpretation; it does not establish liability or the amount of economic exposure. A different or unknown match prevents automatic attribution to the borrower."
+74	    },
+75	    {
+76	      "id": "claim_posture",
+77	      "version": "2.0.0",
+78	      "role": "semantic",
+79	      "applies_when": "The agent needs to distinguish an assertion or expectation from a reported agreement, order or completed event.",
+80	      "question": {
+81	        "instructions": "Classify the single statement state.atomic_claim by what state.passage presents it as. Classify the claim itself, not the document publisher. This input must contain one claim; choose unknown for combined or ambiguous claims. A statement that a party seeks an order is an allegation_or_request, not a court_imposed_requirement. A reported payment or completed manufacturing start is reported_completed_event, not a prediction.",
+82	        "criteria": {
+83	          "allegation_or_request": "A party asserts a disputed factual/legal claim or requests relief; the statement does not report an operative agreement, court requirement or completed event establishing that claim.",
+84	          "court_imposed_requirement": "The statement describes a requirement imposed by an identified court order, rather than a party's requested requirement.",
+85	          "agreed_requirement": "The statement describes an obligation or condition in an agreement between parties, rather than a court-imposed requirement or a report that performance has already occurred.",
+86	          "reported_completed_event": "The statement reports that the identified action or event has occurred, such as a payment, financing receipt or production start, rather than merely being required or expected.",
+87	          "expectation_or_plan": "The statement presents a forecast, expectation, target or plan whose occurrence is not reported as completed or presently required by an identified agreement or order.",
+88	          "unknown": "The statement does not fit one category, has insufficient context, or combines multiple claims with different postures."
+89	        }
+90	      },
+91	      "application": "Record posture separately from source authority. A reported completed event remains a sourced report and can still require reconciliation with contradictory evidence."
+92	    },
+93	    {
+94	      "id": "finding_support",
+95	      "version": "2.0.0",
+96	      "role": "semantic",
+97	      "applies_when": "The primary agent proposes one factual premise for a financial effect, condition or baseline adjustment.",
+98	      "question": {
+99	        "instructions": "Does state.passage, with state.definitions, support the complete single proposition in state.proposed_finding for state.target? Preserve qualifiers, entity scope, claim posture and whether a fact is expected or completed. Do not supply missing amounts, dates, causal steps or facts from memory. Choose unknown if both support and contradiction appear or the passage cannot decide the proposition.",
+100	        "criteria": {
+101	          "supports": "The passage establishes the proposition as worded, including its scope and qualifiers, without requiring an unsupported inference.",
+102	          "contradicts": "The passage establishes an incompatible proposition for the same scope, so the proposed finding cannot accurately describe this passage.",
+103	          "unknown": "The passage is insufficient, ambiguous, internally conflicting, only addresses part of the proposition, or requires outside facts to decide it."
+104	        }
+105	      },
+106	      "application": "This is evidence support for one proposition, not a confidence estimate for the scenario occurring or the borrower defaulting. The agent still reconciles other sources."
+107	    },
+108	    {
+109	      "id": "cash_restriction",
+110	      "version": "2.0.0",
+111	      "role": "semantic",
+112	      "applies_when": "The selected gap concerns access to a specifically identified cash balance, account, receivable proceeds or payout pool.",
+113	      "question": {
+114	        "instructions": "What access condition does the single statement state.atomic_claim in state.passage expressly describe for state.identified_cash_pool? Classify only the described condition; do not determine whether it remains effective at the mission date. A request to freeze funds is not a freeze. A borrowing limit is not automatically a restriction on already-owned cash. If the statement mixes conditions or does not establish one, choose unknown.",
+115	        "criteria": {
+116	          "access_prohibited": "The statement describes an imposed prohibition on access to the entire identified cash pool, rather than a requested or merely possible restriction.",
+117	          "access_limited": "The statement describes imposed partial access, permitted uses, an amount cap or a stated release condition for the identified pool, rather than a complete prohibition.",
+118	          "restriction_released": "The statement reports removal or satisfaction of the identified restriction, rather than a requested release or expected future release.",
+119	          "restriction_requested_only": "The statement only requests, proposes or anticipates a restriction and does not report that it was imposed.",
+120	          "unknown": "No single access condition is established for the identified pool, or the passage combines unresolved conditions."
+121	        }
+122	      },
+123	      "application": "Code handles effective intervals and amounts. A restricted cash pool is not necessarily lost cash, and unknown access is not zero cash."
+124	    },
+125	    {
+126	      "id": "activity_restriction",
+127	      "version": "2.0.0",
+128	      "role": "semantic",
+129	      "applies_when": "The gap concerns whether a specified product, manufacturing activity or sales channel can operate, including production interruptions and planned replacement capacity.",
+130	      "question": {
+131	        "instructions": "What operating-availability state does state.atomic_claim in state.passage describe for state.identified_activity? Classify this one claim, not the whole company. Do not infer current revenue share, sell-through or cash receipts from manufacturing capacity. Do not treat a signed capacity agreement or expected start as completed production. Temporal application to the mission date is performed separately in code. Choose unknown if multiple states are combined or none is established.",
+132	        "criteria": {
+133	          "unavailable": "The statement reports that the identified activity has stopped or is prevented entirely, rather than merely describing a risk of interruption.",
+134	          "limited": "The statement reports that the activity operates only within an identified product, capacity, permission or other constraint; it is not entirely unavailable.",
+135	          "planned_or_conditional": "The statement describes operating availability that depends on a future start, approval, qualification, ramp or other unmet condition; operation is not reported as achieved.",
+136	          "available_or_restored": "The statement reports that the specified activity is operating or has resumed at the scope described, without an unresolved operating constraint stated in this claim.",
+137	          "unknown": "The statement does not establish one operating state, combines different activities/states, or lacks necessary scope."
+138	        }
+139	      },
+140	      "application": "The agent links only the specified activity to supported receipts and costs. Capacity is not demand, revenue or cash. Historical supplier shares do not become current automatic revenue haircuts."
+141	    },
+142	    {
+143	      "id": "obligation_status",
+144	      "version": "2.0.0",
+145	      "role": "semantic",
+146	      "applies_when": "The gap concerns a specified payment obligation such as a disputed payable, settlement, legal expense or debt service.",
+147	      "question": {
+148	        "instructions": "What status does the single statement state.atomic_claim in state.passage establish for state.identified_obligation? Classify the obligation described, not all liabilities of the company. An amount demanded by a counterparty is not automatically an agreed payment. Do not generate a due date, assume immediate payment, or decide whether the amount has already entered the financial baseline. If the status is internally conflicting or combines different obligations, choose unknown.",
+149	        "criteria": {
+150	          "required_unconditional": "The statement describes a fixed payment obligation whose existence does not depend on an unresolved condition and does not report that it has already been satisfied; timing may still be unspecified.",
+151	          "claimed_or_disputed": "The statement describes a demand or contested amount, and does not establish an agreed or ordered unconditional payment of that amount.",
+152	          "conditional": "The statement explicitly makes the payment obligation depend on an unresolved event or condition, rather than presenting it solely as a disputed demand.",
+153	          "reported_satisfied": "The statement reports that the identified obligation has been paid, discharged or otherwise satisfied, rather than merely promising future payment.",
+154	          "unknown": "The statement does not establish one status, omits necessary context, or combines unresolved statuses."
+155	        }
+156	      },
+157	      "application": "Extract amounts and dates separately, then reconcile with opening balances, existing AP and loan schedules. A historical paid amount is not a new forecast outflow."
+158	    },
+159	    {
+160	      "id": "offset_support",
+161	      "version": "2.0.0",
+162	      "role": "semantic",
+163	      "applies_when": "The gap concerns a particular insurance reimbursement, legal-expense funding arrangement, indemnity or other identified source offsetting an expense or exposure.",
+164	      "question": {
+165	        "instructions": "What does state.atomic_claim in state.passage establish about state.identified_offset? Distinguish a documented funding commitment from hoped-for recovery and from money already received. Judge the one identified payment or coverage obligation only. A commitment to finance legal expenses is not unrestricted cash, and being nonrecourse does not make damages recoverable or guaranteed. Choose unknown if the statement combines different statuses or the offset cannot be established.",
+166	        "criteria": {
+167	          "committed_without_stated_unmet_condition": "The statement describes an identified party's commitment or payable obligation covering the specified offset, with no unresolved condition stated in this claim, and does not report the specific payment as already received.",
+168	          "committed_subject_to_condition": "The statement describes a commitment whose availability for this offset expressly depends on a condition not reported as satisfied, and does not report the payment as already received.",
+169	          "possible_or_disputed": "The statement presents the offset as a possibility, demand, disputed entitlement or expectation without an established commitment for this offset.",
+170	          "reported_received_or_paid_for_borrower": "The statement reports that the identified amount has been received or the specified expense has already been paid on the borrower's behalf.",
+171	          "unknown": "The statement does not establish one status or the scope of the offset, or it combines unresolved statuses."
+172	        }
+173	      },
+174	      "application": "The primary agent must establish beneficiary, covered expense, amount, timing and recourse separately. Do not net legal expenses or add a cash inflow beyond the documented coverage."
+175	    },
+176	    {
+177	      "id": "next_source",
+178	      "version": "2.0.0",
+179	      "role": "research_routing",
+180	      "applies_when": "The agent has selected a decision-relevant factual gap and wants to choose an available source category before executing retrieval.",
+181	      "question": {
+182	        "instructions": "For the one factual question in state.selected_gap, which category in state.available_source_categories most directly contains the evidence needed to resolve it? Use state.decision_dependency only to understand the needed premise; do not decide the financing offer. Select only a category explicitly available in state. Choose unknown if the gap combines questions, multiple categories are equally direct, or none can establish the answer. The agent chooses the actual retrieval action after this judgment.",
+183	        "criteria": {
+184	          "court_order": "An available court order or docket record is the most direct source for the specific operative court action or litigation status being asked about.",
+185	          "executed_agreement": "An available executed loan, settlement, supplier, funding or other agreement is the most direct source for the contractual obligation or condition being asked about.",
+186	          "financial_record": "An available financial statement, debt statement, accounting exhibit or bank record is the most direct source for the realized financial amount or balance being asked about.",
+187	          "marketplace_record": "An available marketplace statement, payout record or account notice is the most direct source for the specified platform sales, payouts or account restriction.",
+188	          "official_business_disclosure": "An available company or regulator disclosure is the most direct source for the specified reported business event, and the gap is not more directly resolved by another available listed category.",
+189	          "borrower_question": "The needed fact is not established by available records, and a specific borrower-provided document or answer is the most direct feasible next source.",
+190	          "unknown": "No available category can be selected unambiguously, categories are equally direct, or the gap needs decomposition."
+191	        }
+192	      },
+193	      "application": "This routes research, not credit. A borrower question records the exact missing fact, required evidence and consequences under each answer; it never automatically sends a message."
+194	    },
+195	    {
+196	      "id": "candidate_relevance",
+197	      "version": "2.0.0",
+198	      "role": "research_routing",
+199	      "applies_when": "The agent has a selected gap and one candidate source passage, document description or feasible research action to rank.",
+200	      "question": {
+201	        "instructions": "How directly would the evidence available in state.candidate address state.selected_gap? Judge the candidate's stated content or proposed action, not unseen contents and not the importance of the lawsuit. If only a title or snippet is available, do not assume it contains the required answer. Use the most direct single category whose definition is fully supported; choose unknown if the available description cannot establish relevance.",
+202	        "criteria": {
+203	          "resolves_selected_premise": "The candidate contains the specific evidence needed to resolve the selected premise, or proposes a direct question whose requested answer/document would resolve that premise if supplied.",
+204	          "narrows_selected_premise": "The candidate addresses the selected premise and can reduce a specific uncertainty, but another factual element is still required to resolve it.",
+205	          "context_only": "The candidate provides related background but does not resolve or narrow a specific uncertainty in the selected premise.",
+206	          "unrelated": "The candidate is sufficiently described to establish that it does not concern the selected premise or relevant background.",
+207	          "unknown": "The available description is insufficient, contradictory or too broad to place the candidate in one category."
+208	        }
+209	      },
+210	      "application": "Rank direct relevance independently from economic materiality. Code may map these categories to a research queue order; do not map them to loss percentages or approval thresholds."
+211	    }
+212	  ],
+213	  "response_record": {
+214	    "required_fields": [
+215	      "run_id",
+216	      "case_id",
+217	      "snapshot_id",
+218	      "question_id",
+219	      "question_version",
+220	      "registry_version",
+221	      "requested_model",
+222	      "returned_model",
+223	      "state_sha256",
+224	      "source_content_hashes",
+225	      "raw_answer",
+226	      "selected_choice",
+227	      "probabilities",
+228	      "confidence",
+229	      "agent_disposition",
+230	      "created_at"
+231	    ],
+232	    "agent_disposition_values": [
+233	      "accepted_for_analysis",
+234	      "needs_reconciliation",
+235	      "rejected_with_reason"
+236	    ],
+237	    "raw_answer_policy": "Preserve the SDK's original typed response and any missing field as missing. Do not invent a confidence field when using a future Noul question."
+238	  },
+239	  "sources": [
+240	    "https://docs.typesafe.ai/primitives",
+241	    "https://docs.typesafe.ai/models",
+242	    "https://docs.typesafe.ai/model-jaggedness/jev-1.13",
+243	    "https://docs.typesafe.ai/confidence"
+244	  ],
+245	  "evaluation_mode_policy": {
+246	    "agent_plus_jev": "The scoped judge_evidence tool may load this generic registry. Only admissible retrieved passages and agent-proposed findings enter state. Never insert expected case answers or private evaluator material.",
+247	    "agent_only": "Do not expose this registry or judge_evidence and remove instructions requiring Jev. The agent performs the same semantic work itself using the same admissible research and financial tools.",
+248	    "blind_review": "The blind reviewer receives neither expected answer keys nor experimental arm labels. Ordinary admissible sources and the candidate packet remain available for independent checking.",
+249	    "failure_policy": "Never silently change evaluation arms because Jev is unavailable."
+250	  }
+251	}
+252	{
+253	  "decision_id": "synergy_2024-08-13_external_event_review",
+254	  "mission_id": "synergy_20240813",
+255	  "borrower_id": "synergy_chc_corp",
+256	  "borrower_name": "Synergy CHC Corp.",
+257	  "as_of": "2024-08-13T23:59:59-04:00",
+258	  "decision_timezone": "America/New_York",
+259	  "decision_type": "new_draw",
+260	  "transaction_basis": "analytical_candidate",
+261	  "slope_relationship": "not_established",
+262	  "stakeholder_scope": "loan_asset_holder",
+263	  "currency": "USD",
+264	  "requested_amount": {
+265	    "status": "unknown",
+266	    "unit": "USD_cents",
+267	    "value": null,
+268	    "lower": null,
+269	    "upper": null,
+270	    "observed_on": null,
+271	    "provenance": {
+272	      "basis": "unknown",
+273	      "source_fact_ids": [],
+274	      "assumption_id": null,
+275	      "derivation": null,
+276	      "note": "A proposed incremental financing amount is an operator choice, not a disclosed Slope application."
+277	    }
+278	  },
+279	  "requested_term_months": null,
+280	  "use_of_proceeds": "Evaluate incremental inventory or working-capital financing alongside an actual merchant loan and dated supplier-settlement obligations.",
+281	  "baseline_id": "synergy_explicit_threshold_inputs_v1",
+282	  "baseline_status": "explicit_assumption_model",
+283	  "available_actions": [
+284	    "requested_offer",
+285	    "smaller_feasible_purchase",
+286	    "alternative_term",
+287	    "conditional_offer",
+288	    "decline_new_exposure"
+289	  ],
+290	  "missing_inputs": [
+291	    "Settlement payments actually made July 1 through August 13",
+292	    "Updated unrestricted cash and other debt-service calendar",
+293	    "Daily credits and remittances for the specific Shopify account",
+294	    "Actual May merchant-loan effective funding date",
+295	    "Proposed incremental amount, pricing, term and funded operating plan"
+296	  ],
+297	  "note": "The example computes useful conditional thresholds from real obligations plus named assumptions. It does not fabricate historical bank transactions, channel receipts, a complete borrower forecast, or a Slope relationship."
+298	}
+299	{
+300	  "schema_version": "0.1.0",
+301	  "case_id": "synergy_chc_2024",
+302	  "mission_id": "synergy_20240813",
+303	  "artifact_status": "analytical_proposals_not_historical_applications_or_slope_quotes",
+304	  "currency": "USD",
+305	  "timing_basis": "monthly_indices_from_operator_selected_funding_date",
+306	  "actual_existing_loan_id": "synergy_webbank_shopify_2024-05-01",
+307	  "calendar_date_rule": "No funding or payment calendar dates invented. To generate dates, operator must choose funding date, monthly anchoring, end-of-month and business-day conventions; record them as assumptions.",
+308	  "pricing_rule": "Fixed fees shown are operator sensitivity choices, not actual Slope pricing, APR, or the terms of the existing $370k WebBank loan.",
+309	  "rounding_rule": "Regular payment rounded to nearest cent, half up; final payment adjusted to conserve exact total repayment.",
+310	  "cross_year_calendar_rule": "When a proposal extends into 2025, include the 2025 settlement obligations and explicit installment timing assumptions. An H2-2024 aggregate cash threshold does not establish full-term affordability.",
+311	  "existing_debt_rule": "Retain the existing $370k merchant contract separately. Its remittances follow account credits, two separate six-month minimum windows, recognized manual payments, and outstanding-total caps.",
+312	  "offers": [
+313	    {
+314	      "proposal_id": "analysis_100k_6m",
+315	      "basis": "operator_assumption",
+316	      "advance_cents": 10000000,
+317	      "term_months": 6,
+318	      "fixed_total_fee_fraction": "0.06",
+319	      "fixed_total_fee_cents": 600000,
+320	      "total_repayment_cents": 10600000,
+321	      "funding_month_index": 0,
+322	      "payment_rows": [
+323	        {
+324	          "month_index": 1,
+325	          "borrower_payment_cents": 1766667
+326	        },
+327	        {
+328	          "month_index": 2,
+329	          "borrower_payment_cents": 1766667
+330	        },
+331	        {
+332	          "month_index": 3,
+333	          "borrower_payment_cents": 1766667
+334	        },
+335	        {
+336	          "month_index": 4,
+337	          "borrower_payment_cents": 1766667
+338	        },
+339	        {
+340	          "month_index": 5,
+341	          "borrower_payment_cents": 1766667
+342	        },
+343	        {
+344	          "month_index": 6,
+345	          "borrower_payment_cents": 1766665
+346	        }
+347	      ],
+348	      "capacity_condition": "At every payment date, residual spendable cash after operating needs, existing merchant remittances/catch-ups, settlement installments, and policy reserve must cover this payment under the declared allocation scenario.",
+349	      "operating_plan_condition": "Changing the advance must change the financed purchase and its receipts where appropriate. These offers are not interchangeable injections into an unchanged operating plan."
+350	    },
+351	    {
+352	      "proposal_id": "analysis_250k_6m",
+353	      "basis": "operator_assumption",
+354	      "advance_cents": 25000000,
+355	      "term_months": 6,
+356	      "fixed_total_fee_fraction": "0.06",
+357	      "fixed_total_fee_cents": 1500000,
+358	      "total_repayment_cents": 26500000,
+359	      "funding_month_index": 0,
+360	      "payment_rows": [
+361	        {
+362	          "month_index": 1,
+363	          "borrower_payment_cents": 4416667
+364	        },
+365	        {
+366	          "month_index": 2,
+367	          "borrower_payment_cents": 4416667
+368	        },
+369	        {
+370	          "month_index": 3,
+371	          "borrower_payment_cents": 4416667
+372	        },
+373	        {
+374	          "month_index": 4,
+375	          "borrower_payment_cents": 4416667
+376	        },
+377	        {
+378	          "month_index": 5,
+379	          "borrower_payment_cents": 4416667
+380	        },
+381	        {
+382	          "month_index": 6,
+383	          "borrower_payment_cents": 4416665
+384	        }
+385	      ],
+386	      "capacity_condition": "At every payment date, residual spendable cash after operating needs, existing merchant remittances/catch-ups, settlement installments, and policy reserve must cover this payment under the declared allocation scenario.",
+387	      "operating_plan_condition": "Changing the advance must change the financed purchase and its receipts where appropriate. These offers are not interchangeable injections into an unchanged operating plan."
+388	    },
+389	    {
+390	      "proposal_id": "analysis_250k_3m",
+391	      "basis": "operator_assumption",
+392	      "advance_cents": 25000000,
+393	      "term_months": 3,
+394	      "fixed_total_fee_fraction": "0.03",
+395	      "fixed_total_fee_cents": 750000,
+396	      "total_repayment_cents": 25750000,
+397	      "funding_month_index": 0,
+398	      "payment_rows": [
+399	        {
+400	          "month_index": 1,
+401	          "borrower_payment_cents": 8583333
+402	        },
+403	        {
+404	          "month_index": 2,
+405	          "borrower_payment_cents": 8583333
+406	        },
+407	        {
+408	          "month_index": 3,
+409	          "borrower_payment_cents": 8583334
+410	        }
+411	      ],
+412	      "capacity_condition": "At every payment date, residual spendable cash after operating needs, existing merchant remittances/catch-ups, settlement installments, and policy reserve must cover this payment under the declared allocation scenario.",
+413	      "operating_plan_condition": "Changing the advance must change the financed purchase and its receipts where appropriate. These offers are not interchangeable injections into an unchanged operating plan."
+414	    }
+415	  ]
+416	}
+417	{
+418	  "artifact_id": "case_eval_private",
+419	  "version": "2.0.1-design",
+420	  "access_class": "host_evaluator_only",
+421	  "exposure_policy": "Never mount this file, serialize these fields into model context, include them in evidence search results, or expose them to either investigative agent or blind reviewer. The offline scorer reads it only after a result packet is locked.",
+422	  "cases": {
+423	    "synergy_chc_2024": {
+424	      "expected_findings_and_error_checks": [
+425	        "Connect the HVL/Atrium manufacturing lawsuit to its December 2023 settlement and the existing supplier-loan payment schedule. This is the legal-to-cash-flow mechanism, not a new liability added on top of debt already recorded.",
+426	        "The June 30 disclosure places USD 2 million of remaining 2024 Atrium payments in H2. Bridge payments potentially made between July 1 and August 12 before applying the August 12 cash update; do not automatically assume all USD 2 million remains unpaid on August 13. Preserve any unobserved payments as explicit scenario parameters and do not invent exact installment days.",
+427	        "The separate March 2024 supplier settlement has USD 600000 scheduled for H2 at June 30. Reconcile the same post-June payment bridge before forecasting remaining August exposure. Do not use the Vitabest counterparty name from the 2025 agreement as information available at the August 2024 cutoff.",
+428	        "Recognize that the separate L.O.D.C. Texas settlement was reported paid in May 2024, so its old claim headline does not generate another future payment.",
+429	        "Remove the USD 2235986 noncash settlement gain from normalized FY2023 operating performance when that year informs the baseline. Do not remove it again from H1 2024 results or treat it as cash received.",
+430	        "Distinguish the approximate August 12 cash update from June 30 unrestricted cash and restricted credit-card collateral. Retain the debt load, shareholder deficit and going-concern evidence in both baseline and enriched views.",
+431	        "Model existing Shopify/WebBank collections from the contractually defined account credits, not consolidated revenue. Do not sum multiple loan remittance percentages without mapping loans to the affected account or store.",
+432	        "Keep expected future IPO, refinancing or litigation recoveries outside available funding unless the initial snapshot establishes a commitment that satisfies its conditions.",
+433	        "Compare genuinely feasible fixed-installment new-loan amounts and terms under explicit collection and settlement-timing inputs. If all tested structures fail, say so; do not force an approval-to-decline reversal or an approved alternative.",
+434	        "Model the operating consequences of different financed purchase sizes; declining or shrinking inventory funding can also change future receipts."
+435	      ],
+436	      "outcome_source_ids": [
+437	        "synergy_annual_2024",
+438	        "synergy_credit_agreement_20250530",
+439	        "synergy_quarterly_20250630"
+440	      ]
+441	    },
+442	    "barfresh_schreiber_2024": {
+443	      "transfer_tests": [
+444	        "Supplier-dispute effects must change specific production, inventory-conversion, receipts or expense assumptions, not a generic risk score.",
+445	        "Planned replacement capacity is distinct from completed production and resulting cash collection.",
+446	        "Nonrecourse litigation-expense funding does not imply unrestricted cash or guaranteed damages proceeds.",
+447	        "Existing disputed payables and receivables-facility conditions are represented exactly once."
+448	      ]
+449	    }
+450	  }
+451	}
+452	{
+453	  "artifact_status": "contract_shape_checks_only_not_model_validation",
+454	  "schema_draft": "2020-12",
+455	  "schema_valid": true,
+456	  "example_packet_valid": true,
+457	  "secondary_barfresh_packet_valid": true,
+458	  "conditional_threshold_arithmetic_checked": true,
+459	  "synergy_fact_ids_resolved_in_registry": true,
+460	  "proposal_fixtures_valid_and_conserve_payments": true,
+461	  "merchant_separate_window_cap_and_recognized_manual_credit_examples_checked": true,
+462	  "negative_checks_passed": [
+463	    "fractional-cent money",
+464	    "floating-point rate instead of decimal string",
+465	    "unknown amount silently changed to zero",
+466	    "expected curve without scenario weights",
+467	    "future evidence at August 2024 cutoff",
+468	    "remittance fraction outside zero to one",
+469	    "numerical collection curve without a baseline",
+470	    "incorrect settlement threshold calculation"
+471	  ],
+472	  "not_checked": [
+473	    "Independent truth verification beyond the supplied source/facts registry",
+474	    "General loan cash-flow engine (not implemented)",
+475	    "Actual borrower creditworthiness",
+476	    "Any real model or agent inference"
+477	  ]
+478	}
+479	

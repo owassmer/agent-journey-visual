@@ -1,0 +1,27 @@
+[IMPORTANT: Background process proc_1f3d84aee5ac completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -rn "all_paths\|from app.disputes import parallel\|parallel\.\|SLOPE_WALK_PROCS" app/ --include=*.py | grep -v "^app/disputes/parallel.py" | cut -c1-170 | head; sed -n '/^def all_paths/,/^def load_parts/p' app/disputes/parallel.py; ls ~/dev/Slope_Sparse_Events/.claude/worktrees/*/var/jev_cache -d 2>/dev/null | head -3; du -sh var/jev_cache 2>/dev/null; grep -n "jev_cache\|evidence build" .github/workflows/walk.yml
+Output:
+app/analysis/build.py:325:    if procs > 1:  # the pending claim's tree on a subtree queue (app/disputes/parallel.py): the single walk's result
+app/analysis/build.py:326:        from app.disputes import parallel
+app/analysis/build.py:328:        per = parallel.all_paths(fc, procs)
+app/analysis/build.py:330:        per = fc.all_paths()
+app/analysis/page.py:1237:    per, bank_paths = fc.all_paths(), fc.bank_paths()
+app/disputes/forecast.py:1106:    def all_paths(self) -> dict[str, dict[str, list[DisputePath]]]:
+app/agent/jev_profiles.py:175:        """candidate_screen: one request per query-passage pair, fanned out in parallel.
+def all_paths(fc, procs: int, log=sys.stderr) -> dict:
+    """`Forecaster.all_paths`, a pending claim's tree walked in `procs` processes."""
+    from app.disputes.forecast import PENDING
+
+    return {d.instance_id: {"": walk(fc, d, procs, log) if d.stage == PENDING and d.borrower_role == "debtor"
+                            else fc.paths(d)} for d, _ in fc.ordered()}
+
+
+def load_parts(folder: str) -> list[dict]:
+/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-int/var/jev_cache:
+0003a15a639427f406644f27c3aa6833bf7d9245aca7c160f02fe73bd9fe8b0c.json
+0005c7e5b15234c1f56c1edc11435263ebec8f07e87ca9dd4cccefd1d4a580bf.json
+110M	var/jev_cache
+30:      - run: uv run slope evidence build akoustis_20240514
+
+__HERMES_CWD_4a4ababf3884__/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo__HERMES_CWD_4a4ababf3884__
+]

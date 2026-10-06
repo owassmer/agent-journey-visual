@@ -1,0 +1,1 @@
+{"command": "grep -n \"class SourceSpan\" -A14 app/domain/investigation.py; ls Slope_Credit_Scenario_Research_and_Design_Kit/research/recent_cases/chromadex/ | head -30; grep -n \"class AtomicFinding\" -A22 app/domain/investigation.py | tail -12", "description": "Inspect span and finding types; list ChromaDex sources"}

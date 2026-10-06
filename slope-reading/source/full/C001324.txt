@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6c-run && python3 -c \"\nimport json\nR='runs/recorded/akoustis_20240620-agent_plus_jev-20260926T212137Z/events.jsonl'\nfor l in open(R):\n  e=json.loads(l)\n  if e['kind']=='finding_proposed':\n    print(json.dumps(e['payload'])[:700]); break\n\""}

@@ -1,0 +1,1 @@
+{"command": "python3 -c \"\nimport json\nd=json.load(open('evals/jev_semantic_cases.json'))\nc=next(c for c in d['cases'] if c['case_id']=='syn_entity_unresolvable')\nprint(json.dumps(c,indent=1)[:2500])\"; grep -n \"entity_scope\" app/agent/meanings.py | head -3; grep -n \"AMBIGUITY_MARGIN\\s*=\" -A1 app/agent/*.py"}

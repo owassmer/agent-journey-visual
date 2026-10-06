@@ -1,0 +1,20 @@
+Exit code 1
+[1m[91mF401[0m [[1m[96m*[0m][1m `app.decisions.scenarios.policy_checks` imported but unused[0m
+  [1m[94m--> [0mtests/test_decision_model.py:8:74
+   [1m[94m|[0m
+[1m[94m 7[0m [1m[94m|[0m from app.agent.tools import _date_in_text
+[1m[94m 8[0m [1m[94m|[0m from app.decisions.scenarios import AMOUNT_STEP_CENTS, Request, compare, policy_checks, simulate, summarize
+   [1m[94m|[0m                                                                          [1m[91m^^^^^^^^^^^^^[0m
+[1m[94m 9[0m [1m[94m|[0m from app.disputes.evaluate import Evaluator
+[1m[94m10[0m [1m[94m|[0m from app.domain.investigation import (
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import: `app.decisions.scenarios.policy_checks`[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m7[0m [1m[94m|[0m from app.agent.tools import _date_in_text
+[1m[94m [0m [1m[31m-[0m [31mfrom app.decisions.scenarios import AMOUNT_STEP_CENTS, Request, compare, [0m[1m[31mpolicy_checks, [0m[0m[31msimulate, summarize
+[0m[1m[94m8[0m [1m[32m+[0m [32mfrom app.decisions.scenarios import AMOUNT_STEP_CENTS, Request, compare, [0m[32msimulate, summarize
+[0m[1m[94m9[0m [1m[94m|[0m from app.disputes.evaluate import Evaluator
+[1m[94m [0m [1m[94m|[0m
+
+Found 1 error.
+[[36m*[0m] 1 fixable with the `--fix` option.

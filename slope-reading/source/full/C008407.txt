@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && sed -n 3020,3070p app/analysis/events.py; sed -n 3005,3012p app/analysis/events.py >/dev/null; grep -n \"_STATE_SKIP\\|def _state_items\\|STRUCTURAL\\|skip = \\|not in {\\\"\" app/analysis/events.py | head; sed -n 2955,2974p app/analysis/events.py", "timeout": 30}

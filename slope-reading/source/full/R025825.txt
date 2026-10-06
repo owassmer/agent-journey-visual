@@ -1,0 +1,77 @@
+    agent_config,
+    allowed_tools,
+    main_agent_settings,
+    question_registry,
+)
+from app.domain.investigation import InventoryItem
+from app.evidence.store import EvidenceStore
+
+WORKING_METHOD = """Working method
+- Start with get_mission, read_baseline_profile and read_loan_terms.
+- For each material unknown that could change the financing choice, record_dependency with a precise target: the entity plus
+  the specific obligation, counterparty, asset or activity. Prefer unknowns about dated cash obligations, cash access and receipts.
+- search_evidence for that dependency, read_evidence for the passages you need (including their surrounding context), and cite
+  only text you have read. Quote exactly.
+{jev_method}- propose_finding for one atomic proposition at a time, then resolve_finding. Record how each linked observation was used,
+  and give a reason whenever you override one.
+- propose_effect for each supported economic mechanism, stating its baseline treatment, parameters (unknown stays unknown) and the
+  plain-language model consequence. Existing liabilities are scheduled once, never added again.
+- When a matter has no future cash effect, record that as a cited finding and an effect with cash_direction none, so the
+  reviewer can see why it does not change cash.
+- If you connect a name, label or table row to an obligation by matching amounts or dates, mark that finding is_inference and
+  describe the link as an inference in your conclusion.
+- run_sensitivity on validated settlement effects to see which unknown changes the cash requirement.
+- request_missing_fact for each pivotal fact the evidence cannot supply, then submit_packet.
+- Use only the evidence returned by the tools; do not rely on remembered facts about this company or later events.
+- Work efficiently: the run stops at {turn_budget} turns; submit before then."""
+
+JEV_METHOD = """- read_inventory early: the host screened every admissible section and lists the specific matters it found. Before
+  submitting, account_for_items for every item: covered by accepted findings, or not decision-relevant with a reason.
+- The host checks each proposed effect: its supporting findings' posture and status must fit the mechanism, and its model
+  consequence must be supported by the cited findings. It also checks your conclusion at submission and checks accepted findings
+  under the same question against each other. Revise when a check fails; override only with a stated reason.
+- Search results carry a semantic screen label; all results are shown and you decide what to read.
+- When the posture, status or entity of a statement matters, call judge (claim_interpretation) with one claim, a precise target
+  and the verbatim anchor_quote, and link the observations to the finding. When two statements may conflict, use
+  statement_relation. An ambiguous or unsettled judgment means: read more context or narrow the target, not accept.
+"""
+
+
+class InvestigationOutcome(BaseModel):
+    conclusion: str
+    except TimeoutError:
+        failure = f"wall clock budget of {wall_clock_s}s reached"
+    except Exception as e:  # service failure: incomplete review, never a decline
+        failure = f"{type(e).__name__}: {e}"[:500]
+
+    if stats["turn_limit_hit"] or (result is not None and result.subtype == "error_max_turns"):
+        failure = failure or f"turn budget of {max_turns} reached"
+    if result is not None and result.is_error:
+        failure = failure or f"agent session ended with an error: {result.subtype} {result.result or ''}"[:500]
+    if not ctx.submitted:
+        run.lock({"summary": None, "configuration_failure": ctx.configuration_failure,
+                  "incomplete_reasons": ctx.incomplete_reasons + [failure or "packet not submitted"]})
+    if ctx.configuration_failure:
+        status = "FAILED_CONFIGURATION"
+    elif ctx.submitted and not ctx.incomplete_reasons and not failure:
+        status = "CANDIDATE_READY"
+    else:
+        status = "INCOMPLETE_REVIEW"
+
+    graph = run.export()
+    record.update({
+        "run_id": run_id, "status": status, "failure": failure, "incomplete_reasons": ctx.incomplete_reasons,
+        "finished_at": datetime.now(UTC).isoformat(),
+        "returned_models": sorted(stats["models"] | set((result.model_usage or {}) if result else {})),
+        "tool_calls": stats["tool_calls"], "turns_used": len(stats["turn_ids"]), "max_turns": max_turns,
+        "claude": None if result is None else {"num_turns": result.num_turns, "duration_ms": result.duration_ms,
+                                                "usage": result.usage, "notional_cost_usd": result.total_cost_usd,
+                                                "structured_output": result.structured_output},
+        "jev": jev.usage_summary() if jev else None,
+        "graph_counts": {k: len(v) for k, v in graph.items() if isinstance(v, list)},
+        "chain_head": run.head,
+    })
+    (run.dir / "run.json").write_text(json.dumps(record, indent=2, default=str) + "\n")
+    dest = RECORDED / run_id
+    if dest.exists():
+        shutil.rmtree(dest)

@@ -1,0 +1,1 @@
+{"subject": "Scoped MCP tools and acceptance rules", "description": "app/agent/tools.py: 13 run-bound tools; screening in search; finding_check on propose; resolve_finding enforces ambiguity/support/override-with-reason; propose_effect validated; run_sensitivity; submit_packet locks. Agent-only arm variant.", "activeForm": "Building MCP tools"}

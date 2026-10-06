@@ -1,0 +1,1 @@
+text(await tools.exec_command({cmd:"sed -n '420,480p' app/disputes/state14.py; rg -n -C 3 'stay_motion' data/*/*json app/disputes/registry* 2>/dev/null | head -50; rg -n 'when the court decides|security.*deadline|stay_motion' tests/test_prepared_question_wording.py","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":2500}));

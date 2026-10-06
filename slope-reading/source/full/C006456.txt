@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -rn \"SLOPE_WALK_SHARDS\\|SLOPE_WALK_JOB\" --include=*.py --include=*.yml . | grep -v .venv; grep -n \"def new_node\" -A 12 app/disputes/forecast.py | head -16; grep -n \"def node(self, d\" -A 8 app/disputes/forecast.py | head -10", "timeout": 30}

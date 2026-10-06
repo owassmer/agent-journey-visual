@@ -1,0 +1,1 @@
+{"command": "pkill -P 6291 2>/dev/null; kill 6291 2>/dev/null; sleep 1; ps -Ao pid,etime,rss,command | grep -E \"sleep 540|shard_prof|shard_probe|heavy_check|classes_check|group_check|app\\.disputes|app\\.analysis|pytest\" | grep -v grep | cut -c1-140; echo \"---\"; top -l 1 -o mem -n 8 -stats pid,mem,command | tail -9", "timeout": 30}

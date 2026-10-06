@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && grep -n \"^def _expand\\|^class Dist\\|    def __missing__\" app/disputes/forecast.py; awk '/^def _expand/{f=1} f{print NR\": \"$0; n++} n>22{exit}' app/disputes/forecast.py; awk '/    def __missing__/{f=1} f{print NR\": \"$0; n++} n>18{exit}' app/disputes/forecast.py"}

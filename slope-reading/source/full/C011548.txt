@@ -1,0 +1,2 @@
+text(await tools.exec_command({cmd:"sed -n '1475,1530p' app/disputes/forecast.py\nrg -n 'stay_motion|stay_approved|def stay_post' app/disputes/forecast.py | tail -15\nsed -n '2950,3010p' app/disputes/forecast.py\nrg -n 'dead|never.live' tools/notes_repair.py app/disputes/pool.py | head -40",workdir:"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo",max_output_tokens:3000}));
+text(await tools.exec_command({cmd:"tail -n 6 /tmp/notes-6910-original.log\npython3 /tmp/monitor_notes_recovery.py",yield_time_ms:1000,max_output_tokens:1500}));

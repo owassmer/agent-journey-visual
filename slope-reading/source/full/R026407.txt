@@ -1,0 +1,20 @@
+## Sources
+
+Primary case originals and hashes are in the companion kit. URLs below are authoritative references; retrieval date is 24 September 2026.
+
+- **S1:** Slope, [Inside Slope’s Agents Platform for Credit Risk & Customer Operations](https://slopepay.com/blog/agents-platform).
+- **S2:** Slope, [From Transaction Labels to Customer Understanding](https://slopepay.com/blog/context-aware-ai-bank-transaction-labels).
+- **S3:** Slope, [Borrowing limits and terms](https://help.slopepay.com/en/articles/4357633).
+- **S4:** Slope, [Amazon seller line of credit](https://slopepay.com/blog/slope-amazon-sellers).
+- **S5:** Slope, [Slope 101 / Pay Later](https://help.slopepay.com/en/articles/1972225).
+- **C1:** Synergy, [13 August 2024 S-1/A](https://www.sec.gov/Archives/edgar/data/1562733/000121390024068424/ea0208324-04.htm), legal proceedings and financial notes.
+- **C2:** U.S. District Court, [27 February 2023 opinion, Synergy v. HVL](https://www.govinfo.gov/content/pkg/USCOURTS-med-2_22-cv-00301/pdf/USCOURTS-med-2_22-cv-00301-0.pdf).
+- **C3:** Synergy/WebBank, [May 2024 merchant-loan agreement](https://www.sec.gov/Archives/edgar/data/1562733/000121390024056991/ea020832401ex10-32_synergy.htm).
+- **C4:** Synergy, [FY2024 annual report](https://www.sec.gov/Archives/edgar/data/1562733/000121390025026254/ea0235758-10k_synergy.htm).
+- **C5:** Synergy, [May 2025 credit agreement](https://www.sec.gov/Archives/edgar/data/1562733/000121390025050984/ea024464201ex10-1_synergy.htm), recitals and settlement-funding provisions.
+- **C6:** Synergy, [June 2025 quarterly report](https://www.sec.gov/Archives/edgar/data/1562733/000121390025076060/ea0252562-10q_synergy.htm).
+- **B1:** Barfresh, [September 2024 quarterly report](https://www.sec.gov/Archives/edgar/data/1487197/000149315224042368/form10-q.htm), filed 24 October 2024.
+- **B2:** Barfresh, [FY2024 annual report](https://www.sec.gov/Archives/edgar/data/1487197/000164117225000931/form10-k.htm).
+- **B3:** Barfresh, Q1 2025 report filed 1 May 2025; original and URL in source catalog.
+- **R1:** Anthropic, [Use the Claude Agent SDK with your Claude plan](https://support.claude.com/en/articles/15036540-use-the-claude-agent-sdk-with-your-claude-plan).
+- **R2:** Anthropic, [Agent SDK Python reference](https://code.claude.com/docs/en/agent-sdk/python).

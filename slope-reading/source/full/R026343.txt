@@ -1,0 +1,103 @@
+== cdxc_2023_12_credit_8k#s0000
+(Exact name of registrant as specified in its charter)
+
+Delaware 001-37752 26-2940963
+
+(State or other jurisdiction of incorporation) (Commission File Number) (IRS Employer Identification No.)
+== cdxc_2023_12_credit_8k#s0001
+(Address of principal executive offices, including zip code)
+
+(310) 388-6706
+
+(Registrant's telephone number, including area code)
+
+Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:
+
+☐ Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)
+
+☐ Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)
+
+☐ Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))
+
+☐ Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))
+
+Securities registered pursuant to Section 12(b) of the Act:
+
+Title of each class Trading Symbol(s) Name of each exchange on which registered
+
+Common Stock, par value $0.001 per share CDXC The Nasdaq Capital Market
+
+Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).
+
+Emerging growth company ☐
+
+If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐
+== cdxc_2023_12_credit_8k#s0002
+On December 8, 2023, ChromaDex Corporation (the “Company”), and the Company’s wholly owned subsidiaries, ChromaDex, Inc., a California corporation, and ChromaDex Analytics, Inc., a Nevada corporation (together with the Company, the “Borrowers”) entered into an amendment (the “Amendment”) to the business financing agreement (as amended, the “Credit Agreement”) dated November 1, 2019 among the Borrowers and Western Alliance Bank (the “Lender”).
+
+The Credit Agreement provides for a revolving credit line of up to $10.0 million. The Amendment extended the maturity date of the revolving credit line under the Credit Agreement to November 12, 2025 and also increased the interest rate to be calculated at a floating rate per month equal to (a) the greater of (i) 8.25% per year (instead of 3.25% per year) or (ii) the Prime Rate published in the Money Rates section of the Western Edition of The Wall Street Journal, or such other rate of interest publicly announced by the Lender as its Prime Rate, plus (b) 1.00%, plus an additional 5.00% during any period that an event of default has occurred and is continuing. There are no amounts outstanding under the Credit Agreement, as amended, as of the date of this Current Report on Form 8-K. The maturity date of the Credit Agreement had previously been extended to December 12, 2023 pursuant to the amendment attached hereto as Exhibit 10.1.
+
+In addition, the Amendment amends certain financial covenants, including (a) the amount of the Borrowers’ cash maintained at Lender (b) revising how quick ratio is calculated for purposes of the quick ratio covenant, and (c) Borrowers’ minimum liquidity requirements.
+
+The foregoing is only a summary of the material terms of the Amendment, and does not purport to be complete and is qualified in its entirety by reference to the full text of the Amendment, which is filed as Exhibit 10.2 hereto.
+== cdxc_2023_12_credit_8k#s0003
+The information set forth under Item 1.01 above is hereby incorporated by reference into Item 2.03.
+== cdxc_2023_12_credit_8k#s0004
+(d) Exhibits .
+
+ExhibitNumber Description
+
+10.1 Fourth Modification to Business Financing Agreement dated November 9, 2023 by and among Western Alliance Bank, ChromaDex Corporation, ChromaDex Inc. and ChromaDex Analytics, Inc.
+
+10.2 Fifth Modification to Business Financing Agreement dated December 8, 2023 by and among Western Alliance Bank, ChromaDex Corporation, ChromaDex Inc. and ChromaDex Analytics, Inc.
+
+104 Cover Page Interactive Data File (embedded within the Inline XBRL document)
+== cdxc_2023_12_credit_8k#s0005
+Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.
+
+CHROMADEX CORPORATION
+
+Dated: December 13, 2023 By: /s/ BRIANNA L. GERBER
+
+Brianna L. Gerber
+
+Chief Financial Officer
+
+(principal financial officer and duly authorized on behalf of the registrant)
+######## release
+== cdxc_2024q2_release#s0000
+EX-99.1
+
+2
+
+ex991pressrelease-q22024.htm
+
+EX-99.1
+== cdxc_2024q2_release#s0001
+Total net sales of $22.7 million, up 12% year-over-year, gross margin of 60.2%, lower operating expenses, resulting in approximately breakeven net loss and positive Adjusted EBITDA of $1.6 million for the three months ended June 30, 2024.
+
+LOS ANGELES, CA - August 7, 2024 - ChromaDex Corp. (NASDAQ:CDXC) today announced financial results for the second quarter of 2024.
+== cdxc_2024q2_release#s0002
+• Total net sales were $22.7 million, with $18.6 million from Tru Niagen®, up 12%, and 10%, respectively, from the prior year quarter.
+
+• Solid gross margin of 60.2% and a $0.7 million reduction in total operating expenses from the prior year quarter.
+
+• Net loss and loss per share were approximately breakeven, a $2.2 million and $0.03 per share improvement from the prior year quarter.
+
+• Adjusted EBITDA, a non-GAAP measure, improved to $1.6 million from $0.2 million in the prior year quarter.
+
+• In June 2024, ChromaDex announced U.S. FDA Orphan Drug Designation and Rare Pediatric Disease Designation for nicotinamide riboside chloride, ChromaDex’s product candidate for the treatment of Ataxia Telangiectasia (AT). AT is a rare, progressive disease that typically presents in early childhood and affects the function of the nervous system, the immune system, and several other body systems. Plans are underway to file an Investigational New Drug application with the U.S. FDA in anticipation of conducting human clinical trials. If the application is approved, ChromaDex will pursue grant funding or other non-dilutive financing for the human clinical trials.
+
+• In June 2024, ChromaDex unveiled Niagen+, a product line featuring pharmaceutical-grade Niagen® (patented nicotinamide riboside chloride or NRC). U.S. FDA-registered 503B outsourcing facilities will compound and distribute pharmaceutical-grade Niagen®, which will be available in intravenous (IV) and injectable forms exclusively at clinics with prescription. Beginning this month, Niagen IV and injections will debut at select IV clinics. Clinical study results (1) support Niagen IV offering a 75% shorter infusion time, a higher and faster rise in NAD+ blood levels three hours post-infusion, based on dried blood spot analysi
+== cdxc_2024q2_release#s0003
+ChromaDex recorded net sales of $22.7 million, an increase of 12% or $2.4 million from the prior year quarter. The growth in total net sales was primarily due to higher Tru Niagen® and Niagen® ingredient sales.
+
+Gross margin percentage declined 60 basis points to 60.2% primarily driven by changes in business mix.
+
+Operating expense decreased 5%, or $0.7 million, to $13.9 million driven by lower general and administrative expense, partially offset by increased investments in sales and marketing expense.
+
+Net loss and loss per share were approximately breakeven, both up compared to a net loss of $2.2 million, or $0.03 loss per share, for the second quarter of 2023. Adjusted EBITDA, a non-GAAP measure, improved to $1.6 million from $0.2 million in the second quarter of 2023. See “Reconciliation of Non-GAAP Financial Measures” for a reconciliation of non-GAAP Adjusted EBITDA to net loss, the most directly comparable GAAP measure.
+
+Net cash inflow from operating activities was approximately breakeven for the six months ended June 30, 2024 compared to a net cash inflow of $6.1 million in the prior year. The approximately $6.0 million reduction in cash provided by operating activities was largely driven by a relatively greater increase in trade receivables of $4.2 million and a greater reduction in accounts payable of $2.5 million.
+== cdxc_2024q2_release#s0004
+Looking forward, for the full year, the Company expects between 10% - 15% revenue growth year-over-year, driven by continued revenue growth through our e-commerce business as well as established partnerships, and assumes upside from opportunities with new partnerships, channels, and products. The Company projects that gross margin will improve slightly year-over-year. Moreover, selling and marketing expense will increase in absolute dollars but remain stable as a percentage of net sales, as the Company continues to make focused investments to drive brand awareness and support new market launches, while maintaining efficiency. The Company plans to continue to invest in research and development to drive future innovation and expects general and administrative expense to be down $1.5 million year over year.

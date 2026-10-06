@@ -1,0 +1,1 @@
+{"command": "cd /Users/owenwassmer/.hermes/profiles/connor/cache/scratch/acq/akts && sed -n '1310,1322p;3085,3125p' notes_2022_ex41.txt | grep -v '^$' | cut -c1-300; grep -n -i -E \"Interest.{0,40}(payable|paid) (semi|in cash|in shares)|pay interest.{0,80}shares|June 15|December 15|Fundamental Change\u201d means\" notes_2022_ex41.txt | head -12 | cut -c1-260"}

@@ -1,0 +1,2 @@
+text(await tools.write_stdin({session_id:10129,chars:"",yield_time_ms:1000,max_output_tokens:1000}));
+text(await tools.exec_command({cmd:"python3 - <<'PY'\nimport json\nfrom pathlib import Path\np=Path('tools/notes-recovery-retry.json');r=json.loads(p.read_text());ids=[x for t in r['tasks'] for x in t]\nassert len(ids)==len(set(ids))==113\nassert sorted(ids)==r['failed_units']\nprint('113 unique retry IDs verified; plan SHA',r['plan_sha256'])\nPY","workdir":"/Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo","max_output_tokens":500}));

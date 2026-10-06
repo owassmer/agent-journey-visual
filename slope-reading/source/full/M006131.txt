@@ -1,0 +1,54 @@
+[IMPORTANT: 5 background processes completed. Treat these results as one batch and give one consolidated response; preserve failures and actionable results.]
+
+[IMPORTANT: Background process proc_09d5352cabc5 completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. timeout 900 .venv/bin/python -m pytest -p no:warnings -x tests/test_cash_processing.py tests/test_collection_modes.py tests/test_opening_exposure.py tests/test_equity_20240514.py tests/test_page_data_20240514.py tests/test_share_price.py 2>&1 | grep -v "npmrc\|nvm\|globalconfig" | tail -5
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+.....................                                                    [100%]
+21 passed in 2.42s
+]
+
+[IMPORTANT: Background process proc_49eaf95008e3 completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. .venv/bin/python -m pytest -p no:warnings tests/test_cash_processing.py tests/test_collection_modes.py tests/test_opening_exposure.py tests/test_equity_20240514.py tests/test_page_data_20240514.py tests/test_share_price.py > ~/.hermes/profiles/connor/cache/scratch/memo/tests.log 2>&1; echo EXIT $? >> ~/.hermes/profiles/connor/cache/scratch/memo/tests.log
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+]
+
+[IMPORTANT: Background process proc_aecb2dee628e exited (exit code 1).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/memo; env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. MODE=parallel PROCS=3 SLOPE_WALK_CUT=3 CLS=award:27980800:27980800:27980800 OUT=$S/par_279.pkl .venv/bin/python $S/par_check.py > $S/par_279.log 2>&1
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+]
+
+[IMPORTANT: Background process proc_0427eb9335b6 completed normally (exit code 0).
+Command: cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && S=~/.hermes/profiles/connor/cache/scratch/memo; env -u CLAUDE_CODE_OAUTH_TOKEN SLOPE_JEV_CACHE_ONLY=1 PYTHONPATH=. MODE=single CLS=award:27980800:27980800:27980800 OUT=$S/single_279.pkl .venv/bin/python $S/par_check.py > $S/single_279.log 2>&1
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+]
+
+[IMPORTANT: Background process proc_6a9405827fa6 completed normally (exit code 0).
+Command: S=~/.hermes/profiles/connor/cache/scratch/memo; for i in $(seq 1 40); do grep -q "^single" $S/single_279.log && break; sleep 15; done; grep -v "npmrc\|nvm\|globalconfig" $S/single_279.log | tail -2; cd ~/dev/Slope_Sparse_Events/.claude/worktrees/step-9-memo && MODE=cmp A=$S/single_279.pkl B=$S/par_279.pkl .venv/bin/python $S/par_check.py
+Output:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.
+single award:27980800:27980800:27980800 1038 paths 290.3s 
+paths        equal
+nodes        equal
+facts        equal
+late_seen    equal
+node_group   equal
+remitted     equal
+verdict_asks equal
+raise_open   equal
+time 290.3s single, 130.6s parallel
+ALL EQUAL
+]

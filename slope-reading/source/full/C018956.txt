@@ -1,0 +1,4 @@
+const results=await Promise.allSettled([
+tools.exec_command({cmd:"gh run list --repo owassmer/Slope_Sparse_Events --branch step-9-memo --limit 3 --json databaseId,status,conclusion,headSha,workflowName,url","max_output_tokens":1300}),
+tools.exec_command({cmd:"aws ssm send-command --instance-ids i-09b42b44a8d35909a --document-name AWS-RunShellScript --parameters '{\"commands\":[\"date -u; ps -p 5089 -o pid,pcpu,rss,etime,time; tail -6 /var/log/question-refresh-launch.log; systemctl show slope-refresh-launch -p ActiveState -p ExecMainStatus\"]}' --profile slope --region us-east-2 --query Command.CommandId --output text","max_output_tokens":500})
+]);results.forEach(text);

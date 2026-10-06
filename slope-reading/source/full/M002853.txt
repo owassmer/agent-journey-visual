@@ -1,0 +1,66 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_f45a046b]
+A background fan-out unit you dispatched earlier — 1 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-28 10:59:44 (2h24m ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 5202.25s
+
+--- ✓ TASK 1/1: Worker H3: finish the no-lawsuit view's symmetry for the 14 May case, explain the remaining settles-before-verdict gap by filing route, land it on both branches, and leave PR #18 ready for the orchestrator to label. Work in worktree /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-8-model (branch step-8-model, HEAD 6f4af53), then step-8-page (HEAD a7015b7). Report SHAs, the final no-lawsuit figures and attribution, the gap decomposition, re-asks and spend, and the page check. Do not open a PR, re-run the investigation, or change any question's wording to close the gap.  (status=completed, api_calls=116, 5201.95s) ---
+The no-lawsuit questions now get the same fact keys as the forecast's questions of the same node type. Both branches are re-run, merged, rebuilt and pushed, and the 8012 viewer is back up (HTTP 200). With that fix, the no-lawsuit filing rate by 10 Nov drops from 11.7% to 8.3%.
+
+**Pushed commits**
+- step-8-model: `8b0cac1` is the fix, the extended test 7j, the design §7.12 entry and the re-hashed kit manifest. `a34761d` is the re-run of the lead analysis and the ten variants.
+- Your events.py commit `59899f1` sits between them. I didn't touch it.
+- step-8-page: `e313155` is the merge, with the rebuilt page.json inside the merge commit this time, so no second commit was needed.
+
+**The fix.** `Forecaster.ordinary_facts` now builds the no-cash-effect facts for both views, so they can't drift apart again. The 30-day operating need goes only to the cash-floor and cash-runs-out questions. The listing, holders' and notes questions in the no-lawsuit view no longer carry it. Forecast questions are unchanged. Test 7j now requires equal key sets per node type, and it fails at 6f4af53 on the listing question's operating need.
+
+**Figures**
+
+```
+Setting | View          | Due      | Collected        | Filing by 10 Nov | Preference exposure (weighted)
+--------+---------------+----------+------------------+------------------+-------------------------------
+Central | No lawsuit    | $966,369 | $958,840 (99.2%) | 8.3% (was 11.7%) | $44,754 (was $62,881)         
+Central | Lead forecast | $915,682 | $827,885 (90.4%) | 27.1%            | –                             
+```
+
+- The lead forecast is unchanged in all 11 settings.
+- The no-lawsuit filing rate falls in 8 of the 10 variants.
+- It rises in two:
+  - cost_plan: 4.7% → 6.1%
+  - coupon_cash: 10.1% → 10.3%
+
+**The gap, by filing route** (written to `~/.hermes/profiles/connor/cache/scratch/8/gap.md`, weighted by path probability)
+
+```
+Route                                                      | Settles before the verdict | No lawsuit at 6f4af53 | No lawsuit now            
+-----------------------------------------------------------+----------------------------+-----------------------+---------------------------
+At the cash floor                                          | 1.0% (25 Aug, cash $2.15M) | 3.0%                  | 3.0% (23 Sep, cash $3.34M)
+At zero cash                                               | 2.1% (24 Sep, −$0.49M)     | 1.3%                  | 1.35% (3 Nov, −$0.74M)    
+Company files after the notes are accelerated on delisting | 2.8% (1 Nov, $6.8M)        | 7.4%                  | 4.0% (1 Nov, $10.0M)      
+Notes accelerated on judgment default                      | 0                          | 0                     | 0                         
+Holders' involuntary petition                              | 0                          | 0                     | 0                         
+**Total**                                                  | **5.9%**                   | **11.7%**             | **8.3%**                  
+```
+
+The two zero rows are empty for different reasons. No judgment exists in the settled class, so the judgment-default route never starts. The holders' own petition falls after 10 Nov on every path in both views.
+
+At 6f4af53, the delisting route carried most of the gap. On the question whether the company files once the notes are accelerated after a delisting, Jev said 71% in the no-lawsuit view against 35% when settled. The no-lawsuit question also stated the operating need; with that removed, the answer is 60%.
+
+About 2 of the remaining 2.4 points come from the cash floor, and cash doesn't explain them: the no-lawsuit company holds more cash there. The difference is Jev's answer to a different situation: file 3% against 1%. The no-lawsuit floor comes about a month later, so its 30-day raise ends around 23 Oct, after the 21 Oct listing deadline. The recorded answers can't say whether the timing or the settlement context drives Jev's answer.
+
+**Jev re-asks and spend:** 3 in the lead run and 12 across the variants, 15 in all, about USD 0.002. The page rebuild answered all 207 questions from cache at $0. The a34761d commit message wrongly counts the variants as 15; the merge message corrects it. No variant was re-run.
+
+**Checks**
+- f2_order.py found no decision booked out of date order.
+- The 20 Jun dump is equal in every field; only the runtime seconds differ.
+- Full suite: 249 passed on step-8-model, 251 on step-8-page.
+- The page's figure check (`p3/check.py final`) found 0 mismatches. It still logs the same one console 404 as H2's run.
+- The rebuilt page matches the model run: every tile is identical.
+
+**Issues**
+- Free disk fell to 225 MB after the variants and came back to 3.3–4.4 GB as swap shrank.
+- To free space I deleted two rebuildable things: step-8-page's analysis cache (restored from step-8-model before the rebuild) and the main checkout's `.venv`, which saved little. `uv sync` in the main checkout rebuilds the `.venv`. Nothing was using it, and port 8000 was idle.
+- The 8011 viewer was not touched.
+
+I recorded the new fact builder, the route-breakdown script, the shared-worktree caution and the disk behaviour in the skill notes.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_f45a046b/task-0.log

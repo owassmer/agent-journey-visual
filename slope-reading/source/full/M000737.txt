@@ -1,0 +1,89 @@
+[ASYNC DELEGATION BATCH COMPLETE — deleg_546950fb]
+A background fan-out unit you dispatched earlier — 2 subagent(s) — has finished; its consolidated results are below. Any other units from the same delegate_task call report separately as they finish. You may have moved on since dispatching — act on these or re-dispatch if things have changed. If you are still waiting on siblings, end your turn after acting on this one.
+
+Dispatched: 2026-09-26 12:14:23 (15m27s ago)
+Role: leaf   Model: claude-opus-5-5   Total duration: 927.46s
+
+--- ✓ TASK 1/2: Fix the pre-ruling milestone of Akoustis's response (A4, debtor_response I1) so it is asked when a levy can actually reach cash, not on 21 Jun; on branch fix-a4-milestone stacked on step-6b-page; open a PR.  (status=completed, api_calls=38, 927.19s) ---
+I've fixed the pre-ruling Akoustis response (A4, I1) and opened a PR. Akoustis now decides on the day the early-registration levy would hit its cash, not on 21 Jun. All 134 tests pass, ruff is clean, and CI passed (1m50s).
+
+**PR:** https://github.com/owassmer/Slope_Sparse_Events/pull/15, base `step-6b-page`, stacks on #14. Not labelled or merged.
+
+**Commits on `fix-a4-milestone`:**
+- `17aad3d`:
+  - **Chain:** I1 is now Q1 yes → stay → J9. A4 comes only after J9 yes. It is dated on the levy day (order date + `levy_lag_days`) and asked only where that day falls inside the horizon, before stay approval and before the ruling. J9 no leads to `ripe_i1` with no pre-ruling A4.
+  - **Stay-yes paths:** they keep their J9 logic and now also get A4 on the levy day, under a separate `stay_pending` context. That context is the one extra Jev node.
+  - **Same-day order:** the pre-ruling levy is held back one step, so a payment or petition on the levy day comes first and the levy takes nothing there. The facts Jev sees at A4 are the cash and amount owed before the levy.
+  - **Tests:**
+    - On the full tree, every I1 A4 comes right after J9 yes, and no J9-no path has one.
+    - No petition falls before the J9 order date.
+    - On the $2M fixture with the post-trial motions pending, probabilities sum to one, and 'pay' or 'file' on the levy day stops the levy.
+    - The merged-class identity test still passes.
+    - The old test that expected a petition on day 0 now expects it on the levy day, before the ruling.
+- `582c112`: updated the `debtor_response` timing and 'file' effect text in `dispute_model.json` and re-hashed the kit manifest (all 113 hashes check). I didn't bump `model_version` (it stays 4.0.0), because a bump would mark the recorded instances stale.
+
+**Full Akoustis tree, neutral judgments (one build each):**
+
+```
+                                    | before               | after              
+------------------------------------+----------------------+--------------------
+Paths                               | 5,558                | 5,258              
+Jev nodes                           | 108                  | 109                
+Paths with a petition on 21 Jun     | 1                    | 0                  
+Probability of a petition on 21 Jun | 9.38%                | 0                  
+"Filed: Qorvo enforcement" share    | 11.56%               | 8.88%              
+Its petition date P5 / P50          | 21 Jun / 21 Jun 2024 | 29 Jul / 5 Oct 2024
+```
+
+The new P5 is the fastest possible J9 order: 21 Jun + 21 days of briefing + the shortest measured ruling lag (17 days). I measured the share by path probability, so the 21 Jun part comes to about 81% of the old share rather than the page's 77.9%. The page probably weights by trajectory.
+
+**Where E0 is used in `events.py`:**
+- **`E0` itself:** a legal date, the first day execution may issue (Rule 62(a) ended), no earlier than the day after review.
+- **Notes default before the ruling:** ripens at the enforceable date + 60 days, a legal date.
+- **Q1 (Qorvo executes before the ruling):** a creditor decision day set at E0, no source. It only dates Q1's path facts, but the two motion dates below are also set at E0.
+- **Akoustis's stay motion before the ruling:** a debtor decision day set at E0, no source. Approval = E0 + 21 + lag.
+- **Qorvo's early-registration motion:** a creditor decision day set at E0, no source. Order = E0 + 21 + lag.
+- **A4 before the ruling:** was E0; this PR moves it to the levy day.
+
+I didn't invent a lag for any of these. The PR body lists the three unsourced decision days as bounded timing terms for Owen: when Qorvo decides to execute, when Akoustis moves for a stay, and when Qorvo moves for early registration. All three sit at E0, the earliest date the law allows. After the ruling, the stay and registration motions have the same problem: they are dated at the ruling date with no lag.
+
+I also updated the `slope-sparse-events-build` skill with the new path and node counts and how the held-back levy works.
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_546950fb/task-0.log
+
+--- ✓ TASK 2/2: Independent focused review of PR #14 in owassmer/Slope_Sparse_Events (branch step-6b-page): correctness of the memory-bounded Analysis and the browser reweighting, and whether the page matches the approved one-screen design in plain operator language. Post one PR comment with demonstrated defects only.  (status=completed, api_calls=46, 782.3s) ---
+I've posted the review of PR #14 (at commit 6246a13) as one comment: https://github.com/owassmer/Slope_Sparse_Events/pull/14#issuecomment-5847888539. It lists five defects; I did not label, approve or merge. pytest ran 132 tests with no failures, and ruff is clean.
+
+**What held up:**
+- **Reduced Analysis (small $2M fixture, compared with the old code from 7dc90f1):** every expectation matches, including the views, all three attribution steps and every 0%/Jev/100% value. The ranking is the same, and no value falls outside its bins.
+- **Browser reweighting (Akoustis dev page, 5,558 paths, two different overrides in headless Chrome):**
+  - The page's path probabilities match the Python chain-rule calculation exactly.
+  - The six tiles, eight outcome shares, 0%/now/100% bars and the server's monthly table all equal a Python recomputation.
+- **Money on the page:** each tile reads the right engine field. The table's Collected, Clawback and Drawn columns sum to the tiles, and the CSV matches the table.
+- **Design:** the page fits one screen at 1440x900 with no scroll. "Actual outcome" is disabled. The settings run shows progress through tree, bins and simulate.
+- **Isolation:** the payload, template and JS contain no Akoustis fact dated after 20 Jun 2024.
+
+**Defects in the comment:**
+1. **A choice slider gives different results for the same position** (`page.js:49-51`). Moving a branch straight to 70% gives [0.70, 0.208, 0.046, 0.046]. The same drag passing through 100% gives [0.70, 0.10, 0.10, 0.10], because the other branches are rescaled from the current value, not the pre-drag one.
+2. **The "Filed" shares add up to more than the bankruptcy probability, with no label saying why.** They total 73.4% under "Outcomes by 17 Dec 2024", while the tile says 71.9%. A path counts as Filed even on draws where the filing lands after 17 Dec (`page.py:75-84`, `page.js:196`).
+3. **The collected and headroom bins are too wide to be useful.** Their ranges come from every invoice the borrower could route ($16.7M), not the $387k line limit (`core.py:343-352`).
+   - Collected uses 64 bins of up to $260k, but actual collections fall only in bins 0–3. Headroom bins are $276k wide.
+   - On the small fixture, collected P5 moved $130k and headroom P5 $80k from the old exact values.
+   - The affected numbers still appear in the recorded-run band, `collections.csv`, and the table's "Cash above 30-day need, P5" column.
+4. **The Collections table doesn't add up on its last row.** Due minus Collected is $205.6k, but Past due plus Frozen is $246.5k (the Unrecovered tile). The $41k gap is installments not yet due that a filing froze, and no column shows them.
+5. **Labels:**
+   - Once Jev answers exist, "Model judgment" will appear twice in one line (`page.js:252`) and again under every answer (`page.js:284`).
+   - "(a choice uniform)" is jargon (`page.py:363`).
+   - The P5 column doesn't say the amount owed has already been subtracted.
+
+I killed the dev server. The settings run I started for the check was stopped partway, so it left no new cache file. The worktree is unchanged.
+
+Everything is in `/Users/owenwassmer/.hermes/profiles/connor/cache/scratch/pr14/`:
+- probe scripts: probe_a.py to probe_e.py, compare.py
+- results: ref_b.json, browser.json
+- screenshots: p1440.png, p1440_collections.png, p1440_settings.png
+- comment.md
+Full live transcript (complete tool/assistant trace): /Users/owenwassmer/.hermes/profiles/connor/cache/delegation/live/deleg_546950fb/task-1.log
+Child's process proc_f451a2b61561 `cd /Users/owenwassmer/dev/Slope_Sparse_Events/.claude/worktrees/step-6b-page && (env -u CLAUDE_CODE_` finished (exit code 0) but the child never read its result; output tail:
+Your user’s .npmrc file (${HOME}/.npmrc)
+has a `globalconfig` and/or a `prefix` setting, which are incompatible with nvm.
+Run `nvm use --delete-prefix v22.12.0 --silent` to unset it.

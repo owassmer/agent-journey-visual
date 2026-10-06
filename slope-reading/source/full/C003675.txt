@@ -1,0 +1,1 @@
+{"command": "cd ~/dev/Slope_Sparse_Events && git fetch -q 2>/dev/null; date +%H:%M; git worktree list | cut -c1-120; for b in step-9-core step-9-a step-9-b step-9-c step-9-contracts step-9-page step-9-speed; do echo \"== $b\"; git log --oneline -3 origin/$b 2>/dev/null | cut -c1-110; done; df -h / | tail -1; memory_pressure | tail -1"}

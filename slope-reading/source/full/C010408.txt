@@ -1,0 +1,4 @@
+text(await tools.exec_command({cmd:"aws s3 cp s3://slope-walk-462947327980-20261001/walk-36781427817/pool/progress.json - --profile slope --region us-east-2","max_output_tokens":2000}));
+text(await tools.exec_command({cmd:"aws s3 ls s3://slope-walk-462947327980-20261001/walk-36781427817/pool/ --profile slope --region us-east-2","max_output_tokens":3000}));
+text(await tools.exec_command({cmd:"aws s3 cp s3://slope-walk-462947327980-20261001/walk-36781427817/pool/resources.json - --profile slope --region us-east-2","max_output_tokens":2000}));
+text(await tools.exec_command({cmd:"aws s3 cp s3://slope-walk-462947327980-20261001/walk-36781427817/pool/live.log - --profile slope --region us-east-2 | tail -15","max_output_tokens":2000}));
